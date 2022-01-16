@@ -1,0 +1,7 @@
+CUIDADO AO ATUALIZAR OS SEGUINTES ARQUIVOS:
+
+-app.php
+-constants.php
+-database.php
+-paths.php
+-routes.php
