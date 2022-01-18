@@ -5,35 +5,43 @@ Entrar <?= $this->endSection() ?>
 <main class="form-signin">
     <form method="post" action="/home/login">
         <?= csrf_field() ?>
+        <?php $validation =  \Config\Services::validation(); ?>
 
-        <div class="form-floating alert alert-danger text-start" role="alert">
-            <?= session()->getFlashdata('error') ?>
-            <?= service('validation')->listErrors() ?>
+        <?php if(session()->getFlashdata('success')) { ?>
+        <div class="alert alert-success alert-dismissible">
+            <?php echo session()->getFlashdata('success') ?>
+        </div>
+        <?php } elseif(session()->getFlashdata('failed')) { ?>
+        <div class="alert alert-danger alert-dismissible">
+            <?php echo session()->getFlashdata('failed') ?>
+        </div>
+        <?php } ?>
+
+        <a href="/" /><img class="mb-4" src="<?= base_url() ?>/assets/img/caduceus/caduceus-128.png" alt=""></a>
+        <h1 class="h3 mb-3 fw-normal"><?= HUAP_APPNAME ?></h1>
+
+        <div class="card-body p-4">
+            <div class="form-group mb-3 has-validation text-start">
+                <input type="text" class="form-control <?php if($validation->getError('Usuario')): ?>is-invalid<?php endif ?>" name="Usuario" placeholder="Login EBSERH" autofocus value="<?php echo set_value('Usuario'); ?>"/>
+                <?php if ($validation->getError('Usuario')): ?>
+                    <div class="invalid-feedback text-center">
+                        <?= $validation->getError('Usuario') ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="form-group text-start">
+                <input type="password" class="form-control <?php if($validation->getError('Senha')): ?>is-invalid<?php endif ?>" name="Senha" placeholder="Senha" value="<?php echo set_value('Senha'); ?>"/>
+                    <?php if ($validation->getError('Senha')): ?>
+                    <div class="invalid-feedback text-center">
+                        <?= $validation->getError('Senha') ?>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
 
-		<img class="mb-4" src="<?= base_url() ?>/assets/img/caduceus/caduceus-128.png" alt="">
-		<h1 class="h3 mb-3 fw-normal"><?= HUAP_APPNAME ?></h1>
-
-		<div class="form-floating">
-			<input type="text" name="Usuario" class="form-control" id="floatingInput" placeholder="nome.sobrenome@ebserh.gov.br" value="<?= set_value('Usuario') ?>">
-			<label for="floatingInput">Login EBSERH</label>
-		</div>
-		<div class="form-floating">
-			<input type="password" name="Senha" class="form-control" id="floatingPassword" placeholder="Password" value="<?= set_value('Password') ?>">
-			<label for="floatingPassword">Senha</label>
-		</div>
-
-		<div class="checkbox mb-3">
-			<!--<label>
-				<input type="checkbox" value="remember-me"> Remember me
-			</label>-->
-		</div>
 		<button class="w-100 btn btn-lg btn-primary" type="submit">Entrar</button>
 		<p class="mt-5 mb-3 text-muted">&copy; 2020 - <?= date('Y') ?></p>
 	</form>
 </main>
 
 <?= $this->endSection() ?>
-
-http://prescteste.com/admin
-http://prescteste.com/home/login

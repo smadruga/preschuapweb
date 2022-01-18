@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\Post;
+use App\Models\Usuario;
 use CodeIgniter\RESTful\ResourceController;
 
 class HomeController extends ResourceController
@@ -13,50 +13,50 @@ class HomeController extends ResourceController
     {
         helper(['form', 'url', 'session']);
         $this->session = \Config\Services::session();
-        #$this->var = new Usuario;
+        $this->var = new Usuario;
     }
 
     /**
-    * Return an array of resource objects, themselves in array format
+    * Formulário de Acesso a aplicação web (GET)
     *
-    * @return mixed
+    * @return void
     */
     public function index()
     {
+
         return view('home/form_login');
+
     }
 
     /**
-    * Return an array of resource objects, themselves in array format
+    * Formulário de Acesso a aplicação web, com validação e registro no Banco
+    * de dados (POST)
     *
-    * @return mixed
+    * @return void
     */
     public function login()
     {
-        #exit(base_url('admin'));
-        /*
+
         $inputs = $this->validate([
             'Usuario' => 'required',
             'Senha' => 'required'
         ]);
 
         if (!$inputs) {
-            return view('home/index', [
+            session()->setFlashdata('failed', 'ERRO! <br> Atenção, verifique os campos abaixo.');
+            return view('home/form_login', [
                 'validation' => $this->validator
             ]);
         }
 
         /*
-        $this->post->save([
-            'title' => $this->request->getVar('title'),
-            'description'  => $this->request->getVar('description')
+        $this->var->save([
+            'Usuario' => $this->request->getVar('Usuario'),
+            'Senha'  => $this->request->getVar('Senha')
         ]);
         session()->setFlashdata('success', 'Success! post created.');
         */
-#echo 'oioioi';
         return redirect()->to('/admin');
-        #return redirect()->route(base_url('admin'));
-
 
     }
 
