@@ -26,4 +26,38 @@ class HomeController extends ResourceController
         return view('home/form_login');
     }
 
+    /**
+    * Return an array of resource objects, themselves in array format
+    *
+    * @return mixed
+    */
+    public function login()
+    {
+        #exit(base_url('admin'));
+        /*
+        $inputs = $this->validate([
+            'Usuario' => 'required',
+            'Senha' => 'required'
+        ]);
+
+        if (!$inputs) {
+            return view('home/index', [
+                'validation' => $this->validator
+            ]);
+        }
+
+        /*
+        $this->post->save([
+            'title' => $this->request->getVar('title'),
+            'description'  => $this->request->getVar('description')
+        ]);
+        session()->setFlashdata('success', 'Success! post created.');
+        */
+#echo 'oioioi';
+        return redirect()->to('/admin');
+        #return redirect()->route(base_url('admin'));
+
+
+    }
+
 }

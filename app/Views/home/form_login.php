@@ -3,7 +3,7 @@ Entrar <?= $this->endSection() ?>
 <?= $this->section('content') ?>
 
 <main class="form-signin">
-    <?= form_open('login/entrar') ?>
+    <form method="post" action="/home/login">
         <?= csrf_field() ?>
 
         <div class="form-floating alert alert-danger text-start" role="alert">
@@ -34,3 +34,6 @@ Entrar <?= $this->endSection() ?>
 </main>
 
 <?= $this->endSection() ?>
+
+http://prescteste.com/admin
+http://prescteste.com/home/login
