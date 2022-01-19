@@ -10,13 +10,13 @@
         <meta name="theme-color" content="#7952b3">
 
         <!-- Styles and scripts -->
-        <link href="<?= base_url('/assets/css/simple-datatables@latest-style.css') ?>" rel="stylesheet" />
+        <link href="<?= base_url('/assets/css/simple-datatables@latest-style.css') ?>" rel="stylesheet">
         <link href="<?= base_url('/assets/css/bootswatch-flatly-bootstrap.min.css') ?>" rel="stylesheet">
-
+        <link href="<?= base_url('/assets/fontawesome-free-6.0.0-beta3-web/css/all.min.css') ?>" rel="stylesheet">
 
         <!-- Favicons -->
-        <link href="<?= base_url('/favicon.ico') ?>" rel="shortcut icon" type="image/png" />
-        <link href="<?= base_url('/assets/img/caduceus/caduceus-128.png') ?>" sizes="180x180" rel="apple-touch-icon" >
+        <link href="<?= base_url('/favicon.ico') ?>" rel="shortcut icon" type="image/png"/>
+        <link href="<?= base_url('/assets/img/caduceus/caduceus-128.png') ?>" sizes="180x180" rel="apple-touch-icon">
         <link href="<?= base_url('/assets/img/caduceus/caduceus-32.png') ?>" sizes="32x32" type="image/png" rel="icon">
         <link href="<?= base_url('/assets/img/caduceus/caduceus-16.png') ?>" sizes="16x16" type="image/png" rel="icon">
         <link href="<?= base_url('/favicon.ico') ?>" rel="icon">
@@ -29,7 +29,6 @@
         <?= $this->renderSection('content') ?>
 
         <script src="<?= base_url('/assets/bootstrap/dist/js/bootstrap.bundle.min.js') ?>" crossorigin="anonymous"></script>
-        <script src="<?= base_url('/assets/fontawesome-free-5.15.4-web/js/all.min.js') ?>" crossorigin="anonymous"></script>
         <script src="<?= base_url('/assets/js/jquery-3.6.0.min.js') ?>" crossorigin="anonymous"></script>
 
     </body>

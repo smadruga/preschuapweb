@@ -8,9 +8,9 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <form class="d-flex">
-                <input class="form-control me-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-info my-2 my-sm-0" type="submit">Buscar</button>
+            <form class="d-inline-flex">
+                <input class="form-control me-sm-2" type="text" placeholder="Nome, prontuário...">
+                <button class="btn btn-info my-2 my-sm-0" style="width: 150px" type="submit"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
             </form>
             <div style="padding: 0px 10px 0px 10px;" ></div>
             <ul class="navbar-nav me-auto">
@@ -22,11 +22,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Features</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
@@ -40,9 +35,9 @@
                 </li>
             </ul>
             <div style="padding: 0px 10px 0px 10px;">
-                <span class="text-warning"><div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>nome.sobrenome</span>
+                <span class="text-warning"><i class="fa-solid fa-circle-user"></i> nome.sobrenome</span>
             </div>
-            <a class="btn btn-danger my-2 my-sm-0" href="<?= base_url('home/logout') ?>">Sair</a>
+            <a class="btn btn-danger my-2 my-sm-0" href="<?= base_url('home/logout') ?>"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair</a>
         </div>
     </div>
 </nav>
