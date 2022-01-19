@@ -7,13 +7,13 @@ use CodeIgniter\RESTful\ResourceController;
 
 class HomeController extends ResourceController
 {
-    private $var;
+    private $usuario;
 
     public function __construct()
     {
         helper(['form', 'url', 'session']);
         $this->session = \Config\Services::session();
-        $this->var = new Usuario;
+        $this->usuario = new Usuario;
     }
 
     /**
@@ -50,13 +50,26 @@ class HomeController extends ResourceController
         }
 
         /*
-        $this->var->save([
+        $this->usuario->save([
             'Usuario' => $this->request->getVar('Usuario'),
             'Senha'  => $this->request->getVar('Senha')
         ]);
         session()->setFlashdata('success', 'Success! post created.');
         */
         return redirect()->to('/admin');
+
+    }
+
+    /**
+    * Formulário de Acesso a aplicação web, com validação e registro no Banco
+    * de dados (POST)
+    *
+    * @return void
+    */
+    public function logout()
+    {
+
+        return redirect()->to('/');
 
     }
 

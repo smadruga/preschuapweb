@@ -4,20 +4,18 @@
     <title><?= HUAP_APPNAME ?></title>
     <meta charset="UTF-8">
     <meta name="description" content="PRESCHUAP WEB - Prescrição médica eletrônica de média e alta complexidade.">
+    <meta name="author" content="Rodrigo Campos - rodrigopc@id.uff.br" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#7952b3">
 
-    <link rel="shortcut icon" type="image/png" href="<?= base_url() ?>/favicon.ico"/>
-    <!--<link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">-->
-    <!-- Bootstrap core CSS ThirdParty/img/caduceus-16-->
-    <link href="<?= base_url() ?>/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!--<link href="assets/css/bootswatch-flatly-bootstrap.min.css" rel="stylesheet">-->
+    <link rel="shortcut icon" type="image/png" href="<?= base_url('/favicon.ico') ?>"/>
+    <link href="<?= base_url('/assets/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" href="<?= base_url() ?>/assets/img/caduceus/caduceus-128.png" sizes="180x180">
-    <link rel="icon" href="<?= base_url() ?>/assets/img/caduceus/caduceus-32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="<?= base_url() ?>/assets/img/caduceus/caduceus-16.png" sizes="16x16" type="image/png">
-    <link rel="icon" href="<?= base_url() ?>/favicon.ico">
+    <link rel="apple-touch-icon" href="<?= base_url('/assets/img/caduceus/caduceus-128.png') ?>" sizes="180x180">
+    <link rel="icon" href="<?= base_url('/assets/img/caduceus/caduceus-32.png') ?>" sizes="32x32" type="image/png">
+    <link rel="icon" href="<?= base_url('/assets/img/caduceus/caduceus-16.png') ?>" sizes="16x16" type="image/png">
+    <link rel="icon" href="<?= base_url('/favicon.ico') ?>">
 
     <style>
     .bd-placeholder-img {
@@ -36,7 +34,7 @@
     </style>
 
     <!-- Custom styles for this template -->
-    <link href="<?= base_url() ?>/assets/bootstrap-5.1.3-examples/sign-in/signin.css" rel="stylesheet">
+    <link href="<?= base_url('/assets/bootstrap-5.1.3-examples/sign-in/signin.css') ?>" rel="stylesheet">
 
 </head>
 <body class="text-center">

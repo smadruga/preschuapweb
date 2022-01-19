@@ -44,6 +44,7 @@ $routes->group('home', function ($routes) {
     $routes->get('index', 'HomeController::index');
     #$routes->match(['get', 'post'], 'login', 'HomeController::index');
     $routes->post('login', 'HomeController::login');
+    $routes->get('logout', 'HomeController::logout');
 });
 
 $routes->group('admin', function ($routes) {
