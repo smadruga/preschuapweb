@@ -32,6 +32,7 @@ class HomeController extends ResourceController
         $session = \Config\Services::session();
 
         $v = $this->request->getVar(['Usuario', 'Senha']);
+        $v['Usuario'] = preg_replace('/((\w+).(\w+))(\b@ebserh.gov.br)/i', '$1', $v['Usuario']);
 
         $inputs = $this->validate([
             'Usuario' => 'required',
@@ -57,6 +58,7 @@ class HomeController extends ResourceController
         session()->setFlashdata('success', 'Success! post created.');
         env('CI_ENVIRONMENT')
         */
+
         $session->set($v);
         return redirect()->to('/admin');
 
@@ -95,7 +97,7 @@ class HomeController extends ResourceController
             return FALSE;
 
         // Tenta autenticar no servidor
-        return (!@ldap_bind($ldap_connection, $usr, $pwd)) ? FALSE : TRUE;
+        return (!@ldap_bind($ldap_connection, $usr.'@ebserh.gov.br', $pwd)) ? FALSE : TRUE;
 
     }
 

@@ -345,3 +345,61 @@ if (TRUE === ldap_bind($ldap_connection, $ldap_username, $ldap_password)) {
         }
     }
 }
+
+/*
+Nome > name ou cn
+Usuario > samaccountname
+UID/CPF > employeeID
+E-mail secundário > othermailbox
+
+possível atributo de desativação de conta: useraccountcontrol (*outros* desativado, 544 ativo)
+
+
+$ds=ldap_connect("10.88.1.32");
+if ($ds) {
+    echo "<br><br>Binding ...";
+    $r=ldap_bind($ds, "EBSERHNET\adm.rcampos", "#Int&lbras82!");     // this is an "anonymous" bind, typically
+                           // read-only access
+    echo "<br><br>Bind result is " . $r . "<br />";
+
+    $dn="OU=Usuarios,OU=HUAP,OU=EBSERH,DC=ebserhnet,DC=ebserh,DC=gov,DC=br";
+    $sr=ldap_search($ds, $dn, "employeeid=09850701706");
+
+    $entry = ldap_first_entry($ds, $sr);
+    $attrs = ldap_get_attributes($ds, $entry);
+
+    echo $attrs["count"] . " attributes held for this entry:<p>";
+    for ($i=0; $i < $attrs["count"]; $i++) {
+        echo $attrs[$i] . "<br />";
+    }
+
+    echo "Getting entries ...<p>";
+    $info = ldap_get_entries($ds, $sr);
+    echo "Data for " . $info["count"] . " items returned:<p>";
+
+    for ($i=0; $i<$info["count"]; $i++) {
+        echo "dn is: " . $info[$i]["dn"] . "<br />";
+        echo "1>> cn: " . $info[$i]["cn"][0] . "<br />";
+        echo "2>> sn: " . $info[$i]["sn"][0] . "<br />";
+        echo "############>> sn: <br /><br /><br />";
+
+        echo " >>: nome " . $info[$i]["name"][0] . "<br />";
+        echo " >>: login " . $info[$i]["samaccountname"][0] . "<br />";
+        echo " >>: cpf/uid " . $info[$i]["employeeid"][0] . "<br />";
+        echo " >>: e-mail sec " . $info[$i]["othermailbox"][0] . "<br />";
+
+        echo " >>: tipo " . $info[$i]["samaccounttype"][0] . "<br />";
+
+        echo " >>: descricao " . $info[$i]["description"][0] . "<br />";
+        echo " >>: user acc control " . $info[$i]["useraccountcontrol"][0] . "<br />";
+
+        echo "###########%%%%%%%%%%%%%%%%%%%%%%%%%%#>> sn: <br /><br /><br />";
+        echo "7>> manager: " . $info[$i]["othermailbox"][0] . "<br /><br /><br /><br />";
+    }
+
+    echo "Closing connection";
+    ldap_close($ds);
+
+}
+
+*/
