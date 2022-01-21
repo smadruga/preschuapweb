@@ -23,6 +23,7 @@ class AdminController extends ResourceController
     */
     public function index()
     {
+        $session = \Config\Services::session();
         return view('admin/tela_admin');
     }
 

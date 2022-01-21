@@ -12,15 +12,8 @@ class HomeController extends ResourceController
     public function __construct()
     {
         helper(['form', 'url', 'session']);
-        $this->session = \Config\Services::session();
-        $this->usuario = new Usuario;
     }
 
-    /**
-    * Formulário de Acesso a aplicação web (GET)
-    *
-    * @return void
-    */
     public function index()
     {
 
@@ -36,6 +29,9 @@ class HomeController extends ResourceController
     */
     public function login()
     {
+        $session = \Config\Services::session();
+
+        $v = $this->request->getVar(['Usuario', 'Senha']);
 
         $inputs = $this->validate([
             'Usuario' => 'required',
@@ -48,14 +44,20 @@ class HomeController extends ResourceController
                 'validation' => $this->validator
             ]);
         }
+        elseif (!$this->valida_ldap($v['Usuario'], $v['Senha'])) {
+            session()->setFlashdata('failed', 'Erro ao autenticar. <br> Verifique suas credenciais EBSERH.');
+            return view('home/form_login');
+        }
 
         /*
         $this->usuario->save([
-            'Usuario' => $this->request->getVar('Usuario'),
-            'Senha'  => $this->request->getVar('Senha')
+        'Usuario' => $this->request->getVar('Usuario'),
+        'Senha'  => $this->request->getVar('Senha')
         ]);
         session()->setFlashdata('success', 'Success! post created.');
+        env('CI_ENVIRONMENT')
         */
+        $session->set($v);
         return redirect()->to('/admin');
 
     }
@@ -70,6 +72,30 @@ class HomeController extends ResourceController
     {
 
         return redirect()->to('/');
+
+    }
+
+    /**
+    * Função de validação no AD via protocolo LDAP
+    * como usar:
+    * valida_ldap("servidor", "domíniousuário", "senha");
+    *
+    * @return bool
+    *
+    */
+    public function valida_ldap($usr, $pwd){
+
+        //Tenta se conectar com o servidor LDAP Master
+        if (FALSE !== $ldap2=@ldap_connect(env('srv.ldap2')))
+            $ldap_connection = $ldap2;
+        //Tenta se conectar com o servidor LDAP Slave caso não consiga conexão com o Master
+        elseif (FALSE !== $ldap1=@ldap_connect(env('srv.ldap1')))
+            $ldap_connection = $ldap1;
+        else
+            return FALSE;
+
+        // Tenta autenticar no servidor
+        return (!@ldap_bind($ldap_connection, $usr, $pwd)) ? FALSE : TRUE;
 
     }
 

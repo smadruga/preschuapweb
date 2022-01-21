@@ -1,5 +1,5 @@
 <?= $this->section('uppernavbar') ?>
-
+<?php $session = \Config\Services::session(); ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
         <a class="navbar-brand" href="<?= base_url('admin') ?>"><?= HUAP_APPNAME ?></a>
@@ -35,7 +35,7 @@
                 </li>
             </ul>
             <div style="padding: 0px 10px 0px 10px;">
-                <span class="text-warning"><i class="fa-solid fa-circle-user"></i> nome.sobrenome</span>
+                <span class="text-warning"><i class="fa-solid fa-circle-user"></i> <?= $session->Usuario ?></span>
             </div>
             <a class="btn btn-danger my-2 my-sm-0" href="<?= base_url('home/logout') ?>"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair</a>
         </div>
