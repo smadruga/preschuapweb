@@ -49,6 +49,9 @@ $routes->group('home', function ($routes) {
 
 $routes->group('admin', function ($routes) {
     $routes->add('/', 'AdminController::index');
+    $routes->get('pesquisar', 'AdminController::find_user');
+    $routes->post('encontrar', 'AdminController::get_user');
+    $routes->get('gerenciar', 'AdminController::gerenciar_usuario');
 });
 
 

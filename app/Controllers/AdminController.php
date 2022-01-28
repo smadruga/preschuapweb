@@ -27,4 +27,15 @@ class AdminController extends ResourceController
         return view('admin/tela_admin');
     }
 
+    public function find_user()
+    {
+        $v['form_open'] = 'admin/encontrar';
+        return view('admin/usuario/form_pesquisa_usuario', $v);
+    }
+
+    public function get_user()
+    {
+exit('oi');
+        return view('admin/usuario/form_pesquisa_usuario');
+    }
 }

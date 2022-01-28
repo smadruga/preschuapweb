@@ -46,7 +46,7 @@ class HomeController extends ResourceController
             ]);
         }
         elseif (!$this->valida_ldap($v['Usuario'], $v['Senha'])) {
-            session()->setFlashdata('failed', 'Erro ao autenticar. <br> Verifique suas credenciais EBSERH.');
+            session()->setFlashdata('failed', 'Erro ao autenticar. <br> Verifique seu <b>usuário</b> e <b>senha</b> e tente novamente.');
             return view('home/form_login');
         }
 
