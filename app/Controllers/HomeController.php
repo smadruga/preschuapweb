@@ -7,7 +7,7 @@ use CodeIgniter\RESTful\ResourceController;
 
 class HomeController extends ResourceController
 {
-    private $usuario;
+    #private $v;
 
     public function __construct()
     {
@@ -16,7 +16,7 @@ class HomeController extends ResourceController
 
     public function index()
     {
-
+        unset($v,$_SESSION);
         return view('home/form_login');
 
     }
@@ -40,7 +40,7 @@ class HomeController extends ResourceController
         ]);
 
         if (!$inputs) {
-            session()->setFlashdata('failed', 'ERRO! <br> Atenção, verifique os campos abaixo.');
+            session()->setFlashdata('failed', HUAP_MSG_ERROR);
             return view('home/form_login', [
                 'validation' => $this->validator
             ]);
@@ -59,6 +59,7 @@ class HomeController extends ResourceController
         env('CI_ENVIRONMENT')
         */
 
+        unset($v['Senha']);
         $session->set($v);
         return redirect()->to('/admin');
 
@@ -72,7 +73,7 @@ class HomeController extends ResourceController
     */
     public function logout()
     {
-
+        session_write_close();
         return redirect()->to('/');
 
     }

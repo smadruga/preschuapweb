@@ -1,17 +1,33 @@
-<?= $this->extend('layouts/form') ?>
-<?= $this->section('content_form') ?>
+<?= $this->extend('layouts/main_admin') ?>
+<?= $this->section('content') ?>
 
-<div class="row">
-    <div class="col">
-        <label for="Pesquisa" class="form-label"><b>Usuário</b></label>
-        <div class="input-group mb-3">
-            <input type="Pesquisa" id="Pesquisa" class="form-control" autofocus>
-            <button class="btn btn-info" type="submit"><i class="fa-solid fa-search"></i> Pesquisar</button>
+<main class="container">
+    <form method="post" action="get_user">
+        <?= csrf_field() ?>
+        <?php $validation = \Config\Services::validation(); ?>
+
+        <div class="card">
+            <div class="card-header">
+                <b>Importar Usuário AD/EBSERH</b>
+            </div>
+            <div class="card-body has-validation">
+                <label for="Pesquisar" class="form-label"><b>Usuário</b></label>
+                <div class="input-group mb-3">
+                    <input type="text" id="Pesquisar" class="form-control <?php if($validation->getError('Pesquisar')): ?>is-invalid<?php endif ?>" autofocus name="Pesquisar" value="<?php echo set_value('Pesquisar'); ?>"/>
+                    <button class="btn btn-info" type="submit"><i class="fa-solid fa-search"></i> Pesquisar</button>
+                    <?php if ($validation->getError('Pesquisar')): ?>
+                        <div class="invalid-feedback">
+                            <?= $validation->getError('Pesquisar') ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="form-text">
+                    Informe o CPF ou login/e-mail EBSERH do usuário
+                </div>
+            </div>
         </div>
-        <div class="form-text">
-            Informe o CPF ou login/e-mail EBSERH do usuário
-        </div>
-    </div>
-</div>
+
+    </form>
+</main>
 
 <?= $this->endSection() ?>

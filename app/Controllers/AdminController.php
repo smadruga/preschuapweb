@@ -7,7 +7,7 @@ use CodeIgniter\RESTful\ResourceController;
 
 class AdminController extends ResourceController
 {
-    private $var;
+    private $v;
 
     public function __construct()
     {
@@ -23,7 +23,7 @@ class AdminController extends ResourceController
     */
     public function index()
     {
-        $session = \Config\Services::session();
+        #$session = \Config\Services::session();
         return view('admin/tela_admin');
     }
 
@@ -35,7 +35,22 @@ class AdminController extends ResourceController
 
     public function get_user()
     {
-exit('oi');
+
+        #$session = \Config\Services::session();
+
+        $v = $this->request->getVar(['Pesquisar']);
+
+        $inputs = $this->validate([
+            'Pesquisar' => 'required',
+        ]);
+
+        if (!$inputs) {
+            return view('admin/usuario/form_pesquisa_usuario', [
+                'validation' => $this->validator
+            ]);
+        }
+exit('oioioi');
+
         return view('admin/usuario/form_pesquisa_usuario');
     }
 }
