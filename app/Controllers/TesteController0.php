@@ -402,4 +402,66 @@ if ($ds) {
 
 }
 
+echo '<br /><br />>>>'.$data;
+echo '<br /><br />$$$$ '.'(|(cn=*'.$data.'*)(samaccountname='.$data.')(employeeID='.$data.'))';
+echo '<br /><br />>>>';
+        @ldap_bind($v['ldap']['ldap_conn'], env('ldap.usr'), env('ldap.pwd'));
+
+        $v['ldap']['ldap_filter'] = "(|(cn=*$data*)(samaccountname=$data)(employeeID=$data))";
+        $v['ldap']['ldap_att'] = array("cn", "samaccountname", "employeeID", "othermailbox");
+
+        $v['ldap']['result'] = ldap_search($v['ldap']['ldap_conn'], env('ldap.dn'), $v['ldap']['ldap_filter'], $v['ldap']['ldap_att']);
+        echo "Search result is " . $v['ldap']['result'] . "<br />";
+        echo "Number of entries returned is " . ldap_count_entries($v['ldap']['ldap_conn'], $v['ldap']['result']) . "<br />";
+        $entries = ldap_get_entries($v['ldap']['ldap_conn'], $v['ldap']['result']);
+
+        echo "<pre>";
+        print_r($entries);
+        echo "</pre>";
+
+        //For each account returned by the search
+        for ($x = 0; $x < $entries['count']; $x++) {
+
+            //
+            //Retrieve values from Active Directory
+            //
+echo '<br /><br />################';
+            //Windows Usernaame
+            $LDAP_samaccountname = "";
+
+            if (!empty($entries[$x]['samaccountname'][0])) {
+                $LDAP_samaccountname = $entries[$x]['samaccountname'][0];
+                if ($LDAP_samaccountname == "NULL") {
+                    $LDAP_samaccountname = "";
+                }
+            } else {
+                //#There is no samaccountname s0 assume this is an AD contact record so generate a unique username
+
+                $LDAP_uSNCreated = $entries[$x]['usncreated'][0];
+                $LDAP_samaccountname = "CONTACT_" . $LDAP_uSNCreated;
+            }
+echo '<br />'.$LDAP_samaccountname;
+            //Last Name
+            $LDAP_Name = "";
+
+            if (!empty($entries[$x]['cn'][0])) {
+                $LDAP_Name = $entries[$x]['cn'][0];
+                if ($LDAP_Name == "NULL") {
+                    $LDAP_Name = "";
+                }
+            }
+echo '<br />'.$LDAP_Name;
+        }
+exit('<br />que?');
+
+        // Tenta autenticar no servidor
+        #return (!@ldap_bind($v['ldap']['ldap_conn']ection, $usr.'@ebserh.gov.br', $pwd)) ? FALSE : TRUE;
+
+        /*
+        Nome > name ou cn
+        Usuario > samaccountname
+        UID/CPF > employeeID
+        E-mail secundário > othermailbox
+        */
+
 */

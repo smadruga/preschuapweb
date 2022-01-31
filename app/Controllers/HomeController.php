@@ -89,16 +89,16 @@ class HomeController extends ResourceController
     public function valida_ldap($usr, $pwd){
 
         //Tenta se conectar com o servidor LDAP Master
-        if (FALSE !== $ldap2=@ldap_connect(env('srv.ldap2')))
-            $ldap_connection = $ldap2;
+        if (FALSE !== $ldap1=@ldap_connect(env('srv.ldap1')))
+            $ldap_conn = $ldap1;
         //Tenta se conectar com o servidor LDAP Slave caso não consiga conexão com o Master
-        elseif (FALSE !== $ldap1=@ldap_connect(env('srv.ldap1')))
-            $ldap_connection = $ldap1;
+        elseif (FALSE !== $ldap2=@ldap_connect(env('srv.ldap2')))
+            $ldap_conn = $ldap2;
         else
             return FALSE;
 
         // Tenta autenticar no servidor
-        return (!@ldap_bind($ldap_connection, $usr.'@ebserh.gov.br', $pwd)) ? FALSE : TRUE;
+        return (!@ldap_bind($ldap_conn, $usr.'@ebserh.gov.br', $pwd)) ? FALSE : TRUE;
 
     }
 
