@@ -16,11 +16,28 @@ class TesteController extends ResourceController
         $this->post = new TesteModel;
     }
 
+    public function lista() {
+        $userModel = new TesteModel();
+
+        $data = [
+            'users' => $userModel->paginate(10),
+            'pager' => $userModel->pager
+        ];
+
+        #/*
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+        #*/
+
+        return view('teste/lista', $data);
+    }
+
     /**
-     * Return an array of resource objects, themselves in array format
-     *
-     * @return mixed
-     */
+    * Return an array of resource objects, themselves in array format
+    *
+    * @return mixed
+    */
     public function index()
     {
         $posts = $this->post->orderBy('id', 'desc')->findAll();
@@ -28,10 +45,10 @@ class TesteController extends ResourceController
     }
 
     /**
-     * Return the properties of a resource object
-     *
-     * @return mixed
-     */
+    * Return the properties of a resource object
+    *
+    * @return mixed
+    */
     public function show($id = null)
     {
         $post = $this->post->find($id);
@@ -44,20 +61,20 @@ class TesteController extends ResourceController
     }
 
     /**
-     * Return a new resource object, with default properties
-     *
-     * @return mixed
-     */
+    * Return a new resource object, with default properties
+    *
+    * @return mixed
+    */
     public function new()
     {
         return view('teste/create');
     }
 
     /**
-     * Create a new resource object, from "posted" parameters
-     *
-     * @return mixed
-     */
+    * Create a new resource object, from "posted" parameters
+    *
+    * @return mixed
+    */
     public function create()
     {
         $inputs = $this->validate([
@@ -80,10 +97,10 @@ class TesteController extends ResourceController
     }
 
     /**
-     * Return the editable properties of a resource object
-     *
-     * @return mixed
-     */
+    * Return the editable properties of a resource object
+    *
+    * @return mixed
+    */
     public function edit($id = null)
     {
         $post = $this->post->find($id);
@@ -97,10 +114,10 @@ class TesteController extends ResourceController
     }
 
     /**
-     * Add or update a model resource, from "posted" properties
-     *
-     * @return mixed
-     */
+    * Add or update a model resource, from "posted" properties
+    *
+    * @return mixed
+    */
     public function update($id = null)
     {
         $inputs = $this->validate([
@@ -124,10 +141,10 @@ class TesteController extends ResourceController
     }
 
     /**
-     * Delete the designated resource object from the model
-     *
-     * @return mixed
-     */
+    * Delete the designated resource object from the model
+    *
+    * @return mixed
+    */
     public function delete($id = null)
     {
         $this->post->delete($id);

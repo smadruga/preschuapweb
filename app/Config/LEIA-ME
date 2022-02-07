@@ -3,5 +3,6 @@ CUIDADO AO ATUALIZAR OS SEGUINTES ARQUIVOS:
 -app.php
 -constants.php
 -database.php
+-pager.php
 -paths.php
 -routes.php

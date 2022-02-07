@@ -2,7 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Models\Post;
+use App\Libraries\HUAP_Functions;
+use App\Models\UsuarioModel;
+use App\Models\AuditoriaModel;
+use App\Models\AuditoriaLogModel;
 use CodeIgniter\RESTful\ResourceController;
 
 class AdminController extends ResourceController
@@ -13,7 +16,7 @@ class AdminController extends ResourceController
     {
         helper(['form', 'url', 'session']);
         $this->session = \Config\Services::session();
-        #$this->var = new Usuario;
+
     }
 
     /**
@@ -43,31 +46,103 @@ class AdminController extends ResourceController
     *
     * @return mixed
     */
-    public function get_user()
+    public function get_user($user = false)
     {
 
-        #Captura os inputs do Formulário
-        $v = $this->request->getVar(['Pesquisar']);
+        $func = new HUAP_Functions();
 
-        #Critérios de validação
-        $inputs = $this->validate([
-            'Pesquisar' => 'required',
-        ]);
+        if(!$user) {
 
-        #Realiza a validação e retorna ao formulário de false
-        if (!$inputs) {
-            return view('admin/usuario/form_pesquisa_usuario', [
-                'validation' => $this->validator
+            #Captura os inputs do Formulário
+            $v = $this->request->getVar(['Pesquisar']);
+
+            #Critérios de validação
+            $inputs = $this->validate([
+                'Pesquisar' => 'required',
             ]);
-        }
 
+            #Realiza a validação e retorna ao formulário de false
+            if (!$inputs) {
+                return view('admin/usuario/form_pesquisa_usuario', [
+                    'validation' => $this->validator
+                ]);
+            }
+
+        }
+        else
+            $v['Pesquisar'] = $user;
 
         $v['ad'] = $this->get_user_ad($v['Pesquisar']);
 
+        /*
+        echo "<pre>";
+        print_r($v['ad']);
+        echo "</pre>";
+        #*/
+
+        $v['func'] = $func;
+
+        //se o resultado for zero retorna erro
+        if (!$v['ad']) {
+            session()->setFlashdata('failed', 'Nenhum usuário encontrado. Tente novamente.');
+            return redirect()->to('admin/find_user');
+        }
+        //se o resultado for um vai direto para a página de importação
+        elseif ($v['ad']['entries']['count'] == 1) {
+            return view('admin/usuario/form_confirma_importacao', $v);
+        }
+        //se o resultado for mais que um vai para uma lista de opções
+        else {
+            return view('admin/usuario/list_usuarios', $v);
+        }
 
         exit($v['Pesquisar']);
 
         return view('admin/usuario/form_pesquisa_usuario');
+    }
+
+    /**
+    * Importa o usuário do AD/EBSERH e salva os dados básicos no BD PRESCHUAP
+    *
+    * @return mixed
+    */
+    public function import_user()
+    {
+
+        $usuario = new UsuarioModel();
+        $auditoria = new AuditoriaModel();
+        $auditorialog = new AuditoriaLogModel();
+
+        $func = new HUAP_Functions();
+
+        $agent = $this->request->getUserAgent();
+        $request = \Config\Services::request();
+
+        #Captura usuário a ser immportado
+        $v = $this->request->getVar(['Usuario']);
+        $v['ad'] = $this->get_user_ad($v['Usuario']);
+
+        $v['data'] = [
+            'Usuario'           => (isset($v['ad']['entries'][0]['samaccountname'][0])) ? esc($v['ad']['entries'][0]['samaccountname'][0]) : '',
+            'Nome'              => (isset($v['ad']['entries'][0]['cn'][0])) ? esc(mb_convert_encoding($v['ad']['entries'][0]['cn'][0], "UTF-8", "ASCII")) : '',
+            'Cpf'               => (isset($v['ad']['entries'][0]['employeeid'][0])) ? esc($v['ad']['entries'][0]['employeeid'][0]) : '',
+            'EmailSecundario'   => (isset($v['ad']['entries'][0]['othermailbox'][0])) ? esc($v['ad']['entries'][0]['othermailbox'][0]) : '',
+        ];
+
+        $v['campos'] = array_keys($v['data']);
+        $v['anterior'] = array();
+
+        $id = $usuario->insert($v['data'], TRUE);
+
+        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'CREATE', $id), TRUE);
+        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $id, $v['auditoria']), TRUE);
+
+
+        echo "<pre>";
+        print_r($v);
+        echo "</pre>";
+exit($v['Usuario']);
+
     }
 
     /**
@@ -103,20 +178,14 @@ class AdminController extends ResourceController
         echo "<pre>";
         print_r($v['ldap']);
         echo "</pre>";
-        */
+        #*/
 
         //se o resultado for zero retorna FALSE
-        if ($v['ldap']['entries'] == 0)
+        if ($v['ldap']['entries']['count'] == 0)
             return FALSE;
-        //se o resultado for um realiza a importação no banco e vai direto pra página de sucesso/perfil
-        elseif ($v['ldap']['entries'] == 1) {
-
-        }
-        //se o resultado for mais de 1 encaminha para página com a lista de usuários
+        //se o resultado for 1 ou mais encaminha o array com todas as informações
         else
-
-
-exit('<br />que?');
+            return $v['ldap'];
 
     }
 }

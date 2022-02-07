@@ -32,6 +32,7 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
+$routes->get('lista', 'TesteController::lista');
 $routes->get('posts', 'TesteController::index');
 $routes->get('posts/new', 'TesteController::new');
 $routes->post('posts', 'TesteController::create');
@@ -55,7 +56,9 @@ $routes->group('admin', function ($routes) {
     $routes->add('/', 'AdminController::index');
     $routes->get('find_user', 'AdminController::find_user');
     $routes->post('get_user', 'AdminController::get_user');
-    $routes->get('gerenciar', 'AdminController::gerenciar_usuario');
+    #$routes->match(['get', 'post'], 'get_user', 'AdminController::get_user');
+    $routes->get('get_user/(:any)', 'AdminController::get_user/$1');
+    $routes->post('import_user', 'AdminController::import_user');
 });
 
 
