@@ -137,11 +137,42 @@ class AdminController extends ResourceController
         $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'CREATE', $id), TRUE);
         $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $id, $v['auditoria']), TRUE);
 
+        session()->setFlashdata('success', 'Usuário importado com sucesso!');
+        return redirect()->to('admin/show_user/'.$v['data']['Usuario']);
 
+        /*
         echo "<pre>";
         print_r($v);
         echo "</pre>";
-exit($v['Usuario']);
+        exit($v['Usuario']);
+        */
+
+    }
+
+    /**
+    * Importa o usuário do AD/EBSERH e salva os dados básicos no BD PRESCHUAP
+    *
+    * @return mixed
+    */
+    public function show_user($data)
+    {
+
+        $usuario = new UsuarioModel();
+
+        $func = new HUAP_Functions();
+
+        #Captura usuário a ser immportado
+        #$v['data'] = $usuario->get_user_ad($user);
+        $v['data'] = $usuario->getWhere(['Usuario' => $data])->getRow();
+
+        return view('admin/usuario/main_usuario', $v);
+
+        /*
+        echo "<pre>";
+        print_r($v['data']);
+        echo "</pre>";
+        #exit($v['data']['Usuario']);
+        #*/
 
     }
 
@@ -152,6 +183,7 @@ exit($v['Usuario']);
     */
     function get_user_ad($data)
     {
+
         //Tenta se conectar com o servidor LDAP Master
         if (FALSE !== $v['ldap']['ldap1']=@ldap_connect(env('srv.ldap1')))
             $v['ldap']['ldap_conn'] = $v['ldap']['ldap1'];

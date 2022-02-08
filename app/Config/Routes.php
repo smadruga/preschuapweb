@@ -59,6 +59,7 @@ $routes->group('admin', function ($routes) {
     #$routes->match(['get', 'post'], 'get_user', 'AdminController::get_user');
     $routes->get('get_user/(:any)', 'AdminController::get_user/$1');
     $routes->post('import_user', 'AdminController::import_user');
+    $routes->get('show_user/(:any)', 'AdminController::show_user/$1');
 });
 
 
