@@ -31,6 +31,7 @@
 
         <script src="<?= base_url('/assets/bootstrap/dist/js/bootstrap.bundle.min.js') ?>" crossorigin="anonymous"></script>
         <script src="<?= base_url('/assets/js/jquery-3.6.0.min.js') ?>" crossorigin="anonymous"></script>
+        <script src="<?= base_url('/assets/js/HUAP_jquery.js') ?>" crossorigin="anonymous"></script>
 
     </body>
 </html>

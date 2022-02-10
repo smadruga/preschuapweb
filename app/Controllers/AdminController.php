@@ -36,9 +36,20 @@ class AdminController extends ResourceController
     * @return void
     */
     public function find_user()
-    {
-        $v['form_open'] = 'admin/encontrar';
-        return view('admin/usuario/form_pesquisa_usuario', $v);
+    {/*
+        $data = 'campos.rodrigo';
+        $usuario = new UsuarioModel();
+
+        $v['data'] = $usuario->get_user_mysql('campos.rodrigo');
+        echo ($v['data']) ? '1' : '0';
+        echo "<pre>";/^[0-9]{3}.?[0-9]{3}.?[0-9]{3}-?[0-9]{2}/
+        print_r($v['data']);
+        echo "</pre>";
+/^[0-9]{3}.?[0-9]{3}.?[0-9]{3}-?[0-9]{2}/
+/((\w+).(\w+))(\b@ebserh.gov.br)/
+*/
+#echo 'oi >> '. preg_replace('/^([0-9]{3})\.?([0-9]{3})\.?([0-9]{3})\-?([0-9]{2})$/i', '$1$2$3$4', '098.507.017-06');;
+        return view('admin/usuario/form_pesquisa_usuario');
     }
 
     /**
@@ -72,6 +83,24 @@ class AdminController extends ResourceController
         else
             $v['Pesquisar'] = $user;
 
+        #caso a pesquisa seja um cpf verifica se há pontos e traços e os elimina
+        $v['Pesquisar'] = preg_replace('/^([0-9]{3})\.?([0-9]{3})\.?([0-9]{3})\-?([0-9]{2})$/i', '$1$2$3$4', $v['Pesquisar']);
+
+
+        $usuario = new UsuarioModel();
+        $v['mysql'] = $usuario->get_user_mysql($v['Pesquisar']);
+
+        #se encontrar o usuário já cadastrado na base do mysql já encaminha direto para a página dele
+        if ($v['mysql']) {
+            return redirect()->to('admin/show_user/'.$v['mysql']['Usuario']);
+        }
+
+        #Inicia a classe de funções próprias
+        $v['func'] = new HUAP_Functions();
+        #Função que remove qualquer acentuação da palavra
+        $v['Pesquisar'] = $v['func']->remove_accents($v['Pesquisar']);
+
+        #Pesquisa no AD pela palavra inserida no campo de pesquisa.
         $v['ad'] = $this->get_user_ad($v['Pesquisar']);
 
         /*
@@ -80,23 +109,21 @@ class AdminController extends ResourceController
         echo "</pre>";
         #*/
 
-        $v['func'] = $func;
-
-        //se o resultado for zero retorna erro
+        #se o resultado for zero retorna erro
         if (!$v['ad']) {
             session()->setFlashdata('failed', 'Nenhum usuário encontrado. Tente novamente.');
             return redirect()->to('admin/find_user');
         }
-        //se o resultado for um vai direto para a página de importação
+        #se o resultado for um vai direto para a página de importação
         elseif ($v['ad']['entries']['count'] == 1) {
             return view('admin/usuario/form_confirma_importacao', $v);
         }
-        //se o resultado for mais que um vai para uma lista de opções
+        #se o resultado for mais que um vai para uma lista de opções
         else {
             return view('admin/usuario/list_usuarios', $v);
         }
 
-        exit($v['Pesquisar']);
+        #exit($v['Pesquisar']);
 
         return view('admin/usuario/form_pesquisa_usuario');
     }
@@ -177,33 +204,32 @@ class AdminController extends ResourceController
     }
 
     /**
-    * Valida o formulário de busca e retorna um ou mais resultados
+    * Valida o formulário de busca e retorna um ou mais resultados baseado no AD/EBSERH
     *
     * @return mixed
     */
     function get_user_ad($data)
     {
-
-        //Tenta se conectar com o servidor LDAP Master
+        #Tenta se conectar com o servidor LDAP Master
         if (FALSE !== $v['ldap']['ldap1']=@ldap_connect(env('srv.ldap1')))
             $v['ldap']['ldap_conn'] = $v['ldap']['ldap1'];
-        //Tenta se conectar com o servidor LDAP Slave caso não consiga conexão com o Master
+        #Tenta se conectar com o servidor LDAP Slave caso não consiga conexão com o Master
         elseif (FALSE !== $v['ldap']['ldap2']=@ldap_connect(env('srv.ldap2')))
             $v['ldap']['ldap_conn'] = $v['ldap']['ldap2'];
-        //Se nenhuma conexão acontecer é retornado false
+        #Se nenhuma conexão acontecer é retornado false
         else
             return FALSE;
 
-        //conexão com o usuário adm do ldap
+        #conexão com o usuário adm do ldap
         @ldap_bind($v['ldap']['ldap_conn'], env('ldap.usr'), env('ldap.pwd'));
 
-        //filtros (campos de busca NOME, USUÁRIO e CPF)
+        #filtros (campos de busca NOME, USUÁRIO e CPF)
         $v['ldap']['ldap_filter'] = "(|(cn=*$data*)(samaccountname=$data)(employeeID=$data))";
-        //campos que serão retornados após pesquisa
+        #campos que serão retornados após pesquisa
         $v['ldap']['ldap_att'] = array("cn", "samaccountname", "employeeID", "othermailbox");
-        //resultado da pesquisa
+        #resultado da pesquisa
         $v['ldap']['result'] = ldap_search($v['ldap']['ldap_conn'], env('ldap.dn'), $v['ldap']['ldap_filter'], $v['ldap']['ldap_att']);
-        //organização do resultado da pesquisa
+        #organização do resultado da pesquisa
         $v['ldap']['entries'] = ldap_get_entries($v['ldap']['ldap_conn'], $v['ldap']['result']);
 
         /*
@@ -212,10 +238,10 @@ class AdminController extends ResourceController
         echo "</pre>";
         #*/
 
-        //se o resultado for zero retorna FALSE
+        #se o resultado for zero retorna FALSE
         if ($v['ldap']['entries']['count'] == 0)
             return FALSE;
-        //se o resultado for 1 ou mais encaminha o array com todas as informações
+        #se o resultado for 1 ou mais encaminha o array com todas as informações
         else
             return $v['ldap'];
 

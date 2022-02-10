@@ -18,4 +18,28 @@ class UsuarioModel extends Model
                                         'Cpf',
                                         'EmailSecundario
                                     '];
+
+    /**
+    * Tela inicial do preschuapweb
+    *
+    * @return void
+    */
+    public function get_user_mysql($data)
+    {
+
+        $db = \Config\Database::connect();
+        $query = $db->query('
+            SELECT
+                Usuario,
+                Cpf
+            FROM
+                Sishuap_Usuario
+            WHERE
+                Usuario = "' . $data . '"
+                OR Cpf = "' . $data . '"
+            ORDER BY Nome
+        ');
+        return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
+
+    }
 }

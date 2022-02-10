@@ -7,17 +7,7 @@ Entrar <?= $this->endSection() ?>
         <?= csrf_field() ?>
         <?php $validation =  \Config\Services::validation(); ?>
 
-        <?php if(session()->getFlashdata('success')) { ?>
-        <div class="alert alert-success alert-dismissible">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <?php echo session()->getFlashdata('success') ?>
-        </div>
-        <?php } elseif(session()->getFlashdata('failed')) { ?>
-        <div class="alert alert-danger alert-dismissible">
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <?php echo session()->getFlashdata('failed') ?>
-        </div>
-        <?php } ?>
+        <?= $this->include('layouts/div_flashdata') ?>
 
         <a href="/" /><img class="mb-4" src="<?= base_url() ?>/assets/img/caduceus/caduceus-128.png" alt=""></a>
         <h1 class="h3 mb-3 fw-normal"><?= HUAP_APPNAME ?></h1>
