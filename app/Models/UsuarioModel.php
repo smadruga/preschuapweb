@@ -16,8 +16,8 @@ class UsuarioModel extends Model
                                         'Usuario',
                                         'Nome',
                                         'Cpf',
-                                        'EmailSecundario
-                                    '];
+                                        'EmailSecundario',
+                                        ];
 
     /**
     * Tela inicial do preschuapweb

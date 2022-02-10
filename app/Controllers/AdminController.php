@@ -153,13 +153,14 @@ class AdminController extends ResourceController
             'Usuario'           => (isset($v['ad']['entries'][0]['samaccountname'][0])) ? esc($v['ad']['entries'][0]['samaccountname'][0]) : '',
             'Nome'              => (isset($v['ad']['entries'][0]['cn'][0])) ? esc(mb_convert_encoding($v['ad']['entries'][0]['cn'][0], "UTF-8", "ASCII")) : '',
             'Cpf'               => (isset($v['ad']['entries'][0]['employeeid'][0])) ? esc($v['ad']['entries'][0]['employeeid'][0]) : '',
-            'EmailSecundario'   => (isset($v['ad']['entries'][0]['othermailbox'][0])) ? esc($v['ad']['entries'][0]['othermailbox'][0]) : '',
+            'EmailSecundario'   => (isset($v['ad']['entries'][0]['othermailbox'][0])) ? $v['ad']['entries'][0]['othermailbox'][0] : '',
         ];
 
         $v['campos'] = array_keys($v['data']);
         $v['anterior'] = array();
 
         $id = $usuario->insert($v['data'], TRUE);
+        echo $usuario->getLastQuery();
 
         $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'CREATE', $id), TRUE);
         $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $id, $v['auditoria']), TRUE);
@@ -186,11 +187,10 @@ class AdminController extends ResourceController
 
         $usuario = new UsuarioModel();
 
-        $func = new HUAP_Functions();
-
         #Captura usuário a ser immportado
-        #$v['data'] = $usuario->get_user_ad($user);
         $v['data'] = $usuario->getWhere(['Usuario' => $data])->getRow();
+        #Inicia a classe de funções próprias
+        $v['func'] = new HUAP_Functions();
 
         return view('admin/usuario/main_usuario', $v);
 

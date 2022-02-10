@@ -15,18 +15,60 @@
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
                         <a href="#" class="nav-link" aria-current="page">
-                            Perfil
+                            <i class="fa-solid fa-chalkboard-user"></i> Perfil
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link text-white">
-                            Desativar
+                            <i class="fa-solid fa-user-slash"></i> Desativar
                         </a>
                     </li>
                 </ul>
             </div>
             <div class="col border rounded ms-2 p-4">
-                Column
+
+                <table class="table table-user-information">
+                    <tbody>
+
+                        <tr>
+                            <td width="30%"><i class="fa-solid fa-hospital-user"></i> Nome do Usuário:</td>
+                            <td><b><?= $data->Nome ?></b></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa-solid fa-address-card"></i> CPF:</td>
+                            <td><?= $func->mascara_cpf($data->Cpf) ?></td>
+                        </tr>
+                        <tr class="bg-white">
+                            <td><i class="fa-solid fa-desktop"></i> Login EBSERH:</td>
+                            <td><?= $data->Usuario ?></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa-solid fa-at"></i> E-mail:</td>
+                            <td><?= $data->EmailSecundario ?></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td>
+                            <?php
+                            if($data->Inativo == 1) {
+                                $bg     = 'warning';
+                                $msg    = 'Usuário Inativo';
+                                $fa     = 'user-slash';
+                            }
+                            else {
+                                $bg     = 'success';
+                                $msg    = 'Usuário Ativo';
+                                $fa     = 'user-check';
+                            }
+                            ?>
+                            <h4><span class="badge bg-<?= $bg ?>"><i class="fa-solid fa-<?= $fa ?>"></i> <?= $msg ?></span></h4>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
             </div>
         </div>
     </div>

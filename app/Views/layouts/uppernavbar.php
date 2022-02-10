@@ -25,8 +25,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Configurações</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="<?= base_url('admin/find_user') ?>"><i class="fas fa-upload"></i> Importar Usuário AD/EBSERH</a>
-                        <a class="dropdown-item" href="<?= base_url('admin/gerenciar') ?>"><i class="fas fa-user"></i> Gerenciar Usuário</a>
+                        <a class="dropdown-item" href="<?= base_url('admin/find_user') ?>"><i class="fas fa-user"></i> Gerenciar Usuário</a>
                         <!--<div class="dropdown-divider"></div>-->
                     </div>
                 </li>

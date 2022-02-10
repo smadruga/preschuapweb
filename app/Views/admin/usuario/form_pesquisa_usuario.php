@@ -10,7 +10,7 @@
 
         <div class="card">
             <div class="card-header">
-                <b>Importar Usuário AD/EBSERH</b>
+                <b>Gerenciar Usuário</b>
             </div>
             <div class="card-body has-validation">
                 <label for="Pesquisar" class="form-label"><b>Usuário</b></label>
@@ -24,7 +24,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="form-text">
-                    Informe o CPF ou login/e-mail EBSERH do usuário
+                    Informe parte do Nome, CPF ou login/e-mail EBSERH do usuário.
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@
     <link href="<?= base_url('/assets/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('/assets/css/simple-datatables@latest-style.css') ?>" rel="stylesheet">
     <link href="<?= base_url('/assets/css/bootswatch-flatly-bootstrap.min.css') ?>" rel="stylesheet">
-    <link href="<?= base_url('/assets/fontawesome-free-6.0.0-beta3-web/css/all.min.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('/assets/fontawesome-free-6.0.0-web/css/all.min.css') ?>" rel="stylesheet">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="<?= base_url('/assets/img/caduceus/caduceus-128.png') ?>" sizes="180x180">
