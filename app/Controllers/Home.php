@@ -2,10 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Models\Usuario;
 use CodeIgniter\RESTful\ResourceController;
 
-class HomeController extends ResourceController
+class Home extends ResourceController
 {
     #private $v;
 
@@ -16,6 +15,8 @@ class HomeController extends ResourceController
 
     public function index()
     {
+        \Config\Services::session();
+        session_write_close();
         unset($v,$_SESSION);
         return view('home/form_login');
 
@@ -60,7 +61,16 @@ class HomeController extends ResourceController
         */
 
         unset($v['Senha']);
-        $session->set($v);
+        $_SESSION['Sessao'] = $v;
+        /*
+        echo "<pre>";
+        print_r($v);
+        echo "</pre>";
+        echo "<pre>";
+        print_r($_SESSION);
+        echo "</pre>";
+        exit('oi');
+        #*/
         return redirect()->to('/admin');
 
     }
@@ -74,6 +84,7 @@ class HomeController extends ResourceController
     public function logout()
     {
         session_write_close();
+        unset($v,$_SESSION);
         return redirect()->to('/');
 
     }
@@ -86,7 +97,7 @@ class HomeController extends ResourceController
     * @return bool
     *
     */
-    public function valida_ldap($usr, $pwd){
+    private function valida_ldap($usr, $pwd){
 
         //Tenta se conectar com o servidor LDAP Master
         if (FALSE !== $ldap1=@ldap_connect(env('srv.ldap1')))

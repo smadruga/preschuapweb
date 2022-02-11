@@ -2,10 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Models\TesteModel;
+use App\Models\Testemodel;
 use CodeIgniter\RESTful\ResourceController;
 
-class TesteController extends ResourceController
+class Teste extends ResourceController
 {
     private $post;
 

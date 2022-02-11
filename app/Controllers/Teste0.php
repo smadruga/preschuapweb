@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 
-class TesteController extends BaseController
+class Teste extends BaseController
 {
     /**
      * constructor

@@ -9,6 +9,8 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
+use CodeIgniter\RESTful\ResourceController;
+
 /**
  * Class BaseController
  *
@@ -35,7 +37,7 @@ class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = [];
+    protected $helpers = ['form', 'url', 'session'];
 
     /**
      * Constructor.
@@ -46,7 +48,8 @@ class BaseController extends Controller
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
-
+        
         // E.g.: $this->session = \Config\Services::session();
+        $this->session = \Config\Services::session();
     }
 }

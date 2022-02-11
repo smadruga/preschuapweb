@@ -2,20 +2,20 @@
 
 namespace App\Controllers;
 
-use App\Libraries\HUAP_Functions;
 use App\Models\UsuarioModel;
+use App\Models\PerfilModel;
+use App\Models\TabPerfilModel;
 use App\Models\AuditoriaModel;
 use App\Models\AuditoriaLogModel;
 use CodeIgniter\RESTful\ResourceController;
+use App\Libraries\HUAP_Functions;
 
-class AdminController extends ResourceController
+class Admin extends BaseController
 {
     private $v;
 
     public function __construct()
     {
-        helper(['form', 'url', 'session']);
-        $this->session = \Config\Services::session();
 
     }
 
@@ -26,7 +26,6 @@ class AdminController extends ResourceController
     */
     public function index()
     {
-        #$session = \Config\Services::session();
         return view('admin/tela_admin');
     }
 
@@ -36,19 +35,7 @@ class AdminController extends ResourceController
     * @return void
     */
     public function find_user()
-    {/*
-        $data = 'campos.rodrigo';
-        $usuario = new UsuarioModel();
-
-        $v['data'] = $usuario->get_user_mysql('campos.rodrigo');
-        echo ($v['data']) ? '1' : '0';
-        echo "<pre>";/^[0-9]{3}.?[0-9]{3}.?[0-9]{3}-?[0-9]{2}/
-        print_r($v['data']);
-        echo "</pre>";
-/^[0-9]{3}.?[0-9]{3}.?[0-9]{3}-?[0-9]{2}/
-/((\w+).(\w+))(\b@ebserh.gov.br)/
-*/
-#echo 'oi >> '. preg_replace('/^([0-9]{3})\.?([0-9]{3})\.?([0-9]{3})\-?([0-9]{2})$/i', '$1$2$3$4', '098.507.017-06');;
+    {
         return view('admin/usuario/form_pesquisa_usuario');
     }
 
@@ -160,7 +147,6 @@ class AdminController extends ResourceController
         $v['anterior'] = array();
 
         $id = $usuario->insert($v['data'], TRUE);
-        echo $usuario->getLastQuery();
 
         $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'CREATE', $id), TRUE);
         $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $id, $v['auditoria']), TRUE);
@@ -169,6 +155,7 @@ class AdminController extends ResourceController
         return redirect()->to('admin/show_user/'.$v['data']['Usuario']);
 
         /*
+        #echo $usuario->getLastQuery();
         echo "<pre>";
         print_r($v);
         echo "</pre>";
@@ -187,12 +174,44 @@ class AdminController extends ResourceController
 
         $usuario = new UsuarioModel();
 
-        #Captura usuário a ser immportado
-        $v['data'] = $usuario->getWhere(['Usuario' => $data])->getRow();
+        $_SESSION['Usuario'] = $usuario->getWhere(['Usuario' => $data])->getRowArray();
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
 
-        return view('admin/usuario/main_usuario', $v);
+        /*
+        echo "<pre>";
+        print_r($session);
+        echo "</pre>";
+        exit();
+        #*/
+
+        return view('admin/usuario/page_usuario', $v);
+
+    }
+
+    /**
+    * Lista os perfis atribuídos ao usuário
+    *
+    * @return mixed
+    */
+    public function list_perfil($data)
+    {
+
+        $usuario = new UsuarioModel();
+        $perfil = new PerfilModel();
+        $tabperfil = new TabPerfilModel();
+
+        #Captura usuário a ser importado
+        $v['data'] = $usuario->getWhere(['idSishuap_Usuario' => $data])->getRow();
+
+        $v['oi'] = 0;
+        #Perfis já atribuídos ao usuário
+        #$v['data']['Usuario'] = $usuario->getWhere(['Usuario' => $data])->getRow();
+        #Lista de perfis disponíveis
+
+        #Verifica quais perfis os usuário já possui para exibir apenas aqueles ainda disponíveis pra escolha
+
+        return view('admin/usuario/list_perfil', $v);
 
         /*
         echo "<pre>";
@@ -203,12 +222,15 @@ class AdminController extends ResourceController
 
     }
 
+
+    /******************* FUNÇÕES AUXILIARES *************************/
+
     /**
     * Valida o formulário de busca e retorna um ou mais resultados baseado no AD/EBSERH
     *
     * @return mixed
     */
-    function get_user_ad($data)
+    private function get_user_ad($data)
     {
         #Tenta se conectar com o servidor LDAP Master
         if (FALSE !== $v['ldap']['ldap1']=@ldap_connect(env('srv.ldap1')))

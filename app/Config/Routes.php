@@ -32,34 +32,35 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-$routes->get('lista', 'TesteController::lista');
-$routes->get('posts', 'TesteController::index');
-$routes->get('posts/new', 'TesteController::new');
-$routes->post('posts', 'TesteController::create');
-$routes->get('posts/(:num)', 'TesteController::show/$1');
-$routes->get('posts/edit/(:num)', 'TesteController::edit/$1');
-$routes->put('posts/(:num)', 'TesteController::update/$1');
-$routes->delete('posts/(:num)', 'TesteController::delete/$1');
+$routes->get('lista', 'Teste::lista');
+$routes->get('posts', 'Teste::index');
+$routes->get('posts/new', 'Teste::new');
+$routes->post('posts', 'Teste::create');
+$routes->get('posts/(:num)', 'Teste::show/$1');
+$routes->get('posts/edit/(:num)', 'Teste::edit/$1');
+$routes->put('posts/(:num)', 'Teste::update/$1');
+$routes->delete('posts/(:num)', 'Teste::delete/$1');
 
 
-$routes->get('/', 'HomeController::index');
+$routes->get('/', 'Home::index');
 
 $routes->group('home', function ($routes) {
-    $routes->get('/', 'HomeController::index');
-    $routes->get('index', 'HomeController::index');
-    #$routes->match(['get', 'post'], 'login', 'HomeController::index');
-    $routes->post('login', 'HomeController::login');
-    $routes->get('logout', 'HomeController::logout');
+    $routes->get('/', 'Home::index');
+    $routes->get('index', 'Home::index');
+    #$routes->match(['get', 'post'], 'login', 'Home::index');
+    $routes->post('login', 'Home::login');
+    $routes->get('logout', 'Home::logout');
 });
 
 $routes->group('admin', function ($routes) {
-    $routes->add('/', 'AdminController::index');
-    $routes->get('find_user', 'AdminController::find_user');
-    $routes->post('get_user', 'AdminController::get_user');
-    #$routes->match(['get', 'post'], 'get_user', 'AdminController::get_user');
-    $routes->get('get_user/(:any)', 'AdminController::get_user/$1');
-    $routes->post('import_user', 'AdminController::import_user');
-    $routes->get('show_user/(:any)', 'AdminController::show_user/$1');
+    $routes->add('/', 'Admin::index');
+    $routes->get('find_user', 'Admin::find_user');
+    $routes->post('get_user', 'Admin::get_user');
+    #$routes->match(['get', 'post'], 'get_user', 'Admin::get_user');
+    $routes->get('get_user/(:any)', 'Admin::get_user/$1');
+    $routes->post('import_user', 'Admin::import_user');
+    $routes->get('show_user/(:any)', 'Admin::show_user/$1');
+    $routes->get('list_perfil/(:any)', 'Admin::list_perfil/$1');
 });
 
 

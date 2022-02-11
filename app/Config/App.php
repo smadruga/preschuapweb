@@ -162,7 +162,8 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $sessionCookieName = 'ci_session';
+    #public $sessionCookieName = 'ci_session';
+    public $sessionCookieName = 'sishuap_session';
 
     /**
      * --------------------------------------------------------------------------
