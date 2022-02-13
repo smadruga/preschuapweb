@@ -59,7 +59,7 @@ class Admin extends BaseController
                 'Pesquisar' => 'required',
             ]);
 
-            #Realiza a validação e retorna ao formulário de false
+            #Realiza a validação e retorna ao formulário se false
             if (!$inputs) {
                 return view('admin/usuario/form_pesquisa_usuario', [
                     'validation' => $this->validator
@@ -146,10 +146,10 @@ class Admin extends BaseController
         $v['campos'] = array_keys($v['data']);
         $v['anterior'] = array();
 
-        $id = $usuario->insert($v['data'], TRUE);
+        $v['id'] = $usuario->insert($v['data'], TRUE);
 
-        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'CREATE', $id), TRUE);
-        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $id, $v['auditoria']), TRUE);
+        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'CREATE', $v['id']), TRUE);
+        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
 
         session()->setFlashdata('success', 'Usuário importado com sucesso!');
         return redirect()->to('admin/show_user/'.$v['data']['Usuario']);
@@ -204,24 +204,134 @@ class Admin extends BaseController
         #Captura usuário a ser importado
         $v['data'] = $usuario->getWhere(['idSishuap_Usuario' => $data])->getRow();
 
-        $v['oi'] = 0;
+        #Lista os perfis disponíveis para seleção
+        $v['select']['Perfil'] = $tabperfil->where('Inativo', NULL)->findAll();
+
         #Perfis já atribuídos ao usuário
-        #$v['data']['Usuario'] = $usuario->getWhere(['Usuario' => $data])->getRow();
-        #Lista de perfis disponíveis
+        $v['list']['Perfil'] = $perfil->list_perfil_bd($data);
 
         #Verifica quais perfis os usuário já possui para exibir apenas aqueles ainda disponíveis pra escolha
-
-        return view('admin/usuario/list_perfil', $v);
+        if($v['list']['Perfil'] !== FALSE) {
+            $v['list']['delete'] = array();
+            foreach ($v['list']['Perfil'] as $val) {
+                $v['list']['delete'][$val['idTab_Perfil']] = TRUE;
+            }
+        }
 
         /*
         echo "<pre>";
-        print_r($v['data']);
+        print_r($v);
         echo "</pre>";
         #exit($v['data']['Usuario']);
         #*/
 
+        return view('admin/usuario/list_perfil', $v);
+
     }
 
+    /**
+    * Salva os perfis selecionados no banco de dados
+    *
+    * @return mixed
+    */
+    public function set_perfil()
+    {
+
+        $perfil = new PerfilModel();
+        $tabperfil = new TabPerfilModel();
+        $auditoria = new AuditoriaModel();
+        $auditorialog = new AuditoriaLogModel();
+        $func = new HUAP_Functions();
+
+        #Captura os inputs do Formulário
+        $v = $this->request->getVar(['Perfil']);
+        $data = $_SESSION['Usuario']['idSishuap_Usuario'];
+
+        #Lista os perfis disponíveis para seleção
+        $v['select']['Perfil'] = $tabperfil->where('Inativo', NULL)->findAll();
+
+        #Perfis já atribuídos ao usuário
+        $v['list']['Perfil'] = $perfil->list_perfil_bd($data);
+
+        #Verifica quais perfis os usuário já possui para exibir apenas aqueles ainda disponíveis pra escolha
+        if($v['list']['Perfil'] !== FALSE) {
+            $v['list']['delete'] = array();
+            foreach ($v['list']['Perfil'] as $val) {
+                $v['list']['delete'][$val['idTab_Perfil']] = TRUE;
+            }
+        }
+
+        #Critérios de validação
+        $inputs = $this->validate([
+            'Perfil' => 'required',
+        ]);
+
+        #Realiza a validação e retorna ao formulário se false
+        if (!$inputs)
+            return view('admin/usuario/list_perfil', $v);
+
+        $v['data'] = array();
+
+        $v['data'] = [
+            'idSishuap_Usuario' => $_SESSION['Usuario']['idSishuap_Usuario'],
+            'idTab_Perfil'      => $v['Perfil'],
+        ];
+
+        $v['campos'] = array_keys($v['data']);
+        $v['anterior'] = array();
+
+        /*
+        echo "<pre>";
+        print_r($v);
+        echo "</pre>";
+        exit();
+        #*/
+
+        $v['id'] = $perfil->insert($v['data'], TRUE);
+
+        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Perfil', 'CREATE', $v['id']), TRUE);
+        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
+
+        session()->setFlashdata('success', 'Perfil adicionado com sucesso!');
+        return redirect()->to('admin/list_perfil/'.$_SESSION['Usuario']['idSishuap_Usuario']);
+
+    }
+
+    /**
+    * Deleta os perfis selecionados no banco de dados
+    *
+    * @return bool
+    */
+    public function del_perfil($data)
+    {
+
+        $perfil = new PerfilModel();
+        $auditoria = new AuditoriaModel();
+        $auditorialog = new AuditoriaLogModel();
+        $func = new HUAP_Functions();
+
+        $v['data'] = array();
+        $v['anterior'] = $perfil->find($data);
+        $v['campos'] = array_keys($v['anterior']);
+
+        /*
+        echo "<pre>";
+        print_r($v);
+        echo "</pre>";
+        exit();
+        #*/
+
+        $v['id'] = $perfil->delete($data);
+
+        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Perfil', 'DELETE', $data), TRUE);
+        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], NULL, TRUE), TRUE);
+
+        session()->setFlashdata('success', 'Perfil excluído com sucesso!');
+        return redirect()->to('admin/list_perfil/'.$_SESSION['Usuario']['idSishuap_Usuario']);
+
+
+
+    }
 
     /******************* FUNÇÕES AUXILIARES *************************/
 

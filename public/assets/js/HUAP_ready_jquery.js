@@ -5,4 +5,9 @@ $(document).ready(function() {
         theme: "bootstrap-5",
         language: "pt-BR",
     });
+
+    //$("#submit").attr("disabled", true);
+    $('#submit').one('submit', function() {
+        $(this).find('input[type="submit"]').attr('disabled','disabled');
+    });
 });

@@ -17,4 +17,31 @@ class PerfilModel extends Model
                                         'idTab_Perfil',
                                     ];
 
+    /**
+    * Lista os perfis cadastrados de acordo com o usuário indicado
+    *
+    * @return array
+    */
+    public function list_perfil_bd($data)
+    {
+
+        $db = \Config\Database::connect();
+        $query = $db->query('
+        SELECT
+            SP.idSishuap_Perfil
+            , TP.idTab_Perfil
+            , TP.Perfil
+            , TP.Descricao
+        FROM
+            Sishuap_Perfil AS SP
+            , Tab_Perfil AS TP
+        WHERE
+            SP.idTab_Perfil = TP.idTab_Perfil
+            AND SP.idSishuap_Usuario = ' . $data . '
+        ORDER BY TP.Perfil ASC
+        ');
+        return ($query->getNumRows() > 0) ? $query->getResultArray() : FALSE ;
+
+    }
+
 }

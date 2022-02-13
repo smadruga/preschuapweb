@@ -61,6 +61,8 @@ $routes->group('admin', function ($routes) {
     $routes->post('import_user', 'Admin::import_user');
     $routes->get('show_user/(:any)', 'Admin::show_user/$1');
     $routes->get('list_perfil/(:any)', 'Admin::list_perfil/$1');
+    $routes->post('set_perfil', 'Admin::set_perfil');
+    $routes->get('del_perfil', 'Admin::del_perfil');
 });
 
 

@@ -9,12 +9,12 @@ class HUAP_Functions
 {
     private $v;
 
-    /*
+
     public function __construct()
     {
 
     }
-    */
+
 
     /**
     * Função que aplica máscara de CPF
@@ -44,10 +44,9 @@ class HUAP_Functions
         $request = \Config\Services::request();
         $agent = $request->getUserAgent();
 
-
         return [
             'Tabela'            => $tabela,
-            'idSishuap_Usuario' => 1,
+            'idSishuap_Usuario' => $_SESSION['Sessao']['idSishuap_Usuario'],
 
             'Operacao'          => $operacao,
             'ChavePrimaria'     => $id,
@@ -125,7 +124,7 @@ class HUAP_Functions
         #$query['PK'] = $id;
 
         /*
-          echo $id;
+          #echo $id;
           echo "<pre>";
           print_r($query);
           echo "</pre>";
@@ -133,57 +132,6 @@ class HUAP_Functions
         #*/
 
         return ($query) ? $query : FALSE;
-
-    }
-
-    /**
-    * Função que prepara o insert para a tabela de auditoria
-    *
-    * @return array
-    */
-    function set_auditoria($auditoriaitem, $tabela, $operacao, $data, $usuario = FALSE) {
-
-        (isset($_SESSION['log']['id'])) ? $usuario = $_SESSION['log']['id'] : $usuario = 18;
-
-        if(isset($auditoriaitem['PK']))
-            $chaveprimaria = $auditoriaitem['PK'];
-        elseif(isset($auditoriaitem[0]['ChavePrimaria']))
-            $chaveprimaria = $auditoriaitem[0]['ChavePrimaria'];
-        else
-            $chaveprimaria = NULL;
-
-        unset($auditoriaitem['PK']);
-        $auditoria = array(
-            'Tabela' => $tabela,
-            'id_Usuario' => $usuario,
-            'DataAuditoria' => date('Y-m-d H:i:s', time()),
-            'Operacao' => $operacao,
-            'ChavePrimaria' => $chaveprimaria,
-            'Ip' => $this->input->ip_address(),
-            'So' => $this->agent->platform(),
-            'Navegador' => $this->agent->browser(),
-            'NavegadorVersao' => $this->agent->version(),
-        );
-
-        /*
-        echo "<pre>";
-        print_r($auditoria);
-        echo "</pre>";
-        echo "<pre>";
-        print_r($auditoriaitem);
-        echo "</pre>";
-        exit();
-        #*/
-
-        if ($this->db->insert('Sishuap_Auditoria', $auditoria)) {
-            $i = 0;
-
-            for ($i=0; $i < count($auditoriaitem); $i++)
-                $auditoriaitem[$i]['idSishuap_Auditoria'] = $this->db->insert_id();
-
-            if(isset($auditoriaitem) && count($auditoriaitem) > 0)
-                $this->db->insert_batch('Sishuap_AuditoriaItem', $auditoriaitem);
-        }
 
     }
 

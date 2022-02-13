@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
+use App\Models\UsuarioModel;
 
 class Home extends ResourceController
 {
@@ -31,6 +32,7 @@ class Home extends ResourceController
     public function login()
     {
         $session = \Config\Services::session();
+        $usuario = new UsuarioModel();
 
         $v = $this->request->getVar(['Usuario', 'Senha']);
         $v['Usuario'] = preg_replace('/((\w+).(\w+))(\b@ebserh.gov.br)/i', '$1', $v['Usuario']);
@@ -51,17 +53,9 @@ class Home extends ResourceController
             return view('home/form_login');
         }
 
-        /*
-        $this->usuario->save([
-        'Usuario' => $this->request->getVar('Usuario'),
-        'Senha'  => $this->request->getVar('Senha')
-        ]);
-        session()->setFlashdata('success', 'Success! post created.');
-        env('CI_ENVIRONMENT')
-        */
-
         unset($v['Senha']);
-        $_SESSION['Sessao'] = $v;
+        #$_SESSION['Sessao'] = $usuario->getwhere(['Usuario' => $v['Usuario']])->getRowArray();
+        $_SESSION['Sessao'] = $usuario->get_user_mysql($v['Usuario']);
         /*
         echo "<pre>";
         print_r($v);
@@ -99,16 +93,19 @@ class Home extends ResourceController
     */
     private function valida_ldap($usr, $pwd){
 
-        //Tenta se conectar com o servidor LDAP Master
+        #Apenas para testar o sistema sem a necessidade de consultar o AD - APAGAR
+        return TRUE;
+
+        #Tenta se conectar com o servidor LDAP Master
         if (FALSE !== $ldap1=@ldap_connect(env('srv.ldap1')))
             $ldap_conn = $ldap1;
-        //Tenta se conectar com o servidor LDAP Slave caso não consiga conexão com o Master
+        #Tenta se conectar com o servidor LDAP Slave caso não consiga conexão com o Master
         elseif (FALSE !== $ldap2=@ldap_connect(env('srv.ldap2')))
             $ldap_conn = $ldap2;
         else
             return FALSE;
 
-        // Tenta autenticar no servidor
+        # Tenta autenticar no servidor
         return (!@ldap_bind($ldap_conn, $usr.'@ebserh.gov.br', $pwd)) ? FALSE : TRUE;
 
     }

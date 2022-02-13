@@ -30,8 +30,8 @@ class UsuarioModel extends Model
         $db = \Config\Database::connect();
         $query = $db->query('
             SELECT
-                Usuario,
-                Cpf
+                idSishuap_Usuario
+                , Usuario
             FROM
                 Sishuap_Usuario
             WHERE
