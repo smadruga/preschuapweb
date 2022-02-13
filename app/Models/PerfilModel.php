@@ -22,7 +22,7 @@ class PerfilModel extends Model
     *
     * @return array
     */
-    public function list_perfil_bd($data)
+    public function list_perfil_bd($data, $foreach = NULL)
     {
 
         $db = \Config\Database::connect();
@@ -40,7 +40,19 @@ class PerfilModel extends Model
             AND SP.idSishuap_Usuario = ' . $data . '
         ORDER BY TP.Perfil ASC
         ');
-        return ($query->getNumRows() > 0) ? $query->getResultArray() : FALSE ;
+
+        if ($foreach) {
+            if ($query->getNumRows() > 0) {
+                $v = array();
+                foreach ($query->getResultArray() as $val)
+                    $v[$val['idTab_Perfil']] = $val['Perfil'];
+                return $v;
+            }
+            else
+                return FALSE;
+        }
+        else
+            return ($query->getNumRows() > 0) ? $query->getResultArray() : FALSE ;
 
     }
 

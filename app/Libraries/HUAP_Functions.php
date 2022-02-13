@@ -35,6 +35,28 @@ class HUAP_Functions
     }
 
     /**
+    * Função que prepara o insert de dados de acesso para a tabela de auditoria
+    *
+    * @return array
+    */
+    function set_acesso($operacao) {
+
+        $request = \Config\Services::request();
+        $agent = $request->getUserAgent();
+
+        return [
+            'SessionId'         => session_id(),
+            'Operacao'          => $operacao,
+            'idSishuap_Usuario' => $_SESSION['Sessao']['idSishuap_Usuario'],
+            'Ip'                => $request->getIPAddress(),
+            'So'                => $agent->getPlatform(),
+            'Navegador'         => $agent->getBrowser(),
+            'NavegadorVersao'   => $agent->getVersion(),
+        ];
+
+    }
+
+    /**
     * Função que prepara o insert de log para a tabela de auditoria
     *
     * @return array

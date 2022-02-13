@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\UsuarioModel;
+use App\Models\PerfilModel;
+use App\Models\AuditoriaAcessoModel;
+use App\Libraries\HUAP_Functions;
 
 class Home extends ResourceController
 {
@@ -33,6 +36,8 @@ class Home extends ResourceController
     {
         $session = \Config\Services::session();
         $usuario = new UsuarioModel();
+        $perfil = new PerfilModel();
+        $acesso = new AuditoriaAcessoModel();
 
         $v = $this->request->getVar(['Usuario', 'Senha']);
         $v['Usuario'] = preg_replace('/((\w+).(\w+))(\b@ebserh.gov.br)/i', '$1', $v['Usuario']);
@@ -53,9 +58,13 @@ class Home extends ResourceController
             return view('home/form_login');
         }
 
+        $func = new HUAP_Functions();
+
         unset($v['Senha']);
-        #$_SESSION['Sessao'] = $usuario->getwhere(['Usuario' => $v['Usuario']])->getRowArray();
         $_SESSION['Sessao'] = $usuario->get_user_mysql($v['Usuario']);
+        $_SESSION['Sessao']['Perfil'] = $perfil->list_perfil_bd($_SESSION['Sessao']['idSishuap_Usuario'], TRUE);
+        $acesso->insert($func->set_acesso('LOGIN'), TRUE);
+
         /*
         echo "<pre>";
         print_r($v);
@@ -77,6 +86,15 @@ class Home extends ResourceController
     */
     public function logout()
     {
+
+        $session = \Config\Services::session();
+        $usuario = new UsuarioModel();
+        $acesso = new AuditoriaAcessoModel();
+
+        $func = new HUAP_Functions();
+
+        $acesso->insert($func->set_acesso('LOGOUT'), TRUE);
+
         session_write_close();
         unset($v,$_SESSION);
         return redirect()->to('/');

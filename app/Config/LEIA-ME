@@ -2,6 +2,7 @@ CUIDADO AO ATUALIZAR OS SEGUINTES ARQUIVOS:
 
 -app.php
 -constants.php
+-cookie.php
 -database.php
 -pager.php
 -paths.php
