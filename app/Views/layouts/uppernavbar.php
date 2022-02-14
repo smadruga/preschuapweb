@@ -31,7 +31,10 @@
                 </li>
             </ul>
             <div style="padding: 0px 10px 0px 10px;">
-                <span class="text-warning"><i class="fa-solid fa-circle-user"></i> <?= $_SESSION['Sessao']['Usuario'] ?></span>
+                <span class="text-warning fs-6">
+                    <i class="fa-solid fa-circle-user"></i> <?= $_SESSION['Sessao']['Nome'] ?><br>
+                    Sessão: <b><div id="defaultCountdown"></div></b> <i class="fa-solid fa-hourglass"></i> 
+                    </span>
             </div>
             <a class="btn btn-danger my-2 my-sm-0" href="<?= base_url('home/logout') ?>"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair</a>
         </div>

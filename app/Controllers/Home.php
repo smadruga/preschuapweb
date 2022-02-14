@@ -62,6 +62,10 @@ class Home extends ResourceController
 
         unset($v['Senha']);
         $_SESSION['Sessao'] = $usuario->get_user_mysql($v['Usuario']);
+
+        $v['Nome'] = explode(' ', $_SESSION['Sessao']['Nome']);
+        $_SESSION['Sessao']['Nome'] = $v['Nome'][0] . ' ' . $v['Nome'][count($v['Nome'])-1];
+
         $_SESSION['Sessao']['Perfil'] = $perfil->list_perfil_bd($_SESSION['Sessao']['idSishuap_Usuario'], TRUE);
         $acesso->insert($func->set_acesso('LOGIN'), TRUE);
 

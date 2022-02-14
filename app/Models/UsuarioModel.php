@@ -32,6 +32,7 @@ class UsuarioModel extends Model
         $query = $db->query('
             SELECT
                 idSishuap_Usuario
+                , Nome
                 , Usuario
             FROM
                 Sishuap_Usuario
