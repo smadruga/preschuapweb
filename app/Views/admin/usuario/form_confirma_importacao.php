@@ -6,15 +6,7 @@
         <?= csrf_field() ?>
         <?php $validation = \Config\Services::validation(); ?>
 
-        <?php if(session()->getFlashdata('success')) { ?>
-            <div class="alert alert-success alert-dismissible">
-                <?php echo session()->getFlashdata('success') ?>
-            </div>
-        <?php } elseif(session()->getFlashdata('failed')) { ?>
-            <div class="alert alert-danger alert-dismissible">
-                <?php echo session()->getFlashdata('failed') ?>
-            </div>
-        <?php } ?>
+        <?= $this->include('layouts/div_flashdata') ?>
 
         <div class="card">
             <div class="card-header bg-warning">

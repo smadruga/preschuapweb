@@ -13,6 +13,7 @@ class UsuarioModel extends Model
     protected $returnType           = 'array';
     protected $protectFields        = true;
     protected $allowedFields        = [
+                                        'Inativo',
                                         'Usuario',
                                         'Nome',
                                         'Cpf',
@@ -39,6 +40,11 @@ class UsuarioModel extends Model
                 OR Cpf = "' . $data . '"
             ORDER BY Nome
         ');
+        /*echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query->getRowArray());
+        echo "</pre>";
+        exit($data);*/
         return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 
     }

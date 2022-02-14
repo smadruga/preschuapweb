@@ -355,8 +355,6 @@ class Admin extends BaseController
         $v['anterior'] = $usuario->find($data);
         $v['campos'] = array_keys($v['data']);
 
-        #$v['auditoria'] = $func->create_auditoria('Sishuap_Usuario', 'UPDATE', $data);
-        #$v['teste2'] = $func->create_log($v['anterior'], $v['data'], $v['campos'], $data, $v['auditoria'], TRUE);
         /*
         echo "<pre>";
         print_r($v);
@@ -372,9 +370,49 @@ class Admin extends BaseController
         session()->setFlashdata('success', 'Usuário desativado com sucesso!');
         return redirect()->to('admin/show_user/'.$_SESSION['Usuario']['Usuario']);
 
+    }
 
+    /**
+    * Desabilita no sistema o usuário selecionado
+    *
+    * @return bool
+    */
+    public function enable_user($data)
+    {
+
+        $usuario = new UsuarioModel();
+        $auditoria = new AuditoriaModel();
+        $auditorialog = new AuditoriaLogModel();
+        $func = new HUAP_Functions();
+
+        $v = $this->request->getVar(['Habilitar']);
+
+        if(!$v['Habilitar'])
+            return view('admin/usuario/form_habilita_usuario', $v);
+
+        $v['data'] = array(
+            'Inativo' => 0,
+        );
+        $v['anterior'] = $usuario->find($data);
+        $v['campos'] = array_keys($v['data']);
+
+        /*
+        echo "<pre>";
+        print_r($v);
+        echo "</pre>";
+        exit();
+        #*/
+
+        $usuario->update($data, $v['data']);
+
+        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'UPDATE', $data), TRUE);
+        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $data, $v['auditoria'], TRUE), TRUE);
+
+        session()->setFlashdata('success', 'Usuário ativado com sucesso!');
+        return redirect()->to('admin/show_user/'.$_SESSION['Usuario']['Usuario']);
 
     }
+
 
     /******************* FUNÇÕES AUXILIARES *************************/
 

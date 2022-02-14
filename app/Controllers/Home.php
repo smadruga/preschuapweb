@@ -112,7 +112,7 @@ class Home extends ResourceController
     private function valida_ldap($usr, $pwd){
 
         #Apenas para testar o sistema sem a necessidade de consultar o AD - APAGAR
-        return TRUE;
+        #return TRUE;
 
         #Tenta se conectar com o servidor LDAP Master
         if (FALSE !== $ldap1=@ldap_connect(env('srv.ldap1')))

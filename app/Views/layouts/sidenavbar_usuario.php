@@ -9,8 +9,14 @@
         </a>
     </li>
     <li>
-        <a href="#" class="nav-link text-white" aria-current="page">
+        <?php if ($_SESSION['Usuario']['Inativo'] == 1) { ?>
+        <a href="<?= base_url('admin/enable_user/'.$_SESSION['Usuario']['idSishuap_Usuario']) ?>" class="nav-link text-white" aria-current="page">
+            <i class="fa-solid fa-user-check"></i> Ativar
+        </a>
+    <?php } else { ?>
+        <a href="<?= base_url('admin/disable_user/'.$_SESSION['Usuario']['idSishuap_Usuario']) ?>" class="nav-link text-white" aria-current="page">
             <i class="fa-solid fa-user-slash"></i> Desativar
         </a>
+    <?php } ?>
     </li>
 </ul>
