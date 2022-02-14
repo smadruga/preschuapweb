@@ -138,9 +138,9 @@ class Admin extends BaseController
 
         $v['data'] = [
             'Usuario'           => (isset($v['ad']['entries'][0]['samaccountname'][0])) ? esc($v['ad']['entries'][0]['samaccountname'][0]) : '',
-            'Nome'              => (isset($v['ad']['entries'][0]['cn'][0])) ? esc(mb_convert_encoding($v['ad']['entries'][0]['cn'][0], "UTF-8", "ASCII")) : '',
-            'Cpf'               => (isset($v['ad']['entries'][0]['employeeid'][0])) ? esc($v['ad']['entries'][0]['employeeid'][0]) : '',
-            'EmailSecundario'   => (isset($v['ad']['entries'][0]['othermailbox'][0])) ? $v['ad']['entries'][0]['othermailbox'][0] : '',
+            'Nome'              => (isset($v['ad']['entries'][0]['cn'][0])) ? esc(mb_convert_encoding($v['ad']['entries'][0]['cn'][0], "UTF-8", "ASCII")) : NULL,
+            'Cpf'               => (isset($v['ad']['entries'][0]['employeeid'][0])) ? esc($v['ad']['entries'][0]['employeeid'][0]) : NULL,
+            'EmailSecundario'   => (isset($v['ad']['entries'][0]['othermailbox'][0])) ? $v['ad']['entries'][0]['othermailbox'][0] : NULL,
         ];
 
         $v['campos'] = array_keys($v['data']);
@@ -328,6 +328,49 @@ class Admin extends BaseController
 
         session()->setFlashdata('success', 'Perfil excluído com sucesso!');
         return redirect()->to('admin/list_perfil/'.$_SESSION['Usuario']['idSishuap_Usuario']);
+
+    }
+
+    /**
+    * Desabilita no sistema o usuário selecionado
+    *
+    * @return bool
+    */
+    public function disable_user($data)
+    {
+
+        $usuario = new UsuarioModel();
+        $auditoria = new AuditoriaModel();
+        $auditorialog = new AuditoriaLogModel();
+        $func = new HUAP_Functions();
+
+        $v = $this->request->getVar(['Desabilitar']);
+
+        if(!$v['Desabilitar'])
+            return view('admin/usuario/form_desabilita_usuario', $v);
+
+        $v['data'] = array(
+            'Inativo' => 1,
+        );
+        $v['anterior'] = $usuario->find($data);
+        $v['campos'] = array_keys($v['data']);
+
+        #$v['auditoria'] = $func->create_auditoria('Sishuap_Usuario', 'UPDATE', $data);
+        #$v['teste2'] = $func->create_log($v['anterior'], $v['data'], $v['campos'], $data, $v['auditoria'], TRUE);
+        /*
+        echo "<pre>";
+        print_r($v);
+        echo "</pre>";
+        exit();
+        #*/
+
+        $usuario->update($data, $v['data']);
+
+        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'UPDATE', $data), TRUE);
+        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $data, $v['auditoria'], TRUE), TRUE);
+
+        session()->setFlashdata('success', 'Usuário desativado com sucesso!');
+        return redirect()->to('admin/show_user/'.$_SESSION['Usuario']['Usuario']);
 
 
 
