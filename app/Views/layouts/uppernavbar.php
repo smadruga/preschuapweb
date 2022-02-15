@@ -1,5 +1,5 @@
 <?php $session = \Config\Services::session(); ?>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary pt-1 pb-1">
     <div class="container-fluid">
         <a class="navbar-brand" href="<?= base_url('admin') ?>"><?= HUAP_APPNAME ?></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,7 +11,7 @@
                 <input class="form-control me-sm-2" type="text" placeholder="Nome, prontuário...">
                 <button class="btn btn-info my-2 my-sm-0" style="width: 150px" type="submit"><i class="fa-solid fa-search"></i> Buscar</button>
             </form>
-            <div style="padding: 0px 10px 0px 10px;" ></div>
+            <div class="ps-2 pe-2"></div>
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Home
@@ -30,11 +30,9 @@
                     </div>
                 </li>
             </ul>
-            <div style="padding: 0px 10px 0px 10px;">
-                <span class="text-warning fs-6">
-                    <i class="fa-solid fa-circle-user"></i> <?= $_SESSION['Sessao']['Nome'] ?><br>
-                    Sessão: <b><div id="defaultCountdown"></div></b> <i class="fa-solid fa-hourglass"></i> 
-                    </span>
+            <div class="ms-3 me-3 text-warning fs-6 text-center">
+                <span><i class="fa-solid fa-circle-user"></i> <?= $_SESSION['Sessao']['Nome'] ?><br></span>
+                <span id="clock"></span>
             </div>
             <a class="btn btn-danger my-2 my-sm-0" href="<?= base_url('home/logout') ?>"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair</a>
         </div>
