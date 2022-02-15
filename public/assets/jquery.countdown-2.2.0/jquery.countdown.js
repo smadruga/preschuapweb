@@ -123,7 +123,6 @@
         this.interval = null;
         this.offset = {};
         this.options = $.extend({}, defaultOptions);
-        this.firstTick = true;
         this.instanceNumber = instances.length;
         instances.push(this);
         this.$el.data("countdown-instance", this.instanceNumber);
@@ -183,12 +182,11 @@
                 this.remove();
                 return;
             }
-            var now = new Date(), newTotalSecsLeft;
+            var hasEventsAttached = $._data(this.el, "events") !== undefined, now = new Date(), newTotalSecsLeft;
             newTotalSecsLeft = this.finalDate.getTime() - now.getTime();
             newTotalSecsLeft = Math.ceil(newTotalSecsLeft / 1e3);
             newTotalSecsLeft = !this.options.elapse && newTotalSecsLeft < 0 ? 0 : Math.abs(newTotalSecsLeft);
-            if (this.totalSecsLeft === newTotalSecsLeft || this.firstTick) {
-                this.firstTick = false;
+            if (this.totalSecsLeft === newTotalSecsLeft || !hasEventsAttached) {
                 return;
             } else {
                 this.totalSecsLeft = newTotalSecsLeft;
