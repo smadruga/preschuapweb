@@ -69,6 +69,19 @@ class Home extends ResourceController
         $_SESSION['Sessao']['Perfil'] = $perfil->list_perfil_bd($_SESSION['Sessao']['idSishuap_Usuario'], TRUE);
         $acesso->insert($func->set_acesso('LOGIN'), TRUE);
 
+        /**
+         * Sessão e cookies são definidas para durarem 2h (120minutos)
+         * Tempo definido em segundos no arquivo .env, variável huap.session.expires
+         * A variável huap.session.expires também é carregada nos seguintes aqruivos:
+         * - Home.php (Controller)
+         * - HUAP_jquery.js (public/assets/js)
+         * - BaseController.php (Controller)
+         * - Auth.php (Filter)
+         */
+
+        $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+        setcookie("SishuapCookie", "", time()+env('huap.session.expires'));
+
         /*
         echo "<pre>";
         print_r($v);
@@ -88,7 +101,7 @@ class Home extends ResourceController
     *
     * @return void
     */
-    public function logout()
+    public function logout($data = NULL)
     {
 
         $session = \Config\Services::session();
@@ -97,10 +110,14 @@ class Home extends ResourceController
 
         $func = new HUAP_Functions();
 
-        $acesso->insert($func->set_acesso('LOGOUT'), TRUE);
+        $operacao = (!$data) ? 'LOGOUT' : 'TIMEOUT';
 
+        $acesso->insert($func->set_acesso($operacao), TRUE);
+
+        setcookie("SishuapCookie", "", time()-env('huap.session.expires'));
         session_write_close();
         unset($v,$_SESSION);
+        #session()->setFlashdata('failed', 'Tempo de sessão expirado.');
         return redirect()->to('/');
 
     }

@@ -49,7 +49,7 @@ $routes->group('home', function ($routes) {
     $routes->get('index', 'Home::index');
     #$routes->match(['get', 'post'], 'login', 'Home::index');
     $routes->post('login', 'Home::login');
-    $routes->get('logout', 'Home::logout');
+    $routes->get('logout/(:any)', 'Home::logout/$1');
 });
 
 $routes->group('admin', function ($routes) {

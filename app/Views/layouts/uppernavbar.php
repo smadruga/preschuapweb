@@ -38,3 +38,5 @@
         </div>
     </div>
 </nav>
+
+<input type="hidden" name="timeout" value="<?= env('huap.session.expires') ?>" />
