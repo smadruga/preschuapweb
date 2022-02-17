@@ -21,7 +21,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Features</a>
                 </li>
-                </li>
+                <?php if (isset($_SESSION['Sessao']['Perfil'][1]) || isset($_SESSION['Sessao']['Perfil'][2]) ) { ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Configurações</a>
                     <div class="dropdown-menu">
@@ -29,6 +29,7 @@
                         <!--<div class="dropdown-divider"></div>-->
                     </div>
                 </li>
+                <?php } ?>
             </ul>
             <div class="ms-3 me-3 text-warning fs-6 text-center">
                 <span><i class="fa-solid fa-circle-user"></i> <?= $_SESSION['Sessao']['Nome'] ?><br></span>

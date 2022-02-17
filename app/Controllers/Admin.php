@@ -36,6 +36,10 @@ class Admin extends BaseController
     */
     public function find_user()
     {
+
+        if (!isset($_SESSION['Sessao']['Perfil'][1]) && !isset($_SESSION['Sessao']['Perfil'][2]) )
+            return redirect()->to('admin/');
+
         return view('admin/usuario/form_pesquisa_usuario');
     }
 
