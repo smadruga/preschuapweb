@@ -47,26 +47,46 @@ class Home extends ResourceController
             'Senha' => 'required'
         ]);
 
+        #verifica se os campos foram preenchidos
         if (!$inputs) {
             session()->setFlashdata('failed', HUAP_MSG_ERROR);
             return view('home/form_login', [
                 'validation' => $this->validator
             ]);
         }
-        elseif (!$this->valida_ldap($v['Usuario'], $v['Senha'])) {
-            session()->setFlashdata('failed', 'Erro ao autenticar. <br> Verifique seu <b>usuário</b> e <b>senha</b> e tente novamente.');
-            return view('home/form_login');
-        }
 
         $func = new HUAP_Functions();
 
+        $usuario = new UsuarioModel();
+        $usuario = $usuario->get_user_mysql($v['Usuario']);
+
+        if (!isset($usuario) || !$usuario) {
+            session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário não encontrado ou não autorizado.');
+            return view('home/form_login');
+        }
+        if ($usuario['Inativo'] == 1) {
+            session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário inativo.');
+            return view('home/form_login');
+        }
+
+        $perfil = $perfil->list_perfil_bd($usuario['idSishuap_Usuario'], TRUE);
+
+        if (!isset($perfil) || !$perfil) {
+            session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário não possui nenhum perfil associado.');
+            return view('home/form_login');
+        }
+        if (!$this->validate_ldap($v['Usuario'], $v['Senha'])) {
+            session()->setFlashdata('failed', 'Erro ao autenticar. <br> Senha incorreta.');
+            return view('home/form_login');
+        }
+
         unset($v['Senha']);
-        $_SESSION['Sessao'] = $usuario->get_user_mysql($v['Usuario']);
+        $_SESSION['Sessao'] = $usuario;
 
         $v['Nome'] = explode(' ', $_SESSION['Sessao']['Nome']);
         $_SESSION['Sessao']['Nome'] = $v['Nome'][0] . ' ' . $v['Nome'][count($v['Nome'])-1];
 
-        $_SESSION['Sessao']['Perfil'] = $perfil->list_perfil_bd($_SESSION['Sessao']['idSishuap_Usuario'], TRUE);
+        $_SESSION['Sessao']['Perfil'] = $perfil;
         $acesso->insert($func->set_acesso('LOGIN'), TRUE);
 
         /**
@@ -78,7 +98,6 @@ class Home extends ResourceController
          * - BaseController.php (Controller)
          * - Auth.php (Filter)
          */
-
         $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         setcookie("SishuapCookie", "", time()+env('huap.session.expires'));
 
@@ -117,6 +136,7 @@ class Home extends ResourceController
         setcookie("SishuapCookie", "", time()-env('huap.session.expires'));
         session_write_close();
         unset($v,$_SESSION);
+        #$session = \Config\Services::session();
         #session()->setFlashdata('failed', 'Tempo de sessão expirado.');
         return redirect()->to('/');
 
@@ -125,12 +145,12 @@ class Home extends ResourceController
     /**
     * Função de validação no AD via protocolo LDAP
     * como usar:
-    * valida_ldap("servidor", "domíniousuário", "senha");
+    * validate_ldap("servidor", "domíniousuário", "senha");
     *
     * @return bool
     *
     */
-    private function valida_ldap($usr, $pwd){
+    private function validate_ldap($usr, $pwd){
 
         #Apenas para testar o sistema sem a necessidade de consultar o AD - APAGAR
         #return TRUE;

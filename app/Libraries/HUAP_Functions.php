@@ -44,10 +44,14 @@ class HUAP_Functions
         $request = \Config\Services::request();
         $agent = $request->getUserAgent();
 
+        #Necessário que o Usuário ID=1 do sistema esteja cadastrado como SISTEMA e inativado
+        #Caso a sessão expire então é setado o valor 1 (sistema) para registro do logout
+        $id = (isset($_SESSION['Sessao']['idSishuap_Usuario'])) ? $_SESSION['Sessao']['idSishuap_Usuario'] : 1;
+
         return [
             'SessionId'         => session_id(),
             'Operacao'          => $operacao,
-            'idSishuap_Usuario' => $_SESSION['Sessao']['idSishuap_Usuario'],
+            'idSishuap_Usuario' => $id,
             'Ip'                => $request->getIPAddress(),
             'So'                => $agent->getPlatform(),
             'Navegador'         => $agent->getBrowser(),
