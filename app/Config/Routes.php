@@ -67,6 +67,13 @@ $routes->group('admin', function ($routes) {
     $routes->match(['get', 'post'], 'enable_user/(:any)', 'Admin::enable_user/$1');
 });
 
+$routes->group('prescricao', function ($routes) {
+    $routes->add('/', 'Prescricao::find_paciente');
+    $routes->get('find_paciente', 'Prescricao::find_paciente');
+    $routes->post('get_paciente', 'Prescricao::get_paciente');
+    $routes->get('show_paciente/(:any)', 'Prescricao::show_paciente/$1');
+    $routes->get('list_paciente/(:any)', 'Prescricao::list_paciente/$1');
+});
 
 /*
  * --------------------------------------------------------------------

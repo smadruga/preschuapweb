@@ -7,19 +7,16 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <form class="d-inline-flex">
-                <input class="form-control me-sm-2" type="text" placeholder="Nome, prontuário...">
+            <form class="d-inline-flex" method="post" action="<?= base_url('prescricao/get_paciente') ?>">
+                <input class="form-control me-sm-2" type="text" name="Pesquisar" placeholder="Nome, prontuário, nascimento...">
                 <button class="btn btn-info my-2 my-sm-0" style="width: 150px" type="submit"><i class="fa-solid fa-search"></i> Buscar</button>
             </form>
             <div class="ps-2 pe-2"></div>
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Home
-                        <span class="visually-hidden">(current)</span>
+                    <a class="nav-link" href="<?= base_url('prescricao/find_paciente') ?>">Prescrição
+                        <span class="visually-hidden"></span>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
                 </li>
                 <?php if (isset($_SESSION['Sessao']['Perfil'][1]) || isset($_SESSION['Sessao']['Perfil'][2]) ) { ?>
                 <li class="nav-item dropdown">

@@ -2,9 +2,8 @@
 
 namespace App\Libraries;
 
-#use CodeIgniter\RESTful\ResourceController;
+use CodeIgniter\I18n\Time;
 
-#class HUAP_Functions extends ResourceController
 class HUAP_Functions
 {
     private $v;
@@ -15,23 +14,147 @@ class HUAP_Functions
 
     }
 
+    /**
+    * Função que retorna o sexo por extenso
+    *
+    * @return varchar
+    */
+    function get_sexo($data) {
+
+        if ($data == 'M')
+            return 'MASCULINO';
+        elseif ($data == 'F')
+            return 'FEMININO';
+        else
+            return 'OUTRO';
+
+    }
+
+    /**
+    * Função que verifica se a variável é uma data válida no formato brasileiro
+    *
+    * @return bool
+    */
+    function check_date($data, $opt = 'regex') {
+
+        if($opt == 'checkdate')
+            return (strlen($data) == 8 && checkdate(substr($data, 2, 2), substr($data, 0, 2), substr($data, 4, 6))) ? TRUE : FALSE;
+        else
+            return (preg_match('/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/', $data)) ? TRUE : FALSE;
+
+    }
+
+    /**
+    * Função que verifica se a variável é um cpf válido
+    *
+    * @return bool
+    */
+    function check_cpf($data, $opt = 'regex') {
+
+        return (preg_match("/^([0-9]{3})\.?([0-9]{3})\.?([0-9]{3})\-?([0-9]{2})$/", $data)) ? TRUE : FALSE;
+
+    }
 
     /**
     * Função que aplica máscara de CPF
     *
     * @return varchar
     */
-    function mascara_cpf($data) {
+    function mascara_cpf($data, $opt = 'aplicar') {
 
         if($data == 0)
             return '';
 
-        $zeros = 11 - strlen($data);
-        for ($i = 0; $i < $zeros; $i++)
-            $data = '0' . $data;
+        #remove o separador do cpf
+        if($opt == 'remover')
+            return (strlen($data) == 11) ? $data : substr($data, 0, 3) . substr($data, 4, 3) . substr($data, 8, 3) . substr($data, 12, 2);
+        #aplica o separador no cpf
+        else {
 
-        return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "$1.$2.$3-$4", $data);
+            $zeros = 11 - strlen($data);
+            for ($i = 0; $i < $zeros; $i++)
+                $data = '0' . $data;
 
+            return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "$1.$2.$3-$4", $data);
+        }
+
+    }
+
+    /**
+    * Função que retorna a data formatada conforme desejado (formato gregoriano, invertido/banco de dados, separado)
+    *
+    * @return varchar
+    */
+    function mascara_data($data, $opt, $hora = FALSE, $invertido = FALSE, $removehora = FALSE) {
+
+        #verifica a data de acordo com a situação (se é datetime ou apenas date)
+        $pm = ($hora) ? preg_match("/[0-9]{2,4}(\/|-)[0-9]{2,4}(\/|-)[0-9]{2,4}( )[0-9]{2,4}(:)[0-9]{2,4}/", $data) : preg_match("/[0-9]{2,4}(\/|-)[0-9]{2,4}(\/|-)[0-9]{2,4}/", $data);
+
+        #retorna a data no formato de barras DD/MM/YYYY
+        if ($opt == 'barras') {
+            if ($pm && $data) {
+                #exit('oioioi'.$data);
+                #$data = ($hora) ? Time::createFromFormat('j-M-Y H:i', '15-Feb-2009 15:02', 'America/Chicago') : Time::createFromFormat('Y-m-d', $data);
+                $data = ($hora) ? Time::createFromFormat('Y-m-d H:i:s', $data) : Time::createFromFormat('Y-m-d', $data);
+                $data = ($hora) ? $data->format('d/m/Y H:i') : $data->format('d/m/Y');
+            }
+            else
+                $data = ($hora) ? '0000-00-00 00:00:00' : '0000-00-00';
+
+            if ($removehora) {
+                $d = explode(" ", $data);
+                $data = $d[0];
+            }
+
+        }
+            #$data = ($pm && $data && $data != '0000-00-00') ? ($hora) ? nice_date($data, 'd/m/Y H:i') : nice_date($data, 'd/m/Y') : '';
+
+        #retorna a data no formato invertido, no formato apropriado para banco de dados.
+        elseif ($opt == 'db') {
+
+            #caso a data já esteja invertida mas ainda não esteja no formato para bd
+            if ($invertido) {
+                if ($data > 18000000) {
+                    $data = ($hora) ? Time::createFromFormat('YmdHi', $data) : Time::createFromFormat('Ymd', $data);
+                    $data = ($hora) ? $data->format('Y-m-d H:i:s') : $data->format('Y-m-d');
+                }
+                else
+                    $data = ($hora) ? '0000-00-00 00:00:00' : '0000-00-00';
+
+            }
+            #caso a data não esteja invertida
+            else {
+                if ($pm && $data) {
+                    $data = ($hora) ? Time::createFromFormat('d/m/Y H:i', $data) : Time::createFromFormat('d/m/Y', $data);
+                    $data = ($hora) ? $data->format('Y-m-d H:i') : $data->format('Y-m-d');
+                }
+                else
+                    $data = ($hora) ? '0000-00-00 00:00:00' : '0000-00-00';
+
+            }
+
+        }
+        #Se eu desejar apenas inverter a data
+        elseif ($opt == 'inverter') {
+            #Se houver data e hora
+            if ($pm && $data) {
+                $info = explode(" ", $data);
+                $data = DateTime::createFromFormat('d-m-Y', $info[0]);
+                $data = $data->format('Y-m-d');
+
+                if ($hora)
+                    $data = $data . ' ' . $info[1];
+
+            }
+            #Se houver apenas data
+            elseif (!$pm && $data)
+                $data = substr($data, 4, 4).'-'.substr($data, 2, 2).'-'.substr($data, 0, 2);
+            #Se não houver nada
+            else
+                $data = NULL;
+        }
+
+        return $data;
     }
 
     /**

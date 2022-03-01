@@ -51,6 +51,32 @@ class Database extends Config
     ];
 
     /**
+     * AGHUX database connection.
+     *
+     * @var array
+     */
+    public $aghux = [
+        'DSN'      => '',
+        'hostname' => '',
+        'username' => '',
+        'password' => '',
+        'database' => '',
+        'DBDriver' => '',
+        'DBPrefix' => '',
+        'pConnect' => false,
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'charset'  => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre'  => '',
+        'encrypt'  => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+        'port'     => '',
+        'schema'   => '',
+    ];
+
+    /**
      * This database connection is used when
      * running PHPUnit database tests.
      *
