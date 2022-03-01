@@ -19,3 +19,7 @@ $('#clock').countdown(timesession)
 //    $(this).html('This offer has expired!')
 //    .parent().addClass('disabled');
 //});
+
+$(".clickable-row").click(function () {
+    window.document.location = $(this).data("href");
+});
