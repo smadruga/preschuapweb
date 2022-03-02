@@ -3,13 +3,15 @@
 </a>
 <span class="fs-6">Prontuário: <?= $_SESSION['Paciente']['prontuario'] ?></span>
 <hr>
-<ul class="nav nav-pills flex-column mb-auto">
+<ul class="nav navbar-nav flex-column mb-auto">
     <li class="nav-item">
-        <a href="<?= base_url('prescricao/list_prescricao/'.$_SESSION['Paciente']['codigo']) ?>" class="nav-link" aria-current="page">
-            <i class="fa-solid fa-chalkboard-user"></i> Perfil
+        <a href="<?= base_url('prescricao/form_prescricao/'.$_SESSION['Paciente']['codigo']) ?>" class="nav-link text-white p-2" aria-current="page">
+            <i class="fa-solid fa-add"></i> Nova Prescrição
         </a>
     </li>
     <li>
-
+        <a href="<?= base_url('prescricao/list_prescricao/'.$_SESSION['Paciente']['codigo']) ?>" class="nav-link text-white p-2" aria-current="page">
+            <i class="fa-solid fa-list"></i> Histórico de Prescrições
+        </a>
     </li>
 </ul>

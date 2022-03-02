@@ -77,6 +77,32 @@ class Database extends Config
     ];
 
     /**
+     * MV2000 database connection.
+     *
+     * @var array
+     */
+    public $mv = [
+        'DSN'      => '(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 200.20.8.100)(PORT = 1521)) ) (CONNECT_DATA = (SID = orcl)))',
+        'hostname' => '',
+        'username' => '',
+        'password' => '',
+        'database' => '',
+        'DBDriver' => '',
+        'DBPrefix' => '',
+        'pConnect' => false,
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'charset'  => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre'  => '',
+        'encrypt'  => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+        'port'     => '',
+        'schema'   => '',
+    ];
+
+    /**
      * This database connection is used when
      * running PHPUnit database tests.
      *
