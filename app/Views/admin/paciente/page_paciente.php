@@ -48,14 +48,7 @@
             </tr>
             <tr>
                 <td width="30%"><i class="fa-solid fa-phone"></i> Telefone:</td>
-                <td><b><?=
-                    '(Residencial) >> '.
-                    $_SESSION['Paciente']['ddd_fone_residencial'].' '.
-                    $_SESSION['Paciente']['fone_residencial'].' '.
-                    ' # (Recado) >> '.
-                    $_SESSION['Paciente']['ddd_fone_recado'].' '.
-                    $_SESSION['Paciente']['fone_recado']
-                ?></b></td>
+                <td><b><?= $_SESSION['Paciente']['telefone'] ?></b></td>
             </tr>
             <tr>
                 <td width="30%"><i class="fa-solid fa-at"></i> E-mail:</td>

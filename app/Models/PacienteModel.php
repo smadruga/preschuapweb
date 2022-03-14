@@ -62,16 +62,22 @@ class PacienteModel extends Model
             WHERE
                 codigo = '.$data.'
         ');
+
+        $query = $query->getRowArray();
+
+        $query['telefone'] = ($query['ddd_fone_residencial'] || $query['fone_residencial']) ? $query['ddd_fone_residencial'].' '.$query['fone_residencial'].' (Residencial) ' : NULL;
+        $query['telefone'] .= ($query['ddd_fone_recado'] || $query['fone_recado']) ? $query['ddd_fone_recado'].' '.$query['fone_recado'].' (Recado) ' : NULL;
+
         /*
         echo $db->getLastQuery();
         echo "<pre>";
-        print_r($query->getResultArray());
+        print_r($query);
         echo "</pre>";
         exit($data);
         #*/
         #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 
-        return $query->getRowArray();
+        return $query;
 
     }
 

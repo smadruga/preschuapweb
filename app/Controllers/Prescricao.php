@@ -29,21 +29,39 @@ class Prescricao extends BaseController
     {
 
         $prescricao = new PrescricaoModel();
+        $medicamento = new PrescricaoMedicamentoModel();
+
         $v['pager'] = \Config\Services::pager();
         $request = \Config\Services::request();
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
 
-        $v['prescricao'] = $prescricao->where('Prontuario', $_SESSION['Paciente']['prontuario'])->findAll();;
+        $v['prescricao'] = $p = $prescricao->read_prescricao($_SESSION['Paciente']['prontuario']);
 
-        #/*
+        if($v['prescricao']['count'] > 0) {
+
+            $m['where'] = null;
+            foreach($p['array'] as $val) {
+                $m['where'] .= $val['idPreschuap_Prescricao'].', ';
+                $m['medicamento'][$val['idPreschuap_Prescricao']] = NULL;
+            }
+            $m['where'] = substr($m['where'], 0, -2);
+
+            $v['medicamento'] = $medicamento->read_medicamento($m);
+
+        }
+
+        /*
         echo "<pre>";
         print_r($v['prescricao']);
         echo "</pre>";
-        exit('oi'.$_SESSION['Paciente']['prontuario']);
+        echo "<pre>";
+        print_r($v['medicamento']);
+        echo "</pre>";
+        #exit('oi'.$_SESSION['Paciente']['prontuario']);
         #*/
 
-        return view('admin/paciente/list_paciente', $v);
+        return view('admin/prescricao/list_prescricao', $v);
 
     }
 

@@ -44,28 +44,61 @@ class PrescricaoModel extends Model
     *
     * @return void
     */
-    public function get_prescricao($data)
+    public function read_prescricao($data)
     {
 
         $db = \Config\Database::connect();
         $query = $db->query('
             SELECT
-
+                p.idPreschuap_Prescricao
+                , p.Prontuario
+                , date_format(p.DataMarcacao, "%d/%m/%Y") as DataMarcacao
+                , date_format(p.DataPrescricao, "%d/%m/%Y") as DataPrescricao
+                , concat("D",p.Dia) as Dia
+                , concat("CICLO ",p.Ciclo) as Ciclo
+                , p.Aplicabilidade
+                , concat(tc.idTabPreschuap_Categoria, " - ", tc.Categoria) as Categoria
+                , concat(ts.idTabPreschuap_Subcategoria, " - ", ts.Subcategoria) as Subcategoria
+                , tp.Protocolo
+                , ttt.TipoTerapia
+                , p.CiclosTotais
+                , p.EntreCiclos
+                , format(p.Peso, 2, "pt_BR") as Peso
+                , format(p.CreatininaSerica, 2, "pt_BR") as CreatininaSerica
+                , p.Altura
+                , u.Nome
+                , p.Status
+                , p.Leito
+                , p.DescricaoServico
+                , tmc.MotivoCancelamento
+                , p.InformacaoComplementar
+                , p.ReacaoAdversa
+                , ta.Alergia
             FROM
-                aip_pacientes
+                preschuapweb.Preschuap_Prescricao as p
+                    left join TabPreschuap_Categoria as tc on p.idTabPreschuap_Categoria = tc.idTabPreschuap_Categoria
+                    left join TabPreschuap_Subcategoria as ts on p.idTabPreschuap_Subcategoria = ts.idTabPreschuap_Subcategoria
+                    left join TabPreschuap_Protocolo as tp on p.idTabPreschuap_Protocolo = tp.idTabPreschuap_Protocolo
+                    left join TabPreschuap_TipoTerapia as ttt on p.idTabPreschuap_TipoTerapia = ttt.idTabPreschuap_TipoTerapia
+                    left join Sishuap_Usuario as u on p.idSishuap_Usuario = u.idSishuap_Usuario
+                    left join TabPreschuap_MotivoCancelamento as tmc on p.idTabPreschuap_Subcategoria = tmc.idTabPreschuap_MotivoCancelamento
+                    left join TabPreschuap_Alergia as ta on p.idTabPreschuap_Subcategoria = ta.idTabPreschuap_Alergia
             WHERE
-                codigo = '.$data.'
+                p.Prontuario = '.$data.'
         ');
         /*
         echo $db->getLastQuery();
         echo "<pre>";
         print_r($query->getResultArray());
         echo "</pre>";
-        exit($data);
+        exit($data.' <> '.$query->getNumRows());
         #*/
         #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 
-        return $query->getRowArray();
+        $r['array'] = $query->getResultArray();
+        $r['count'] = $query->getNumRows();
+
+        return $r;
 
     }
 
