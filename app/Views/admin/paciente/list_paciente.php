@@ -1,5 +1,5 @@
-<?= $this->extend('layouts/main_admin') ?>
-<?= $this->section('content') ?>
+<?= $this->extend('layouts/main_content') ?>
+<?= $this->section('subcontent') ?>
 
 <main class="container">
     <div class="text-center">

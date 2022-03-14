@@ -17,6 +17,8 @@
         <link href="<?= base_url('/assets/css/bootswatch-flatly-bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?= base_url('/assets/fontawesome-free-6.0.0-web/css/all.min.css') ?>" rel="stylesheet">
 
+        <link href="<?= base_url('/assets/css/apphuap.css') ?>" rel="stylesheet">
+
         <!-- Favicons -->
         <link href="<?= base_url('/favicon.ico') ?>" rel="shortcut icon" type="image/png"/>
         <link href="<?= base_url('/assets/img/caduceus/caduceus-128.png') ?>" sizes="180x180" rel="apple-touch-icon">
@@ -28,8 +30,6 @@
     </head>
     <body>
 
-        <?= $this->include('layouts/uppernavbar') ?>
-        <br />
         <?= $this->renderSection('content') ?>
 
         <script src="<?= base_url('/assets/js/jquery-3.6.0.min.js') ?>" crossorigin="anonymous"></script>

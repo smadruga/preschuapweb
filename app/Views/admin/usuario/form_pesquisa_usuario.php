@@ -1,5 +1,5 @@
-<?= $this->extend('layouts/main_admin') ?>
-<?= $this->section('content') ?>
+<?= $this->extend('layouts/main_content') ?>
+<?= $this->section('subcontent') ?>
 
 <main class="container">
     <form method="post" action="<?= base_url('admin/get_user') ?>">

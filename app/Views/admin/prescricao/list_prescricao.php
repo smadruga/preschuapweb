@@ -26,10 +26,10 @@
                     <b>Prescrição #<?= $v['idPreschuap_Prescricao'] ?></b>
                 </button>
             </h2>
-            <div id="collapse<?= $v['idPreschuap_Prescricao'] ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $v['idPreschuap_Prescricao'] ?>">
+            <div id="collapse<?= $v['idPreschuap_Prescricao'] ?>" class="accordion-collapse" aria-labelledby="heading<?= $v['idPreschuap_Prescricao'] ?>">
                 <div class="accordion-body">
                     <div>
-                        <a class="btn btn-primary" href="#" role="button">Link</a>
+                        <a class="btn btn-primary" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
                         <button class="btn btn-primary" type="submit">Button</button>
                         <input class="btn btn-primary" type="button" value="Input">
                         <input class="btn btn-primary" type="submit" value="Submit">
@@ -92,7 +92,7 @@
                         <br />
 
                         <div class="row">
-                            <div class="col"><b>Prescritor:</b> <?= $v['Nome'] ?></div>
+                            <div class="col"><b>Médico(a) Prescritor(a):</b> <?= $v['Nome'] ?></div>
                         </div>
 
                         <hr />

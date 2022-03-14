@@ -44,8 +44,10 @@ class PrescricaoModel extends Model
     *
     * @return void
     */
-    public function read_prescricao($data)
+    public function read_prescricao($data, $buscaid = FALSE)
     {
+
+        $where = ($buscaid) ? 'p.idPreschuap_Prescricao = '.$data : 'p.Prontuario = '.$data;
 
         $db = \Config\Database::connect();
         $query = $db->query('
@@ -84,7 +86,7 @@ class PrescricaoModel extends Model
                     left join TabPreschuap_MotivoCancelamento as tmc on p.idTabPreschuap_Subcategoria = tmc.idTabPreschuap_MotivoCancelamento
                     left join TabPreschuap_Alergia as ta on p.idTabPreschuap_Subcategoria = ta.idTabPreschuap_Alergia
             WHERE
-                p.Prontuario = '.$data.'
+                '.$where.'
         ');
         /*
         echo $db->getLastQuery();

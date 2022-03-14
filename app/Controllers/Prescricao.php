@@ -36,12 +36,12 @@ class Prescricao extends BaseController
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
 
-        $v['prescricao'] = $p = $prescricao->read_prescricao($_SESSION['Paciente']['prontuario']);
+        $v['prescricao'] = $prescricao->read_prescricao($_SESSION['Paciente']['prontuario']);
 
         if($v['prescricao']['count'] > 0) {
 
             $m['where'] = null;
-            foreach($p['array'] as $val) {
+            foreach($v['prescricao']['array'] as $val) {
                 $m['where'] .= $val['idPreschuap_Prescricao'].', ';
                 $m['medicamento'][$val['idPreschuap_Prescricao']] = NULL;
             }
@@ -62,6 +62,45 @@ class Prescricao extends BaseController
         #*/
 
         return view('admin/prescricao/list_prescricao', $v);
+
+    }
+
+    /**
+    * Gera a versão para impressão da Prescrição Médica
+    *
+    * @return mixed
+    */
+    public function print_prescricao($data)
+    {
+
+        $prescricao = new PrescricaoModel();
+        $medicamento = new PrescricaoMedicamentoModel();
+
+        #Inicia a classe de funções próprias
+        $v['func'] = new HUAP_Functions();
+
+        $v['prescricao'] = $prescricao->read_prescricao($data, TRUE);
+
+        if($v['prescricao']['count'] > 0) {
+
+            $m['where'] = $data;
+            $m['medicamento'][$data] = NULL;
+
+            $v['medicamento'] = $medicamento->read_medicamento($m);
+
+        }
+
+        /*
+        echo "<pre>";
+        print_r($v['prescricao']);
+        echo "</pre>";
+        echo "<pre>";
+        print_r($v['medicamento']);
+        echo "</pre>";
+        #exit('oi'.$_SESSION['Paciente']['prontuario']);
+        #*/
+
+        return view('admin/prescricao/print_prescricao', $v);
 
     }
 

@@ -1,5 +1,7 @@
 <?= $this->extend('layouts/main_admin') ?>
 <?= $this->section('content') ?>
+<?= $this->include('layouts/uppernavbar') ?>
+<br />
 
 <main class="container">
 
