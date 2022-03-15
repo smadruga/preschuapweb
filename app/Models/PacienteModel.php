@@ -45,7 +45,8 @@ class PacienteModel extends Model
                 codigo
                 , nome
                 , nome_mae
-                , dt_nascimento
+                , to_char(dt_nascimento, \'DD/MM/YYYY\') as dt_nascimento
+                , extract(year from age(dt_nascimento)) as idade
                 , sexo
                 , cpf
                 , prontuario

@@ -15,6 +15,40 @@ class HUAP_Functions
     }
 
     /**
+    * Função que calcula o IMC
+    *
+    * Fórmula: IMC = P/(A^2)
+    *   onde:
+    *   P = Peso (em quilogramas (Kg))
+    *   A = Altura (em metros (m))
+    *
+    * @return double
+    */
+    function calc_imc($peso, $altura) {
+
+        return number_format((str_replace(',', '.',$peso)/(($altura/100)**2)), 2, ',', '');
+
+    }
+
+    /**
+    * Função que calcula a Área da superfície corporal (método Du Bois)
+    *
+    * Fórmula S=0,007184*X^{0,425}*Y^{0,725}
+    *   onde:
+    *   S = Área da superfície do corpo (em metros quadrados (m²))
+    *   X = Peso (em quilogramas (Kg))
+    *   Y = Altura (em centímetros (cm))
+    *
+    * @return double
+    */
+    function calc_sc($peso, $altura) {
+
+        #return ( (0.007184)*((str_replace(',', '.',$peso)**(0.425)*($altura**(0.725))) );
+        return number_format(( (0.007184) * (str_replace(',', '.',$peso)**(0.425)) * ($altura**(0.725)) ), 2, ',', '');
+
+    }
+
+    /**
     * Função que retorna o sexo por extenso
     *
     * @return varchar

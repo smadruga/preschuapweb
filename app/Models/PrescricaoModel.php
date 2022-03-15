@@ -57,18 +57,20 @@ class PrescricaoModel extends Model
                 , date_format(p.DataMarcacao, "%d/%m/%Y") as DataMarcacao
                 , date_format(p.DataPrescricao, "%d/%m/%Y") as DataPrescricao
                 , concat("D",p.Dia) as Dia
-                , concat("CICLO ",p.Ciclo) as Ciclo
+                , p.Ciclo
                 , p.Aplicabilidade
                 , concat(tc.idTabPreschuap_Categoria, " - ", tc.Categoria) as Categoria
                 , concat(ts.idTabPreschuap_Subcategoria, " - ", ts.Subcategoria) as Subcategoria
                 , tp.Protocolo
+                , tp.Observacoes
                 , ttt.TipoTerapia
                 , p.CiclosTotais
                 , p.EntreCiclos
                 , format(p.Peso, 2, "pt_BR") as Peso
                 , format(p.CreatininaSerica, 2, "pt_BR") as CreatininaSerica
-                , p.Altura
+                , Altura
                 , u.Nome
+                , u.Cpf
                 , p.Status
                 , p.Leito
                 , p.DescricaoServico
@@ -101,6 +103,37 @@ class PrescricaoModel extends Model
         $r['count'] = $query->getNumRows();
 
         return $r;
+
+    }
+
+    /**
+    * Tela inicial do preschuapweb
+    *
+    * @return void
+    */
+    public function get_conselho($data)
+    {
+
+        $db = \Config\Database::connect('aghux');
+        $query = $db->query('
+            SELECT
+                concat(cpr_sigla, \'-\',nro_reg_conselho) as conselho
+            FROM
+                agh.v_rap_servidor_conselho
+            WHERE
+                cpf = '.$data.'
+        ');
+
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit($data);
+        #*/
+        #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
+        $query = $query->getRowArray();
+        return $query['conselho'];
 
     }
 

@@ -24,7 +24,7 @@
             </tr>
             <tr>
                 <td width="30%"><i class="fa-solid fa-cake-candles"></i> Data de Nascimento:</td>
-                <td><b><?= $func->mascara_data($_SESSION['Paciente']['dt_nascimento'], 'barras', TRUE, FALSE, TRUE) ?></b></td>
+                <td><b><?= $_SESSION['Paciente']['dt_nascimento'].' - '.$_SESSION['Paciente']['idade'].' anos' ?></b></td>
             </tr>
             <?php
                 if($_SESSION['Paciente']['sexo'] == 'M')

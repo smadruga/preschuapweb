@@ -29,7 +29,7 @@
             <div id="collapse<?= $v['idPreschuap_Prescricao'] ?>" class="accordion-collapse" aria-labelledby="heading<?= $v['idPreschuap_Prescricao'] ?>">
                 <div class="accordion-body">
                     <div>
-                        <a class="btn btn-primary" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
+                        <a class="btn btn-primary" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
                         <button class="btn btn-primary" type="submit">Button</button>
                         <input class="btn btn-primary" type="button" value="Input">
                         <input class="btn btn-primary" type="submit" value="Submit">

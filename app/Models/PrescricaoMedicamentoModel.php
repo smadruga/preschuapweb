@@ -34,16 +34,16 @@ class PrescricaoMedicamentoModel extends Model
                 pm.idPreschuap_Prescricao_Medicamento
                 , pm.idPreschuap_Prescricao
                 , pm.idTabPreschuap_Protocolo_Medicamento
-                , pm.Ajuste
-                , pm.Calculo
+                , if(pm.Ajuste is not null, format(pm.Ajuste, 2, "pt_BR"), "-")  as Ajuste
+                , format(pm.Calculo, 2, "pt_BR") as Calculo
                 , tpm.idTabPreschuap_Protocolo
                 , tpm.OrdemInfusao
                 , tet.EtapaTerapia
                 , tm.Medicamento
-                , concat(tpm.Dose," ",tum.Representacao) as Dose
+                , concat(format(tpm.Dose, 2, "pt_BR")," ",tum.Representacao) as Dose
                 , tva.ViaAdministracao
                 , td.Diluente
-                , tpm.Volume
+                , format(tpm.Volume, 2, "pt_BR") as Volume
                 , tpm.TempoInfusao
                 , tps.Posologia
             FROM
