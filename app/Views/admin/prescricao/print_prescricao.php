@@ -5,7 +5,7 @@
 foreach($prescricao['array'] as $v) {
 ?>
 
-<table class="table" style="width:297mm;height:210mm;font-size:80%;">
+<table class="table ms-1" style="width:270mm;font-size:80%;">
     <thead>
         <tr>
             <td class="border-0" colspan="11">
@@ -119,6 +119,7 @@ foreach($prescricao['array'] as $v) {
                             <div class="row">
                                 <div class="col"><b>Unidade de Internação:</b> --- </div>
                             </div>
+                            <br />
                         </div>
                     </div>
                     <div class="row">
@@ -126,7 +127,7 @@ foreach($prescricao['array'] as $v) {
                             <div class="col"><b>Reações Adversas Anteriores:</b> <?= nl2br($v['ReacaoAdversa']) ?></div>
                         </div>
                         <div class="col border border-dark border-start-0">
-                            <div class="col"><b>Observações do Protocolo:</b> <?= $v['Observacoes'] ?></div>
+                            <div class="col"><b>Observações do Protocolo:</b> <?= $v['Observacoes'] ?><br /><br /></div>
                         </div>
                     </div>
                     <div class="row">
@@ -139,7 +140,7 @@ foreach($prescricao['array'] as $v) {
                         <div class="col border border-dark border-top-0 border-start-0">
                             <div class="col">
                                 <b>Médico(a) Prescritor(a):</b> <?= $v['Nome'] ?><br />
-                                <b>Conselho:</b> <?= $prescricao['conselho'] ?>
+                                <b>Conselho:</b> <?= $prescricao['conselho'] ?><br /><br />
                             </div>
                         </div>
                     </div>
