@@ -67,6 +67,10 @@ $routes->group('admin', function ($routes) {
     $routes->match(['get', 'post'], 'enable_user/(:any)', 'Admin::enable_user/$1');
 });
 
+$routes->group('tabela', function ($routes) {
+    $routes->get('list_tabela/(:any)/(:any)', 'Tabela::list_tabela/$1/$2');
+});
+
 $routes->group('paciente', function ($routes) {
     $routes->add('/', 'Paciente::find_paciente');
     $routes->get('find_paciente', 'Paciente::find_paciente');
@@ -78,6 +82,7 @@ $routes->group('paciente', function ($routes) {
 $routes->group('prescricao', function ($routes) {
     $routes->get('list_prescricao/(:any)', 'Prescricao::list_prescricao/$1');
     $routes->get('print_prescricao/(:any)', 'Prescricao::print_prescricao/$1');
+    $routes->get('page_prescricao', 'Prescricao::page_prescricao');
 });
 
 /*

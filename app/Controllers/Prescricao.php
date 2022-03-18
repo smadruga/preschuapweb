@@ -106,4 +106,28 @@ class Prescricao extends BaseController
 
     }
 
+    /**
+    * Direciona para a página onde o usuário escolhe entre criar uma nova prescrição
+    * ou carregar a última prescrição do paciente.
+    *
+    * @return void
+    */
+    public function page_prescricao()
+    {
+        return view('admin/prescricao/page_prescricao');
+    }
+
+    /**
+    * Cria uma nova prescrição
+    *
+    * @return void
+    */
+    public function create_prescricao()
+    {
+
+
+
+        return view('admin/prescricao/page_prescricao');
+    }
+
 }

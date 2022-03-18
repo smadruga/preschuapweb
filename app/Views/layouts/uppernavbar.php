@@ -14,13 +14,28 @@
             <div class="ps-2 pe-2"></div>
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('paciente/find_paciente') ?>">Prescrição
+                    <a class="nav-link" href="<?= base_url('paciente/find_paciente') ?>"><i class="fa-solid fa-file-medical"></i> Prescrição
                         <span class="visually-hidden"></span>
                     </a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-table"></i> Tabelas</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Alergia') ?>"><i class="fa-solid fa-table-list"></i> Alergia</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Diluente') ?>"><i class="fa-solid fa-table-list"></i> Diluente</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/EtapaTerapia') ?>"><i class="fa-solid fa-table-list"></i> Etapa da Terapia</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Medicamento') ?>"><i class="fa-solid fa-table-list"></i> Medicamento</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/MotivoCancelamento') ?>"><i class="fa-solid fa-table-list"></i> Motivo Cancelamento</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Posologia') ?>"><i class="fa-solid fa-table-list"></i> Posologia</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Protocolo') ?>"><i class="fa-solid fa-table-list"></i> Protocolo</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/TipoTerapia') ?>"><i class="fa-solid fa-table-list"></i> Tipo de Terapia</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/UnidadeMedida') ?>"><i class="fa-solid fa-table-list"></i> Unidade de Medida</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/ViaAdministracao') ?>"><i class="fa-solid fa-table-list"></i> Via de Administração</a>
+                    </div>
+                </li>
                 <?php if (isset($_SESSION['Sessao']['Perfil'][1]) || isset($_SESSION['Sessao']['Perfil'][2]) ) { ?>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Configurações</a>
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-gear"></i> Configurações</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="<?= base_url('admin/find_user') ?>"><i class="fas fa-user"></i> Gerenciar Usuário</a>
                         <!--<div class="dropdown-divider"></div>-->
