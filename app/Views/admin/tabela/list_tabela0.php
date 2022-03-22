@@ -1,7 +1,9 @@
 <?= $this->extend('layouts/main_content') ?>
 <?= $this->section('subcontent') ?>
 
-<main>
+<main class="container">
+
+    <?= $pager->makeLinks($page, $perpage, $count, 'bootstrap') ?>
 
     <table class="table table-hover table-bordered" id="table"
                 data-toggle="table"
@@ -9,8 +11,11 @@
                 data-id-field="Id"
                 data-sortable="true"
                 data-search="true"
+                data-show-fullscreen="true"
                 data-search-highlight="true"
+                data-show-pagination-switch="true"
                 data-pagination="true"
+                data-page-list="[10, 25, 50, 100, all]"
                 >
         <thead>
             <tr>
@@ -38,7 +43,12 @@
             }
             ?>
         </tbody>
-    </table>
+        <tfoot>
+            <tr>
+                <th colspan="5" class="bg-light text-center">Total: <?= $lista->getNumRows().' de '. $count ?> resultado(s).</th>
+            </tr>
+        </tfoot>
+    </table
 
 </main>
 

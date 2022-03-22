@@ -31,17 +31,6 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-
-$routes->get('lista', 'Teste::lista');
-$routes->get('posts', 'Teste::index');
-$routes->get('posts/new', 'Teste::new');
-$routes->post('posts', 'Teste::create');
-$routes->get('posts/(:num)', 'Teste::show/$1');
-$routes->get('posts/edit/(:num)', 'Teste::edit/$1');
-$routes->put('posts/(:num)', 'Teste::update/$1');
-$routes->delete('posts/(:num)', 'Teste::delete/$1');
-
-
 $routes->get('/', 'Home::index');
 
 $routes->group('home', function ($routes) {
@@ -65,6 +54,7 @@ $routes->group('admin', function ($routes) {
     $routes->get('del_perfil', 'Admin::del_perfil');
     $routes->match(['get', 'post'], 'disable_user/(:any)', 'Admin::disable_user/$1');
     $routes->match(['get', 'post'], 'enable_user/(:any)', 'Admin::enable_user/$1');
+    $routes->add('teste', 'Admin::teste');
 });
 
 $routes->group('tabela', function ($routes) {

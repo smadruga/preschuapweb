@@ -37,7 +37,8 @@ class Tabela extends BaseController
 
         #$v['paciente'] = $paciente->get_paciente_bd($_SESSION['pager']['Pesquisar'], $v['perpage'], ($v['perpage']*($v['page']-1)));
 
-        $v['lista'] = $tabela->list_tabela_bd($data, $v['perpage'], ($v['perpage']*($v['page']-1))); #Carrega os itens da tabela selecionada
+        #$v['lista'] = $tabela->list_tabela_bd($data, $v['perpage'], ($v['perpage']*($v['page']-1))); #Carrega os itens da tabela selecionada
+        $v['lista'] = $tabela->list_tabela_bd($data); #Carrega os itens da tabela selecionada
         $v['count'] = $tabela->count_tabela_bd($data); #Retorna o total de itens da tabela selecionada, auxiliando a paginação.
         $v['tabela'] = $data;
 

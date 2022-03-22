@@ -19,6 +19,11 @@ class Admin extends BaseController
 
     }
 
+    public function teste()
+    {
+        return view('admin/teste');
+    }
+
     /**
     * Tela inicial do preschuapweb
     *
