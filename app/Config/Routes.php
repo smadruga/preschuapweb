@@ -58,7 +58,9 @@ $routes->group('admin', function ($routes) {
 });
 
 $routes->group('tabela', function ($routes) {
-    $routes->get('list_tabela/(:any)/(:any)', 'Tabela::list_tabela/$1/$2');
+    #$routes->get('list_tabela/(:any)/(:any)', 'Tabela::list_tabela/$1/$2');
+    #$routes->get('list_tabela/(:any)', 'Tabela::list_tabela/$1');
+    $routes->match(['get', 'post'], 'list_tabela/(:any)', 'Tabela::list_tabela/$1');
 });
 
 $routes->group('paciente', function ($routes) {

@@ -23,6 +23,8 @@ class TabelaModel extends Model
         return $db->query('
             SELECT
                 *
+                , date_format(DataCadastro, "%d/%m/%Y %H:%i") as DataCadastro
+                , date_format(DataUltimaAtualizacao, "%d/%m/%Y %H:%i") as DataUltimaAtualizacao
             FROM
                 TabPreschuap_'.$data.'
             ORDER BY '.$data.' ASC
@@ -44,6 +46,21 @@ class TabelaModel extends Model
 
         $db = \Config\Database::connect();
         return $db->table('TabPreschuap_'.$data)->countAll();;
+
+    }
+
+    /**
+    * Registra o item no banco de dados
+    *
+    * @return array
+    */
+    public function insert_item($data, $tabela)
+    {
+
+        $db = \Config\Database::connect();
+        $builder = $db->table('TabPreschuap_'.$tabela);
+
+        return $builder->insert($data);
 
     }
 

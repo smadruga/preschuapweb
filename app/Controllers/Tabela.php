@@ -28,19 +28,45 @@ class Tabela extends BaseController
     {
 
         $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
-        $request = \Config\Services::request(); #Inicia o recurso de request
+        $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
+        $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
         $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
 
-        $v['pager'] = \Config\Services::pager(); #Inicia o recurso de paginação
-        $v['page'] = ($request->getVar('page')) ? $request->getVar('page', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : 1; #Página a ser carregada
-        $v['perpage'] = 25; #Itens por página
-
-        #$v['paciente'] = $paciente->get_paciente_bd($_SESSION['pager']['Pesquisar'], $v['perpage'], ($v['perpage']*($v['page']-1)));
-
-        #$v['lista'] = $tabela->list_tabela_bd($data, $v['perpage'], ($v['perpage']*($v['page']-1))); #Carrega os itens da tabela selecionada
         $v['lista'] = $tabela->list_tabela_bd($data); #Carrega os itens da tabela selecionada
-        $v['count'] = $tabela->count_tabela_bd($data); #Retorna o total de itens da tabela selecionada, auxiliando a paginação.
         $v['tabela'] = $data;
+
+        #Captura os inputs do Formulário
+        $v['data'] = $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if(isset($v['data']['Item'])) {
+
+            #Critérios de validação
+            $inputs = $this->validate([
+                'Item' => 'required',
+            ]);
+
+            #Realiza a validação e retorna ao formulário se false
+            if (!$inputs)
+                $v['validation'] = $this->validator;
+            else {
+
+                $v['data'][$v['tabela']] = trim($v['data']['Item']);
+                unset($v['data']['csrf_test_name'],$v['data']['Item']);
+
+                $v['campos'] = array_keys($v['data']);
+                $v['anterior'] = array();
+
+                $v['id'] = $tabela->insert_item($v['data'], $v['tabela']);
+
+                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_'.$v['tabela'], 'CREATE', $v['id']), TRUE);
+                $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
+
+                session()->setFlashdata('success', 'Item adicionado com sucesso!');
+                return redirect()->to('tabela/list_tabela/'.$v['tabela']);
+
+            }
+
+        }
 
         /*
         echo "<pre>";
