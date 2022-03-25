@@ -20,6 +20,83 @@ class Tabela extends BaseController
     }
 
     /**
+    * Desabilita item da tabela
+    *
+    * @return mixed
+    */
+    public function manage_item($tab = FALSE, $data = FALSE, $manage = FALSE)
+    {
+
+        $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
+        $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
+        $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
+        $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
+
+        $v['tabela'] = $tab;
+        $v['id'] = $data;
+
+        if($manage == 1) {
+            $v['opt'] = [
+                'form'      => 'manage_item',
+                'bg'        => 'bg-danger',
+                'button'    => '<button class="btn btn-danger" type="submit"><i class="fa-solid fa-ban"></i> Desabilitar</button>',
+                'title'     => 'Desabilitar item - Tabela: '.$tab.' - Tem certeza que deseja desabilitar o item abaixo?',
+                'disabled'  => 'disabled',
+                'manage'    => '<input type="hidden" name="manage" value="1" />',
+            ];
+        }
+        else {
+            $v['opt'] = [
+                'form'      => 'manage_item',
+                'bg'        => 'bg-info',
+                'button'    => '<button class="btn btn-info" type="submit"><i class="fa-solid fa-circle-exclamation"></i> Habilitar</button>',
+                'title'     => 'Habilitar item - Tabela: '.$tab,
+                'disabled'  => 'disabled',
+                'manage'    => '<input type="hidden" name="manage" value="0" />',
+            ];
+        }
+
+        #Captura os inputs do Formulário
+        $v['data'] = $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if(isset($v['data']['idTabPreschuap_'.$v['tabela']])) {
+
+            $v['id'] = $v['data']['idTabPreschuap_'.$v['tabela']];
+            $v['data']['Inativo'] = ($v['data']['manage'] == 1) ? 1 : 0;
+            unset($v['data']['csrf_test_name'],$v['data']['Item'], $v['data']['idTabPreschuap_'.$v['tabela']], $v['data']['manage']);
+
+
+            $v['campos'] = array_keys($v['data']);
+            $v['anterior'] = $tabela->get_item($v['id'], $v['tabela']);
+
+            if($tabela->update_item($v['data'], $v['tabela'], $v['id']) ) {
+
+                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_'.$v['tabela'], 'UPDATE', $v['id']), TRUE);
+                $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
+
+                session()->setFlashdata('success', 'Item atualizado com sucesso!');
+                return redirect()->to('tabela/list_tabela/'.$v['tabela']);
+
+            }
+            else {
+
+                session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+                return redirect()->to('tabela/list_tabela/'.$v['tabela']);
+
+            }
+
+        }
+        else {
+
+            $v['data'] = $tabela->get_item($data, $tab);
+            $v['data']['Item'] = $v['data'][$tab];
+
+        }
+
+        return view('admin/tabela/form_tabela', $v);
+    }
+
+    /**
     * Lista as prescrições associadas ao paciente
     *
     * @return mixed
@@ -34,7 +111,14 @@ class Tabela extends BaseController
 
         $v['tabela'] = $tab;
         $v['id'] = $data;
-        $v['opt'] = 'edit_item';
+        $v['opt'] = [
+            'form'      => 'edit_item',
+            'bg'        => 'bg-warning',
+            'button'    => '<button class="btn btn-warning" type="submit"><i class="fa-solid fa-save"></i> Gravar</button>',
+            'title'     => 'Editar item - Tabela: '.$tab,
+            'disabled'  => '',
+            'manage'    => '',
+        ];
 
         #Captura os inputs do Formulário
         $v['data'] = $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -58,22 +142,6 @@ class Tabela extends BaseController
                 $v['campos'] = array_keys($v['data']);
                 $v['anterior'] = $tabela->get_item($v['id'], $v['tabela']);
 
-                #/*
-                echo "<pre>";
-                print_r($v['data']);
-                echo "</pre>";
-                echo "<pre>";
-                print_r($v['campos']);
-                echo "</pre>";
-                echo "<pre>";
-                print_r($v['anterior']);
-                echo "</pre>";
-                echo "<pre>";
-                print_r($v['func']);
-                echo "</pre>";
-                #exit('oi >> '.$v['tabela'].' <> '.$v['id']);
-                #*/
-
                 if($tabela->update_item($v['data'], $v['tabela'], $v['id']) ) {
 
                     $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_'.$v['tabela'], 'UPDATE', $v['id']), TRUE);
@@ -90,8 +158,6 @@ class Tabela extends BaseController
 
                 }
 
-
-
             }
 
         }
@@ -101,14 +167,6 @@ class Tabela extends BaseController
             $v['data']['Item'] = $v['data'][$tab];
 
         }
-
-
-                    /*
-                    echo "<pre>";
-                    print_r($v['data']);
-                    echo "</pre>";
-                    #exit('oi');
-                    #*/
 
         return view('admin/tabela/form_tabela', $v);
     }

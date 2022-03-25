@@ -23,8 +23,7 @@ class TabelaModel extends Model
         return $db->query('
             SELECT
                 *
-                , date_format(DataCadastro, "%d/%m/%Y %H:%i") as DataCadastro
-                , date_format(DataUltimaAtualizacao, "%d/%m/%Y %H:%i") as DataUltimaAtualizacao
+                , date_format(DataCadastro, "%d/%m/%Y %H:%i") as Cadastro
             FROM
                 TabPreschuap_'.$data.'
             ORDER BY '.$data.' ASC

@@ -37,12 +37,11 @@
                 data-id-field="Id"
                 data-sortable="true"
                 data-search="true"
-                data-search-highlight="true"
                 data-pagination="true"
                 >
         <thead>
             <tr>
-                <th scope="col" colspan="6" class="bg-light text-center">Tabela: <?= $tabela ?></th>
+                <th scope="col" colspan="5" class="bg-light text-center">Tabela: <?= $tabela ?></th>
             </tr>
             <tr>
                 <th scope="col" class="col-1" data-field="Id" data-sortable="true">Id</th>
@@ -55,17 +54,26 @@
         <tbody>
             <?php
             foreach($lista->getResultArray() as $v) {
-                $v['Inativo'] = (!$v['Inativo']) ? 'ATIVO' : 'INATIVO';
+                if (!$v['Inativo']) {
+                    $v['Inativo'] = '<span class="badge rounded-pill bg-success">ATIVO</span>';
+                    $manage = '<a href="'.base_url('tabela/manage_item/'.$tabela.'/'.$v['idTabPreschuap_'.$tabela].'/1').'" type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Desabilitar"><i class="fa-solid fa-ban"></i></a>';
+                }
+                else {
+                    $v['Inativo'] = '<span class="badge rounded-pill bg-danger">INATIVO</span>';
+                    $manage = '<a href="'.base_url('tabela/manage_item/'.$tabela.'/'.$v['idTabPreschuap_'.$tabela].'/0').'" type="button" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar"><i class="fa-solid fa-circle-exclamation"></i></a>';
+                }
+
+                $diff = ($func->dateDifference($v['DataCadastro'], date('Y-m-d H:i')) < 7 ) ? '<a href="'.base_url('tabela/edit_item/'.$tabela.'/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" ><i class="fa-solid fa-pen-to-square"></i></a>' : NULL;
+
                 echo '
                 <tr>
                     <td>'.$v['idTabPreschuap_'.$tabela].'</td>
                     <td>'.$v[$tabela].'</td>
                     <td>'.$v['Inativo'].'</d>
-                    <td>'.$v['DataCadastro'].'</td>
-                    <td>
-                        <a href="'.base_url('tabela/edit_item/'.$tabela.'/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" ><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir"><i class="fa-solid fa-trash-can"></i></a>
-                        <a type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Cancelar"><i class="fa-solid fa-ban"></i></a>
+                    <td>'.$v['Cadastro'].'</td>
+                    <td class="text-center">
+                        '.$diff.'
+                        '.$manage.'
                     </td>
                 </tr>
                 ';

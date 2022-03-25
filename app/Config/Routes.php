@@ -60,7 +60,7 @@ $routes->group('admin', function ($routes) {
 $routes->group('tabela', function ($routes) {
     $routes->match(['get', 'post'], 'list_tabela/(:any)', 'Tabela::list_tabela/$1');
     $routes->get('edit_item', 'Tabela::edit_item');
-    $routes->post('save_item', 'Tabela::save_item');
+    $routes->post('manage_item', 'Tabela::manage_item');
 });
 
 $routes->group('paciente', function ($routes) {
