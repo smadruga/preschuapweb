@@ -50,6 +50,22 @@ class TabelaModel extends Model
     }
 
     /**
+    * Atualiza o item no banco de dados
+    *
+    * @return array
+    */
+    public function update_item($data, $tabela, $id)
+    {
+
+        $db = \Config\Database::connect();
+        $builder = $db->table('TabPreschuap_'.$tabela);
+
+        $builder->where(['idTabPreschuap_'.$tabela => $id]);
+        return $builder->update($data);
+
+    }
+
+    /**
     * Registra o item no banco de dados
     *
     * @return array
@@ -61,6 +77,21 @@ class TabelaModel extends Model
         $builder = $db->table('TabPreschuap_'.$tabela);
 
         return $builder->insert($data);
+
+    }
+
+    /**
+    * Retorna o item no banco de dados de acordo com seu id
+    *
+    * @return array
+    */
+    public function get_item($data, $tabela)
+    {
+
+        $db = \Config\Database::connect();
+        $builder = $db->table('TabPreschuap_'.$tabela);
+
+        return $builder->getWhere(['idTabPreschuap_'.$tabela => $data])->getRowArray();
 
     }
 
