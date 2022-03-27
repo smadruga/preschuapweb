@@ -3,7 +3,7 @@
 
 <main>
 
-    <form method="post" action="<?= base_url('tabela/list_tabela/'.$tabela) ?>">
+    <form method="post" action="<?= base_url('tabela/'.$opt['form'].'/'.$tabela) ?>">
         <?= csrf_field() ?>
         <?php $validation = \Config\Services::validation(); ?>
 
@@ -19,7 +19,7 @@
                             <label for="Item" class="form-label"><b>Item</b></label>
                             <div class="input-group mb-3">
                                 <input type="text" id="Item" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>" autofocus name="Item" value="<?php echo $data['Item']; ?>"/>
-
+                                <?= $opt['button'] ?>
                                 <?php if ($validation->getError('Item')): ?>
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('Item') ?>
@@ -33,8 +33,8 @@
                         <div class="col">
                             <label for="Codigo" class="form-label"><b>Abreviação</b></label>
                             <div class="input-group mb-3">
-                                <input type="text" id="Codigo" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Codigo')): ?>is-invalid<?php endif ?>" autofocus maxlength="10" name="Codigo" value="<?php echo $data['Codigo']; ?>"/>
-
+                                <input type="text" id="Codigo" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Codigo')): ?>is-invalid<?php endif ?>" autofocus maxlength="10" name="Codigo" value="<?php echo set_value('Codigo'); ?>"/>
+                                <?= $opt['button'] ?>
                                 <?php if ($validation->getError('Codigo')): ?>
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('Codigo') ?>
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <br />
-                    <?= $opt['button'] ?>
+                    <button class="btn btn-info" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>
                 <?php } else { ?>
                     <label for="Item" class="form-label"><b>Item</b></label>
                     <div class="input-group mb-3">
@@ -66,23 +66,14 @@
 
             </div>
         </div>
-        <?php if($opt['action'] == 'editar' || $opt['action'] == 'habilitar' || $opt['action'] == 'desabilitar') { ?>
-        <input type="hidden" name="idTabPreschuap_<?= $tabela ?>" value="<?= $data['idTabPreschuap_'.$tabela] ?>" />
-        <?php } ?>
-        <input type="hidden" name="action" value="<?= $opt['action'] ?>" />
+        <input type="hidden" name="idTabPreschuap_<?= $tabela ?>" value="<?=$data['idTabPreschuap_'.$tabela] ?>" />
+        <?= $opt['manage'] ?>
     </form>
 
-    <?php
-        if (isset($lista))
-            echo $this->include('admin/tabela/list_tabela');
-        else
-            echo '
-                <div class="text-center">
-                    <br /><br />
-                    <a class="btn btn-warning" href="'.previous_url(-1).'"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
-                </div>
-            ';
-    ?>
+    <div class="text-center">
+        <br /><br />
+        <a class="btn btn-warning" href="<?= previous_url(-1) ?>"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+    </div>
 
 </main>
 

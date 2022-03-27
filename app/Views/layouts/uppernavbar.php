@@ -29,7 +29,6 @@
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Posologia') ?>"><i class="fa-solid fa-table-list"></i> Posologia</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Protocolo') ?>"><i class="fa-solid fa-table-list"></i> Protocolo</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/TipoTerapia') ?>"><i class="fa-solid fa-table-list"></i> Tipo de Terapia</a>
-                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/UnidadeMedida') ?>"><i class="fa-solid fa-table-list"></i> Unidade de Medida</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/ViaAdministracao') ?>"><i class="fa-solid fa-table-list"></i> Via de Administração</a>
                     </div>
                 </li>

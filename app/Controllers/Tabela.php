@@ -20,88 +20,11 @@ class Tabela extends BaseController
     }
 
     /**
-    * Desabilita item da tabela
-    *
-    * @return mixed
-    */
-    public function manage_item($tab = FALSE, $data = FALSE, $manage = FALSE)
-    {
-
-        $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
-        $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
-        $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
-        $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
-
-        $v['tabela'] = $tab;
-        $v['id'] = $data;
-
-        if($manage == 1) {
-            $v['opt'] = [
-                'form'      => 'manage_item',
-                'bg'        => 'bg-danger',
-                'button'    => '<button class="btn btn-danger" type="submit"><i class="fa-solid fa-ban"></i> Desabilitar</button>',
-                'title'     => 'Desabilitar item - Tabela: '.$tab.' - Tem certeza que deseja desabilitar o item abaixo?',
-                'disabled'  => 'disabled',
-                'manage'    => '<input type="hidden" name="manage" value="1" />',
-            ];
-        }
-        else {
-            $v['opt'] = [
-                'form'      => 'manage_item',
-                'bg'        => 'bg-info',
-                'button'    => '<button class="btn btn-info" type="submit"><i class="fa-solid fa-circle-exclamation"></i> Habilitar</button>',
-                'title'     => 'Habilitar item - Tabela: '.$tab,
-                'disabled'  => 'disabled',
-                'manage'    => '<input type="hidden" name="manage" value="0" />',
-            ];
-        }
-
-        #Captura os inputs do Formulário
-        $v['data'] = $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-        if(isset($v['data']['idTabPreschuap_'.$v['tabela']])) {
-
-            $v['id'] = $v['data']['idTabPreschuap_'.$v['tabela']];
-            $v['data']['Inativo'] = ($v['data']['manage'] == 1) ? 1 : 0;
-            unset($v['data']['csrf_test_name'],$v['data']['Item'], $v['data']['idTabPreschuap_'.$v['tabela']], $v['data']['manage']);
-
-
-            $v['campos'] = array_keys($v['data']);
-            $v['anterior'] = $tabela->get_item($v['id'], $v['tabela']);
-
-            if($tabela->update_item($v['data'], $v['tabela'], $v['id']) ) {
-
-                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_'.$v['tabela'], 'UPDATE', $v['id']), TRUE);
-                $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
-
-                session()->setFlashdata('success', 'Item atualizado com sucesso!');
-                return redirect()->to('tabela/list_tabela/'.$v['tabela']);
-
-            }
-            else {
-
-                session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
-                return redirect()->to('tabela/list_tabela/'.$v['tabela']);
-
-            }
-
-        }
-        else {
-
-            $v['data'] = $tabela->get_item($data, $tab);
-            $v['data']['Item'] = $v['data'][$tab];
-
-        }
-
-        return view('admin/tabela/form_tabela', $v);
-    }
-
-    /**
     * Lista as prescrições associadas ao paciente
     *
     * @return mixed
     */
-    public function edit_item($tab = FALSE, $data = FALSE)
+    public function list_tabela($tab = FALSE, $action = FALSE, $data = FALSE)
     {
 
         $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
@@ -110,37 +33,85 @@ class Tabela extends BaseController
         $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
 
         $v['tabela'] = $tab;
-        $v['id'] = $data;
-        $v['opt'] = [
-            'form'      => 'edit_item',
-            'bg'        => 'bg-warning',
-            'button'    => '<button class="btn btn-warning" type="submit"><i class="fa-solid fa-save"></i> Gravar</button>',
-            'title'     => 'Editar item - Tabela: '.$tab,
-            'disabled'  => '',
-            'manage'    => '',
-        ];
+        $action = (!$action) ? $this->request->getVar('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
+
+        if($action == 'editar' || $action == 'habilitar' || $action == 'desabilitar') {
+
+            $v['id'] = $data;
+
+            if($action == 'editar')
+                $v['opt'] = [
+                    'bg'        => 'bg-warning',
+                    'button'    => '<button class="btn btn-warning" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
+                    'title'     => 'Editar item - Tabela: '.$v['tabela'],
+                    'disabled'  => '',
+                    'action'    => 'editar',
+                ];
+            if($action == 'desabilitar')
+                $v['opt'] = [
+                    'bg'        => 'bg-danger',
+                    'button'    => '<button class="btn btn-danger" type="submit"><i class="fa-solid fa-ban"></i> Desabilitar</button>',
+                    'title'     => 'Desabilitar item - Tabela: '.$v['tabela'].' - Tem certeza que deseja desabilitar o item abaixo?',
+                    'disabled'  => 'disabled',
+                    'action'    => 'desabilitar',
+                ];
+            if($action == 'habilitar')
+                $v['opt'] = [
+                    'bg'        => 'bg-info',
+                    'button'    => '<button class="btn btn-info" type="submit"><i class="fa-solid fa-circle-exclamation"></i> Habilitar</button>',
+                    'title'     => 'Habilitar item - Tabela: '.$v['tabela'],
+                    'disabled'  => 'disabled',
+                    'action'    => 'habilitar',
+                ];
+
+        }
+        else {
+
+            $v['lista'] = $tabela->list_tabela_bd($tab); #Carrega os itens da tabela selecionada
+
+            $v['opt'] = [
+                'bg'        => 'bg-secondary',
+                'button'    => '<button class="btn btn-info" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>',
+                'title'     => 'Cadastrar item - Tabela: '.$v['tabela'],
+                'disabled'  => '',
+                'action'    => 'cadastrar',
+            ];
+
+        }
 
         #Captura os inputs do Formulário
-        $v['data'] = $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-        if(isset($v['data']['Item'])) {
+        if($v['tabela'] == 'ViaAdministracao')
+            $v['tab']['colspan'] = 6;
+        else
+            $v['tab']['colspan'] = 5;
 
-            #Critérios de validação
-            $inputs = $this->validate([
-                'Item' => 'required',
-            ]);
+        if($action == 'habilitar' || $action == 'desabilitar') {
 
-            #Realiza a validação e retorna ao formulário se false
-            if (!$inputs)
-                $v['validation'] = $this->validator;
-            else {
+            if(isset($v['data']['idTabPreschuap_'.$v['tabela']])) {
 
-                $v['data'][$v['tabela']] = trim($v['data']['Item']);
                 $v['id'] = $v['data']['idTabPreschuap_'.$v['tabela']];
-                unset($v['data']['csrf_test_name'],$v['data']['Item'], $v['data']['idTabPreschuap_'.$v['tabela']]);
+                $v['data']['Inativo'] = ($v['data']['action'] == 'desabilitar') ? 1 : 0;
+                unset(
+                    $v['data']['csrf_test_name'],
+                    $v['data']['Item'],
+                    $v['data']['idTabPreschuap_'.$v['tabela']],
+                    $v['data']['action']
+                );
 
                 $v['campos'] = array_keys($v['data']);
                 $v['anterior'] = $tabela->get_item($v['id'], $v['tabela']);
+
+                /*
+                echo "<pre>";
+                print_r($v);
+                echo "</pre>";
+                echo "<pre>";
+                print_r($v['data']);
+                echo "</pre>";
+                exit('oi');
+                #*/
 
                 if($tabela->update_item($v['data'], $v['tabela'], $v['id']) ) {
 
@@ -159,62 +130,104 @@ class Tabela extends BaseController
                 }
 
             }
+            else {
 
+                $v['data'] = $tabela->get_item($data, $tab);
+                $v['data']['Item'] = $v['data'][$tab];
+
+            }
         }
         else {
 
-            $v['data'] = $tabela->get_item($data, $tab);
-            $v['data']['Item'] = $v['data'][$tab];
+            if(isset($v['data']['Item'])) {
 
-        }
+                if($v['tabela'] == 'ViaAdministracao')
+                    #Critérios de validação
+                    $inputs = $this->validate([
+                        'Item' => 'required',
+                        'Codigo' => ['label' => 'Abreviação', 'rules' => 'required'],
+                    ]);
+                else
+                    #Critérios de validação
+                    $inputs = $this->validate([
+                        'Item' => 'required',
+                    ]);
 
-        return view('admin/tabela/form_tabela', $v);
-    }
+                #Realiza a validação e retorna ao formulário se false
+                if (!$inputs)
+                    $v['validation'] = $this->validator;
+                else {
 
-    /**
-    * Lista as prescrições associadas ao paciente
-    *
-    * @return mixed
-    */
-    public function list_tabela($data)
-    {
+                    $action = $v['data']['action'];
 
-        $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
-        $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
-        $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
-        $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
+                    $v['data'][$v['tabela']] = $v['data']['Item'];
+                    if($v['tabela'] == 'ViaAdministracao')
+                        $v['data']['Codigo'] = mb_strtoupper($v['data']['Codigo']);
 
-        $v['lista'] = $tabela->list_tabela_bd($data); #Carrega os itens da tabela selecionada
-        $v['tabela'] = $data;
+                    unset(
+                        $v['data']['csrf_test_name'],
+                        $v['data']['Item'],
+                        $v['data']['action']
+                    );
 
-        #Captura os inputs do Formulário
-        $v['data'] = $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                    $v['campos'] = array_keys($v['data']);
 
-        if(isset($v['data']['Item'])) {
+                    if($action == 'editar') {
 
-            #Critérios de validação
-            $inputs = $this->validate([
-                'Item' => 'required',
-            ]);
+                        $v['id'] = $v['data']['idTabPreschuap_'.$v['tabela']];
+                        $v['anterior'] = $tabela->get_item($v['id'], $v['tabela']);
 
-            #Realiza a validação e retorna ao formulário se false
-            if (!$inputs)
-                $v['validation'] = $this->validator;
+                        if($tabela->update_item($v['data'], $v['tabela'], $v['id']) ) {
+
+                            $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_'.$v['tabela'], 'UPDATE', $v['id']), TRUE);
+                            $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
+
+                            session()->setFlashdata('success', 'Item atualizado com sucesso!');
+                            return redirect()->to('tabela/list_tabela/'.$v['tabela']);
+
+                        }
+                        else {
+
+                            session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+                            return redirect()->to('tabela/list_tabela/'.$v['tabela']);
+
+                        }
+
+                    }
+                    else {
+                        $v['anterior'] = array();
+
+                        $v['id'] = $tabela->insert_item($v['data'], $v['tabela']);
+
+                        if($v['id']) {
+
+                            $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_'.$v['tabela'], 'CREATE', $v['id']), TRUE);
+                            $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
+
+                            session()->setFlashdata('success', 'Item adicionado com sucesso!');
+                            return redirect()->to('tabela/list_tabela/'.$v['tabela']);
+
+                        }
+                        else {
+
+                            session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+                            return redirect()->to('tabela/list_tabela/'.$v['tabela']);
+
+                        }
+
+                    }
+
+                }
+
+            }
             else {
 
-                $v['data'][$v['tabela']] = trim($v['data']['Item']);
-                unset($v['data']['csrf_test_name'],$v['data']['Item']);
-
-                $v['campos'] = array_keys($v['data']);
-                $v['anterior'] = array();
-
-                $v['id'] = $tabela->insert_item($v['data'], $v['tabela']);
-
-                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_'.$v['tabela'], 'CREATE', $v['id']), TRUE);
-                $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
-
-                session()->setFlashdata('success', 'Item adicionado com sucesso!');
-                return redirect()->to('tabela/list_tabela/'.$v['tabela']);
+                if($action == 'editar') {
+                    $v['data'] = $tabela->get_item($data, $tab);
+                    $v['data']['Item'] = $v['data'][$tab];
+                }
+                else
+                    $v['data']['Item'] = $v['data']['Codigo'] = ''; #iniciando as variávies para serem carregadas corretamente na página de lista de itens de tabela
 
             }
 
@@ -222,18 +235,15 @@ class Tabela extends BaseController
 
         /*
         echo "<pre>";
-        print_r($v['lista']);
+        #print_r($v);
         echo "</pre>";
         echo "<pre>";
-        print_r($v['lista']->getResultArray());
+        print_r($v['data']);
         echo "</pre>";
-        echo "<pre>";
-        print_r($v['lista']->getResultObject());
-        echo "</pre>";
-        exit('oi');
+        #exit('oi');
         #*/
 
-        return view('admin/tabela/list_tabela', $v);
+        return view('admin/tabela/form_tabela', $v);
 
     }
 
