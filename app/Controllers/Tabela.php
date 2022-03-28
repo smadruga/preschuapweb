@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\TabelaModel;
+use App\Models\ProtocoloModel;
+use App\Models\ProtocoloMedicmentoModel;
 
 use App\Models\AuditoriaModel;
 use App\Models\AuditoriaLogModel;
@@ -19,6 +21,7 @@ class Tabela extends BaseController
 
     }
 
+
     /**
     * Lista as prescrições associadas ao paciente
     *
@@ -28,6 +31,9 @@ class Tabela extends BaseController
     {
 
         $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
+        $protocolo = new ProtocoloModel(); #Inicia o objeto baseado no model de mesmo nome
+        #$protmed = new ProtocoloMedicmentoModel(); #Inicia o objeto baseado no model de mesmo nome
+
         $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
         $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
         $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
@@ -35,6 +41,11 @@ class Tabela extends BaseController
         $v['tabela'] = $tab;
         $action = (!$action) ? $this->request->getVar('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
 
+        /*
+        $opt = $this->get_opt($tab, $action, $data);
+        $v['opt'] = $opt['opt'];
+        $v['lista'] = (isset($opt['lista'])) ? $opt['lista'] : NULL;
+        */
         if($action == 'editar' || $action == 'habilitar' || $action == 'desabilitar') {
 
             $v['id'] = $data;
@@ -43,7 +54,7 @@ class Tabela extends BaseController
                 $v['opt'] = [
                     'bg'        => 'bg-warning',
                     'button'    => '<button class="btn btn-warning" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
-                    'title'     => 'Editar item - Tabela: '.$v['tabela'],
+                    'title'     => 'Editar item - Tabela: '.$tab,
                     'disabled'  => '',
                     'action'    => 'editar',
                 ];
@@ -51,7 +62,7 @@ class Tabela extends BaseController
                 $v['opt'] = [
                     'bg'        => 'bg-danger',
                     'button'    => '<button class="btn btn-danger" type="submit"><i class="fa-solid fa-ban"></i> Desabilitar</button>',
-                    'title'     => 'Desabilitar item - Tabela: '.$v['tabela'].' - Tem certeza que deseja desabilitar o item abaixo?',
+                    'title'     => 'Desabilitar item - Tabela: '.$tab.' - Tem certeza que deseja desabilitar o item abaixo?',
                     'disabled'  => 'disabled',
                     'action'    => 'desabilitar',
                 ];
@@ -59,7 +70,7 @@ class Tabela extends BaseController
                 $v['opt'] = [
                     'bg'        => 'bg-info',
                     'button'    => '<button class="btn btn-info" type="submit"><i class="fa-solid fa-circle-exclamation"></i> Habilitar</button>',
-                    'title'     => 'Habilitar item - Tabela: '.$v['tabela'],
+                    'title'     => 'Habilitar item - Tabela: '.$tab,
                     'disabled'  => 'disabled',
                     'action'    => 'habilitar',
                 ];
@@ -72,7 +83,7 @@ class Tabela extends BaseController
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
                 'button'    => '<button class="btn btn-info" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>',
-                'title'     => 'Cadastrar item - Tabela: '.$v['tabela'],
+                'title'     => 'Cadastrar item - Tabela: '.$tab,
                 'disabled'  => '',
                 'action'    => 'cadastrar',
             ];
@@ -81,11 +92,20 @@ class Tabela extends BaseController
 
         #Captura os inputs do Formulário
         $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        if($v['tabela'] == 'Protocolo')
+            $v['data']['Aplicabilidade'] = (isset($v['data']['Aplicabilidade'])) ? $v['data']['Aplicabilidade'] : NULL;
 
         if($v['tabela'] == 'ViaAdministracao')
             $v['tab']['colspan'] = 6;
         else
             $v['tab']['colspan'] = 5;
+
+        if($v['tabela'] == 'Protocolo') {
+            $v['select']['TipoTerapia'] = $tabela->list_tabela_bd('TipoTerapia', FALSE, FALSE, '*'); #Carrega os itens da tabela selecionada
+            $v['select']['Categoria'] = $tabela->list_tabela_bd('Categoria', FALSE, FALSE, '*', 'idTabPreschuap_Categoria'); #Carrega os itens da tabela selecionada
+            $v['select']['Aplicabilidade'] = ['CANCEROLOGIA', 'HEMATOLOGIA'];
+
+        }
 
         if($action == 'habilitar' || $action == 'desabilitar') {
 
@@ -144,8 +164,17 @@ class Tabela extends BaseController
                 if($v['tabela'] == 'ViaAdministracao')
                     #Critérios de validação
                     $inputs = $this->validate([
-                        'Item' => 'required',
-                        'Codigo' => ['label' => 'Abreviação', 'rules' => 'required'],
+                        'Item'      => 'required',
+                        'Codigo'    => ['label' => 'Abreviação', 'rules' => 'required'],
+                    ]);
+                elseif($v['tabela'] == 'Protocolo')
+                    #Critérios de validação
+                    $inputs = $this->validate([
+                        'Item'                          => ['label' => 'Protocolo', 'rules' => 'required'],
+                        'Aplicabilidade'                => 'required',
+                        'idTabPreschuap_TipoTerapia'    => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
+                        'idTabPreschuap_Categoria'      => ['label' => 'Categoria', 'rules' => 'required'],
+                        'Observacoes'                   => ['label' => 'Observações', 'rules' => 'required'],
                     ]);
                 else
                     #Critérios de validação
@@ -163,13 +192,23 @@ class Tabela extends BaseController
                     $v['data'][$v['tabela']] = $v['data']['Item'];
                     if($v['tabela'] == 'ViaAdministracao')
                         $v['data']['Codigo'] = mb_strtoupper($v['data']['Codigo']);
+                    if($v['tabela'] == 'Protocolo')
+                        $v['data']['Protocolo'] = mb_strtoupper($v['data']['Item']);
 
                     unset(
                         $v['data']['csrf_test_name'],
                         $v['data']['Item'],
                         $v['data']['action']
                     );
-
+                    /*
+                    echo "<pre>";
+                    print_r($v);
+                    echo "</pre>";
+                    echo "<pre>";
+                    print_r($v['data']);
+                    echo "</pre>";
+                    exit('oi');
+                    #*/
                     $v['campos'] = array_keys($v['data']);
 
                     if($action == 'editar') {
@@ -227,7 +266,14 @@ class Tabela extends BaseController
                     $v['data']['Item'] = $v['data'][$tab];
                 }
                 else
-                    $v['data']['Item'] = $v['data']['Codigo'] = ''; #iniciando as variávies para serem carregadas corretamente na página de lista de itens de tabela
+                    $v['data'] = [
+                        'Item'                          =>  '',
+                        'Codigo'                        =>  '',
+                        'Aplicabilidade'                =>  '',
+                        'idTabPreschuap_TipoTerapia'    =>  '',
+                        'idTabPreschuap_Categoria'      =>  '',
+                        'Observacoes'                   =>  '',
+                    ]; #iniciando as variávies para serem carregadas corretamente na página de lista de itens de tabela
 
             }
 

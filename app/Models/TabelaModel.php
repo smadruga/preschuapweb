@@ -13,20 +13,29 @@ class TabelaModel extends Model
     *
     * @return array
     */
-    public function list_tabela_bd($data, $limit = NULL, $offset = NULL)
+    public function list_tabela_bd($data, $limit = NULL, $offset = NULL, $queryfields = NULL, $order = NULL)
     {
 
-        $limit = ($limit) ? ' LIMIT '.$limit : NULL;
-        $offset = ($offset) ? ' OFFSET '.$offset : NULL;
+        $limit = $offset = NULL;
+        if ($queryfields === NULL || $queryfields === FALSE) {
+            $limit = ($limit) ? ' LIMIT '.$limit : NULL;
+            $offset = ($offset) ? ' OFFSET '.$offset : NULL;
+            $select = '*, date_format(DataCadastro, "%d/%m/%Y %H:%i") as Cadastro';
+        }
+        else {
+            $limit = $offset = NULL;
+            $select = $queryfields;
+        }
+
+        $order = ($order) ? $order : $data;
 
         $db = \Config\Database::connect();
         return $db->query('
             SELECT
-                *
-                , date_format(DataCadastro, "%d/%m/%Y %H:%i") as Cadastro
+                '.$select.'
             FROM
                 TabPreschuap_'.$data.'
-            ORDER BY '.$data.' ASC
+            ORDER BY '.$order.' ASC
             '.$limit.'
             '.$offset.'
         ');
