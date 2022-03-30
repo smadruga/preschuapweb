@@ -9,6 +9,53 @@ class TabelaModel extends Model
     protected $DBGroup              = 'default';
 
     /**
+    * Lista os itens da tabela Protocolo_Medicamentos
+    *
+    * @return array
+    */
+    public function list_medicamento_bd($data)
+    {
+
+        $db = \Config\Database::connect();
+        return $db->query('
+            SELECT
+            	tpm.idTabPreschuap_Protocolo_Medicamento
+                , tpm.idTabPreschuap_Protocolo
+                , tpm.OrdemInfusao
+                , tet.EtapaTerapia
+                , tm.Medicamento
+                , concat(format(tpm.Dose, 2, "pt_BR"), " ", tum.Representacao) AS Dose
+                , tva.ViaAdministracao
+                , td.Diluente
+                , format(tpm.Volume, 2, "pt_BR") AS Volume
+                , tpm.TempoInfusao
+                , tpo.Posologia
+                , tpm.DataCadastro
+                , date_format(tpm.DataCadastro, "%d/%m/%Y %H:%i") as Cadastro
+                , tpm.Inativo
+            FROM
+            	TabPreschuap_Protocolo_Medicamento 		AS tpm
+                , TabPreschuap_EtapaTerapia 			AS tet
+                , TabPreschuap_Medicamento 				AS tm
+                , TabPreschuap_UnidadeMedida 			AS tum
+                , TabPreschuap_ViaAdministracao 		AS tva
+                , TabPreschuap_Diluente 				AS td
+                , TabPreschuap_Posologia 				AS tpo
+            WHERE
+            	tpm.idTabPreschuap_EtapaTerapia 		= tet.idTabPreschuap_EtapaTerapia
+                and tpm.idTabPreschuap_Medicamento 		= tm.idTabPreschuap_Medicamento
+                and tpm.idTabPreschuap_UnidadeMedida 	= tum.idTabPreschuap_UnidadeMedida
+                and tpm.idTabPreschuap_ViaAdministracao = tva.idTabPreschuap_ViaAdministracao
+                and tpm.idTabPreschuap_Diluente 		= td.idTabPreschuap_Diluente
+                and tpm.idTabPreschuap_Posologia 		= tpo.idTabPreschuap_Posologia
+
+                and tpm.idTabPreschuap_Protocolo = '.$data.'
+            ORDER BY tpm.idTabPreschuap_Protocolo ASC, tpm.OrdemInfusao ASC
+        ');
+
+    }
+
+    /**
     * Lista os itens registrados na tabela selecionada
     *
     * @return array
@@ -30,17 +77,15 @@ class TabelaModel extends Model
         $order = ($order) ? $order : $data;
 
         $db = \Config\Database::connect();
-        return $db->query('
-            SELECT
+        return $db->query(
+            'SELECT
                 '.$select.'
             FROM
                 TabPreschuap_'.$data.'
             ORDER BY '.$order.' ASC
-            '.$limit.'
-            '.$offset.'
-        ');
-
-        #return ($query->getNumRows() > 0) ? $query->getResultArray() : FALSE ;
+                '.$limit.'
+                '.$offset
+        );
 
     }
 

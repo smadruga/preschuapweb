@@ -177,8 +177,13 @@
 
     <?php
         #/*
-        if (isset($lista))
-            echo $this->include('admin/tabela/list_tabela');
+        if (isset($lista)) {
+            if($tabela == 'Protocolo_Medicamento')
+                echo $this->include('admin/tabela/list_tabela_medicamento');
+            else
+                echo $this->include('admin/tabela/list_tabela');
+        }
+
         else
             echo '
                 <div class="text-center">

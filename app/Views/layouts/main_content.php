@@ -3,16 +3,24 @@
 <?= $this->include('layouts/uppernavbar') ?>
 <br />
 
-<main class="container">
+<main class="col-12">
+    <div class="row">
+        
 
-    <?= $this->include('layouts/div_flashdata') ?>
+        <div class="col">
 
-    <div class="container">
-        <div class="row">
+            <?= $this->include('layouts/div_flashdata') ?>
 
-            <?= $this->renderSection('subcontent') ?>
+            <div class="">
+                <div class="row">
 
+                    <?= $this->renderSection('subcontent') ?>
+
+                </div>
+            </div>
         </div>
+
+
     </div>
 </main>
 

@@ -3,8 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\TabelaModel;
-use App\Models\ProtocoloModel;
-use App\Models\ProtocoloMedicmentoModel;
 
 use App\Models\AuditoriaModel;
 use App\Models\AuditoriaLogModel;
@@ -31,8 +29,6 @@ class Tabela extends BaseController
     {
 
         $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
-        $protocolo = new ProtocoloModel(); #Inicia o objeto baseado no model de mesmo nome
-        #$protmed = new ProtocoloMedicmentoModel(); #Inicia o objeto baseado no model de mesmo nome
 
         $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
         $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
@@ -54,7 +50,7 @@ class Tabela extends BaseController
                 $v['opt'] = [
                     'bg'        => 'bg-warning',
                     'button'    => '<button class="btn btn-warning" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
-                    'title'     => 'Editar item - Tabela: '.$tab,
+                    'title'     => 'Editar item - Tabela: '.$v['tabela'],
                     'disabled'  => '',
                     'action'    => 'editar',
                 ];
@@ -62,7 +58,7 @@ class Tabela extends BaseController
                 $v['opt'] = [
                     'bg'        => 'bg-danger',
                     'button'    => '<button class="btn btn-danger" type="submit"><i class="fa-solid fa-ban"></i> Desabilitar</button>',
-                    'title'     => 'Desabilitar item - Tabela: '.$tab.' - Tem certeza que deseja desabilitar o item abaixo?',
+                    'title'     => 'Desabilitar item - Tabela: '.$v['tabela'].' - Tem certeza que deseja desabilitar o item abaixo?',
                     'disabled'  => 'disabled',
                     'action'    => 'desabilitar',
                 ];
@@ -70,7 +66,7 @@ class Tabela extends BaseController
                 $v['opt'] = [
                     'bg'        => 'bg-info',
                     'button'    => '<button class="btn btn-info" type="submit"><i class="fa-solid fa-circle-exclamation"></i> Habilitar</button>',
-                    'title'     => 'Habilitar item - Tabela: '.$tab,
+                    'title'     => 'Habilitar item - Tabela: '.$v['tabela'],
                     'disabled'  => 'disabled',
                     'action'    => 'habilitar',
                 ];
@@ -78,12 +74,21 @@ class Tabela extends BaseController
         }
         else {
 
-            $v['lista'] = $tabela->list_tabela_bd($tab); #Carrega os itens da tabela selecionada
-
+            if($v['tabela'] == 'Protocolo_Medicamento')
+                $v['lista'] = $tabela->list_medicamento_bd($data); #Carrega os itens da tabela Medicamentos
+            else
+                $v['lista'] = $tabela->list_tabela_bd($v['tabela']); #Carrega os itens da tabela selecionada
+                /*
+                #echo $db->getLastQuery();
+                echo "<pre>";
+                print_r($v['lista']);
+                echo "</pre>";
+                #exit('oi');
+                #*/
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
                 'button'    => '<button class="btn btn-info" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>',
-                'title'     => 'Cadastrar item - Tabela: '.$tab,
+                'title'     => 'Cadastrar item - Tabela: '.$v['tabela'],
                 'disabled'  => '',
                 'action'    => 'cadastrar',
             ];
@@ -152,8 +157,8 @@ class Tabela extends BaseController
             }
             else {
 
-                $v['data'] = $tabela->get_item($data, $tab);
-                $v['data']['Item'] = $v['data'][$tab];
+                $v['data'] = $tabela->get_item($data, $v['tabela']);
+                $v['data']['Item'] = $v['data'][$v['tabela']];
 
             }
         }
@@ -262,8 +267,8 @@ class Tabela extends BaseController
             else {
 
                 if($action == 'editar') {
-                    $v['data'] = $tabela->get_item($data, $tab);
-                    $v['data']['Item'] = $v['data'][$tab];
+                    $v['data'] = $tabela->get_item($data, $v['tabela']);
+                    $v['data']['Item'] = $v['data'][$v['tabela']];
                 }
                 else
                     $v['data'] = [
