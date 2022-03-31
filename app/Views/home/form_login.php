@@ -22,7 +22,7 @@ Entrar <?= $this->endSection() ?>
                 <?php endif; ?>
             </div>
             <div class="form-group text-start">
-                <input type="password" class="form-control <?php if($validation->getError('Senha')): ?>is-invalid<?php endif ?>" name="Senha" placeholder="Senha" value="<?php echo set_value('Senha'); ?>"/>
+                <input type="password" data-toggle="password" class="form-control <?php if($validation->getError('Senha')): ?>is-invalid<?php endif ?>" name="Senha" placeholder="Senha" value="<?php echo set_value('Senha'); ?>"/>
                     <?php if ($validation->getError('Senha')): ?>
                     <div class="invalid-feedback text-center">
                         <?= $validation->getError('Senha') ?>
