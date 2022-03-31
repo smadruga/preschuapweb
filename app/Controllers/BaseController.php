@@ -55,6 +55,8 @@ class BaseController extends Controller
         $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         setcookie("SishuapCookie", "", time()+env('huap.session.expires'));
 
+        $_SESSION['config']['class'] = 'container';
+
     }
 
 }

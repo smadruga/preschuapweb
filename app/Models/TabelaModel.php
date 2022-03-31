@@ -119,6 +119,21 @@ class TabelaModel extends Model
     }
 
     /**
+    * Atualiza a ordem de infusão no banco de dados
+    *
+    * @return array
+    */
+    public function update_item_sort($data)
+    {
+
+        $db = \Config\Database::connect();
+        $builder = $db->table('TabPreschuap_Protocolo_Medicamento');
+
+        return $builder->updateBatch($data, 'idTabPreschuap_Protocolo_Medicamento');
+
+    }
+
+    /**
     * Registra o item no banco de dados
     *
     * @return array
@@ -145,6 +160,30 @@ class TabelaModel extends Model
         $builder = $db->table('TabPreschuap_'.$tabela);
 
         return $builder->getWhere(['idTabPreschuap_'.$tabela => $data])->getRowArray();
+
+    }
+
+    /**
+    * Retorna o item no banco de dados de acordo com seu id
+    *
+    * @return array
+    */
+    public function get_item_sort($id, $ordem)
+    {
+
+        $db = \Config\Database::connect();
+        $query = $db->query('
+            SELECT
+                idTabPreschuap_Protocolo_Medicamento
+                , OrdemInfusao
+            FROM
+                TabPreschuap_Protocolo_Medicamento
+            WHERE
+                idTabPreschuap_Protocolo = '.$id.'
+                AND OrdemInfusao IN ('.$ordem.')
+        ');
+
+        return $query->getResultArray();
 
     }
 

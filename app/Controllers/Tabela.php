@@ -19,6 +19,71 @@ class Tabela extends BaseController
 
     }
 
+    /**
+    * Altera a Ordem de Infusão de um medicamento cadastrado em um protocolo
+    *
+    * @return void
+    */
+    public function sort_item($id, $ordem, $sort)
+    {
+        $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
+        $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
+        $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
+        $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
+
+        $prox = ($sort == 'up') ? $ordem-1 : $ordem+1;
+
+        $v['data'] = $v['sort'] = $tabela->get_item_sort($id, $ordem.','.$prox);
+
+        $i=0;
+        foreach ($v['sort'] as $val) { #aplica a nova ordem de infusão
+
+            $v['data'][$i]['OrdemInfusao'] = ($val['OrdemInfusao'] == $ordem) ? $prox : $ordem;
+
+            $i++;
+        }
+
+        #aplico o update
+        if($tabela->update_item_sort($v['data'])) {
+
+            $i=0;
+            foreach ($v['sort'] as $val) {
+
+                $v['id'] = $val['idTabPreschuap_Protocolo_Medicamento'];
+                unset($val['idTabPreschuap_Protocolo_Medicamento']);
+
+                $v['campos'] = array_keys($val);
+                $v['anterior'] = $val;
+
+                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_Protocolo_Medicamento', 'UPDATE', $v['id']), TRUE);
+                $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'][$i], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
+
+                $i++;
+            }
+
+            session()->setFlashdata('success', 'Item atualizado com sucesso!');
+            return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$id);
+
+        }
+        else {
+
+            session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+            return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$id);
+
+        }
+
+        /*
+        #echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($v);
+        echo "</pre>";
+        echo "<pre>";
+        print_r($v['data']);
+        echo "</pre>";
+        exit('oi');
+        #*/
+
+    }
 
     /**
     * Lista as prescrições associadas ao paciente
@@ -29,13 +94,14 @@ class Tabela extends BaseController
     {
 
         $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
-
         $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
         $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
         $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
 
         $v['tabela'] = $tab;
         $action = (!$action) ? $this->request->getVar('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
+
+        $v['class'] = 'container';
 
         /*
         $opt = $this->get_opt($tab, $action, $data);
@@ -74,17 +140,13 @@ class Tabela extends BaseController
         }
         else {
 
-            if($v['tabela'] == 'Protocolo_Medicamento')
+            if($v['tabela'] == 'Protocolo_Medicamento') {
                 $v['lista'] = $tabela->list_medicamento_bd($data); #Carrega os itens da tabela Medicamentos
+                $_SESSION['config']['class'] = 'col-12';
+            }
             else
                 $v['lista'] = $tabela->list_tabela_bd($v['tabela']); #Carrega os itens da tabela selecionada
-                /*
-                #echo $db->getLastQuery();
-                echo "<pre>";
-                print_r($v['lista']);
-                echo "</pre>";
-                #exit('oi');
-                #*/
+
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
                 'button'    => '<button class="btn btn-info" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>',

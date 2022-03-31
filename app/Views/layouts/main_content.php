@@ -3,9 +3,8 @@
 <?= $this->include('layouts/uppernavbar') ?>
 <br />
 
-<main class="col-12">
+<main class="<?= $_SESSION['config']['class'] ?>">
     <div class="row">
-        
 
         <div class="col">
 
