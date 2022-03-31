@@ -168,10 +168,19 @@ class Tabela extends BaseController
             $v['tab']['colspan'] = 5;
 
         if($v['tabela'] == 'Protocolo') {
-            $v['select']['TipoTerapia'] = $tabela->list_tabela_bd('TipoTerapia', FALSE, FALSE, '*'); #Carrega os itens da tabela selecionada
-            $v['select']['Categoria'] = $tabela->list_tabela_bd('Categoria', FALSE, FALSE, '*', 'idTabPreschuap_Categoria'); #Carrega os itens da tabela selecionada
-            $v['select']['Aplicabilidade'] = ['CANCEROLOGIA', 'HEMATOLOGIA'];
+            $v['select']['TipoTerapia']     = $tabela->list_tabela_bd('TipoTerapia', FALSE, FALSE, '*'); #Carrega os itens da tabela selecionada
+            $v['select']['Categoria']       = $tabela->list_tabela_bd('Categoria', FALSE, FALSE, '*', 'idTabPreschuap_Categoria'); #Carrega os itens da tabela selecionada
+            $v['select']['Aplicabilidade']  = ['CANCEROLOGIA', 'HEMATOLOGIA'];
 
+        }
+        if($v['tabela'] == 'Protocolo_Medicamento') {
+            $v['select']['Medicamento']        = $tabela->list_tabela_bd('Medicamento'); #Carrega os itens da tabela selecionada
+            $v['select']['EtapaTerapia']        = $tabela->list_tabela_bd('EtapaTerapia'); #Carrega os itens da tabela selecionada
+            $v['select']['Medicamento']         = $tabela->list_tabela_bd('Medicamento'); #Carrega os itens da tabela selecionada
+            $v['select']['UnidadeMedida']       = $tabela->list_tabela_bd('UnidadeMedida'); #Carrega os itens da tabela selecionada
+            $v['select']['ViaAdministracao']    = $tabela->list_tabela_bd('ViaAdministracao'); #Carrega os itens da tabela selecionada
+            $v['select']['Diluente']            = $tabela->list_tabela_bd('Diluente'); #Carrega os itens da tabela selecionada
+            $v['select']['Posologia']           = $tabela->list_tabela_bd('Posologia'); #Carrega os itens da tabela selecionada
         }
 
         if($action == 'habilitar' || $action == 'desabilitar') {
@@ -192,7 +201,7 @@ class Tabela extends BaseController
 
                 /*
                 echo "<pre>";
-                print_r($v);
+                print_r($v['select']['EtapaTerapia']);
                 echo "</pre>";
                 echo "<pre>";
                 print_r($v['data']);
@@ -340,6 +349,17 @@ class Tabela extends BaseController
                         'idTabPreschuap_TipoTerapia'    =>  '',
                         'idTabPreschuap_Categoria'      =>  '',
                         'Observacoes'                   =>  '',
+
+                        'idTabPreschuap_Protocolo'              => '',
+                        'idTabPreschuap_EtapaTerapia'           => '',
+                        'idTabPreschuap_Medicamento'            => '',
+                        'Dose'                                  => '',
+                        'idTabPreschuap_UnidadeMedida'          => '',
+                        'idTabPreschuap_ViaAdministracao'       => '',
+                        'idTabPreschuap_Diluente'               => '',
+                        'Volume'                                => '',
+                        'TempoInfusao'                          => '',
+                        'idTabPreschuap_Posologia'              => '',
                     ]; #iniciando as variávies para serem carregadas corretamente na página de lista de itens de tabela
 
             }
@@ -348,7 +368,7 @@ class Tabela extends BaseController
 
         /*
         echo "<pre>";
-        #print_r($v);
+        print_r($v['select']['EtapaTerapia']);
         echo "</pre>";
         echo "<pre>";
         print_r($v['data']);
