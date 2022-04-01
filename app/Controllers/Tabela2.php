@@ -142,13 +142,16 @@ class Tabela extends BaseController
 
         }
         else {
-            $protmed = '';
+
             if($v['tabela'] == 'Protocolo_Medicamento') {
-                $v['data']['idTabPreschuap_Protocolo'] = ($data) ? $data : $v['data']['idTabPreschuap_Protocolo'];
-                $v['lista'] = $tabela->list_medicamento_bd($v['data']['idTabPreschuap_Protocolo']);
-                $v['protocolo'] = $tabela->get_item($v['data']['idTabPreschuap_Protocolo'], 'Protocolo'); #Carrega os itens da tabela Medicamentos
+                echo "<pre>";
+                print_r($v['data']);
+                echo "</pre>";
+                #exit('oi');
+                #echo '>>'.$v['data']['idTabPreschuap_Protocolo'] = ($data) ? $data : NULL;
+                echo '>>'.$v['data']['idTabPreschuap_Protocolo'] = ($data) ? $data : NULL;
+                $v['lista'] = $tabela->list_medicamento_bd($v['data']['idTabPreschuap_Protocolo']); #Carrega os itens da tabela Medicamentos
                 $_SESSION['config']['class'] = 'col-12';
-                $protmed = 'Protocolo: '.$v['protocolo']['Protocolo'].' - ';
 
             }
             else
@@ -160,7 +163,7 @@ class Tabela extends BaseController
                     <button class="btn btn-info" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>
                     <a class="btn btn-warning" href="'.base_url('tabela/list_tabela/Protocolo').'"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
                 ',
-                'title'     => $protmed.'Cadastrar item - Tabela: '.$v['tabela'],
+                'title'     => 'Cadastrar item - Tabela: '.$v['tabela'],
                 'disabled'  => '',
                 'action'    => 'cadastrar',
             ];
@@ -261,14 +264,14 @@ class Tabela extends BaseController
                     #Critérios de validação
                     $inputs = $this->validate([
                         'Item'                              => ['label' => 'Medicamento', 'rules' => 'required'],
-                        'idTabPreschuap_EtapaTerapia'       => ['label' => 'Etapa da Terapia', 'rules' => 'required'],
-                        'Dose'                              => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
-                        'idTabPreschuap_UnidadeMedida'      => ['label' => 'Unidade de Medida', 'rules' => 'required'],
+                        'idTabPreschuap_EtapaTerapia'       => 'required',
+                        'Dose'                              => 'required',
+                        'idTabPreschuap_UnidadeMedida'      => ['label' => 'Categoria', 'rules' => 'required'],
                         'idTabPreschuap_ViaAdministracao'   => ['label' => 'Via de Administração', 'rules' => 'required'],
                         'idTabPreschuap_Diluente'           => ['label' => 'Diluente', 'rules' => 'required'],
-                        'Volume'                            => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
-                        'TempoInfusao'                      => ['label' => 'Tempo de Infusão', 'rules' => 'required|decimal'],
-                        'idTabPreschuap_Posologia'          => ['label' => 'Posologia', 'rules' => 'required'],
+                        'Volume'                            => 'required',
+                        'TempoInfusao'                      => 'required',
+                        'idTabPreschuap_Posologia'          => ['label' => 'Observações', 'rules' => 'required'],
 
                     ]);
                 else
@@ -276,12 +279,12 @@ class Tabela extends BaseController
                     $inputs = $this->validate([
                         'Item' => 'required',
                     ]);
-
+exit('cheguei');
                 #Realiza a validação e retorna ao formulário se false
                 if (!$inputs)
                     $v['validation'] = $this->validator;
                 else {
-
+exit('cheguei');
                     $action = $v['data']['action'];
 
                     $v['data'][$v['tabela']] = $v['data']['Item'];
@@ -289,10 +292,6 @@ class Tabela extends BaseController
                         $v['data']['Codigo'] = mb_strtoupper($v['data']['Codigo']);
                     if($v['tabela'] == 'Protocolo')
                         $v['data']['Protocolo'] = mb_strtoupper($v['data']['Item']);
-                    if($v['tabela'] == 'Protocolo_Medicamento') {
-                        $v['data']['idTabPreschuap_Medicamento'] = $v['data']['Item'];
-                        unset($v['data'][$v['tabela']]);
-                    }
 
                     unset(
                         $v['data']['csrf_test_name'],
@@ -389,7 +388,7 @@ class Tabela extends BaseController
 
         }
 
-        /*
+        #/*
         echo "<pre>";
         #print_r($v['select']['EtapaTerapia']);
         echo "</pre>";
