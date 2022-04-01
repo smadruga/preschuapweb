@@ -27,7 +27,7 @@
 
 
     </head>
-    <body>
+    <body style="padding-top: 35px;">
 
         <?= $this->renderSection('content') ?>
 
