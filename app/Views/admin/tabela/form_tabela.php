@@ -201,7 +201,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col">
+                        <div class="col-2">
                             <label for="idTabPreschuap_UnidadeMedida" class="form-label"><b>Dose</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
@@ -248,23 +248,23 @@
                             </div>
                         </div>
                         <div class="col">
-                            <label for="idTabPreschuap_ViaAdministracao" class="form-label"><b>Diluente</b> <b class="text-danger">*</b></label>
+                            <label for="idTabPreschuap_Diluente" class="form-label"><b>Diluente</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('idTabPreschuap_ViaAdministracao')): ?>is-invalid<?php endif ?>" id="idTabPreschuap_ViaAdministracao"
-                                    name="idTabPreschuap_ViaAdministracao" data-placeholder="Selecione uma opção" data-allow-clear="1">
+                                <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('idTabPreschuap_Diluente')): ?>is-invalid<?php endif ?>" id="idTabPreschuap_Diluente"
+                                    name="idTabPreschuap_Diluente" data-placeholder="Selecione uma opção" data-allow-clear="1">
                                     <option></option>
                                     <?php
-                                    foreach ($select['ViaAdministracao']->getResultArray() as $val) {
-                                        $selected = ($data['idTabPreschuap_ViaAdministracao'] == $val['idTabPreschuap_ViaAdministracao']) ? 'selected' : '';
-                                        echo '<option value="'.$val['idTabPreschuap_ViaAdministracao'].'" '.$selected.'>'.$val['ViaAdministracao'].'</option>';
+                                    foreach ($select['Diluente']->getResultArray() as $val) {
+                                        $selected = ($data['idTabPreschuap_Diluente'] == $val['idTabPreschuap_Diluente']) ? 'selected' : '';
+                                        echo '<option value="'.$val['idTabPreschuap_Diluente'].'" '.$selected.'>'.$val['Diluente'].'</option>';
                                     }
                                     ?>
                                 </select>
 
-                                <?php if ($validation->getError('idTabPreschuap_ViaAdministracao')): ?>
+                                <?php if ($validation->getError('idTabPreschuap_Diluente')): ?>
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('idTabPreschuap_ViaAdministracao') ?>
+                                        <?= $validation->getError('idTabPreschuap_Diluente') ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -321,8 +321,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <br />
+                    <input type="hidden" name="idTabPreschuap_Protocolo" value="<?= $data['idTabPreschuap_Protocolo'] ?>" />
                     <?= $opt['button'] ?>
                 <?php } else { ?>
                     <label for="Item" class="form-label"><b>Item</b> <b class="text-danger">*</b></label>

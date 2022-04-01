@@ -101,7 +101,10 @@ class Tabela extends BaseController
         $v['tabela'] = $tab;
         $action = (!$action) ? $this->request->getVar('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
 
-        $v['class'] = 'container';
+        #Captura os inputs do Formulário
+        $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        if($v['tabela'] == 'Protocolo')
+            $v['data']['Aplicabilidade'] = (isset($v['data']['Aplicabilidade'])) ? $v['data']['Aplicabilidade'] : NULL;
 
         /*
         $opt = $this->get_opt($tab, $action, $data);
@@ -141,26 +144,31 @@ class Tabela extends BaseController
         else {
 
             if($v['tabela'] == 'Protocolo_Medicamento') {
-                $v['lista'] = $tabela->list_medicamento_bd($data); #Carrega os itens da tabela Medicamentos
+                echo "<pre>";
+                print_r($v['data']);
+                echo "</pre>";
+                #exit('oi');
+                #echo '>>'.$v['data']['idTabPreschuap_Protocolo'] = ($data) ? $data : NULL;
+                echo '>>'.$v['data']['idTabPreschuap_Protocolo'] = ($data) ? $data : NULL;
+                $v['lista'] = $tabela->list_medicamento_bd($v['data']['idTabPreschuap_Protocolo']); #Carrega os itens da tabela Medicamentos
                 $_SESSION['config']['class'] = 'col-12';
+
             }
             else
                 $v['lista'] = $tabela->list_tabela_bd($v['tabela']); #Carrega os itens da tabela selecionada
 
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
-                'button'    => '<button class="btn btn-info" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>',
+                'button'    => '
+                    <button class="btn btn-info" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>
+                    <a class="btn btn-warning" href="'.base_url('tabela/list_tabela/Protocolo').'"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+                ',
                 'title'     => 'Cadastrar item - Tabela: '.$v['tabela'],
                 'disabled'  => '',
                 'action'    => 'cadastrar',
             ];
 
         }
-
-        #Captura os inputs do Formulário
-        $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-        if($v['tabela'] == 'Protocolo')
-            $v['data']['Aplicabilidade'] = (isset($v['data']['Aplicabilidade'])) ? $v['data']['Aplicabilidade'] : NULL;
 
         if($v['tabela'] == 'ViaAdministracao')
             $v['tab']['colspan'] = 6;
@@ -252,17 +260,31 @@ class Tabela extends BaseController
                         'idTabPreschuap_Categoria'      => ['label' => 'Categoria', 'rules' => 'required'],
                         'Observacoes'                   => ['label' => 'Observações', 'rules' => 'required'],
                     ]);
+                elseif($v['tabela'] == 'Protocolo_Medicamento')
+                    #Critérios de validação
+                    $inputs = $this->validate([
+                        'Item'                              => ['label' => 'Medicamento', 'rules' => 'required'],
+                        'idTabPreschuap_EtapaTerapia'       => 'required',
+                        'Dose'                              => 'required',
+                        'idTabPreschuap_UnidadeMedida'      => ['label' => 'Categoria', 'rules' => 'required'],
+                        'idTabPreschuap_ViaAdministracao'   => ['label' => 'Via de Administração', 'rules' => 'required'],
+                        'idTabPreschuap_Diluente'           => ['label' => 'Diluente', 'rules' => 'required'],
+                        'Volume'                            => 'required',
+                        'TempoInfusao'                      => 'required',
+                        'idTabPreschuap_Posologia'          => ['label' => 'Observações', 'rules' => 'required'],
+
+                    ]);
                 else
                     #Critérios de validação
                     $inputs = $this->validate([
                         'Item' => 'required',
                     ]);
-
+exit('cheguei');
                 #Realiza a validação e retorna ao formulário se false
                 if (!$inputs)
                     $v['validation'] = $this->validator;
                 else {
-
+exit('cheguei');
                     $action = $v['data']['action'];
 
                     $v['data'][$v['tabela']] = $v['data']['Item'];
@@ -350,7 +372,7 @@ class Tabela extends BaseController
                         'idTabPreschuap_Categoria'      =>  '',
                         'Observacoes'                   =>  '',
 
-                        'idTabPreschuap_Protocolo'              => '',
+                        'idTabPreschuap_Protocolo'              => $data,
                         'idTabPreschuap_EtapaTerapia'           => '',
                         'idTabPreschuap_Medicamento'            => '',
                         'Dose'                                  => '',
@@ -366,9 +388,9 @@ class Tabela extends BaseController
 
         }
 
-        /*
+        #/*
         echo "<pre>";
-        print_r($v['select']['EtapaTerapia']);
+        #print_r($v['select']['EtapaTerapia']);
         echo "</pre>";
         echo "<pre>";
         print_r($v['data']);

@@ -1,3 +1,7 @@
+<div class="text-center">
+
+</div>
+
 <hr>
 
 <table class="table table-hover table-bordered" id="table"
@@ -10,12 +14,11 @@
     >
     <thead>
         <tr>
-            <th scope="col" colspan="13" class="bg-light text-center">Tabela: <?= $tabela ?></th>
+            <th scope="col" colspan="10" class="bg-light text-center">Tabela: <?= $tabela ?></th>
         </tr>
         <tr>
             <th scope="col" data-field="Ordem Infusão" data-sortable="true">Ordem Infusão</th>
             <th scope="col" data-field="Medicamento" data-sortable="true">Medicamento</th>
-            <th scope="col" class="col-1" data-field="Id" data-sortable="true">Id</th>
             <th scope="col" data-field="EtapaTerapia" data-sortable="true">Etapa Terapia</th>
             <th scope="col" data-field="Dose" data-sortable="true">Dose</th>
             <th scope="col" data-field="Via Administração" data-sortable="true">Via Administração</th>
@@ -23,8 +26,6 @@
             <th scope="col" data-field="Volume" data-sortable="true">Volume</th>
             <th scope="col" data-field="Tempo Infusão" data-sortable="true">Tempo Infusão</th>
             <th scope="col" data-field="Posologia" data-sortable="true">Posologia</th>
-            <th scope="col" data-field="Status" data-sortable="true">Status</th>
-            <th scope="col" data-field="Data Cadastro" data-sortable="true">Data Cadastro</th>
             <th scope="col" class="col-1"></th>
         </tr>
     </thead>
@@ -74,7 +75,6 @@
                         </div>
                     </td>
                     <td>'.$v['Medicamento'].'</td>
-                    <td>'.$v['idTabPreschuap_Protocolo_Medicamento'].'</td>
                     <td>'.$v['EtapaTerapia'].'</td>
                     <td>'.$v['Dose'].'</td>
                     <td>'.$v['ViaAdministracao'].'</td>
@@ -82,8 +82,6 @@
                     <td>'.$v['Volume'].'</td>
                     <td>'.$v['TempoInfusao'].'</td>
                     <td>'.$v['Posologia'].'</td>
-                    <td>'.$v['Inativo'].'</td>
-                    <td>'.$v['Cadastro'].'</td>
                     <td class="text-center">
                         '.$diff.'
                         '.$manage.'
