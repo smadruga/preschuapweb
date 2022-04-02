@@ -326,6 +326,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="idTabPreschuap_Protocolo" value="<?= $data['idTabPreschuap_Protocolo'] ?>" />
+                    <input type="hidden" name="OrdemInfusao" value="<?= $data['OrdemInfusao'] ?>" />
                     <?= $opt['button'] ?>
                 <?php } else { ?>
                     <label for="Item" class="form-label"><b>Item</b> <b class="text-danger">*</b></label>

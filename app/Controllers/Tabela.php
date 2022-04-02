@@ -105,7 +105,10 @@ class Tabela extends BaseController
         $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         if($v['tabela'] == 'Protocolo')
             $v['data']['Aplicabilidade'] = (isset($v['data']['Aplicabilidade'])) ? $v['data']['Aplicabilidade'] : NULL;
-
+            /*echo "<pre>";
+            print_r($v['data']);
+            echo "</pre>";
+            exit('oi2');
         /*
         $opt = $this->get_opt($tab, $action, $data);
         $v['opt'] = $opt['opt'];
@@ -144,12 +147,15 @@ class Tabela extends BaseController
         else {
             $protmed = '';
             if($v['tabela'] == 'Protocolo_Medicamento') {
+                /*echo "<pre>";
+                print_r($v['data']);
+                echo "</pre>";
+                exit('oi');#*/
                 $v['data']['idTabPreschuap_Protocolo'] = ($data) ? $data : $v['data']['idTabPreschuap_Protocolo'];
                 $v['lista'] = $tabela->list_medicamento_bd($v['data']['idTabPreschuap_Protocolo']);
                 $v['protocolo'] = $tabela->get_item($v['data']['idTabPreschuap_Protocolo'], 'Protocolo'); #Carrega os itens da tabela Medicamentos
                 $_SESSION['config']['class'] = 'col-12';
                 $protmed = 'Protocolo: '.$v['protocolo']['Protocolo'].' - ';
-
             }
             else
                 $v['lista'] = $tabela->list_tabela_bd($v['tabela']); #Carrega os itens da tabela selecionada
@@ -267,7 +273,7 @@ class Tabela extends BaseController
                         'idTabPreschuap_ViaAdministracao'   => ['label' => 'Via de Administração', 'rules' => 'required'],
                         'idTabPreschuap_Diluente'           => ['label' => 'Diluente', 'rules' => 'required'],
                         'Volume'                            => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
-                        'TempoInfusao'                      => ['label' => 'Tempo de Infusão', 'rules' => 'required|decimal'],
+                        'TempoInfusao'                      => ['label' => 'Tempo de Infusão', 'rules' => 'required'],
                         'idTabPreschuap_Posologia'          => ['label' => 'Posologia', 'rules' => 'required'],
 
                     ]);
@@ -291,6 +297,8 @@ class Tabela extends BaseController
                         $v['data']['Protocolo'] = mb_strtoupper($v['data']['Item']);
                     if($v['tabela'] == 'Protocolo_Medicamento') {
                         $v['data']['idTabPreschuap_Medicamento'] = $v['data']['Item'];
+                        $v['data']['Dose'] = str_replace(",",".",$v['data']['Dose']);
+                        $v['data']['Volume'] = str_replace(",",".",$v['data']['Volume']);
                         unset($v['data'][$v['tabela']]);
                     }
 
@@ -321,15 +329,10 @@ class Tabela extends BaseController
                             $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
 
                             session()->setFlashdata('success', 'Item atualizado com sucesso!');
-                            return redirect()->to('tabela/list_tabela/'.$v['tabela']);
 
                         }
-                        else {
-
+                        else
                             session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
-                            return redirect()->to('tabela/list_tabela/'.$v['tabela']);
-
-                        }
 
                     }
                     else {
@@ -343,17 +346,17 @@ class Tabela extends BaseController
                             $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
 
                             session()->setFlashdata('success', 'Item adicionado com sucesso!');
-                            return redirect()->to('tabela/list_tabela/'.$v['tabela']);
 
                         }
-                        else {
-
+                        else
                             session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
-                            return redirect()->to('tabela/list_tabela/'.$v['tabela']);
-
-                        }
 
                     }
+
+                    if ($v['tabela'] == 'Protocolo_Medicamento')
+                        return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$v['data']['idTabPreschuap_Protocolo']);
+                    else
+                        return redirect()->to('tabela/list_tabela/'.$v['tabela']);
 
                 }
 
@@ -362,9 +365,16 @@ class Tabela extends BaseController
 
                 if($action == 'editar') {
                     $v['data'] = $tabela->get_item($data, $v['tabela']);
-                    $v['data']['Item'] = $v['data'][$v['tabela']];
+
+                    if ($v['tabela'] == 'Protocolo_Medicamento') {
+                        $v['data']['Item'] = $v['data']['idTabPreschuap_Medicamento'];
+                        $v['data']['Dose'] = str_replace(".",",",$v['data']['Dose']);
+                        $v['data']['Volume'] = str_replace(".",",",$v['data']['Volume']);
+                    }
+                    else
+                        $v['data']['Item'] = $v['data'][$v['tabela']];
                 }
-                else
+                else {
                     $v['data'] = [
                         'Item'                          =>  '',
                         'Codigo'                        =>  '',
@@ -385,17 +395,24 @@ class Tabela extends BaseController
                         'idTabPreschuap_Posologia'              => '',
                     ]; #iniciando as variávies para serem carregadas corretamente na página de lista de itens de tabela
 
+                    if($v['tabela'] == 'Protocolo_Medicamento')
+                        $v['data']['OrdemInfusao'] = (isset($v['data']['OrdemInfusao'])) ? $v['data']['OrdemInfusao'] : $v['lista']->getNumRows()+1 ;
+
+                }
+
+
             }
 
         }
 
         /*
-        echo "<pre>";
+        #echo "<pre>";
         #print_r($v['select']['EtapaTerapia']);
-        echo "</pre>";
+        #echo "</pre>";
         echo "<pre>";
         print_r($v['data']);
         echo "</pre>";
+        #echo $v['lista']->getNumRows();
         #exit('oi');
         #*/
 

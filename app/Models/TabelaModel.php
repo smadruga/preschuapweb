@@ -144,7 +144,8 @@ class TabelaModel extends Model
         $db = \Config\Database::connect();
         $builder = $db->table('TabPreschuap_'.$tabela);
 
-        return $builder->insert($data);
+        $builder->insert($data);
+        return $db->insertID();
 
     }
 
