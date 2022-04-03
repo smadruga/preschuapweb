@@ -8,4 +8,9 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <?php echo session()->getFlashdata('failed') ?>
     </div>
+<?php } elseif(session()->getFlashdata('nochange')) { ?>
+    <div class="alert alert-warning alert-dismissible" id="flashdata">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <?php echo session()->getFlashdata('nochange') ?>
+    </div>
 <?php } ?>

@@ -20,6 +20,107 @@ class Tabela extends BaseController
     }
 
     /**
+    * Reorganiza a Ordem de Infusão dos medicamentos de um protocolo caso haja duplicidade
+    *
+    * @return void
+    */
+    public function remove_medicamento($protocolo, $medicamento)
+    {
+        $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
+        $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
+        $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
+        $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
+
+        #deleta o item do banco de dados e reorganiza a lista de medicamentos
+        if($tabela->remove_medicamento($medicamento)) {
+        #if(TRUE) {
+
+            #$v['sort'] = $tabela->get_item_sort($protocolo);
+            $this->sort_medicamento($protocolo, TRUE);
+
+            $v['id'] = $medicamento;
+
+            $v['anterior'] = $tabela->get_item($medicamento, 'Protocolo_Medicamento');
+            $v['campos'] = array_keys($v['anterior']);
+            $v['data'] = array();
+
+            /*echo "<pre>";
+            print_r($v);
+            echo "</pre>";
+            #exit('oi');
+#exit('o11111i');*/
+            $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_Protocolo_Medicamento', 'DELETE', $v['id']), TRUE);
+            $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], FALSE, TRUE), TRUE);
+
+            session()->setFlashdata('success', 'Item excluído com sucesso!');
+
+        }
+        else
+            session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+
+        return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$protocolo);
+
+
+    }
+
+    /**
+    * Reorganiza a Ordem de Infusão dos medicamentos de um protocolo caso haja duplicidade
+    *
+    * @return void
+    */
+    public function sort_medicamento($protocolo, $interno = FALSE)
+    {
+        $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
+        $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
+        $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
+        $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
+
+        $v['sort'] = $tabela->get_item_sort($protocolo);
+
+        $i=0;
+        $v['data'] = array();
+        foreach ($v['sort'] as $val) { #aplica a nova ordem de infusão
+
+            $v['data'][$i]['idTabPreschuap_Protocolo_Medicamento'] = $val['idTabPreschuap_Protocolo_Medicamento'];
+            $v['data'][$i]['OrdemInfusao'] = $i+1;
+            $i++;
+        }
+
+        /*
+        #echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($v['sort']);
+        echo "</pre>";
+        echo "<pre>";
+        print_r($v['data']);
+        echo "</pre>";
+        exit('oi');
+        #*/
+
+        #aplico o update
+        if($interno) {
+            if($tabela->update_item_sort($v['data'])) {
+                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_Protocolo_Medicamento', 'RE-SORT', $protocolo), TRUE);
+                return TRUE;
+            }
+            else
+                return FALSE;
+
+        }
+        else {
+            if($tabela->update_item_sort($v['data'])) {
+                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_Protocolo_Medicamento', 'RE-SORT', $protocolo), TRUE);
+                session()->setFlashdata('success', 'Item atualizado com sucesso!');
+            }
+            else
+                session()->setFlashdata('nochange', 'Sem alterações.');
+
+            return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$protocolo);
+        }
+
+    }
+
+    /**
     * Altera a Ordem de Infusão de um medicamento cadastrado em um protocolo
     *
     * @return void
@@ -62,26 +163,12 @@ class Tabela extends BaseController
             }
 
             session()->setFlashdata('success', 'Item atualizado com sucesso!');
-            return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$id);
 
         }
-        else {
-
+        else
             session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
-            return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$id);
 
-        }
-
-        /*
-        #echo $db->getLastQuery();
-        echo "<pre>";
-        print_r($v);
-        echo "</pre>";
-        echo "<pre>";
-        print_r($v['data']);
-        echo "</pre>";
-        exit('oi');
-        #*/
+        return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$id);
 
     }
 
@@ -179,19 +266,19 @@ class Tabela extends BaseController
             $v['tab']['colspan'] = 5;
 
         if($v['tabela'] == 'Protocolo') {
-            $v['select']['TipoTerapia']     = $tabela->list_tabela_bd('TipoTerapia', FALSE, FALSE, '*'); #Carrega os itens da tabela selecionada
+            $v['select']['TipoTerapia']     = $tabela->list_tabela_bd('TipoTerapia', FALSE, FALSE, '*', FALSE, TRUE); #Carrega os itens da tabela selecionada
             $v['select']['Categoria']       = $tabela->list_tabela_bd('Categoria', FALSE, FALSE, '*', 'idTabPreschuap_Categoria'); #Carrega os itens da tabela selecionada
             $v['select']['Aplicabilidade']  = ['CANCEROLOGIA', 'HEMATOLOGIA'];
 
         }
         if($v['tabela'] == 'Protocolo_Medicamento') {
-            $v['select']['Medicamento']        = $tabela->list_tabela_bd('Medicamento'); #Carrega os itens da tabela selecionada
-            $v['select']['EtapaTerapia']        = $tabela->list_tabela_bd('EtapaTerapia'); #Carrega os itens da tabela selecionada
-            $v['select']['Medicamento']         = $tabela->list_tabela_bd('Medicamento'); #Carrega os itens da tabela selecionada
-            $v['select']['UnidadeMedida']       = $tabela->list_tabela_bd('UnidadeMedida'); #Carrega os itens da tabela selecionada
-            $v['select']['ViaAdministracao']    = $tabela->list_tabela_bd('ViaAdministracao'); #Carrega os itens da tabela selecionada
-            $v['select']['Diluente']            = $tabela->list_tabela_bd('Diluente'); #Carrega os itens da tabela selecionada
-            $v['select']['Posologia']           = $tabela->list_tabela_bd('Posologia'); #Carrega os itens da tabela selecionada
+            $v['select']['Medicamento']        = $tabela->list_tabela_bd('Medicamento', FALSE, FALSE, FALSE, FALSE, TRUE); #Carrega os itens da tabela selecionada
+            $v['select']['EtapaTerapia']        = $tabela->list_tabela_bd('EtapaTerapia', FALSE, FALSE, FALSE, FALSE, TRUE); #Carrega os itens da tabela selecionada
+            $v['select']['Medicamento']         = $tabela->list_tabela_bd('Medicamento', FALSE, FALSE, FALSE, FALSE, TRUE); #Carrega os itens da tabela selecionada
+            $v['select']['UnidadeMedida']       = $tabela->list_tabela_bd('UnidadeMedida', FALSE, FALSE, FALSE, FALSE, TRUE); #Carrega os itens da tabela selecionada
+            $v['select']['ViaAdministracao']    = $tabela->list_tabela_bd('ViaAdministracao', FALSE, FALSE, FALSE, FALSE, TRUE); #Carrega os itens da tabela selecionada
+            $v['select']['Diluente']            = $tabela->list_tabela_bd('Diluente', FALSE, FALSE, FALSE, FALSE, TRUE); #Carrega os itens da tabela selecionada
+            $v['select']['Posologia']           = $tabela->list_tabela_bd('Posologia', FALSE, FALSE, FALSE, FALSE, TRUE); #Carrega os itens da tabela selecionada
         }
 
         if($action == 'habilitar' || $action == 'desabilitar') {
@@ -212,10 +299,10 @@ class Tabela extends BaseController
 
                 /*
                 echo "<pre>";
-                print_r($v['select']['EtapaTerapia']);
+                print_r($v['select']);
                 echo "</pre>";
                 echo "<pre>";
-                print_r($v['data']);
+                #print_r($v['data']);
                 echo "</pre>";
                 exit('oi');
                 #*/
@@ -406,12 +493,12 @@ class Tabela extends BaseController
         }
 
         /*
-        #echo "<pre>";
-        #print_r($v['select']['EtapaTerapia']);
-        #echo "</pre>";
         echo "<pre>";
-        print_r($v['data']);
+        print_r($v['select']);
         echo "</pre>";
+        #echo "<pre>";
+        #print_r($v['data']);
+        #echo "</pre>";
         #echo $v['lista']->getNumRows();
         #exit('oi');
         #*/

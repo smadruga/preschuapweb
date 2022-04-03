@@ -60,7 +60,7 @@ class TabelaModel extends Model
     *
     * @return array
     */
-    public function list_tabela_bd($data, $limit = NULL, $offset = NULL, $queryfields = NULL, $order = NULL)
+    public function list_tabela_bd($data, $limit = NULL, $offset = NULL, $queryfields = NULL, $order = NULL, $notinativo = NULL )
     {
 
         $limit = $offset = NULL;
@@ -76,12 +76,15 @@ class TabelaModel extends Model
 
         $order = ($order) ? $order : $data;
 
+        $where = ($notinativo) ? ' WHERE Inativo = 0 OR Inativo is null ' : NULL;
+
         $db = \Config\Database::connect();
         return $db->query(
             'SELECT
                 '.$select.'
             FROM
                 TabPreschuap_'.$data.'
+                '.$where.'
             ORDER BY '.$order.' ASC
                 '.$limit.'
                 '.$offset
@@ -169,8 +172,10 @@ class TabelaModel extends Model
     *
     * @return array
     */
-    public function get_item_sort($id, $ordem)
+    public function get_item_sort($id, $ordem = FALSE)
     {
+
+        $where = ($ordem) ? 'AND OrdemInfusao IN ('.$ordem.')' : NULL;
 
         $db = \Config\Database::connect();
         $query = $db->query('
@@ -181,10 +186,26 @@ class TabelaModel extends Model
                 TabPreschuap_Protocolo_Medicamento
             WHERE
                 idTabPreschuap_Protocolo = '.$id.'
-                AND OrdemInfusao IN ('.$ordem.')
+                '.$where.'
+            ORDER BY OrdemInfusao ASC, idTabPreschuap_Protocolo_Medicamento ASC
         ');
 
         return $query->getResultArray();
+
+    }
+
+    /**
+    * Deleta um medicamento de acordo com seu id
+    *
+    * @return array
+    */
+    public function remove_medicamento($id)
+    {
+
+        $db = \Config\Database::connect();
+        $builder = $db->table('TabPreschuap_Protocolo_Medicamento');
+
+        return $builder->delete(['idTabPreschuap_Protocolo_Medicamento' => $id]);
 
     }
 

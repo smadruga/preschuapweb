@@ -17,10 +17,7 @@
             <th scope="col" colspan="10" class="bg-light text-center">Tabela: <?= $tabela ?></th>
         </tr>
         <tr>
-            <th scope="col" data-field="Ordem Infusão" data-sortable="true">
-                <a href="<?= base_url('tabela/sort_medicamento/'.$data['idTabPreschuap_Protocolo']) ?>" type="button" class="btn btn-sm btn-warning" title="Reorganizar Ordem de Infusão - Para quando houver dois ou mais itens com a mesma ordem."><i class="fa-solid fa-shuffle"></i></a>
-                Ordem Infusão
-            </th>
+            <th scope="col" data-field="Ordem Infusão" data-sortable="true">Ordem Infusão</th>
             <th scope="col" data-field="Medicamento" data-sortable="true">Medicamento</th>
             <th scope="col" data-field="EtapaTerapia" data-sortable="true">Etapa Terapia</th>
             <th scope="col" data-field="Dose" data-sortable="true">Dose</th>
@@ -36,6 +33,17 @@
         <?php
         $total = $lista->getNumRows();
         foreach($lista->getResultArray() as $v) {
+
+            if (!$v['Inativo']) {
+                $v['Inativo'] = '<span class="badge rounded-pill bg-success">ATIVO</span>';
+                $manage = '<a href="'.base_url('tabela/list_tabela/'.$tabela.'/desabilitar/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Desabilitar"><i class="fa-solid fa-ban"></i></a>';
+            }
+            else {
+                $v['Inativo'] = '<span class="badge rounded-pill bg-danger">INATIVO</span>';
+                $manage = '<a href="'.base_url('tabela/list_tabela/'.$tabela.'/habilitar/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar"><i class="fa-solid fa-circle-exclamation"></i></a>';
+            }
+
+            $diff = ($func->dateDifference($v['DataCadastro'], date('Y-m-d H:i')) < 7 ) ? '<a href="'.base_url('tabela/list_tabela/'.$tabela.'/editar/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" ><i class="fa-solid fa-pen-to-square"></i></a>' : NULL;
 
             if($v['OrdemInfusao'] == 1)
                 $sort = '
@@ -75,8 +83,8 @@
                     <td>'.$v['TempoInfusao'].'</td>
                     <td>'.$v['Posologia'].'</td>
                     <td class="text-center">
-                        <a href="'.base_url('tabela/list_tabela/'.$tabela.'/editar/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" ><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="'.base_url('tabela/remove_medicamento/'.$v['idTabPreschuap_Protocolo'].'/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir"><i class="fa-solid fa-trash-can"></i></a>
+                        '.$diff.'
+                        '.$manage.'
                     </td>
                 </tr>
             ';
