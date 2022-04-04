@@ -79,6 +79,11 @@ $routes->group('prescricao', function ($routes) {
     $routes->get('page_prescricao', 'Prescricao::page_prescricao');
 });
 
+$routes->group('migracao', function ($routes) {
+    $routes->get('completa_tabela', 'Migracao::completa_tabela');
+    $routes->get('calcula_tabela', 'Migracao::calcula_tabela');
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
