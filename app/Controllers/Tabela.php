@@ -170,7 +170,7 @@ class Tabela extends BaseController
             if($action == 'editar')
                 $v['opt'] = [
                     'bg'        => 'bg-warning',
-                    'button'    => '<button class="btn btn-warning" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
+                    'button'    => '<button class="btn btn-warning" id="submit" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
                     'title'     => 'Editar item - Tabela: '.$v['tabela'],
                     'disabled'  => '',
                     'action'    => 'editar',
@@ -178,7 +178,7 @@ class Tabela extends BaseController
             if($action == 'desabilitar')
                 $v['opt'] = [
                     'bg'        => 'bg-danger',
-                    'button'    => '<button class="btn btn-danger" type="submit"><i class="fa-solid fa-ban"></i> Desabilitar</button>',
+                    'button'    => '<button class="btn btn-danger" id="submit" type="submit"><i class="fa-solid fa-ban"></i> Desabilitar</button>',
                     'title'     => 'Desabilitar item - Tabela: '.$v['tabela'].' - Tem certeza que deseja desabilitar o item abaixo?',
                     'disabled'  => 'disabled',
                     'action'    => 'desabilitar',
@@ -186,7 +186,7 @@ class Tabela extends BaseController
             if($action == 'habilitar')
                 $v['opt'] = [
                     'bg'        => 'bg-info',
-                    'button'    => '<button class="btn btn-info" type="submit"><i class="fa-solid fa-circle-exclamation"></i> Habilitar</button>',
+                    'button'    => '<button class="btn btn-info" id="submit" type="submit"><i class="fa-solid fa-circle-exclamation"></i> Habilitar</button>',
                     'title'     => 'Habilitar item - Tabela: '.$v['tabela'],
                     'disabled'  => 'disabled',
                     'action'    => 'habilitar',
@@ -222,7 +222,7 @@ class Tabela extends BaseController
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
                 'button'    => '
-                    <button class="btn btn-info" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>
+                    <button class="btn btn-info" id="submit" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>
                     <a class="btn btn-warning" href="'.base_url('tabela/list_tabela/Protocolo').'"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
                 ',
                 'title'     => $protmed.'Cadastrar item - Tabela: '.$v['tabela'],

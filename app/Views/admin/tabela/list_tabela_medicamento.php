@@ -34,7 +34,6 @@
     </thead>
     <tbody>
         <?php
-        $total = $count;
         foreach($lista->getResultArray() as $v) {
 
             if($v['Inativo'] == 1)
@@ -44,7 +43,7 @@
                     $sort = '
                         <a href="'.base_url('tabela/sort_item/'.$v['idTabPreschuap_Protocolo'].'/'.$v['OrdemInfusao'].'/down').'" type="button" class="btn btn-sm btn-outline-info" title="Alterar para '.($v['OrdemInfusao']+1).'"><i class="fa-solid fa-sort-down"></i></a>
                     ';
-                elseif($v['OrdemInfusao'] == $total)
+                elseif($v['OrdemInfusao'] == $count)
                     $sort = '
                         <a href="'.base_url('tabela/sort_item/'.$v['idTabPreschuap_Protocolo'].'/'.$v['OrdemInfusao'].'/up').'" type="button" class="btn btn-sm btn-outline-info" title="Alterar para '.($v['OrdemInfusao']-1).'"><i class="fa-solid fa-sort-up"></i></a>
                     ';

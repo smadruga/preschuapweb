@@ -16,7 +16,7 @@
                 <label for="Pesquisar" class="form-label"><b>Paciente</b></label>
                 <div class="input-group mb-3">
                     <input type="text" id="Pesquisar" class="form-control <?php if($validation->getError('Pesquisar')): ?>is-invalid<?php endif ?>" autofocus name="Pesquisar" value="<?php echo set_value('Pesquisar'); ?>"/>
-                    <button class="btn btn-info" type="submit"><i class="fa-solid fa-search"></i> Pesquisar</button>
+                    <button class="btn btn-info" id="submit" type="submit"><i class="fa-solid fa-search"></i> Pesquisar</button>
                     <?php if ($validation->getError('Pesquisar')): ?>
                         <div class="invalid-feedback">
                             <?= $validation->getError('Pesquisar') ?>

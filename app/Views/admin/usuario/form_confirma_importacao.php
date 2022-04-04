@@ -52,7 +52,7 @@
                             <a class="btn btn-warning" href="<?= previous_url() ?>"><i class="fa-solid fa-ban"></i> Cancelar</a>
                         </div>
                         <div class="col">
-                            <button class="btn btn-primary" type="submit"><i class="fa-solid fa-check-circle"></i> Confirmar</button>
+                            <button class="btn btn-primary" id="submit" type="submit"><i class="fa-solid fa-check-circle"></i> Confirmar</button>
                         </div>
                     </div>
                 </div>
