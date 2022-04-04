@@ -11,7 +11,7 @@ class Migracao extends BaseController
 {
 
     /**
-    * Lista as prescrições associadas ao paciente
+    * Completa a tabela Preschuap_Prescricao_Medicamento com dados da tabela TabPreschuap_Protocolo_Medicamento
     *
     * @return mixed
     */
@@ -58,6 +58,34 @@ class Migracao extends BaseController
         /*
         echo "<pre>";
         print_r($r);
+        echo "</pre>";
+        echo "<pre>";
+        #print_r($v['tpm']);
+        echo "</pre>";
+        #exit('oi');
+        #*/
+
+        echo '<br /><hr />FINISH HIM!<hr />';
+
+    }
+
+    /**
+    * Completa a tabela Preschuap_Prescricao_Medicamento com o cálculo das doses ajustadas
+    *
+    * @return mixed
+    */
+    public function calcula_tabela()
+    {
+
+        $migracao = new MigracaoModel(); #Inicia o objeto baseado na TabelaModel
+        $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
+
+        $v['prontuario'] = $migracao->list_prontuario();
+        $v['aghux'] = $migracao->get_aghux($v['prontuario']);
+
+        #/*
+        echo "<pre>";
+        print_r($v['prontuario']);
         echo "</pre>";
         echo "<pre>";
         #print_r($v['tpm']);
