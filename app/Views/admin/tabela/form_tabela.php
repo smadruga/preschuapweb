@@ -205,7 +205,7 @@
                             <label for="Dose" class="form-label"><b>Dose</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <input type="text" id="Dose" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Dose')): ?>is-invalid<?php endif ?>" autofocus maxlength="10" name="Dose" value="<?php echo $data['Dose']; ?>"/>
+                                <input type="text" id="Dose" <?= $opt['disabled'] ?> placeholder="0,00" class="form-control <?php if($validation->getError('Dose')): ?>is-invalid<?php endif ?>" autofocus maxlength="10" name="Dose" value="<?php echo $data['Dose']; ?>"/>
 
                                 <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('idTabPreschuap_UnidadeMedida')): ?>is-invalid<?php endif ?>" id="idTabPreschuap_UnidadeMedida"
                                     name="idTabPreschuap_UnidadeMedida" data-placeholder="Selecione uma opção" data-allow-clear="1">
@@ -280,7 +280,7 @@
                             <label for="Volume" class="form-label"><b>Volume</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <input type="text" id="Volume" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Volume')): ?>is-invalid<?php endif ?>" autofocus maxlength="9" name="Volume" value="<?php echo $data['Volume']; ?>"/>
+                                <input type="text" id="Volume" <?= $opt['disabled'] ?> placeholder="0,00" class="form-control <?php if($validation->getError('Volume')): ?>is-invalid<?php endif ?>" autofocus maxlength="9" name="Volume" value="<?php echo $data['Volume']; ?>"/>
 
                                 <?php if ($validation->getError('Volume')): ?>
                                     <div class="invalid-feedback">

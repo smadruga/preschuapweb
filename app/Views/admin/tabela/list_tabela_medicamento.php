@@ -26,7 +26,7 @@
             <th scope="col" data-field="Dose" data-sortable="true">Dose</th>
             <th scope="col" data-field="Via Administração" data-sortable="true">Via Administração</th>
             <th scope="col" data-field="Diluente" data-sortable="true">Diluente</th>
-            <th scope="col" data-field="Volume" data-sortable="true">Volume</th>
+            <th scope="col" data-field="Volume" data-sortable="true">Volume (ml)</th>
             <th scope="col" data-field="Tempo Infusão" data-sortable="true">Tempo Infusão</th>
             <th scope="col" data-field="Posologia" data-sortable="true">Posologia</th>
             <th scope="col" class="col-1"></th>
