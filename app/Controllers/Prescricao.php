@@ -127,7 +127,7 @@ class Prescricao extends BaseController
 
 
 
-        return view('admin/prescricao/page_prescricao');
+        return view('admin/prescricao/form_prescricao');
     }
 
 }

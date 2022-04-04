@@ -79,11 +79,11 @@
                         </div>
 
                         <div class="row">
-                            <div class="col"><b>Reações Adversas:</b> <?= nl2br($v['ReacaoAdversa']) ?></div>
+                            <div class="col"><b>Reações Adversas:</b> <?= ($v['ReacaoAdversa']) ? nl2br($v['ReacaoAdversa']) : NULL ?></div>
                         </div>
 
                         <div class="row">
-                            <div class="col"><b>Informações Complementares:</b> <?= nl2br($v['InformacaoComplementar']) ?></div>
+                            <div class="col"><b>Informações Complementares:</b> <?= ($v['InformacaoComplementar']) ? nl2br($v['InformacaoComplementar']) : NULL ?></div>
                         </div>
 
                         <br />
