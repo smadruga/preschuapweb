@@ -17,7 +17,20 @@ class TabelaModel extends Model
     {
 
         $db = \Config\Database::connect();
-        return $db->query('
+
+        $query['count'] = $db->query('
+            SELECT
+                COUNT(idTabPreschuap_Protocolo_Medicamento) AS count
+            FROM
+                TabPreschuap_Protocolo_Medicamento
+            WHERE
+                idTabPreschuap_Protocolo = '.$data.'
+                AND Inativo = 0;
+        ');
+        $query['count'] = $query['count']->getRowArray();
+        $query['count'] = $query['count']['count'];
+
+        $query['lista'] = $db->query('
             SELECT
             	tpm.idTabPreschuap_Protocolo_Medicamento
                 , tpm.idTabPreschuap_Protocolo
@@ -50,8 +63,10 @@ class TabelaModel extends Model
                 and tpm.idTabPreschuap_Posologia 		= tpo.idTabPreschuap_Posologia
 
                 and tpm.idTabPreschuap_Protocolo = '.$data.'
-            ORDER BY tpm.idTabPreschuap_Protocolo ASC, tpm.OrdemInfusao ASC
+            ORDER BY Inativo ASC, tpm.idTabPreschuap_Protocolo ASC, tpm.OrdemInfusao ASC
         ');
+
+        return $query;
 
     }
 
@@ -79,6 +94,7 @@ class TabelaModel extends Model
         $where = ($notinativo) ? ' WHERE Inativo = 0 OR Inativo is null ' : NULL;
 
         $db = \Config\Database::connect();
+
         return $db->query(
             'SELECT
                 '.$select.'
@@ -182,6 +198,7 @@ class TabelaModel extends Model
             SELECT
                 idTabPreschuap_Protocolo_Medicamento
                 , OrdemInfusao
+                , Inativo
             FROM
                 TabPreschuap_Protocolo_Medicamento
             WHERE
@@ -191,21 +208,6 @@ class TabelaModel extends Model
         ');
 
         return $query->getResultArray();
-
-    }
-
-    /**
-    * Deleta um medicamento de acordo com seu id
-    *
-    * @return array
-    */
-    public function remove_medicamento($id)
-    {
-
-        $db = \Config\Database::connect();
-        $builder = $db->table('TabPreschuap_Protocolo_Medicamento');
-
-        return $builder->delete(['idTabPreschuap_Protocolo_Medicamento' => $id]);
 
     }
 

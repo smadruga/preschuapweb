@@ -63,7 +63,6 @@ $routes->group('tabela', function ($routes) {
     $routes->post('manage_item', 'Tabela::manage_item');
     $routes->get('sort_item/(:any)/(:any)/(:any)', 'Tabela::sort_item/$1/$2/$3');
     $routes->get('sort_medicamento/(:any)', 'Tabela::sort_medicamento/$1');
-    $routes->get('remove_medicamento/(:any)/(:any)', 'Tabela::remove_medicamento/$1/$2');
 });
 
 $routes->group('paciente', function ($routes) {

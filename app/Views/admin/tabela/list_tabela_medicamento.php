@@ -34,23 +34,35 @@
     </thead>
     <tbody>
         <?php
-        $total = $lista->getNumRows();
+        $total = $count;
         foreach($lista->getResultArray() as $v) {
 
-            if($v['OrdemInfusao'] == 1)
-                $sort = '
-                    <a href="'.base_url('tabela/sort_item/'.$v['idTabPreschuap_Protocolo'].'/'.$v['OrdemInfusao'].'/down').'" type="button" class="btn btn-sm btn-outline-info" title="Alterar para '.($v['OrdemInfusao']+1).'"><i class="fa-solid fa-sort-down"></i></a>
-                ';
-            elseif($v['OrdemInfusao'] == $total)
-                $sort = '
-                    <a href="'.base_url('tabela/sort_item/'.$v['idTabPreschuap_Protocolo'].'/'.$v['OrdemInfusao'].'/up').'" type="button" class="btn btn-sm btn-outline-info" title="Alterar para '.($v['OrdemInfusao']-1).'"><i class="fa-solid fa-sort-up"></i></a>
-                ';
-            else
-                $sort = '
-                    <a href="'.base_url('tabela/sort_item/'.$v['idTabPreschuap_Protocolo'].'/'.$v['OrdemInfusao'].'/up').'" type="button" class="btn btn-sm btn-outline-info" title="Alterar para '.($v['OrdemInfusao']-1).'"><i class="fa-solid fa-sort-up"></i></a>
-                    <a href="'.base_url('tabela/sort_item/'.$v['idTabPreschuap_Protocolo'].'/'.$v['OrdemInfusao'].'/down').'" type="button" class="btn btn-sm btn-outline-info" title="Alterar para '.($v['OrdemInfusao']+1).'"><i class="fa-solid fa-sort-down"></i></a>
-                ';
+            if($v['Inativo'] == 1)
+                $sort = NULL;
+            else {
+                if($v['OrdemInfusao'] == 1)
+                    $sort = '
+                        <a href="'.base_url('tabela/sort_item/'.$v['idTabPreschuap_Protocolo'].'/'.$v['OrdemInfusao'].'/down').'" type="button" class="btn btn-sm btn-outline-info" title="Alterar para '.($v['OrdemInfusao']+1).'"><i class="fa-solid fa-sort-down"></i></a>
+                    ';
+                elseif($v['OrdemInfusao'] == $total)
+                    $sort = '
+                        <a href="'.base_url('tabela/sort_item/'.$v['idTabPreschuap_Protocolo'].'/'.$v['OrdemInfusao'].'/up').'" type="button" class="btn btn-sm btn-outline-info" title="Alterar para '.($v['OrdemInfusao']-1).'"><i class="fa-solid fa-sort-up"></i></a>
+                    ';
+                else
+                    $sort = '
+                        <a href="'.base_url('tabela/sort_item/'.$v['idTabPreschuap_Protocolo'].'/'.$v['OrdemInfusao'].'/up').'" type="button" class="btn btn-sm btn-outline-info" title="Alterar para '.($v['OrdemInfusao']-1).'"><i class="fa-solid fa-sort-up"></i></a>
+                        <a href="'.base_url('tabela/sort_item/'.$v['idTabPreschuap_Protocolo'].'/'.$v['OrdemInfusao'].'/down').'" type="button" class="btn btn-sm btn-outline-info" title="Alterar para '.($v['OrdemInfusao']+1).'"><i class="fa-solid fa-sort-down"></i></a>
+                    ';
+            }
 
+            if (!$v['Inativo']) {
+                $v['Inativo'] = '<span class="badge rounded-pill bg-success"><i class="fa-solid fa-circle-check" title="Ativo" ></i></span>';
+                $manage = '<a href="'.base_url('tabela/list_tabela/'.$tabela.'/desabilitar/'.$v['idTabPreschuap_'.$tabela].'/'.$v['idTabPreschuap_Protocolo']).'" type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Desabilitar"><i class="fa-solid fa-ban"></i></a>';
+            }
+            else {
+                $v['Inativo'] = '<span class="badge rounded-pill bg-danger"><i class="fa-solid fa-ban" title="Inativo"></i></span>';
+                $manage = '<a href="'.base_url('tabela/list_tabela/'.$tabela.'/habilitar/'.$v['idTabPreschuap_'.$tabela].'/'.$v['idTabPreschuap_Protocolo']).'" type="button" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar"><i class="fa-solid fa-circle-exclamation"></i></a>';
+            }
 
             echo '
                 <tr>
@@ -66,7 +78,7 @@
                             </div>
                         </div>
                     </td>
-                    <td>'.$v['Medicamento'].'</td>
+                    <td>'.$v['Medicamento'].' '.$v['Inativo'].'</td>
                     <td>'.$v['EtapaTerapia'].'</td>
                     <td>'.$v['Dose'].'</td>
                     <td>'.$v['ViaAdministracao'].'</td>
@@ -76,7 +88,7 @@
                     <td>'.$v['Posologia'].'</td>
                     <td class="text-center">
                         <a href="'.base_url('tabela/list_tabela/'.$tabela.'/editar/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" ><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="'.base_url('tabela/remove_medicamento/'.$v['idTabPreschuap_Protocolo'].'/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir"><i class="fa-solid fa-trash-can"></i></a>
+                        '.$manage.'
                     </td>
                 </tr>
             ';

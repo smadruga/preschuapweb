@@ -24,6 +24,50 @@ class Tabela extends BaseController
     *
     * @return void
     */
+    public function remove_medicamento($protocolo, $medicamento)
+    {
+        $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
+        $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
+        $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
+        $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
+
+        #deleta o item do banco de dados e reorganiza a lista de medicamentos
+        if($tabela->remove_medicamento($medicamento)) {
+        #if(TRUE) {
+
+            #$v['sort'] = $tabela->get_item_sort($protocolo);
+            $this->sort_medicamento($protocolo, TRUE);
+
+            $v['id'] = $medicamento;
+
+            $v['anterior'] = $tabela->get_item($medicamento, 'Protocolo_Medicamento');
+            $v['campos'] = array_keys($v['anterior']);
+            $v['data'] = array();
+
+            /*echo "<pre>";
+            print_r($v);
+            echo "</pre>";
+            #exit('oi');
+#exit('o11111i');*/
+            $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_Protocolo_Medicamento', 'DELETE', $v['id']), TRUE);
+            $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], FALSE, TRUE), TRUE);
+
+            session()->setFlashdata('success', 'Item excluído com sucesso!');
+
+        }
+        else
+            session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+
+        return redirect()->to('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$protocolo);
+
+
+    }
+
+    /**
+    * Reorganiza a Ordem de Infusão dos medicamentos de um protocolo caso haja duplicidade
+    *
+    * @return void
+    */
     public function sort_medicamento($protocolo, $interno = FALSE)
     {
         $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
@@ -34,18 +78,12 @@ class Tabela extends BaseController
         $v['sort'] = $tabela->get_item_sort($protocolo);
 
         $i=0;
-        $n=1;
         $v['data'] = array();
         foreach ($v['sort'] as $val) { #aplica a nova ordem de infusão
 
             $v['data'][$i]['idTabPreschuap_Protocolo_Medicamento'] = $val['idTabPreschuap_Protocolo_Medicamento'];
-            if($val['Inativo'])
-                $v['data'][$i]['OrdemInfusao'] = NULL;
-            else {
-                $v['data'][$i]['OrdemInfusao'] = $n++;
-            }
+            $v['data'][$i]['OrdemInfusao'] = $i+1;
             $i++;
-
         }
 
         /*
@@ -196,25 +234,15 @@ class Tabela extends BaseController
         else {
             $protmed = '';
             if($v['tabela'] == 'Protocolo_Medicamento') {
+                /*echo "<pre>";
+                print_r($v['data']);
+                echo "</pre>";
+                exit('oi');#*/
                 $v['data']['idTabPreschuap_Protocolo'] = ($data) ? $data : $v['data']['idTabPreschuap_Protocolo'];
                 $v['lista'] = $tabela->list_medicamento_bd($v['data']['idTabPreschuap_Protocolo']);
                 $v['protocolo'] = $tabela->get_item($v['data']['idTabPreschuap_Protocolo'], 'Protocolo'); #Carrega os itens da tabela Medicamentos
                 $_SESSION['config']['class'] = 'col-12';
                 $protmed = 'Protocolo: '.$v['protocolo']['Protocolo'].' - ';
-
-                $v['count'] = $v['lista']['count'];
-                $v['lista'] = $v['lista']['lista'];
-
-                /*
-                echo "<pre>";
-                print_r($v['lista']);
-                echo "</pre>";
-                echo "<pre>";
-                #print_r($v['lista']['count']);
-                echo "</pre>";
-                echo $v['count'];
-                exit('oi');
-                #*/
             }
             else
                 $v['lista'] = $tabela->list_tabela_bd($v['tabela']); #Carrega os itens da tabela selecionada
@@ -458,7 +486,7 @@ class Tabela extends BaseController
                     ]; #iniciando as variávies para serem carregadas corretamente na página de lista de itens de tabela
 
                     if($v['tabela'] == 'Protocolo_Medicamento')
-                        $v['data']['OrdemInfusao'] = (isset($v['data']['OrdemInfusao'])) ? $v['data']['OrdemInfusao'] : $v['count']+1 ;
+                        $v['data']['OrdemInfusao'] = (isset($v['data']['OrdemInfusao'])) ? $v['data']['OrdemInfusao'] : $v['lista']->getNumRows()+1 ;
 
                 }
 
@@ -469,11 +497,11 @@ class Tabela extends BaseController
 
         /*
         echo "<pre>";
-        #print_r($v['select']);
+        print_r($v['select']);
         echo "</pre>";
-        echo "<pre>";
-        print_r($v['data']);
-        echo "</pre>";
+        #echo "<pre>";
+        #print_r($v['data']);
+        #echo "</pre>";
         #echo $v['lista']->getNumRows();
         #exit('oi');
         #*/
