@@ -125,9 +125,48 @@ class Prescricao extends BaseController
     public function create_prescricao()
     {
 
+        $prescricao = new PrescricaoModel(); #Inicia o objeto baseado na TabelaModel
+        $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
+        $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
+        $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
 
+        #$action = (!$action) ? $this->request->getVar('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
+        $action = 'cadastrar';
 
-        return view('admin/prescricao/form_prescricao');
+        #Captura os inputs do Formulário
+        $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+
+        if($action == 'editar' || $action == 'habilitar' || $action == 'desabilitar') {
+
+            $v['id'] = $data;
+
+            if($action == 'editar')
+                $v['opt'] = [
+                    'bg'        => 'bg-warning',
+                    'button'    => '<button class="btn btn-warning" id="submit" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
+                    'title'     => 'Editar item - Tabela: '.$v['tabela'],
+                    'disabled'  => '',
+                    'action'    => 'editar',
+                ];
+
+        }
+        else {
+            #$v['lista'] = $tabela->list_tabela_bd($v['tabela']); #Carrega os itens da tabela selecionada
+
+            $v['opt'] = [
+                'bg'        => 'bg-secondary',
+                'button'    => '
+                    <button class="btn btn-info" id="submit" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>
+                    <a class="btn btn-warning" href="'.base_url('tabela/list_tabela/Protocolo').'"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+                ',
+                'title'     => 'Cadastrar item',
+                'disabled'  => '',
+                'action'    => 'cadastrar',
+            ];
+
+        }
+
+        return view('admin/prescricao/form_prescricao', $v);
     }
 
 }
