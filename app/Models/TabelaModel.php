@@ -91,7 +91,7 @@ class TabelaModel extends Model
 
         $order = ($order) ? $order : $data;
 
-        $where = ($notinativo) ? ' WHERE Inativo = 0 OR Inativo is null ' : NULL;
+        $where = ($notinativo) ? ' WHERE Inativo = 0' : NULL;
 
         $db = \Config\Database::connect();
 

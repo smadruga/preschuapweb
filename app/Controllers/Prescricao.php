@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\TabelaModel;
 use App\Models\PrescricaoModel;
 use App\Models\PrescricaoMedicamentoModel;
 
@@ -125,6 +126,7 @@ class Prescricao extends BaseController
     public function create_prescricao()
     {
 
+        $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
         $prescricao = new PrescricaoModel(); #Inicia o objeto baseado na TabelaModel
         $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
         $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
@@ -133,8 +135,46 @@ class Prescricao extends BaseController
         #$action = (!$action) ? $this->request->getVar('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
         $action = 'cadastrar';
 
-        #Captura os inputs do Formulário
-        $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+            $v['data'] = [
+                'idPreschuap_Prescricao'            => '',
+                'Prontuario'                        => '',
+                'DataMarcacao'                      => '',
+                'DataPrescricao'                    => date('d/m/Y', time()),
+                'Dia'                               => '',
+                'Ciclo'                             => '',
+                'Aplicabilidade'                    => '',
+                'idTabPreschuap_Categoria'          => '',
+                'idTabPreschuap_Subcategoria'       => '',
+                'idTabPreschuap_Protocolo'          => '',
+                'idTabPreschuap_TipoTerapia'        => '',
+                'CiclosTotais'                      => '',
+                'EntreCiclos'                       => '',
+                'Peso'                              => '',
+                'CreatininaSerica'                  => '',
+                'Altura'                            => '',
+                'DescricaoServico'                  => '',
+                'InformacaoComplementar'            => '',
+                'ReacaoAdversa'                     => '',
+                'idTabPreschuap_Alergia'            => '',
+                'ClearanceCreatinina'               => '',
+                'IndiceMassaCorporal'               => '',
+                'SuperficieCorporal'                => '',
+            ];
+        }
+        else {
+            #Captura os inputs do Formulário
+            $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        }
+
+        $v['select'] = [
+            'Categoria'         => $tabela->list_tabela_bd('Categoria', FALSE, FALSE, '*', 'idTabPreschuap_Categoria', TRUE), #Carrega os itens da tabela selecionada
+            'Subcategoria'      => $tabela->list_tabela_bd('Subcategoria', FALSE, FALSE, '*', 'idTabPreschuap_Subcategoria', TRUE), #Carrega os itens da tabela selecionada
+            'Protocolo'         => $tabela->list_tabela_bd('Protocolo', FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
+            'TipoTerapia'       => $tabela->list_tabela_bd('TipoTerapia', FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
+            'Alergia'           => $tabela->list_tabela_bd('Alergia', FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
+            'Aplicabilidade'    => ['CANCEROLOGIA', 'HEMATOLOGIA'],
+        ];
 
         if($action == 'editar' || $action == 'habilitar' || $action == 'desabilitar') {
 

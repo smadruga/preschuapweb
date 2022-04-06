@@ -245,7 +245,7 @@ class Tabela extends BaseController
 
         }
         if($v['tabela'] == 'Protocolo_Medicamento') {
-            $v['select']['Medicamento']        = $tabela->list_tabela_bd('Medicamento', FALSE, FALSE, FALSE, FALSE, $notinativo); #Carrega os itens da tabela selecionada
+            $v['select']['Medicamento']         = $tabela->list_tabela_bd('Medicamento', FALSE, FALSE, FALSE, FALSE, $notinativo); #Carrega os itens da tabela selecionada
             $v['select']['EtapaTerapia']        = $tabela->list_tabela_bd('EtapaTerapia', FALSE, FALSE, FALSE, FALSE, $notinativo); #Carrega os itens da tabela selecionada
             $v['select']['Medicamento']         = $tabela->list_tabela_bd('Medicamento', FALSE, FALSE, FALSE, FALSE, $notinativo); #Carrega os itens da tabela selecionada
             $v['select']['UnidadeMedida']       = $tabela->list_tabela_bd('UnidadeMedida', FALSE, FALSE, FALSE, FALSE, $notinativo); #Carrega os itens da tabela selecionada
