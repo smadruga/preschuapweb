@@ -9,9 +9,36 @@
             <b>Escolha uma opção</b>
         </div>
         <div class="card-body has-validation">
-            <a class="btn btn-info" href="<?= base_url('prescricao/create_prescricao/') ?>" role="button"><i class="fa-solid fa-circle-plus"></i> Nova Prescrição</a>
-            <a class="btn btn-info" href="#" role="button"><i class="fa-solid fa-copy"></i> Copiar última Prescrição</a>
-            <a class="btn btn-info" href="#" role="button"><i class="fa-solid fa-repeat"></i> Continuar último Tratamento</a>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <a class="btn btn-info" href="<?= base_url('prescricao/manage_prescricao/') ?>" role="button"><i class="fa-solid fa-circle-plus"></i> Nova Prescrição</a>
+                    </div>
+                    <div class="col">
+                        Cria uma nova prescição médica, iniciando um novo tratamento.
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <a class="btn btn-info" href="#" role="button"><i class="fa-solid fa-copy"></i> Copiar última Prescrição</a>
+                    </div>
+                    <div class="col">
+                        Copia todos os dados da última prescrição do paciente.
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-4">
+                        <a class="btn btn-info" href="#" role="button"><i class="fa-solid fa-repeat"></i> Continuar último Tratamento</a>
+                    </div>
+                    <div class="col">
+                        Continua o tratamento do paciente, copiando alguns dados e atualizando os demais campos.
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 

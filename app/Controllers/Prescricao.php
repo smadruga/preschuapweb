@@ -123,7 +123,7 @@ class Prescricao extends BaseController
     *
     * @return void
     */
-    public function create_prescricao()
+    public function manage_prescricao()
     {
 
         $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
@@ -150,9 +150,14 @@ class Prescricao extends BaseController
                 'idTabPreschuap_TipoTerapia'        => '',
                 'CiclosTotais'                      => '',
                 'EntreCiclos'                       => '',
+
                 'Peso'                              => '',
                 'CreatininaSerica'                  => '',
                 'Altura'                            => '',
+                'ClearanceCreatinina'               => '',
+                'IndiceMassaCorporal'               => '',
+                'SuperficieCorporal'                => '',
+
                 'DescricaoServico'                  => '',
                 'InformacaoComplementar'            => '',
                 'ReacaoAdversa'                     => '',
@@ -176,7 +181,7 @@ class Prescricao extends BaseController
             'Aplicabilidade'    => ['CANCEROLOGIA', 'HEMATOLOGIA'],
         ];
 
-        if($action == 'editar' || $action == 'habilitar' || $action == 'desabilitar') {
+        if($action == 'editar') {
 
             $v['id'] = $data;
 
@@ -195,16 +200,47 @@ class Prescricao extends BaseController
 
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
-                'button'    => '
-                    <button class="btn btn-info" id="submit" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>
-                    <a class="btn btn-warning" href="'.base_url('tabela/list_tabela/Protocolo').'"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
-                ',
+                'button'    => '<button class="btn btn-info" id="submit" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>',
                 'title'     => 'Cadastrar item',
                 'disabled'  => '',
                 'action'    => 'cadastrar',
             ];
 
         }
+
+        #Critérios de validação
+        $inputs = $this->validate([
+            'DataPrescricao'                    => ['label' => 'Data da Prescrição', 'rules' => 'required|valid_date[d/m/Y]'],
+            'Dia'                               => 'required|integer',
+            'Ciclo'                             => 'required|integer',
+            'Aplicabilidade'                    => 'required',
+            'idTabPreschuap_Categoria'          => ['label' => 'CID Categoria', 'rules' => 'required'],
+            'idTabPreschuap_Subcategoria'       => ['label' => 'CID Subcategoria', 'rules' => 'required'],
+            'idTabPreschuap_Protocolo'          => ['label' => 'Protocolo', 'rules' => 'required'],
+            'idTabPreschuap_TipoTerapia'        => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
+            'CiclosTotais'                      => ['label' => 'Total de Ciclos', 'rules' => 'required|integer'],
+            'EntreCiclos'                       => ['label' => 'Entre Ciclos', 'rules' => 'required|integer'],
+
+            'Peso'                              => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
+            'CreatininaSerica'                  => ['label' => 'Creatinina Sérica', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+            'Altura'                            => 'required|integer',
+            #'ClearanceCreatinina'               => ['label' => 'Clearance Creatinina', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+            #'IndiceMassaCorporal'               => ['label' => 'Índice de Massa Corporal', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+            #'SuperficieCorporal'                => ['label' => 'Superfície Corporal', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+
+            'DescricaoServico'                  => ['label' => 'Serviço', 'rules' => 'required'],
+            'InformacaoComplementar'            => ['label' => 'Informação Complementar', 'rules' => 'required'],
+            'ReacaoAdversa'                     => ['label' => 'Reação Adversa', 'rules' => 'required'],
+            'idTabPreschuap_Alergia'            => ['label' => 'Alergia', 'rules' => 'required'],
+        ]);
+
+        #Realiza a validação e retorna ao formulário se false
+        if (!$inputs)
+            $v['validation'] = $this->validator;
+        else {
+            exit('cheguei');
+        }
+
 
         return view('admin/prescricao/form_prescricao', $v);
     }

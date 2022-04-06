@@ -4,7 +4,7 @@
 
 <main class="col">
 
-    <form method="post" action="<?= base_url('tabela/list_tabela/') ?>">
+    <form method="post" action="<?= base_url('prescricao/manage_prescricao/') ?>">
         <?= csrf_field() ?>
         <?php $validation = \Config\Services::validation(); ?>
 
@@ -16,7 +16,7 @@
 
                 <div class="row">
                     <div class="col-3">
-                        <label for="DataPrescricao" class="form-label"><b>Data da Prescricao</b> <b class="text-danger">*</b></label>
+                        <label for="DataPrescricao" class="form-label"><b>Data da Prescrição</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
                             <input type="text" placeholder="DD/MM/AAAA" id="DataPrescricao" <?= $opt['disabled'] ?> class="form-control Data <?php if($validation->getError('DataPrescricao')): ?>is-invalid<?php endif ?>" autofocus name="DataPrescricao" value="<?php echo $data['DataPrescricao']; ?>"/>
 
@@ -204,7 +204,8 @@
                     <div class="col">
                         <label for="Peso" class="form-label"><b>Peso</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
-                            <input type="text" id="Peso" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Peso')): ?>is-invalid<?php endif ?>"  name="Peso" value="<?php echo $data['Peso']; ?>"/>
+                            <input type="text" id="Peso" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Peso')): ?>is-invalid<?php endif ?>"
+                                name="Peso" onkeyup="indiceMassaCorporal(),superficieCorporal(),clearanceCreatinina()" value="<?php echo $data['Peso']; ?>"/>
                             <span class="input-group-text" id="basic-addon2">kg</span>
                             <?php if ($validation->getError('Peso')): ?>
                                 <div class="invalid-feedback">
@@ -216,7 +217,8 @@
                     <div class="col">
                         <label for="Altura" class="form-label"><b>Altura</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
-                            <input type="text" id="Altura" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Altura')): ?>is-invalid<?php endif ?>"  maxlength="10" name="Altura" value="<?php echo $data['Altura']; ?>"/>
+                            <input type="text" id="Altura" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Altura')): ?>is-invalid<?php endif ?>"
+                                maxlength="10" name="Altura" onkeyup="indiceMassaCorporal(),superficieCorporal()" value="<?php echo $data['Altura']; ?>"/>
                             <span class="input-group-text" id="basic-addon2">cm</span>
                             <?php if ($validation->getError('Altura')): ?>
                                 <div class="invalid-feedback">
@@ -228,7 +230,8 @@
                     <div class="col">
                         <label for="CreatininaSerica" class="form-label"><b>Creatinina Sérica (ClSr)</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
-                            <input type="text" id="CreatininaSerica" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('CreatininaSerica')): ?>is-invalid<?php endif ?>"  maxlength="10" name="CreatininaSerica" value="<?php echo $data['CreatininaSerica']; ?>"/>
+                            <input type="text" id="CreatininaSerica" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('CreatininaSerica')): ?>is-invalid<?php endif ?>"
+                                maxlength="10" name="CreatininaSerica" onkeyup="clearanceCreatinina()" value="<?php echo $data['CreatininaSerica']; ?>"/>
                             <span class="input-group-text" id="basic-addon2">mg/dL</span>
                             <?php if ($validation->getError('CreatininaSerica')): ?>
                                 <div class="invalid-feedback">
@@ -243,37 +246,22 @@
                     <div class="col">
                         <label for="ClearanceCreatinina" class="form-label"><b>Clearance Creatinina (ClCr)</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
-                            <input type="text" id="ClearanceCreatinina" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('ClearanceCreatinina')): ?>is-invalid<?php endif ?>"  name="ClearanceCreatinina" value="<?php echo $data['ClearanceCreatinina']; ?>"/>
+                            <input type="text" readonly id="ClearanceCreatinina" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('ClearanceCreatinina')): ?>is-invalid<?php endif ?>"  name="ClearanceCreatinina" value="<?php echo $data['ClearanceCreatinina']; ?>"/>
                             <span class="input-group-text" id="basic-addon2">mL/min</span>
-                            <?php if ($validation->getError('ClearanceCreatinina')): ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('ClearanceCreatinina') ?>
-                                </div>
-                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="col">
                         <label for="IndiceMassaCorporal" class="form-label"><b>Índice de Massa Corporal (IMC)</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
-                            <input type="text" id="IndiceMassaCorporal" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('IndiceMassaCorporal')): ?>is-invalid<?php endif ?>"  maxlength="10" name="IndiceMassaCorporal" value="<?php echo $data['IndiceMassaCorporal']; ?>"/>
-
-                            <?php if ($validation->getError('IndiceMassaCorporal')): ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('IndiceMassaCorporal') ?>
-                                </div>
-                            <?php endif; ?>
+                            <input type="text" readonly id="IndiceMassaCorporal" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('IndiceMassaCorporal')): ?>is-invalid<?php endif ?>"  maxlength="10" name="IndiceMassaCorporal" value="<?php echo $data['IndiceMassaCorporal']; ?>"/>
+                            <span class="input-group-text" id="basic-addon2">kg/m²</span>
                         </div>
                     </div>
                     <div class="col">
                         <label for="SuperficieCorporal" class="form-label"><b>Superfície Corporal (SC)</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
-                            <input type="text" id="SuperficieCorporal" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('SuperficieCorporal')): ?>is-invalid<?php endif ?>"  maxlength="10" name="SuperficieCorporal" value="<?php echo $data['SuperficieCorporal']; ?>"/>
+                            <input type="text" readonly id="SuperficieCorporal" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('SuperficieCorporal')): ?>is-invalid<?php endif ?>"  maxlength="10" name="SuperficieCorporal" value="<?php echo $data['SuperficieCorporal']; ?>"/>
                             <span class="input-group-text" id="basic-addon2">m²</span>
-                            <?php if ($validation->getError('SuperficieCorporal')): ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('SuperficieCorporal') ?>
-                                </div>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -315,8 +303,44 @@
                     </div>
                 </div>
 
-                <br />
+                <div class="row">
+                    <div class="col">
+                        <label for="InformacaoComplementar" class="form-label"><b>Informação Complementar</b> <b class="text-danger">*</b></label>
+                        <div class="input-group mb-3">
+
+                            <textarea <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('InformacaoComplementar')): ?>is-invalid<?php endif ?>" id="InformacaoComplementar" name="InformacaoComplementar" rows="3"><?php echo $data['InformacaoComplementar']; ?></textarea>
+
+                            <?php if ($validation->getError('InformacaoComplementar')): ?>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('InformacaoComplementar') ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="ReacaoAdversa" class="form-label"><b>Reação Adversa</b> <b class="text-danger">*</b></label>
+                        <div class="input-group mb-3">
+
+                            <textarea <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('ReacaoAdversa')): ?>is-invalid<?php endif ?>" id="ReacaoAdversa" name="ReacaoAdversa" rows="3"><?php echo $data['ReacaoAdversa']; ?></textarea>
+
+                            <?php if ($validation->getError('ReacaoAdversa')): ?>
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('ReacaoAdversa') ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="Idade" id="Idade" value="<?= $_SESSION['Paciente']['idade'] ?>" />
+                <input type="hidden" name="Sexo" id="Sexo" value="<?= $_SESSION['Paciente']['sexo'] ?>" />
+
+                <hr />
                 <?= $opt['button'] ?>
+                <a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
 
             </div>
         </div>
