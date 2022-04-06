@@ -23,3 +23,100 @@ $('#clock').countdown(timesession)
 $(".clickable-row").click(function () {
     window.document.location = $(this).data("href");
 });
+
+/*
+ * Função que calcula o Índice de Massa Corporal
+ *
+ * IMC = PESO / ALTURA^2
+ *
+ * @param {decimal} peso
+ * @param {int} altura
+ * @returns {decimal}
+ */
+function indiceMassaCorporal() {
+
+    //busca os valores
+    var peso = $("#Peso").val();
+    var altura = $("#Altura").val();
+
+    if(peso && altura) {
+        peso = peso.replace(".","").replace(",",".");
+
+        imc = (peso / (altura**2)) * 10000;
+        imc = imc.toFixed(3);
+        imc = imc.replace(".",",");
+
+        $('#IndiceMassaCorporal').val(imc);
+    }
+
+}
+
+/*
+ * Função que calcula a Superfície Corporal
+ *
+ * SC (m2) = 0,007184 X ( Altura (cm)^0,725) X ( Peso (kg) )^0,425
+ * Referência: https://arquivos.sbn.org.br/equacoes/eq6.htm
+ *
+ * @param {decimal} peso
+ * @param {int} altura
+ * @returns {decimal}
+ */
+function superficieCorporal() {
+
+    //busca os valores
+    var peso = $("#Peso").val();
+    var altura = $("#Altura").val();
+
+    if(peso && altura) {
+        peso = peso.replace(".","").replace(",",".");
+
+        sc = (0.007184 * (altura**0.725) * (peso**0.425));
+        sc = sc.toFixed(3);
+        sc = sc.replace(".",",");
+
+        $('#SuperficieCorporal').val(sc);
+
+    }
+
+}
+
+/*
+ * Função que calcula o Clearance Creatinina
+ *
+ * ClCr (mL/min) = (140 – idade) × (peso em kg) × (0.85 se mulher) / (72 × Creatinina sérica)
+ * Referência: https://www.mdsaude.com/nefrologia/calculadoras-clearance-creatinina/ ou
+ *             https://calculadorasmedicas.com.br/calculadora/clearance-de-creatinina-equacao-cockcroft-gault
+ *
+ * @param {decimal} peso
+ * @param {int} idade
+ * @param {char} sexo
+ * @param {decimal} creatinina
+ * @returns {decimal}
+ */
+function clearanceCreatinina() {
+
+    //busca os valores
+    var peso        = $("#Peso").val();
+    var idade       = $("#Idade").val();
+    var sexo        = $("#Sexo").val();
+    var creatinina  = $("#CreatininaSerica").val();
+
+    if (sexo == 'F')
+        sexo = 0.85;
+    else
+        sexo = 1;
+
+    if(peso && idade && sexo && creatinina) {
+        peso        = peso.replace(".","").replace(",",".");
+        creatinina  = creatinina.replace(".","").replace(",",".");
+
+        clcr = ((140 - idade) * peso * sexo) / (72 * creatinina);
+        clcr = clcr.toFixed(3);
+        clcr = clcr.replace(".",",");
+
+        $('#ClearanceCreatinina').val(clcr);
+
+        console.log("OI SC >>> "+peso+" % "+idade+" <> "+sexo+" <> "+creatinina+" <> "+clcr);
+    }
+
+}
