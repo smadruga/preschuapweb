@@ -133,10 +133,18 @@ class Home extends ResourceController
         $acesso->insert($func->set_acesso($operacao), TRUE);
 
         setcookie("SishuapCookie", "", time()-env('huap.session.expires'));
-        session_write_close();
-        unset($v,$_SESSION);
-        $session = \Config\Services::session();
-        session()->setFlashdata('failed', 'Tempo de sessão expirado.');
+        #session_write_close();
+        #unset($v,$_SESSION);
+        #session()->remove();
+        (isset($_SESSION)) ? $session->destroy($_SESSION) : NULL;
+        (isset($v)) ? $session->destroy($v) : NULL;
+        #$session->stop();
+        #$session = \Config\Services::session();
+        #session()->setFlashdata('failed', 'Tempo de sessão expirado.');
+        /*echo "<pre>";
+        print_r($_SESSION);
+        echo "</pre>";
+        exit('??');*/
         return redirect()->to('/');
 
     }
