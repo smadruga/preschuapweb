@@ -75,7 +75,6 @@ function superficieCorporal() {
         sc = sc.replace(".",",");
 
         $('#SuperficieCorporal').val(sc);
-
     }
 
 }
@@ -115,8 +114,6 @@ function clearanceCreatinina() {
         clcr = clcr.replace(".",",");
 
         $('#ClearanceCreatinina').val(clcr);
-
-        console.log("OI SC >>> "+peso+" % "+idade+" <> "+sexo+" <> "+creatinina+" <> "+clcr);
     }
 
 }
