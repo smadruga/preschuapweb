@@ -123,7 +123,7 @@ class Prescricao extends BaseController
     *
     * @return void
     */
-    public function manage_prescricao()
+    public function manage_prescricao($action = FALSE)
     {
 
         $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
@@ -132,8 +132,7 @@ class Prescricao extends BaseController
         $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
         $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
 
-        #$action = (!$action) ? $this->request->getVar('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
-        $action = 'cadastrar';
+        $action = (!$action) ? $this->request->getVar('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
 
         if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             $v['data'] = [
@@ -165,6 +164,8 @@ class Prescricao extends BaseController
                 'ClearanceCreatinina'               => '',
                 'IndiceMassaCorporal'               => '',
                 'SuperficieCorporal'                => '',
+
+                'submit'                            => '',
             ];
         }
         else {
@@ -188,7 +189,7 @@ class Prescricao extends BaseController
             if($action == 'editar')
                 $v['opt'] = [
                     'bg'        => 'bg-warning',
-                    'button'    => '<button class="btn btn-warning" id="submit" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
+                    'button'    => '<button class="btn btn-warning" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
                     'title'     => 'Editar item - Tabela: '.$v['tabela'],
                     'disabled'  => '',
                     'action'    => 'editar',
@@ -200,7 +201,7 @@ class Prescricao extends BaseController
 
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
-                'button'    => '<button class="btn btn-info" id="submit" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>',
+                'button'    => '<button class="btn btn-info" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>',
                 'title'     => 'Cadastrar item',
                 'disabled'  => '',
                 'action'    => 'cadastrar',
@@ -208,39 +209,108 @@ class Prescricao extends BaseController
 
         }
 
-        #Critérios de validação
-        $inputs = $this->validate([
-            'DataPrescricao'                    => ['label' => 'Data da Prescrição', 'rules' => 'required|valid_date[d/m/Y]'],
-            'Dia'                               => 'required|integer',
-            'Ciclo'                             => 'required|integer',
-            'Aplicabilidade'                    => 'required',
-            'idTabPreschuap_Categoria'          => ['label' => 'CID Categoria', 'rules' => 'required'],
-            'idTabPreschuap_Subcategoria'       => ['label' => 'CID Subcategoria', 'rules' => 'required'],
-            'idTabPreschuap_Protocolo'          => ['label' => 'Protocolo', 'rules' => 'required'],
-            'idTabPreschuap_TipoTerapia'        => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
-            'CiclosTotais'                      => ['label' => 'Total de Ciclos', 'rules' => 'required|integer'],
-            'EntreCiclos'                       => ['label' => 'Entre Ciclos', 'rules' => 'required|integer'],
+        if($v['data']['submit']) {
+            #Critérios de validação
+            $inputs = $this->validate([
+                'DataPrescricao'                    => ['label' => 'Data da Prescrição', 'rules' => 'required|valid_date[d/m/Y]'],
+                'Dia'                               => 'required|integer',
+                'Ciclo'                             => 'required|integer',
+                'Aplicabilidade'                    => 'required',
+                'idTabPreschuap_Categoria'          => ['label' => 'CID Categoria', 'rules' => 'required'],
+                'idTabPreschuap_Subcategoria'       => ['label' => 'CID Subcategoria', 'rules' => 'required'],
+                'idTabPreschuap_Protocolo'          => ['label' => 'Protocolo', 'rules' => 'required'],
+                'idTabPreschuap_TipoTerapia'        => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
+                'CiclosTotais'                      => ['label' => 'Total de Ciclos', 'rules' => 'required|integer'],
+                'EntreCiclos'                       => ['label' => 'Entre Ciclos', 'rules' => 'required|integer'],
 
-            'Peso'                              => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
-            'CreatininaSerica'                  => ['label' => 'Creatinina Sérica', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
-            'Altura'                            => 'required|integer',
-            #'ClearanceCreatinina'               => ['label' => 'Clearance Creatinina', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
-            #'IndiceMassaCorporal'               => ['label' => 'Índice de Massa Corporal', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
-            #'SuperficieCorporal'                => ['label' => 'Superfície Corporal', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+                'Peso'                              => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
+                'CreatininaSerica'                  => ['label' => 'Creatinina Sérica', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+                'Altura'                            => 'required|integer',
+                #'ClearanceCreatinina'               => ['label' => 'Clearance Creatinina', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+                #'IndiceMassaCorporal'               => ['label' => 'Índice de Massa Corporal', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+                #'SuperficieCorporal'                => ['label' => 'Superfície Corporal', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
 
-            'DescricaoServico'                  => ['label' => 'Serviço', 'rules' => 'required'],
-            'InformacaoComplementar'            => ['label' => 'Informação Complementar', 'rules' => 'required'],
-            'ReacaoAdversa'                     => ['label' => 'Reação Adversa', 'rules' => 'required'],
-            'idTabPreschuap_Alergia'            => ['label' => 'Alergia', 'rules' => 'required'],
-        ]);
+                'DescricaoServico'                  => ['label' => 'Serviço', 'rules' => 'required'],
+                'InformacaoComplementar'            => ['label' => 'Informação Complementar', 'rules' => 'required'],
+                'ReacaoAdversa'                     => ['label' => 'Reação Adversa', 'rules' => 'required'],
+                'idTabPreschuap_Alergia'            => ['label' => 'Alergia', 'rules' => 'required'],
+            ]);
 
-        #Realiza a validação e retorna ao formulário se false
-        if (!$inputs)
-            $v['validation'] = $this->validator;
-        else {
-            exit('cheguei');
+            #Realiza a validação e retorna ao formulário se false
+            if (!$inputs)
+                $v['validation'] = $this->validator;
+            else {
+
+                $v['data']['DataPrescricao']        = date("Y-m-d", strtotime($v['data']['DataPrescricao']));
+
+                $v['data']['Peso']                  = str_replace(",",".",$v['data']['Peso']);
+                $v['data']['CreatininaSerica']      = str_replace(",",".",$v['data']['CreatininaSerica']);
+                $v['data']['ClearanceCreatinina']   = str_replace(",",".",$v['data']['ClearanceCreatinina']);
+                $v['data']['IndiceMassaCorporal']   = str_replace(",",".",$v['data']['IndiceMassaCorporal']);
+                $v['data']['SuperficieCorporal']    = str_replace(",",".",$v['data']['SuperficieCorporal']);
+
+                $v['data']['idSishuap_Usuario']     = $_SESSION['Sessao']['idSishuap_Usuario'];
+                $v['data']['Prontuario']            = $_SESSION['Paciente']['prontuario'];
+
+                unset(
+                    $v['data']['csrf_test_name'],
+                    $v['data']['Idade'],
+                    $v['data']['Sexo'],
+                    $v['data']['submit'],
+                );
+
+                $v['campos'] = array_keys($v['data']);
+
+                #/*
+                echo "<pre>";
+                print_r($_SESSION['Paciente']);
+                echo "</pre>";
+                echo "<pre>";
+                print_r($v['data']);
+                echo "</pre>";
+                #exit('oi');
+                #*/
+
+                if($action == 'editar') {
+
+                    $v['id'] = $v['data']['id'];
+                    $v['anterior'] = $tabela->get_item($v['id'], $v['tabela']);
+
+                    if($prescricao->update_item($v['data'], $v['tabela'], $v['id']) ) {
+
+                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao', 'UPDATE', $v['id']), TRUE);
+                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
+
+                        session()->setFlashdata('success', 'Item atualizado com sucesso!');
+
+                    }
+                    else
+                        session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+
+                }
+                else {
+                    $v['anterior'] = array();
+
+                    $v['id'] = $prescricao->insert($v['data']);
+
+                    if($v['id']) {
+
+                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao', 'CREATE', $v['id']), TRUE);
+                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
+
+                        session()->setFlashdata('success', 'Item adicionado com sucesso!');
+
+                    }
+                    else
+                        session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+
+                }
+
+                return redirect()->to('prescricao/list_prescricao');
+
+            }
+
         }
-
 
         return view('admin/prescricao/form_prescricao', $v);
     }

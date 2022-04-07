@@ -26,9 +26,14 @@ class PrescricaoModel extends Model
                                         'idTabPreschuap_TipoTerapia',
                                         'CiclosTotais',
                                         'EntreCiclos',
+
                                         'Peso',
                                         'CreatininaSerica',
                                         'Altura',
+                                        'ClearanceCreatinina',
+                                        'IndiceMassaCorporal',
+                                        'SuperficieCorporal',
+
                                         'idSishuap_Usuario',
                                         'Status',
                                         'Leito',
@@ -66,9 +71,14 @@ class PrescricaoModel extends Model
                 , ttt.TipoTerapia
                 , p.CiclosTotais
                 , p.EntreCiclos
+
                 , format(p.Peso, 2, "pt_BR") as Peso
                 , format(p.CreatininaSerica, 2, "pt_BR") as CreatininaSerica
                 , Altura
+                , format(p.ClearanceCreatinina, 2, "pt_BR") as ClearanceCreatinina
+                , format(p.IndiceMassaCorporal, 2, "pt_BR") as IndiceMassaCorporal
+                , format(p.SuperficieCorporal, 2, "pt_BR") as SuperficieCorporal
+
                 , u.Nome
                 , u.Cpf
                 , p.Status
@@ -85,8 +95,8 @@ class PrescricaoModel extends Model
                     left join TabPreschuap_Protocolo as tp on p.idTabPreschuap_Protocolo = tp.idTabPreschuap_Protocolo
                     left join TabPreschuap_TipoTerapia as ttt on p.idTabPreschuap_TipoTerapia = ttt.idTabPreschuap_TipoTerapia
                     left join Sishuap_Usuario as u on p.idSishuap_Usuario = u.idSishuap_Usuario
-                    left join TabPreschuap_MotivoCancelamento as tmc on p.idTabPreschuap_Subcategoria = tmc.idTabPreschuap_MotivoCancelamento
-                    left join TabPreschuap_Alergia as ta on p.idTabPreschuap_Subcategoria = ta.idTabPreschuap_Alergia
+                    left join TabPreschuap_MotivoCancelamento as tmc on p.idTabPreschuap_MotivoCancelamento = tmc.idTabPreschuap_MotivoCancelamento
+                    left join TabPreschuap_Alergia as ta on p.idTabPreschuap_Alergia = ta.idTabPreschuap_Alergia
             WHERE
                 '.$where.'
         ');

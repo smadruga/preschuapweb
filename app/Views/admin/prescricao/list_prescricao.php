@@ -26,18 +26,19 @@
             <div id="collapse<?= $v['idPreschuap_Prescricao'] ?>" class="accordion-collapse" aria-labelledby="heading<?= $v['idPreschuap_Prescricao'] ?>">
                 <div class="accordion-body">
                     <div>
-                        <a class="btn btn-primary" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
-                        <button class="btn btn-primary" type="submit">Button</button>
-                        <input class="btn btn-primary" type="button" value="Input">
-                        <input class="btn btn-primary" type="submit" value="Submit">
-                        <input class="btn btn-primary" type="reset" value="Reset">
+                        <a class="btn btn-outline-warning" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-edit"></i> Editar</a>
+                        <a class="btn btn-outline-danger" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-trash-can"></i> Excluir</a>
+                        <a class="btn btn-outline-success" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-check-circle"></i> Concluir</a>
+                        <a class="btn btn-outline-info" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
+                        <a class="btn btn-outline-info" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-copy"></i> Copiar</a>
+                        <a class="btn btn-outline-info" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-repeat"></i> Continuar</a>
                     </div>
 
                     <hr />
 
                     <div class="container">
                         <div class="row">
-                            <div class="col"><b>Data da Marcação:</b> <?= $v['DataMarcacao'] ?></div>
+                            <!--<div class="col"><b>Data da Marcação:</b> <?= $v['DataMarcacao'] ?></div>-->
                             <div class="col"><b>Data da Prescrição:</b> <?= $v['DataPrescricao'] ?></div>
                         </div>
 
@@ -64,26 +65,35 @@
                             <div class="col"><b>Tipo de Terapia:</b> <?= $v['TipoTerapia'] ?></div>
                         </div>
 
+                        <hr />
+
                         <div class="row">
-                            <div class="col"><b>Peso:</b> <?= $v['Peso'] ?> Kg</div>
+                            <div class="col"><b>Peso:</b> <?= $v['Peso'] ?> kg</div>
                             <div class="col"><b>Altura:</b> <?= $v['Altura'] ?> cm</div>
+                            <div class="col"><b>Creatinina Sérica (ClSr):</b> <?= $v['CreatininaSerica'] ?> mg/dL</div>
                         </div>
 
                         <div class="row">
-                            <div class="col"><b>Creatinina Serica:</b> <?= $v['CreatininaSerica'] ?></div>
+                            <div class="col"><b>Clearance Creatinina (ClCr):</b> <?= $v['ClearanceCreatinina'] ?> mL/min</div>
+                            <div class="col"><b>Índice de Massa Corporal (IMC):</b> <?= $v['IndiceMassaCorporal'] ?> kg/m²</div>
+                            <div class="col"><b>Superfície Corporal (SC):</b> <?= $v['SuperficieCorporal'] ?> m²</div>
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
                             <div class="col"><b>Alergia:</b> <?= $v['Alergia'] ?></div>
-                        </div>
-
-                        <div class="row">
                             <div class="col"><b>Serviço:</b> <?= $v['DescricaoServico'] ?></div>
                         </div>
 
                         <div class="row">
-                            <div class="col"><b>Reações Adversas:</b> <?= ($v['ReacaoAdversa']) ? nl2br($v['ReacaoAdversa']) : NULL ?></div>
+                            <div class="col"><b>Reações Adversas:</b> <?= ($v['ReacaoAdversa']) ? '<br>'.nl2br($v['ReacaoAdversa']) : NULL ?></div>
                         </div>
 
+                        <br />
+
                         <div class="row">
-                            <div class="col"><b>Informações Complementares:</b> <?= ($v['InformacaoComplementar']) ? nl2br($v['InformacaoComplementar']) : NULL ?></div>
+                            <div class="col"><b>Informações Complementares:</b> <?= ($v['InformacaoComplementar']) ? '<br>'.nl2br($v['InformacaoComplementar']) : NULL ?></div>
                         </div>
 
                         <br />
@@ -102,7 +112,11 @@
                         <hr />
 
                         <?php
-                        foreach($medicamento[$v['idPreschuap_Prescricao']] as $m) {
+                        if(!isset($medicamento[$v['idPreschuap_Prescricao']])) {
+
+                        }
+                        else {
+                            foreach($medicamento[$v['idPreschuap_Prescricao']] as $m) {
                         ?>
                         <div class="row">
                             <div class="col"><b>Medicamento: <?= $m['Medicamento'] ?></b></div>
@@ -135,6 +149,7 @@
 
                         <hr />
                         <?php
+                            }
                         }
                         ?>
 

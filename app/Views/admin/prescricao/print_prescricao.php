@@ -43,8 +43,8 @@ foreach($prescricao['array'] as $v) {
                             <div class="row">
                                 <div class="col"><b>Peso:</b> <?= $v['Peso'] ?> Kg</div>
                                 <div class="col"><b>Altura:</b> <?= $v['Altura'] ?> cm</div>
-                                <div class="col"><b>IMC:</b> <?= $func->calc_imc($v['Peso'],$v['Altura']) ?></div>
-                                <div class="col"><b>SC:</b> <?= $func->calc_sc($v['Peso'],$v['Altura']) ?> m²</div>
+                                <div class="col"><b>IMC:</b> <?= $v['IndiceMassaCorporal'] ?> kg/m²</div>
+                                <div class="col"><b>SC:</b> <?= $v['SuperficieCorporal'] ?> m²</div>
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,7 @@ foreach($prescricao['array'] as $v) {
                     </div>
                     <div class="row">
                         <div class="col-6 border border-dark">
-                            <div class="col"><b>Reações Adversas Anteriores:</b> <?= nl2br($v['ReacaoAdversa']) ?></div>
+                            <div class="col"><b>Reações Adversas Anteriores:</b> <?= ($v['ReacaoAdversa']) ? '<br>'.nl2br($v['ReacaoAdversa']) : NULL ?></div>
                         </div>
                         <div class="col border border-dark border-start-0">
                             <div class="col"><b>Observações do Protocolo:</b> <?= $v['Observacoes'] ?><br /><br /></div>
@@ -135,7 +135,7 @@ foreach($prescricao['array'] as $v) {
                             <div class="col"><b>Alergia:</b> <?= $v['Alergia'] ?></div>
                         </div>
                         <div class="col-4 border border-dark border-top-0 border-start-0">
-                            <div class="col"><b>Informações Complementares:</b> <?= nl2br($v['InformacaoComplementar']) ?></div>
+                            <div class="col"><b>Informações Complementares:</b> <?= ($v['InformacaoComplementar']) ? '<br>'.nl2br($v['InformacaoComplementar']) : NULL ?></div>
                         </div>
                         <div class="col border border-dark border-top-0 border-start-0">
                             <div class="col">
