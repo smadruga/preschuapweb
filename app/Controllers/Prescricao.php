@@ -123,7 +123,7 @@ class Prescricao extends BaseController
     *
     * @return void
     */
-    public function manage_prescricao($action = FALSE)
+    public function manage_prescricao($action = FALSE, $id = FALSE)
     {
 
         $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
@@ -173,6 +173,22 @@ class Prescricao extends BaseController
             $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         }
 
+        if($action == 'editar' && !$v['data']['submit']) {
+
+            $v['idPreschuap_Prescricao'] = $id;
+            $v['data'] = $prescricao->find($v['idPreschuap_Prescricao']); #Carrega os itens da tabela selecionada
+            $v['data']['submit'] = '';
+
+            $v['data']['ClearanceCreatinina']   = (!$v['data']['ClearanceCreatinina']) ? $v['func']->calc_ClearanceCreatinina($v['data']['Peso'], $_SESSION['Paciente']['idade'], $_SESSION['Paciente']['sexo'], $v['data']['CreatininaSerica']) : $v['data']['ClearanceCreatinina'];
+            $v['data']['IndiceMassaCorporal']   = (!$v['data']['IndiceMassaCorporal']) ? $v['func']->calc_IndiceMassaCorporal($v['data']['Peso'], $v['data']['Altura']) : $v['data']['IndiceMassaCorporal'];
+            $v['data']['SuperficieCorporal']   = (!$v['data']['SuperficieCorporal']) ? $v['func']->calc_SuperficieCorporal($v['data']['Peso'], $v['data']['Altura']) : $v['data']['SuperficieCorporal'];
+
+            $v['data']['DataPrescricao']        = date("d/m/Y", strtotime($v['data']['DataPrescricao']));
+
+            $v['data']['Peso']                  = str_replace(".",",",$v['data']['Peso']);
+            $v['data']['CreatininaSerica']      = str_replace(".",",",$v['data']['CreatininaSerica']);
+        }
+
         $v['select'] = [
             'Categoria'         => $tabela->list_tabela_bd('Categoria', FALSE, FALSE, '*', 'idTabPreschuap_Categoria', TRUE), #Carrega os itens da tabela selecionada
             'Subcategoria'      => $tabela->list_tabela_bd('Subcategoria', FALSE, FALSE, '*', 'idTabPreschuap_Subcategoria', TRUE), #Carrega os itens da tabela selecionada
@@ -184,13 +200,11 @@ class Prescricao extends BaseController
 
         if($action == 'editar') {
 
-            $v['id'] = $data;
-
             if($action == 'editar')
                 $v['opt'] = [
                     'bg'        => 'bg-warning',
-                    'button'    => '<button class="btn btn-warning" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
-                    'title'     => 'Editar item - Tabela: '.$v['tabela'],
+                    'button'    => '<button class="btn btn-info" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
+                    'title'     => 'Editar Prescrição',
                     'disabled'  => '',
                     'action'    => 'editar',
                 ];
@@ -202,7 +216,7 @@ class Prescricao extends BaseController
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
                 'button'    => '<button class="btn btn-info" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>',
-                'title'     => 'Cadastrar item',
+                'title'     => 'Cadastrar Prescrição',
                 'disabled'  => '',
                 'action'    => 'cadastrar',
             ];
@@ -261,7 +275,7 @@ class Prescricao extends BaseController
 
                 $v['campos'] = array_keys($v['data']);
 
-                #/*
+                /*
                 echo "<pre>";
                 print_r($_SESSION['Paciente']);
                 echo "</pre>";
@@ -273,10 +287,20 @@ class Prescricao extends BaseController
 
                 if($action == 'editar') {
 
-                    $v['id'] = $v['data']['id'];
-                    $v['anterior'] = $tabela->get_item($v['id'], $v['tabela']);
+                    $v['id'] = $v['data']['idPreschuap_Prescricao'];
+                    $v['anterior'] = $prescricao->find($v['id']);
 
-                    if($prescricao->update_item($v['data'], $v['tabela'], $v['id']) ) {
+                    /*
+                    echo "<pre>";
+                    print_r($v['anterior']);
+                    echo "</pre>";
+                    echo "<pre>";
+                    print_r($v['data']);
+                    echo "</pre>";
+                    exit('oi1');
+                    */
+
+                    if($prescricao->update($v['id'], $v['data']) ) {
 
                         $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao', 'UPDATE', $v['id']), TRUE);
                         $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
@@ -289,6 +313,7 @@ class Prescricao extends BaseController
 
                 }
                 else {
+exit('oi2');
                     $v['anterior'] = array();
 
                     $v['id'] = $prescricao->insert($v['data']);
@@ -311,6 +336,16 @@ class Prescricao extends BaseController
             }
 
         }
+
+        /*
+        echo "<pre>";
+        print_r($_SESSION['Paciente']);
+        echo "</pre>";
+        echo "<pre>";
+        print_r($v['data']);
+        echo "</pre>";
+        exit('oi');
+        #*/
 
         return view('admin/prescricao/form_prescricao', $v);
     }

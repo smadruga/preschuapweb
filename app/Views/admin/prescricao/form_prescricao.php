@@ -9,8 +9,8 @@
         <?php $validation = \Config\Services::validation(); ?>
 
         <div class="card">
-            <div class="card-header">
-                <b>Cadastrar nova Prescrição</b>
+            <div class="card-header <?= $opt['bg'] ?> text-white">
+                <b><?= $opt['title'] ?></b>
             </div>
             <div class="card-body has-validation">
 
@@ -337,6 +337,10 @@
 
                 <input type="hidden" name="Idade" id="Idade" value="<?= $_SESSION['Paciente']['idade'] ?>" />
                 <input type="hidden" name="Sexo" id="Sexo" value="<?= $_SESSION['Paciente']['sexo'] ?>" />
+                <input type="hidden" name="action" value="<?= $opt['action'] ?>" />
+                <?php if($opt['action'] == 'editar') { ?>
+                <input type="hidden" name="idPreschuap_Prescricao" value="<?= $data['idPreschuap_Prescricao'] ?>" />
+                <?php } ?>
 
                 <hr />
                 <?= $opt['button'] ?>
