@@ -45,7 +45,7 @@ class HUAP_Functions
     }
 
     /**
-    * Função que calcula o IMC
+    * Função que calcula o Índice de Massa Corporal
     *
     * Fórmula: IMC = P/(A^2)
     *   onde:
@@ -54,9 +54,9 @@ class HUAP_Functions
     *
     * @return double
     */
-    function calc_imc($peso, $altura) {
+    function calc_IndiceMassaCorporal($peso, $altura) {
 
-        return number_format((str_replace(',', '.',$peso)/(($altura/100)**2)), 2, ',', '');
+        return number_format((str_replace(',', '.',$peso)/(($altura/100)**2)), 3, ',', '');
 
     }
 
@@ -69,12 +69,30 @@ class HUAP_Functions
     *   X = Peso (em quilogramas (Kg))
     *   Y = Altura (em centímetros (cm))
     *
+    * Referência: https://arquivos.sbn.org.br/equacoes/eq6.htm
+    *
     * @return double
     */
-    function calc_sc($peso, $altura) {
+    function calc_SuperficieCorporal($peso, $altura) {
 
-        #return ( (0.007184)*((str_replace(',', '.',$peso)**(0.425)*($altura**(0.725))) );
-        return number_format(( (0.007184) * (str_replace(',', '.',$peso)**(0.425)) * ($altura**(0.725)) ), 2, ',', '');
+        return number_format(( (0.007184) * (str_replace(',', '.',$peso)**(0.425)) * ($altura**(0.725)) ), 3, ',', '');
+
+    }
+
+    /**
+    * Função que calcula o Clearance Creatinina
+    *
+    * ClCr (mL/min) = (140 – idade) × (peso em kg) × (0.85 se mulher) / (72 × Creatinina sérica)
+    * Referência: https://www.mdsaude.com/nefrologia/calculadoras-clearance-creatinina/ ou
+    *             https://calculadorasmedicas.com.br/calculadora/clearance-de-creatinina-equacao-cockcroft-gault
+    *
+    * @return double
+    */
+    function calc_ClearanceCreatinina($peso, $idade, $sexo, $creatinina) {
+
+        $sexo = ($sexo == 'F') ? 0.85 : 1;
+
+        return number_format((((140 - $idade) * $peso * $sexo) / (72 * $creatinina)), 3, ',', '');
 
     }
 
