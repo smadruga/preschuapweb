@@ -99,6 +99,8 @@ class PrescricaoModel extends Model
                     left join TabPreschuap_Alergia as ta on p.idTabPreschuap_Alergia = ta.idTabPreschuap_Alergia
             WHERE
                 '.$where.'
+            ORDER BY p.idPreschuap_Prescricao DESC
+
         ');
         /*
         echo $db->getLastQuery();
@@ -142,8 +144,14 @@ class PrescricaoModel extends Model
         exit($data);
         #*/
         #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
-        $query = $query->getRowArray();
-        return $query['conselho'];
+
+        if($query->getNumRows()) {
+            $query = $query->getRowArray();
+            return $query['conselho'];
+        }
+        else
+            return 'NÃO ENCONTRADO';
+
 
     }
 

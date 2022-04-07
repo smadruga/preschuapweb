@@ -173,7 +173,7 @@ class Prescricao extends BaseController
             $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         }
 
-        if($action == 'editar' && !$v['data']['submit']) {
+        if(($action == 'editar' || $action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) {
 
             $v['idPreschuap_Prescricao'] = $id;
             $v['data'] = $prescricao->find($v['idPreschuap_Prescricao']); #Carrega os itens da tabela selecionada
@@ -200,14 +200,35 @@ class Prescricao extends BaseController
 
         if($action == 'editar') {
 
-            if($action == 'editar')
-                $v['opt'] = [
-                    'bg'        => 'bg-warning',
-                    'button'    => '<button class="btn btn-info" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
-                    'title'     => 'Editar Prescrição',
-                    'disabled'  => '',
-                    'action'    => 'editar',
-                ];
+            $v['opt'] = [
+                'bg'        => 'bg-warning',
+                'button'    => '<button class="btn btn-info" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
+                'title'     => 'Editar Prescrição',
+                'disabled'  => '',
+                'action'    => 'editar',
+            ];
+
+        }
+        elseif($action == 'excluir') {
+
+            $v['opt'] = [
+                'bg'        => 'bg-danger',
+                'button'    => '<button class="btn btn-danger" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-trash-can"></i> Excluir</button>',
+                'title'     => 'Tem certeza que deseja excluir os dados abaixo? Essa operação não pode ser desfeita.',
+                'disabled'  => 'disabled',
+                'action'    => 'excluir',
+            ];
+
+        }
+        elseif($action == 'concluir') {
+
+            $v['opt'] = [
+                'bg'        => 'bg-success',
+                'button'    => '<button class="btn btn-success" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-check-circle"></i> Concluir</button>',
+                'title'     => 'Tem certeza que deseja concluir a prescrição abaixo?',
+                'disabled'  => 'disabled',
+                'action'    => 'concluir',
+            ];
 
         }
         else {
@@ -224,81 +245,81 @@ class Prescricao extends BaseController
         }
 
         if($v['data']['submit']) {
-            #Critérios de validação
-            $inputs = $this->validate([
-                'DataPrescricao'                    => ['label' => 'Data da Prescrição', 'rules' => 'required|valid_date[d/m/Y]'],
-                'Dia'                               => 'required|integer',
-                'Ciclo'                             => 'required|integer',
-                'Aplicabilidade'                    => 'required',
-                'idTabPreschuap_Categoria'          => ['label' => 'CID Categoria', 'rules' => 'required'],
-                'idTabPreschuap_Subcategoria'       => ['label' => 'CID Subcategoria', 'rules' => 'required'],
-                'idTabPreschuap_Protocolo'          => ['label' => 'Protocolo', 'rules' => 'required'],
-                'idTabPreschuap_TipoTerapia'        => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
-                'CiclosTotais'                      => ['label' => 'Total de Ciclos', 'rules' => 'required|integer'],
-                'EntreCiclos'                       => ['label' => 'Entre Ciclos', 'rules' => 'required|integer'],
 
-                'Peso'                              => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
-                'CreatininaSerica'                  => ['label' => 'Creatinina Sérica', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
-                'Altura'                            => 'required|integer',
-                #'ClearanceCreatinina'               => ['label' => 'Clearance Creatinina', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
-                #'IndiceMassaCorporal'               => ['label' => 'Índice de Massa Corporal', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
-                #'SuperficieCorporal'                => ['label' => 'Superfície Corporal', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+            if($action != 'excluir' || $action != 'concluir') {
+                #Critérios de validação
+                $inputs = $this->validate([
+                    'DataPrescricao'                    => ['label' => 'Data da Prescrição', 'rules' => 'required|valid_date[d/m/Y]'],
+                    'Dia'                               => 'required|integer',
+                    'Ciclo'                             => 'required|integer',
+                    'Aplicabilidade'                    => 'required',
+                    'idTabPreschuap_Categoria'          => ['label' => 'CID Categoria', 'rules' => 'required'],
+                    'idTabPreschuap_Subcategoria'       => ['label' => 'CID Subcategoria', 'rules' => 'required'],
+                    'idTabPreschuap_Protocolo'          => ['label' => 'Protocolo', 'rules' => 'required'],
+                    'idTabPreschuap_TipoTerapia'        => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
+                    'CiclosTotais'                      => ['label' => 'Total de Ciclos', 'rules' => 'required|integer'],
+                    'EntreCiclos'                       => ['label' => 'Entre Ciclos', 'rules' => 'required|integer'],
 
-                'DescricaoServico'                  => ['label' => 'Serviço', 'rules' => 'required'],
-                'InformacaoComplementar'            => ['label' => 'Informação Complementar', 'rules' => 'required'],
-                'ReacaoAdversa'                     => ['label' => 'Reação Adversa', 'rules' => 'required'],
-                'idTabPreschuap_Alergia'            => ['label' => 'Alergia', 'rules' => 'required'],
-            ]);
+                    'Peso'                              => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
+                    'CreatininaSerica'                  => ['label' => 'Creatinina Sérica', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+                    'Altura'                            => 'required|integer',
+                    #'ClearanceCreatinina'               => ['label' => 'Clearance Creatinina', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+                    #'IndiceMassaCorporal'               => ['label' => 'Índice de Massa Corporal', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+                    #'SuperficieCorporal'                => ['label' => 'Superfície Corporal', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
+
+                    'DescricaoServico'                  => ['label' => 'Serviço', 'rules' => 'required'],
+                    'InformacaoComplementar'            => ['label' => 'Informação Complementar', 'rules' => 'required'],
+                    'ReacaoAdversa'                     => ['label' => 'Reação Adversa', 'rules' => 'required'],
+                    'idTabPreschuap_Alergia'            => ['label' => 'Alergia', 'rules' => 'required'],
+                ]);
+            }
+            else
+                $inputs = '';
 
             #Realiza a validação e retorna ao formulário se false
-            if (!$inputs)
+            if (!$inputs && $action != 'excluir' || $action != 'concluir')
                 $v['validation'] = $this->validator;
             else {
 
-                $v['data']['DataPrescricao']        = date("Y-m-d", strtotime($v['data']['DataPrescricao']));
+                if($action != 'excluir' || $action != 'concluir') {
 
-                $v['data']['Peso']                  = str_replace(",",".",$v['data']['Peso']);
-                $v['data']['CreatininaSerica']      = str_replace(",",".",$v['data']['CreatininaSerica']);
-                $v['data']['ClearanceCreatinina']   = str_replace(",",".",$v['data']['ClearanceCreatinina']);
-                $v['data']['IndiceMassaCorporal']   = str_replace(",",".",$v['data']['IndiceMassaCorporal']);
-                $v['data']['SuperficieCorporal']    = str_replace(",",".",$v['data']['SuperficieCorporal']);
+                    $v['data']['DataPrescricao']        = date("Y-m-d", strtotime($v['data']['DataPrescricao']));
 
-                $v['data']['idSishuap_Usuario']     = $_SESSION['Sessao']['idSishuap_Usuario'];
-                $v['data']['Prontuario']            = $_SESSION['Paciente']['prontuario'];
+                    $v['data']['Peso']                  = str_replace(",",".",$v['data']['Peso']);
+                    $v['data']['CreatininaSerica']      = str_replace(",",".",$v['data']['CreatininaSerica']);
+                    $v['data']['ClearanceCreatinina']   = str_replace(",",".",$v['data']['ClearanceCreatinina']);
+                    $v['data']['IndiceMassaCorporal']   = str_replace(",",".",$v['data']['IndiceMassaCorporal']);
+                    $v['data']['SuperficieCorporal']    = str_replace(",",".",$v['data']['SuperficieCorporal']);
+
+                    $v['data']['Prontuario']            = $_SESSION['Paciente']['prontuario'];
+                    $v['data']['idSishuap_Usuario']     = $_SESSION['Sessao']['idSishuap_Usuario'];
+
+                }
 
                 unset(
                     $v['data']['csrf_test_name'],
                     $v['data']['Idade'],
                     $v['data']['Sexo'],
                     $v['data']['submit'],
+                    $v['data']['action'],
                 );
 
                 $v['campos'] = array_keys($v['data']);
 
-                /*
+                #/*
                 echo "<pre>";
-                print_r($_SESSION['Paciente']);
+                #print_r($_SESSION['Paciente']);
                 echo "</pre>";
                 echo "<pre>";
                 print_r($v['data']);
                 echo "</pre>";
-                #exit('oi');
+                exit('oi >> '.$action);
                 #*/
 
-                if($action == 'editar') {
+                if($action == 'editar' || $action == 'concluir') {
 
                     $v['id'] = $v['data']['idPreschuap_Prescricao'];
                     $v['anterior'] = $prescricao->find($v['id']);
-
-                    /*
-                    echo "<pre>";
-                    print_r($v['anterior']);
-                    echo "</pre>";
-                    echo "<pre>";
-                    print_r($v['data']);
-                    echo "</pre>";
-                    exit('oi1');
-                    */
 
                     if($prescricao->update($v['id'], $v['data']) ) {
 
@@ -312,8 +333,41 @@ class Prescricao extends BaseController
                         session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
 
                 }
+                elseif($action == 'excluir') {
+
+                    $v['id'] = $v['data']['idPreschuap_Prescricao'];
+                    $v['anterior'] = $prescricao->find($v['id']);
+                    $v['campos'] = array_keys($v['anterior']);
+                    $v['data'] = array();
+
+                    /*
+                    echo "<pre>";
+                    print_r($v['campos']);
+                    echo "</pre>";
+                    echo "<pre>";
+                    print_r($v['anterior']);
+                    echo "</pre>";
+                    echo "<pre>";
+                    print_r($v['data']);
+                    echo "</pre>";
+                    #exit('oi3');
+                    #*/
+
+                    if($prescricao->delete($v['id']) ) {
+                    #if(1) {
+
+                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao', 'DELETE', $v['id']), TRUE);
+                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], FALSE, TRUE), TRUE);
+
+                        session()->setFlashdata('success', 'Item excluído com sucesso!');
+
+                    }
+                    else
+                        session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+
+                }
                 else {
-exit('oi2');
+
                     $v['anterior'] = array();
 
                     $v['id'] = $prescricao->insert($v['data']);

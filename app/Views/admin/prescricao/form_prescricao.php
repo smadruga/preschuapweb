@@ -338,7 +338,7 @@
                 <input type="hidden" name="Idade" id="Idade" value="<?= $_SESSION['Paciente']['idade'] ?>" />
                 <input type="hidden" name="Sexo" id="Sexo" value="<?= $_SESSION['Paciente']['sexo'] ?>" />
                 <input type="hidden" name="action" value="<?= $opt['action'] ?>" />
-                <?php if($opt['action'] == 'editar') { ?>
+                <?php if($opt['action'] == 'editar' || $opt['action'] == 'excluir') { ?>
                 <input type="hidden" name="idPreschuap_Prescricao" value="<?= $data['idPreschuap_Prescricao'] ?>" />
                 <?php } ?>
 

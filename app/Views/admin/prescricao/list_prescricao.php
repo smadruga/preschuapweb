@@ -27,8 +27,8 @@
                 <div class="accordion-body">
                     <div>
                         <a class="btn btn-outline-warning" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Editar</a>
-                        <a class="btn btn-outline-danger" href="<?= base_url('prescricao/manage_prescricao/excluir') ?>" role="button"><i class="fa-solid fa-trash-can"></i> Excluir</a>
-                        <a class="btn btn-outline-success" href="<?= base_url('prescricao/manage_prescricao/concluir') ?>" role="button"><i class="fa-solid fa-check-circle"></i> Concluir</a>
+                        <a class="btn btn-outline-danger" href="<?= base_url('prescricao/manage_prescricao/excluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-trash-can"></i> Excluir</a>
+                        <a class="btn btn-outline-success" href="<?= base_url('prescricao/manage_prescricao/concluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-check-circle"></i> Concluir</a>
                         <a class="btn btn-outline-info" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
                         <a class="btn btn-outline-info" href="<?= base_url('prescricao/manage_prescricao/copiar') ?>" role="button"><i class="fa-solid fa-copy"></i> Copiar</a>
                         <a class="btn btn-outline-info" href="<?= base_url('prescricao/manage_prescricao/continuar') ?>" role="button"><i class="fa-solid fa-repeat"></i> Continuar</a>
