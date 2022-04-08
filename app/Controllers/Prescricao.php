@@ -463,13 +463,13 @@ class Prescricao extends BaseController
 
             $v['idPreschuap_Prescricao']    = $id;
             $v['data']['prescricao']        = $prescricao->read_prescricao($v['idPreschuap_Prescricao'], TRUE); #Carrega os itens da tabela selecionada
-            $v['data']['medicamento']       = $medicamento->where('idPreschuap_Prescricao', $v['idPreschuap_Prescricao'])->findAll(); #Carrega os itens da tabela selecionada
+            $v['data']['medicamento']       = $medicamento->read_medicamento($v['idPreschuap_Prescricao']); #Carrega os itens da tabela selecionada
+            #$v['data']['medicamento']       = $medicamento->where('idPreschuap_Prescricao', $v['idPreschuap_Prescricao'])->findAll(); #Carrega os itens da tabela selecionada
             $v['data']['submit']            = '';
 
-            $v['opt']['Peso']                  = str_replace(",",".",$v['data']['Peso']);
-            $v['opt']['CreatininaSerica']      = str_replace(",",".",$v['data']['CreatininaSerica']);
-            $v['opt']['Dose']                  = str_replace(",",".",$v['data']['Dose']);
-            $v['opt']['Peso']                  = str_replace(",",".",$v['data']['Peso']);
+            $v['opt']['Peso']                  = str_replace(",",".",$v['data']['prescricao']['Peso']);
+            $v['opt']['CreatininaSerica']      = str_replace(",",".",$v['data']['prescricao']['CreatininaSerica']);
+            #$v['opt']['Dose']                  = str_replace(",",".",$v['data']['medicamento']['Dose']);
 
             /*
             echo "<pre>";
@@ -481,16 +481,6 @@ class Prescricao extends BaseController
             exit('oi>>'.$id);
             #*/
 
-
-/*
-            $v['data']['ClearanceCreatinina']   = (!$v['data']['ClearanceCreatinina']) ? $v['func']->calc_ClearanceCreatinina($v['data']['Peso'], $_SESSION['Paciente']['idade'], $_SESSION['Paciente']['sexo'], $v['data']['CreatininaSerica']) : $v['data']['ClearanceCreatinina'];
-            $v['data']['IndiceMassaCorporal']   = (!$v['data']['IndiceMassaCorporal']) ? $v['func']->calc_IndiceMassaCorporal($v['data']['Peso'], $v['data']['Altura']) : $v['data']['IndiceMassaCorporal'];
-            $v['data']['SuperficieCorporal']   = (!$v['data']['SuperficieCorporal']) ? $v['func']->calc_SuperficieCorporal($v['data']['Peso'], $v['data']['Altura']) : $v['data']['SuperficieCorporal'];
-
-            $v['data']['DataPrescricao']        = date("d/m/Y", strtotime($v['data']['DataPrescricao']));
-
-            $v['data']['Peso']                  = str_replace(".",",",$v['data']['Peso']);
-            $v['data']['CreatininaSerica']      = str_replace(".",",",$v['data']['CreatininaSerica']);*/
         }
 
         $v['opt'] = [
@@ -499,6 +489,11 @@ class Prescricao extends BaseController
             'title'     => 'Ajustar doses',
             'disabled'  => '',
             'action'    => 'editar',
+        ];
+
+        $v['select']['TipoAjuste']  = [
+            'porcentagem'   => 'Porcentagem sobre a dose',
+            'substituicao'  => 'Substituir dose pelo ajuste'
         ];
 
         if($v['data']['submit']) {
@@ -538,12 +533,12 @@ exit('eeeiieiei');
             }
 
         }
-        #/*
+        /*
         echo "<pre>";
         print_r($v['data']);
         echo "</pre>";
         echo "<pre>";
-        print_r($v['data']['medicamento']);
+        #print_r($v['data']['medicamento']);
         echo "</pre>";
         #exit('oi');
         #*/
