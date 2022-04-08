@@ -40,6 +40,8 @@ class PrescricaoMedicamentoModel extends Model
     public function read_medicamento($data)
     {
 
+        $id = (isset($data['where'])) ? $data['where'] : $data;
+
         $db = \Config\Database::connect();
         $query = $db->query('
             SELECT
@@ -47,7 +49,7 @@ class PrescricaoMedicamentoModel extends Model
                 , pm.idPreschuap_Prescricao
                 , pm.idTabPreschuap_Protocolo_Medicamento
                 , if(pm.Ajuste is not null, format(pm.Ajuste, 3, "pt_BR"), "")  as Ajuste
-                , format(pm.Calculo, 3, "pt_BR") as Calculo
+                , concat(format(pm.Calculo, 3, "pt_BR")," ",tum.Representacao) as Calculo
                 , tpm.idTabPreschuap_Protocolo
                 , tpm.OrdemInfusao
                 , tet.EtapaTerapia
@@ -76,13 +78,20 @@ class PrescricaoMedicamentoModel extends Model
                 and tpm.idTabPreschuap_Diluente = td.idTabPreschuap_Diluente
                 and tpm.idTabPreschuap_Posologia = tps.idTabPreschuap_Posologia
 
-            	AND idPreschuap_Prescricao in ('.$data['where'].')
+            	AND idPreschuap_Prescricao in ('.$id.')
 
             ORDER BY pm.idPreschuap_Prescricao asc, tpm.OrdemInfusao asc
         ');
 
-        foreach($query->getResultArray() as $val)
-            $data['medicamento'][$val['idPreschuap_Prescricao']][] = $val;
+        if(isset($data['where'])) {
+            foreach($query->getResultArray() as $val)
+                $data['medicamento'][$val['idPreschuap_Prescricao']][] = $val;
+
+            return $data['medicamento'];
+        }
+        else
+            return $query->getResultArray();
+
 
         /*
         echo $db->getLastQuery();
@@ -95,7 +104,6 @@ class PrescricaoMedicamentoModel extends Model
         exit('oi');
         #*/
 
-        return $data['medicamento'];
 
     }
 
