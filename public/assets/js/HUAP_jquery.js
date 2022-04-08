@@ -145,3 +145,42 @@ function doseCarboplatina() {
     }
 
 }
+
+/*
+ * Função que calcula o ajuste da dose da prescrição
+ *
+ *
+ *
+ * @param {decimal} peso
+ * @param {int} altura
+ * @returns {decimal}
+ */
+function ajuste(campo) {
+
+    //busca os valores
+    var dose    = $("#Dose"+campo).val();
+    var ajuste  = $("#Ajuste"+campo).val();
+    var tipo    = $("#TipoAjuste"+campo).val();
+
+    if(dose && ajuste && tipo) {
+
+        dose    = dose.replace(".","").replace(",",".");
+        ajuste  = ajuste.replace(".","").replace(",",".");
+
+        if(tipo == 'porcentagem') {
+            r = (dose * (ajuste/100));
+            r = parseFloat(dose) + parseFloat(r);
+            r = r.toFixed(3);
+        }
+        else
+            r = ajuste;
+
+        //console.log(' >> '+dose+' <> '+ajuste+' <> '+tipo+' <> '+campo+' <> '+r);
+
+        r = r.replace(".",",");
+
+        $('#Calculo'+campo).val(r);
+
+    }
+
+}
