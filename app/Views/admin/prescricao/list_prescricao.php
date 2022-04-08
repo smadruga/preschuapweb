@@ -108,41 +108,45 @@
                         <hr />
                             <div class="text-center">
                                 <b>
-                                    <b>PROTOCOLO:</b> <?= $v['Protocolo'] ?><br />
-                                    Medicamentos
+                                    <h4><span class="badge bg-primary">PROTOCOLO: <?= $v['Protocolo'] ?></b></span></h4>
+                                    <a class="btn btn-outline-warning" href="<?= base_url('prescricao/manage_medicamento/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Ajustar Doses</a>
                                 </b>
                             </div>
                         <hr />
 
                         <?php
                         if(!isset($medicamento[$v['idPreschuap_Prescricao']])) {
-
+                        ?>
+                        <div class="alert alert-warning" role="alert">
+                            Nenhum medicamento cadastrado.
+                        </div>
+                        <?php
                         }
                         else {
                             foreach($medicamento[$v['idPreschuap_Prescricao']] as $m) {
                         ?>
                         <div class="row">
+                            <div class="col"><b>Ordem de Infusão:</b> <?= $m['OrdemInfusao'] ?></div>
+                        </div>
+
+                        <div class="row">
                             <div class="col"><b>Medicamento: <?= $m['Medicamento'] ?></b></div>
                         </div>
 
                         <div class="row">
-                            <div class="col"><b>Ordem de Infusão:</b> <?= $m['OrdemInfusao'] ?></div>
                             <div class="col"><b>Etapa da Terapia:</b> <?= $m['EtapaTerapia'] ?></div>
+                            <div class="col"><b>Via de Administração:</b> <?= $m['ViaAdministracao'] ?></div>
                         </div>
 
                         <div class="row">
                             <div class="col"><b>Dose:</b> <?= $m['Dose'] ?></div>
                             <div class="col"><b>Ajuste:</b> <?= $m['Ajuste'] ?></div>
-                        </div>
-
-                        <div class="row">
                             <div class="col"><b>Cálculo:</b> <?= $m['Calculo'] ?></div>
-                            <div class="col"><b>Via de Administração:</b> <?= $m['ViaAdministracao'] ?></div>
                         </div>
 
                         <div class="row">
                             <div class="col"><b>Diluente:</b> <?= $m['Diluente'] ?></div>
-                            <div class="col"><b>Volume:</b> <?= $m['Volume'] ?></div>
+                            <div class="col"><b>Volume:</b> <?= $m['Volume'] ?> ml</div>
                         </div>
 
                         <div class="row">

@@ -21,22 +21,25 @@ class TabelaModel extends Model
         if($simples) {
             $query = $db->query(
                 'SELECT
-                    idTabPreschuap_Protocolo_Medicamento
-                    , idTabPreschuap_Protocolo
-                    , OrdemInfusao
-                    , idTabPreschuap_EtapaTerapia
-                    , idTabPreschuap_Medicamento
-                    , Dose
-                    , idTabPreschuap_UnidadeMedida
-                    , idTabPreschuap_ViaAdministracao
-                    , idTabPreschuap_Diluente
-                    , Volume
-                    , TempoInfusao
-                    , idTabPreschuap_Posologia
+                    tpm.idTabPreschuap_Protocolo_Medicamento
+                    , tpm.idTabPreschuap_Protocolo
+                    , tpm.OrdemInfusao
+                    , tpm.idTabPreschuap_EtapaTerapia
+                    , tpm.idTabPreschuap_Medicamento
+                    , tpm.Dose
+                    , tpm.idTabPreschuap_UnidadeMedida
+                    , tpm.idTabPreschuap_ViaAdministracao
+                    , tpm.idTabPreschuap_Diluente
+                    , tpm.Volume
+                    , tpm.TempoInfusao
+                    , tpm.idTabPreschuap_Posologia
+                    , tum.idTabPreschuap_Formula
                 FROM
-                    TabPreschuap_Protocolo_Medicamento
+                    TabPreschuap_Protocolo_Medicamento AS tpm
+                    , TabPreschuap_UnidadeMedida AS tum
                 WHERE
                     idTabPreschuap_Protocolo = '.$data.'
+                    and tpm.idTabPreschuap_UnidadeMedida = tum.idTabPreschuap_UnidadeMedida
                 ORDER BY OrdemInfusao ASC'
             );
         }

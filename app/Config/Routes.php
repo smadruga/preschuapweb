@@ -78,6 +78,7 @@ $routes->group('prescricao', function ($routes) {
     $routes->get('print_prescricao/(:any)', 'Prescricao::print_prescricao/$1');
     $routes->get('page_prescricao', 'Prescricao::page_prescricao');
     $routes->get('manage_prescricao/(:any)/(:any)', 'Prescricao::manage_prescricao/$1/$2');
+    $routes->get('manage_medicamento/(:any)/(:any)', 'Prescricao::manage_medicamento/$1/$2');
 });
 
 $routes->group('migracao', function ($routes) {

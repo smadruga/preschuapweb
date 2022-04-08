@@ -97,6 +97,19 @@ class HUAP_Functions
     }
 
     /**
+    * Função que calcula a Dose Carboplatina
+    *
+    * Dose Carboplatina = Valor AUC * (ClCr + 25)
+    *
+    * @return double
+    */
+    function calc_DoseCarboplatina($dose, $clearance) {
+
+        return number_format(($dose * ($clearance + 25)), 3, ',', '');
+
+    }
+
+    /**
     * Função que retorna o sexo por extenso
     *
     * @return varchar
