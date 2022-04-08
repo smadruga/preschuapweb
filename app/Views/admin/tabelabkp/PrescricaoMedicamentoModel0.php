@@ -17,18 +17,7 @@ class PrescricaoMedicamentoModel extends Model
                                         'idPreschuap_Prescricao',
                                         'idTabPreschuap_Protocolo_Medicamento',
                                         'Ajuste',
-                                        'Calculo',
-                                        'idTabPreschuap_Protocolo',
-                                        'OrdemInfusao',
-                                        'idTabPreschuap_EtapaTerapia',
-                                        'idTabPreschuap_Medicamento',
-                                        'Dose',
-                                        'idTabPreschuap_UnidadeMedida',
-                                        'idTabPreschuap_ViaAdministracao',
-                                        'idTabPreschuap_Diluente',
-                                        'Volume',
-                                        'TempoInfusao',
-                                        'idTabPreschuap_Posologia',
+                                        'Cálculo',
                                     ];
 
     /**

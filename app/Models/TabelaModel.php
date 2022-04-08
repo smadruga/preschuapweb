@@ -13,58 +13,82 @@ class TabelaModel extends Model
     *
     * @return array
     */
-    public function list_medicamento_bd($data)
+    public function list_medicamento_bd($data, $simples = FALSE)
     {
 
         $db = \Config\Database::connect();
 
-        $query['count'] = $db->query('
-            SELECT
-                COUNT(idTabPreschuap_Protocolo_Medicamento) AS count
-            FROM
-                TabPreschuap_Protocolo_Medicamento
-            WHERE
-                idTabPreschuap_Protocolo = '.$data.'
-                AND Inativo = 0;
-        ');
-        $query['count'] = $query['count']->getRowArray();
-        $query['count'] = $query['count']['count'];
+        if($simples) {
+            $query = $db->query(
+                'SELECT
+                    idTabPreschuap_Protocolo_Medicamento
+                    , idTabPreschuap_Protocolo
+                    , OrdemInfusao
+                    , idTabPreschuap_EtapaTerapia
+                    , idTabPreschuap_Medicamento
+                    , Dose
+                    , idTabPreschuap_UnidadeMedida
+                    , idTabPreschuap_ViaAdministracao
+                    , idTabPreschuap_Diluente
+                    , Volume
+                    , TempoInfusao
+                    , idTabPreschuap_Posologia
+                FROM
+                    TabPreschuap_Protocolo_Medicamento
+                WHERE
+                    idTabPreschuap_Protocolo = '.$data.'
+                ORDER BY OrdemInfusao ASC'
+            );
+        }
+        else {
+            $query['count'] = $db->query('
+                SELECT
+                    COUNT(idTabPreschuap_Protocolo_Medicamento) AS count
+                FROM
+                    TabPreschuap_Protocolo_Medicamento
+                WHERE
+                    idTabPreschuap_Protocolo = '.$data.'
+                    AND Inativo = 0;
+            ');
+            $query['count'] = $query['count']->getRowArray();
+            $query['count'] = $query['count']['count'];
 
-        $query['lista'] = $db->query('
-            SELECT
-            	tpm.idTabPreschuap_Protocolo_Medicamento
-                , tpm.idTabPreschuap_Protocolo
-                , tpm.OrdemInfusao
-                , tet.EtapaTerapia
-                , tm.Medicamento
-                , concat(format(tpm.Dose, 2, "pt_BR"), " ", tum.Representacao) AS Dose
-                , tva.ViaAdministracao
-                , td.Diluente
-                , format(tpm.Volume, 2, "pt_BR") AS Volume
-                , tpm.TempoInfusao
-                , tpo.Posologia
-                , tpm.DataCadastro
-                , date_format(tpm.DataCadastro, "%d/%m/%Y %H:%i") as Cadastro
-                , tpm.Inativo
-            FROM
-            	TabPreschuap_Protocolo_Medicamento 		AS tpm
-                , TabPreschuap_EtapaTerapia 			AS tet
-                , TabPreschuap_Medicamento 				AS tm
-                , TabPreschuap_UnidadeMedida 			AS tum
-                , TabPreschuap_ViaAdministracao 		AS tva
-                , TabPreschuap_Diluente 				AS td
-                , TabPreschuap_Posologia 				AS tpo
-            WHERE
-            	tpm.idTabPreschuap_EtapaTerapia 		= tet.idTabPreschuap_EtapaTerapia
-                and tpm.idTabPreschuap_Medicamento 		= tm.idTabPreschuap_Medicamento
-                and tpm.idTabPreschuap_UnidadeMedida 	= tum.idTabPreschuap_UnidadeMedida
-                and tpm.idTabPreschuap_ViaAdministracao = tva.idTabPreschuap_ViaAdministracao
-                and tpm.idTabPreschuap_Diluente 		= td.idTabPreschuap_Diluente
-                and tpm.idTabPreschuap_Posologia 		= tpo.idTabPreschuap_Posologia
+            $query['lista'] = $db->query('
+                SELECT
+                	tpm.idTabPreschuap_Protocolo_Medicamento
+                    , tpm.idTabPreschuap_Protocolo
+                    , tpm.OrdemInfusao
+                    , tet.EtapaTerapia
+                    , tm.Medicamento
+                    , concat(format(tpm.Dose, 2, "pt_BR"), " ", tum.Representacao) AS Dose
+                    , tva.ViaAdministracao
+                    , td.Diluente
+                    , format(tpm.Volume, 2, "pt_BR") AS Volume
+                    , tpm.TempoInfusao
+                    , tpo.Posologia
+                    , tpm.DataCadastro
+                    , date_format(tpm.DataCadastro, "%d/%m/%Y %H:%i") as Cadastro
+                    , tpm.Inativo
+                FROM
+                	TabPreschuap_Protocolo_Medicamento 		AS tpm
+                    , TabPreschuap_EtapaTerapia 			AS tet
+                    , TabPreschuap_Medicamento 				AS tm
+                    , TabPreschuap_UnidadeMedida 			AS tum
+                    , TabPreschuap_ViaAdministracao 		AS tva
+                    , TabPreschuap_Diluente 				AS td
+                    , TabPreschuap_Posologia 				AS tpo
+                WHERE
+                	tpm.idTabPreschuap_EtapaTerapia 		= tet.idTabPreschuap_EtapaTerapia
+                    and tpm.idTabPreschuap_Medicamento 		= tm.idTabPreschuap_Medicamento
+                    and tpm.idTabPreschuap_UnidadeMedida 	= tum.idTabPreschuap_UnidadeMedida
+                    and tpm.idTabPreschuap_ViaAdministracao = tva.idTabPreschuap_ViaAdministracao
+                    and tpm.idTabPreschuap_Diluente 		= td.idTabPreschuap_Diluente
+                    and tpm.idTabPreschuap_Posologia 		= tpo.idTabPreschuap_Posologia
 
-                and tpm.idTabPreschuap_Protocolo = '.$data.'
-            ORDER BY Inativo ASC, tpm.idTabPreschuap_Protocolo ASC, tpm.OrdemInfusao ASC
-        ');
+                    and tpm.idTabPreschuap_Protocolo = '.$data.'
+                ORDER BY Inativo ASC, tpm.idTabPreschuap_Protocolo ASC, tpm.OrdemInfusao ASC
+            ');
+        }
 
         return $query;
 
@@ -75,7 +99,7 @@ class TabelaModel extends Model
     *
     * @return array
     */
-    public function list_tabela_bd($data, $limit = NULL, $offset = NULL, $queryfields = NULL, $order = NULL, $notinativo = NULL )
+    public function list_tabela_bd($data, $limit = NULL, $offset = NULL, $queryfields = NULL, $order = NULL, $notinativo = NULL)
     {
 
         $limit = $offset = NULL;

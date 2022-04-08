@@ -70,13 +70,16 @@
                         <div class="row">
                             <div class="col"><b>Peso:</b> <?= $v['Peso'] ?> kg</div>
                             <div class="col"><b>Altura:</b> <?= $v['Altura'] ?> cm</div>
-                            <div class="col"><b>Creatinina Sérica (ClSr):</b> <?= $v['CreatininaSerica'] ?> mg/dL</div>
                         </div>
 
                         <div class="row">
-                            <div class="col"><b>Clearance Creatinina (ClCr):</b> <?= $v['ClearanceCreatinina'] ?> mL/min</div>
                             <div class="col"><b>Índice de Massa Corporal (IMC):</b> <?= $v['IndiceMassaCorporal'] ?> kg/m²</div>
                             <div class="col"><b>Superfície Corporal (SC):</b> <?= $v['SuperficieCorporal'] ?> m²</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col"><b>Creatinina Sérica (ClSr):</b> <?= $v['CreatininaSerica'] ?> mg/dL</div>
+                            <div class="col"><b>Clearance Creatinina (ClCr):</b> <?= $v['ClearanceCreatinina'] ?> mL/min</div>
                         </div>
 
                         <hr />

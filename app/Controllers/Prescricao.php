@@ -119,18 +119,19 @@ class Prescricao extends BaseController
     }
 
     /**
-    * Cria uma nova prescrição
+    * Cria, edita, excluir e gerencia uma prescrição
     *
     * @return void
     */
     public function manage_prescricao($action = FALSE, $id = FALSE)
     {
 
-        $tabela = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
-        $prescricao = new PrescricaoModel(); #Inicia o objeto baseado na TabelaModel
-        $auditoria = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
-        $auditorialog = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
-        $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
+        $tabela         = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
+        $prescricao     = new PrescricaoModel(); #Inicia o objeto baseado na TabelaModel
+        $medicamento    = new PrescricaoMedicamentoModel(); #Inicia o objeto baseado na TabelaModel
+        $auditoria      = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
+        $auditorialog   = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
+        $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias
 
         $action = (!$action) ? $this->request->getVar('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
 
@@ -232,7 +233,6 @@ class Prescricao extends BaseController
 
         }
         else {
-            #$v['lista'] = $tabela->list_tabela_bd($v['tabela']); #Carrega os itens da tabela selecionada
 
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
@@ -246,7 +246,7 @@ class Prescricao extends BaseController
 
         if($v['data']['submit']) {
 
-            if($action != 'excluir' || $action != 'concluir') {
+            if($action == 'cadastrar' || $action == 'editar') {
                 #Critérios de validação
                 $inputs = $this->validate([
                     'DataPrescricao'                    => ['label' => 'Data da Prescrição', 'rules' => 'required|valid_date[d/m/Y]'],
@@ -263,9 +263,6 @@ class Prescricao extends BaseController
                     'Peso'                              => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
                     'CreatininaSerica'                  => ['label' => 'Creatinina Sérica', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
                     'Altura'                            => 'required|integer',
-                    #'ClearanceCreatinina'               => ['label' => 'Clearance Creatinina', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
-                    #'IndiceMassaCorporal'               => ['label' => 'Índice de Massa Corporal', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
-                    #'SuperficieCorporal'                => ['label' => 'Superfície Corporal', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
 
                     'DescricaoServico'                  => ['label' => 'Serviço', 'rules' => 'required'],
                     'InformacaoComplementar'            => ['label' => 'Informação Complementar', 'rules' => 'required'],
@@ -277,11 +274,11 @@ class Prescricao extends BaseController
                 $inputs = '';
 
             #Realiza a validação e retorna ao formulário se false
-            if (!$inputs && $action != 'excluir' || $action != 'concluir')
+            if (!$inputs && ($action == 'cadastrar' || $action == 'editar'))
                 $v['validation'] = $this->validator;
             else {
 
-                if($action != 'excluir' || $action != 'concluir') {
+                if($action == 'cadastrar' || $action == 'editar') {
 
                     $v['data']['DataPrescricao']        = date("Y-m-d", strtotime($v['data']['DataPrescricao']));
 
@@ -293,6 +290,8 @@ class Prescricao extends BaseController
 
                     $v['data']['Prontuario']            = $_SESSION['Paciente']['prontuario'];
                     $v['data']['idSishuap_Usuario']     = $_SESSION['Sessao']['idSishuap_Usuario'];
+
+                    $v['medicamento'] = $tabela->list_medicamento_bd($v['data']['idTabPreschuap_Protocolo'], TRUE);
 
                 }
 
@@ -306,14 +305,14 @@ class Prescricao extends BaseController
 
                 $v['campos'] = array_keys($v['data']);
 
-                #/*
+                /*
                 echo "<pre>";
-                #print_r($_SESSION['Paciente']);
+                print_r($v['data']['medicamento']->getResultArray());
                 echo "</pre>";
                 echo "<pre>";
                 print_r($v['data']);
                 echo "</pre>";
-                exit('oi >> '.$action);
+                exit('oi');
                 #*/
 
                 if($action == 'editar' || $action == 'concluir') {
@@ -340,19 +339,6 @@ class Prescricao extends BaseController
                     $v['campos'] = array_keys($v['anterior']);
                     $v['data'] = array();
 
-                    /*
-                    echo "<pre>";
-                    print_r($v['campos']);
-                    echo "</pre>";
-                    echo "<pre>";
-                    print_r($v['anterior']);
-                    echo "</pre>";
-                    echo "<pre>";
-                    print_r($v['data']);
-                    echo "</pre>";
-                    #exit('oi3');
-                    #*/
-
                     if($prescricao->delete($v['id']) ) {
                     #if(1) {
 
@@ -366,7 +352,7 @@ class Prescricao extends BaseController
                         session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
 
                 }
-                else {
+                elseif($action == 'cadastrar') {
 
                     $v['anterior'] = array();
 
@@ -377,13 +363,31 @@ class Prescricao extends BaseController
                         $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao', 'CREATE', $v['id']), TRUE);
                         $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
 
+                        foreach ($v['medicamento']->getResultArray() as $val) {
+
+                            $val['idPreschuap_Prescricao'] = $v['id'];
+                            $v['campos'] = array_keys($val);
+
+                            $v['mid'] = $medicamento->insert($val);
+
+                            if($v['mid']) {
+                                $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao_Medicamento', 'CREATE', $v['mid']), TRUE);
+                                $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $val, $v['campos'], $v['mid'], $v['auditoria']), TRUE);
+                            }
+
+                        }
+
                         session()->setFlashdata('success', 'Item adicionado com sucesso!');
+                        return redirect()->to('prescricao/list_prescricao');
 
                     }
                     else
                         session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
 
                 }
+                else
+                    session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação. ERRO: PRESCRIÇÃO-01');
+
 
                 return redirect()->to('prescricao/list_prescricao');
 

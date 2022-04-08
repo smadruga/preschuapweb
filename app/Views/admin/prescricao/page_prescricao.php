@@ -13,7 +13,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-4">
-                        <a class="btn btn-info" href="<?= base_url('prescricao/manage_prescricao/') ?>" role="button"><i class="fa-solid fa-circle-plus"></i> Nova Prescrição</a>
+                        <a class="btn btn-info" href="<?= base_url('prescricao/manage_prescricao/cadastrar') ?>" role="button"><i class="fa-solid fa-circle-plus"></i> Nova Prescrição</a>
                     </div>
                     <div class="col">
                         Cria uma nova prescição médica, iniciando um novo tratamento.
