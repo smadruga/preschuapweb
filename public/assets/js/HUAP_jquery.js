@@ -117,3 +117,31 @@ function clearanceCreatinina() {
     }
 
 }
+
+/*
+ * Função que calcula a Dose Carboplatina
+ *
+ * Dose Carboplatina = Valor AUC * (ClCr + 25)
+ *
+ * @param {decimal} peso
+ * @param {int} altura
+ * @returns {decimal}
+ */
+function doseCarboplatina() {
+
+    //busca os valores
+    var dose = $("#Dose").val();
+    var clearance = $("#Clearance").val();
+
+    if(dose && clearance) {
+        dose        = dose.replace(".","").replace(",",".");
+        clearance   = clearance.replace(".","").replace(",",".");
+
+        dc = (dose * (clearance + 25));
+        dc = dc.toFixed(3);
+        dc = dc.replace(".",",");
+
+        $('#DoseCarboplatina').val(dc);
+    }
+
+}
