@@ -140,7 +140,7 @@
 
                         <div class="row">
                             <div class="col"><b>Dose:</b> <?= $m['Dose'] ?></div>
-                            <div class="col"><b>Ajuste:</b> <?= $m['Ajuste'] ?></div>
+                            <div class="col"><b>Ajuste:</b> <?= $m['Ajuste2'] ?></div>
                             <div class="col"><b>Cálculo:</b> <?= $m['Calculo'] ?></div>
                         </div>
 

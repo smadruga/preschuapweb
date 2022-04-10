@@ -144,8 +144,8 @@
                     <div class="col">
                         <label for="Calculo<?= $i ?>" class="form-label"><b>Cálculo</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
-                            <input type="text" id="Calculo<?= $i ?>" disabled class="form-control <?php if($validation->getError('Calculo'.$i)): ?>is-invalid<?php endif ?>"
-                                maxlength="10" name="Calculo<?= $i ?>" value="<?php echo $data['Calculo']; ?>"/>
+                            <input type="text" id="Calculo<?= $i ?>" readonly class="form-control <?php if($validation->getError('Calculo'.$i)): ?>is-invalid<?php endif ?>"
+                                maxlength="10" name="Calculo<?= $i ?>" value="<?php echo $data['input'][$i]['Calculo']; ?>"/>
                             <span class="input-group-text" id="basic-addon2"><?php echo $dose[1] ?></span>
                             <?php if ($validation->getError('Calculo'.$i)): ?>
                                 <div class="invalid-feedback">
@@ -161,7 +161,7 @@
                         <label for="Ajuste<?= $i ?>" class="form-label"><b>Ajuste</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
                             <input type="text" id="Ajuste<?= $i ?>" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Ajuste'.$i)): ?>is-invalid<?php endif ?>"
-                                maxlength="10" name="Ajuste<?= $i ?>" placeholder="Apenas números" onkeyup="ajuste(<?= $i ?>)" value="<?php echo $data['Ajuste']; ?>"/>
+                                maxlength="10" name="Ajuste<?= $i ?>" placeholder="Apenas números" onkeyup="ajuste(<?= $i ?>)" value="<?php echo $data['input'][$i]['Ajuste']; ?>"/>
 
                             <?php if ($validation->getError('Ajuste'.$i)): ?>
                                 <div class="invalid-feedback">
@@ -178,7 +178,7 @@
                                 id="TipoAjuste<?= $i ?>" name="TipoAjuste<?= $i ?>" onchange="ajuste(<?= $i ?>)" data-placeholder="Selecione uma opção" data-allow-clear="1">
                                 <?php
                                 foreach ($select['TipoAjuste'] as $key => $val) {
-                                    $selected = ($data['TipoAjuste'] == $val) ? 'selected' : '';
+                                    $selected = ($data['input'][$i]['TipoAjuste'] == $key) ? 'selected' : '';
                                     echo '<option value="'.$key.'" '.$selected.'>'.$val.'</option>';
                                 }
                                 ?>
@@ -193,6 +193,8 @@
                     </div>
                 </div>
 
+                <input type="hidden" name="idPreschuap_Prescricao_Medicamento<?= $i ?>" value="<?= $data['input'][$i]['idPreschuap_Prescricao_Medicamento'] ?>" />
+
                 <hr />
                 <?php
                     $i++;
@@ -201,8 +203,10 @@
                 ?>
 
                 <?= $opt['button'] ?>
-                <a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+                <!--<a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i> Cancelar</a>-->
+                <a class="btn btn-warning" href="<?= base_url('prescricao/list_prescricao/') ?>"><i class="fa-solid fa-ban"></i> Cancelar</a>
 
+                <input type="hidden" name="idPreschuap_Prescricao" value="<?= $data['prescricao']['idPreschuap_Prescricao'] ?>" />
             </div>
         </div>
 

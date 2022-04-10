@@ -48,8 +48,11 @@ class PrescricaoMedicamentoModel extends Model
                 pm.idPreschuap_Prescricao_Medicamento
                 , pm.idPreschuap_Prescricao
                 , pm.idTabPreschuap_Protocolo_Medicamento
-                , if(pm.Ajuste is not null, format(pm.Ajuste, 3, "pt_BR"), "")  as Ajuste
+                , if(pm.Ajuste is not null, format(pm.Ajuste, 3, "pt_BR"), "") as Ajuste
+                , pm.Ajuste as Ajuste2
+                , pm.TipoAjuste
                 , concat(format(pm.Calculo, 3, "pt_BR")," ",tum.Representacao) as Calculo
+                , format(pm.Calculo, 3, "pt_BR") as Calculo2
                 , tpm.idTabPreschuap_Protocolo
                 , tpm.OrdemInfusao
                 , tet.EtapaTerapia
@@ -84,8 +87,17 @@ class PrescricaoMedicamentoModel extends Model
         ');
 
         if(isset($data['where'])) {
-            foreach($query->getResultArray() as $val)
+            foreach($query->getResultArray() as $val) {
+
+                if($val['Ajuste2'] == 0 || !$val['Ajuste2'])
+                    $val['Ajuste2'] = NULL;
+                elseif($val['TipoAjuste'] == "porcentagem")
+                    $val['Ajuste2'] = intval($val['Ajuste2']).'%';
+                else
+                    $val['Ajuste2'] = $val['Ajuste'];
+
                 $data['medicamento'][$val['idPreschuap_Prescricao']][] = $val;
+            }
 
             return $data['medicamento'];
         }

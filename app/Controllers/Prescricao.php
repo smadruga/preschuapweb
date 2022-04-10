@@ -236,7 +236,7 @@ class Prescricao extends BaseController
 
             $v['opt'] = [
                 'bg'        => 'bg-secondary',
-                'button'    => '<button class="btn btn-info" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-plus"></i> Cadastrar</button>',
+                'button'    => '<button class="btn btn-info" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-circle-chevron-right"></i> Próximo</button>',
                 'title'     => 'Cadastrar Prescrição',
                 'disabled'  => '',
                 'action'    => 'cadastrar',
@@ -399,7 +399,7 @@ class Prescricao extends BaseController
                         }
 #exit('oi');
                         session()->setFlashdata('success', 'Item adicionado com sucesso!');
-                        return redirect()->to('prescricao/list_prescricao');
+                        return redirect()->to('prescricao/manage_medicamento/'.$v['id']);
 
                     }
                     else
@@ -410,7 +410,10 @@ class Prescricao extends BaseController
                     session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação. ERRO: PRESCRIÇÃO-01');
 
 
-                return redirect()->to('prescricao/list_prescricao');
+                if($action == 'editar' || $action == 'cadastrar')
+                    return redirect()->to('prescricao/manage_medicamento/'.$v['id']);
+                else
+                    return redirect()->to('prescricao/list_prescricao');
 
             }
 
@@ -444,43 +447,47 @@ class Prescricao extends BaseController
         $auditorialog   = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
         $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias
 
-        if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-            $v['data'] = [
-                'idPreschuap_Prescricao_Medicamento'    => '',
-                'Ajuste'                                => '',
-                'TipoAjuste'                            => '',
-                'Calculo'                               => '',
+        $v['idPreschuap_Prescricao']    = ($id) ? $id : $this->request->getVar('idPreschuap_Prescricao');
+        $v['data']['prescricao']        = $prescricao->read_prescricao($v['idPreschuap_Prescricao'], TRUE); #Carrega os itens da tabela selecionada
+        $v['data']['medicamento']       = $medicamento->read_medicamento($v['idPreschuap_Prescricao']); #Carrega os itens da tabela selecionada
+        $v['data']['submit']            = '';
 
-                'submit'                                => '',
-            ];
+        $v['opt']['Peso']                  = str_replace(",",".",$v['data']['prescricao']['Peso']);
+        $v['opt']['CreatininaSerica']      = str_replace(",",".",$v['data']['prescricao']['CreatininaSerica']);
+
+        if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+
+            $v['data']['input'] = array();
+            foreach ($v['data']['medicamento'] as $key => $val) {
+                $v['data']['input'][$key]['idPreschuap_Prescricao_Medicamento'] = $val['idPreschuap_Prescricao_Medicamento'];
+
+                $v['data']['input'][$key]['TipoAjuste']                         = $val['TipoAjuste'];
+                $v['data']['input'][$key]['Calculo']                            = $val['Calculo2'];
+
+                if($val['Ajuste2'] == 0 || !$val['Ajuste2'])
+                    $v['data']['input'][$key]['Ajuste'] = NULL;
+                elseif($val['TipoAjuste'] == "porcentagem")
+                    $v['data']['input'][$key]['Ajuste'] = intval($val['Ajuste']);
+                else
+                    $v['data']['input'][$key]['Ajuste'] = $val['Ajuste'];
+
+            }
+
+            $v['data']['input']['submit'] = '';
+
         }
         else {
             #Captura os inputs do Formulário
-            $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-        }
+            $v['data']['input'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
-        if(!$v['data']['submit']) {
+            for ($i = 0; $i < count($v['data']['medicamento']); $i++) {
+                $v['data']['input'][$i]['idPreschuap_Prescricao_Medicamento'] = $v['data']['input']['idPreschuap_Prescricao_Medicamento'.$i];
+                $v['data']['input'][$i]['Ajuste']                             = $v['data']['input']['Ajuste'.$i];
+                $v['data']['input'][$i]['TipoAjuste']                         = $v['data']['input']['TipoAjuste'.$i];
+                $v['data']['input'][$i]['Calculo']                            = $v['data']['input']['Calculo'.$i];
 
-            $v['idPreschuap_Prescricao']    = $id;
-            $v['data']['prescricao']        = $prescricao->read_prescricao($v['idPreschuap_Prescricao'], TRUE); #Carrega os itens da tabela selecionada
-            $v['data']['medicamento']       = $medicamento->read_medicamento($v['idPreschuap_Prescricao']); #Carrega os itens da tabela selecionada
-            #$v['data']['medicamento']       = $medicamento->where('idPreschuap_Prescricao', $v['idPreschuap_Prescricao'])->findAll(); #Carrega os itens da tabela selecionada
-            $v['data']['submit']            = '';
-
-            $v['opt']['Peso']                  = str_replace(",",".",$v['data']['prescricao']['Peso']);
-            $v['opt']['CreatininaSerica']      = str_replace(",",".",$v['data']['prescricao']['CreatininaSerica']);
-            #$v['opt']['Dose']                  = str_replace(",",".",$v['data']['medicamento']['Dose']);
-
-            /*
-            echo "<pre>";
-            print_r($v['data']);
-            echo "</pre>";
-            echo "<pre>";
-            print_r($v['data']['medicamento']);
-            echo "</pre>";
-            exit('oi>>'.$id);
-            #*/
-
+                $inputs = $this->validate(['Ajuste'.$i => ['label' => 'Ajuste', 'rules' => 'permit_empty|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]']]);
+            }
         }
 
         $v['opt'] = [
@@ -496,40 +503,63 @@ class Prescricao extends BaseController
             'substituicao'  => 'Substituir dose pelo ajuste'
         ];
 
-        if($v['data']['submit']) {
-
-            if($action == 'cadastrar' || $action == 'editar') {
-                #Critérios de validação
-                $inputs = $this->validate([
-                    'DataPrescricao'                    => ['label' => 'Data da Prescrição', 'rules' => 'required|valid_date[d/m/Y]'],
-                    'Dia'                               => 'required|integer',
-                    'Ciclo'                             => 'required|integer',
-                    'Aplicabilidade'                    => 'required',
-                    'idTabPreschuap_Categoria'          => ['label' => 'CID Categoria', 'rules' => 'required'],
-                    'idTabPreschuap_Subcategoria'       => ['label' => 'CID Subcategoria', 'rules' => 'required'],
-                    'idTabPreschuap_Protocolo'          => ['label' => 'Protocolo', 'rules' => 'required'],
-                    'idTabPreschuap_TipoTerapia'        => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
-                    'CiclosTotais'                      => ['label' => 'Total de Ciclos', 'rules' => 'required|integer'],
-                    'EntreCiclos'                       => ['label' => 'Entre Ciclos', 'rules' => 'required|integer'],
-
-                    'Peso'                              => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
-                    'CreatininaSerica'                  => ['label' => 'Creatinina Sérica', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
-                    'Altura'                            => 'required|integer',
-
-                    'DescricaoServico'                  => ['label' => 'Serviço', 'rules' => 'required'],
-                    'InformacaoComplementar'            => ['label' => 'Informação Complementar', 'rules' => 'required'],
-                    'ReacaoAdversa'                     => ['label' => 'Reação Adversa', 'rules' => 'required'],
-                    'idTabPreschuap_Alergia'            => ['label' => 'Alergia', 'rules' => 'required'],
-                ]);
-            }
-            else
-                $inputs = '';
+        if($v['data']['input']['submit']) {
 
             #Realiza a validação e retorna ao formulário se false
-            if (!$inputs && ($action == 'cadastrar' || $action == 'editar'))
+            if (!$inputs)
                 $v['validation'] = $this->validator;
             else {
-exit('eeeiieiei');
+
+                for ($i = 0; $i < count($v['data']['medicamento']); $i++) {
+                    $v['data']['bd'][$i]['idPreschuap_Prescricao_Medicamento'] = $v['data']['input'][$i]['idPreschuap_Prescricao_Medicamento'];
+
+                    $v['data']['bd'][$i]['TipoAjuste']  = $v['data']['input'][$i]['TipoAjuste'];
+                    $v['data']['bd'][$i]['Ajuste']      = str_replace(",",".",$v['data']['input'][$i]['Ajuste']);
+                    $v['data']['bd'][$i]['Calculo']     = str_replace(",",".",$v['data']['input'][$i]['Calculo']);
+
+                    $v['anterior'][$i]['TipoAjuste']    = $v['data']['medicamento'][$i]['TipoAjuste'];
+                    $v['anterior'][$i]['Ajuste']        = str_replace(",",".",$v['data']['medicamento'][$i]['Ajuste']);
+                    $v['anterior'][$i]['Calculo']       = str_replace(",",".",$v['data']['medicamento'][$i]['Calculo2']);
+
+                }
+
+                /*
+                echo "<pre>";
+                #print_r($v['campos']);
+                echo "</pre>";
+                echo "<pre>";
+                print_r($v['data']['bd']);
+                echo "</pre>";
+                echo "<pre>";
+                print_r($v['anterior']);
+                echo "</pre>";
+                #exit('oi');
+                #*/
+
+                if($medicamento->updateBatch($v['data']['bd'], 'idPreschuap_Prescricao_Medicamento')) {
+
+                    $i=0;
+                    foreach ($v['data']['bd'] as $val) {
+
+                        $v['id'] = $val['idPreschuap_Prescricao_Medicamento'];
+                        unset($val['idPreschuap_Prescricao_Medicamento']);
+
+                        $v['campos'] = array_keys($val);
+
+                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Protocolo_Medicamento', 'UPDATE', $v['id']), TRUE);
+                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'][$i], $val, $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
+
+                        $i++;
+                    }
+#exit('oiojoiuo');
+                    session()->setFlashdata('success', 'Dados atualizados com sucesso!');
+
+                }
+                else
+                    session()->setFlashdata('nothing', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+
+                return redirect()->to('prescricao/list_prescricao');
+
             }
 
         }
