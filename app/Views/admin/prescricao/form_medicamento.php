@@ -131,7 +131,8 @@
                     <div class="col">
                         <label for="Dose<?= $i ?>" class="form-label"><b>Dose</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
-                            <input type="text" id="Dose<?= $i ?>" disabled class="form-control <?php if($validation->getError('Dose'.$i)): ?>is-invalid<?php endif ?>"
+                            <input type="text" id="Dose<?= $i ?>" disabled
+                                class="form-control <?php if($validation->getError('Dose'.$i)): ?>is-invalid<?php endif ?>"
                                 name="Dose<?= $i ?>" value="<?php echo $dose[0] ?>"/>
                             <span class="input-group-text" id="basic-addon2"><?php echo $dose[1] ?></span>
                             <?php if ($validation->getError('Dose'.$i)): ?>
@@ -144,7 +145,8 @@
                     <div class="col">
                         <label for="Calculo<?= $i ?>" class="form-label"><b>Cálculo</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
-                            <input type="text" id="Calculo<?= $i ?>" readonly class="form-control <?php if($validation->getError('Calculo'.$i)): ?>is-invalid<?php endif ?>"
+                            <input type="text" id="Calculo<?= $i ?>" readonly
+                                class="form-control <?php if($validation->getError('Calculo'.$i)): ?>is-invalid<?php endif ?>"
                                 maxlength="10" name="Calculo<?= $i ?>" value="<?php echo $data['input'][$i]['Calculo']; ?>"/>
                             <span class="input-group-text" id="basic-addon2"><?php echo $dose[1] ?></span>
                             <?php if ($validation->getError('Calculo'.$i)): ?>
@@ -160,8 +162,10 @@
                     <div class="col">
                         <label for="Ajuste<?= $i ?>" class="form-label"><b>Ajuste</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
-                            <input type="text" id="Ajuste<?= $i ?>" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Ajuste'.$i)): ?>is-invalid<?php endif ?>"
-                                maxlength="10" name="Ajuste<?= $i ?>" placeholder="Apenas números" onkeyup="ajuste(<?= $i ?>)" value="<?php echo $data['input'][$i]['Ajuste']; ?>"/>
+                            <input type="text" id="Ajuste<?= $i ?>" <?= $opt['disabled'] ?>
+                                class="form-control <?php if($validation->getError('Ajuste'.$i)): ?>is-invalid<?php endif ?>"
+                                maxlength="9" name="Ajuste<?= $i ?>" placeholder="Apenas números" onkeyup="ajuste(<?= $i ?>)"
+                                value="<?php echo $data['input'][$i]['Ajuste']; ?>"/>
 
                             <?php if ($validation->getError('Ajuste'.$i)): ?>
                                 <div class="invalid-feedback">
@@ -174,8 +178,10 @@
                         <label for="TipoAjuste<?= $i ?>" class="form-label"><b>Tipo de Ajuste</b> <b class="text-danger">*</b></label>
                         <div class="input-group mb-3">
 
-                            <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('TipoAjuste'.$i)): ?>is-invalid<?php endif ?>"
-                                id="TipoAjuste<?= $i ?>" name="TipoAjuste<?= $i ?>" onchange="ajuste(<?= $i ?>)" data-placeholder="Selecione uma opção" data-allow-clear="1">
+                            <select <?= $opt['disabled'] ?>
+                                class="form-select <?php if($validation->getError('TipoAjuste'.$i)): ?>is-invalid<?php endif ?>"
+                                id="TipoAjuste<?= $i ?>" name="TipoAjuste<?= $i ?>" onchange="ajuste(<?= $i ?>)"
+                                data-placeholder="Selecione uma opção" data-allow-clear="1">
                                 <?php
                                 foreach ($select['TipoAjuste'] as $key => $val) {
                                     $selected = ($data['input'][$i]['TipoAjuste'] == $key) ? 'selected' : '';
@@ -193,7 +199,8 @@
                     </div>
                 </div>
 
-                <input type="hidden" name="idPreschuap_Prescricao_Medicamento<?= $i ?>" value="<?= $data['input'][$i]['idPreschuap_Prescricao_Medicamento'] ?>" />
+                <input type="hidden" name="idPreschuap_Prescricao_Medicamento<?= $i ?>"
+                    value="<?= $data['input'][$i]['idPreschuap_Prescricao_Medicamento'] ?>" />
 
                 <hr />
                 <?php

@@ -18,7 +18,9 @@
                         <div class="col">
                             <label for="Item" class="form-label"><b>Item</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
-                                <input type="text" id="Item" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>" autofocus name="Item" value="<?php echo $data['Item']; ?>"/>
+                                <input type="text" id="Item" <?= $opt['disabled'] ?>  maxlength="100"
+                                    class="form-control <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>"
+                                    autofocus name="Item" value="<?php echo $data['Item']; ?>"/>
 
                                 <?php if ($validation->getError('Item')): ?>
                                     <div class="invalid-feedback">
@@ -33,7 +35,9 @@
                         <div class="col">
                             <label for="Codigo" class="form-label"><b>Abreviação</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
-                                <input type="text" id="Codigo" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Codigo')): ?>is-invalid<?php endif ?>" autofocus maxlength="10" name="Codigo" value="<?php echo $data['Codigo']; ?>"/>
+                                <input type="text" id="Codigo" <?= $opt['disabled'] ?>
+                                    class="form-control <?php if($validation->getError('Codigo')): ?>is-invalid<?php endif ?>"
+                                    maxlength="10" name="Codigo" value="<?php echo $data['Codigo']; ?>"/>
 
                                 <?php if ($validation->getError('Codigo')): ?>
                                     <div class="invalid-feedback">
@@ -53,7 +57,9 @@
                         <div class="col">
                             <label for="Item" class="form-label"><b>Protocolo</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
-                                <input <?= $opt['disabled'] ?> type="text" id="Item" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>" autofocus name="Item" value="<?php echo $data['Item']; ?>"/>
+                                <input <?= $opt['disabled'] ?> type="text" id="Item" <?= $opt['disabled'] ?> maxlength="100"
+                                    class="form-control <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>"
+                                    autofocus name="Item" value="<?php echo $data['Item']; ?>"/>
 
                                 <?php if ($validation->getError('Item')): ?>
                                     <div class="invalid-feedback">
@@ -66,8 +72,9 @@
                             <label for="Aplicabilidade" class="form-label"><b>Aplicabilidade</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('Aplicabilidade')): ?>is-invalid<?php endif ?>" id="Aplicabilidade"
-                                    name="Aplicabilidade" data-placeholder="Selecione uma opção" data-allow-clear="1">
+                                <select <?= $opt['disabled'] ?>
+                                    class="form-select <?php if($validation->getError('Aplicabilidade')): ?>is-invalid<?php endif ?>"
+                                    id="Aplicabilidade" name="Aplicabilidade" data-placeholder="Selecione uma opção" data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['Aplicabilidade'] as $val) {
@@ -91,8 +98,10 @@
                             <label for="idTabPreschuap_TipoTerapia" class="form-label"><b>Tipo de Terapia</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('idTabPreschuap_TipoTerapia')): ?>is-invalid<?php endif ?>" id="idTabPreschuap_TipoTerapia"
-                                    name="idTabPreschuap_TipoTerapia" data-placeholder="Selecione uma opção" data-allow-clear="1">
+                                <select <?= $opt['disabled'] ?>
+                                    class="form-select <?php if($validation->getError('idTabPreschuap_TipoTerapia')): ?>is-invalid<?php endif ?>"
+                                    id="idTabPreschuap_TipoTerapia" name="idTabPreschuap_TipoTerapia" data-placeholder="Selecione uma opção"
+                                    data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['TipoTerapia']->getResultArray() as $val) {
@@ -113,8 +122,10 @@
                             <label for="idTabPreschuap_Categoria" class="form-label"><b>Categoria</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('idTabPreschuap_Categoria')): ?>is-invalid<?php endif ?>" id="idTabPreschuap_Categoria"
-                                    name="idTabPreschuap_Categoria" data-placeholder="Selecione uma opção" data-allow-clear="1">
+                                <select <?= $opt['disabled'] ?> c
+                                    lass="form-select <?php if($validation->getError('idTabPreschuap_Categoria')): ?>is-invalid<?php endif ?>"
+                                    id="idTabPreschuap_Categoria" name="idTabPreschuap_Categoria" data-placeholder="Selecione uma opção"
+                                    data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['Categoria']->getResultArray() as $val) {
@@ -158,7 +169,8 @@
                             <label for="Item" class="form-label"><b>Medicamento</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>" id="Item"
+                                <select <?= $opt['disabled'] ?> autofocus
+                                    class="form-select <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>" id="Item"
                                     name="Item" data-placeholder="Selecione uma opção" data-allow-clear="1">
                                     <option></option>
                                     <?php
@@ -180,8 +192,10 @@
                             <label for="idTabPreschuap_EtapaTerapia" class="form-label"><b>Etapa da Terapia</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('idTabPreschuap_EtapaTerapia')): ?>is-invalid<?php endif ?>" id="idTabPreschuap_EtapaTerapia"
-                                    name="idTabPreschuap_EtapaTerapia" data-placeholder="Selecione uma opção" data-allow-clear="1">
+                                <select <?= $opt['disabled'] ?>
+                                    class="form-select <?php if($validation->getError('idTabPreschuap_EtapaTerapia')): ?>is-invalid<?php endif ?>"
+                                    id="idTabPreschuap_EtapaTerapia" name="idTabPreschuap_EtapaTerapia" data-placeholder="Selecione uma opção"
+                                    data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['EtapaTerapia']->getResultArray() as $val) {
@@ -205,7 +219,9 @@
                             <label for="Dose" class="form-label"><b>Dose</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <input type="text" id="Dose" <?= $opt['disabled'] ?> placeholder="0,00" class="form-control <?php if($validation->getError('Dose')): ?>is-invalid<?php endif ?>" autofocus maxlength="10" name="Dose" value="<?php echo $data['Dose']; ?>"/>
+                                <input type="text" id="Dose" <?= $opt['disabled'] ?> placeholder="0,00"
+                                    class="form-control <?php if($validation->getError('Dose')): ?>is-invalid<?php endif ?>"
+                                    maxlength="9" name="Dose" value="<?php echo $data['Dose']; ?>"/>
 
                                 <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('idTabPreschuap_UnidadeMedida')): ?>is-invalid<?php endif ?>" id="idTabPreschuap_UnidadeMedida"
                                     name="idTabPreschuap_UnidadeMedida" data-placeholder="Selecione uma opção" data-allow-clear="1">
@@ -233,8 +249,10 @@
                             <label for="idTabPreschuap_ViaAdministracao" class="form-label"><b>Via de Administração</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('idTabPreschuap_ViaAdministracao')): ?>is-invalid<?php endif ?>" id="idTabPreschuap_ViaAdministracao"
-                                    name="idTabPreschuap_ViaAdministracao" data-placeholder="Selecione uma opção" data-allow-clear="1">
+                                <select <?= $opt['disabled'] ?>
+                                    class="form-select <?php if($validation->getError('idTabPreschuap_ViaAdministracao')): ?>is-invalid<?php endif ?>"
+                                    id="idTabPreschuap_ViaAdministracao" name="idTabPreschuap_ViaAdministracao" data-placeholder="Selecione uma opção"
+                                    data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['ViaAdministracao']->getResultArray() as $val) {
@@ -255,8 +273,10 @@
                             <label for="idTabPreschuap_Diluente" class="form-label"><b>Diluente</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('idTabPreschuap_Diluente')): ?>is-invalid<?php endif ?>" id="idTabPreschuap_Diluente"
-                                    name="idTabPreschuap_Diluente" data-placeholder="Selecione uma opção" data-allow-clear="1">
+                                <select <?= $opt['disabled'] ?>
+                                    class="form-select <?php if($validation->getError('idTabPreschuap_Diluente')): ?>is-invalid<?php endif ?>"
+                                    id="idTabPreschuap_Diluente" name="idTabPreschuap_Diluente" data-placeholder="Selecione uma opção"
+                                    data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['Diluente']->getResultArray() as $val) {
@@ -280,7 +300,9 @@
                             <label for="Volume" class="form-label"><b>Volume</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <input type="text" id="Volume" <?= $opt['disabled'] ?> placeholder="0,00" class="form-control <?php if($validation->getError('Volume')): ?>is-invalid<?php endif ?>" autofocus maxlength="9" name="Volume" value="<?php echo $data['Volume']; ?>"/>
+                                <input type="text" id="Volume" <?= $opt['disabled'] ?> placeholder="0,00"
+                                    class="form-control <?php if($validation->getError('Volume')): ?>is-invalid<?php endif ?>"
+                                    maxlength="9" name="Volume" value="<?php echo $data['Volume']; ?>"/>
 
                                 <?php if ($validation->getError('Volume')): ?>
                                     <div class="invalid-feedback">
@@ -293,7 +315,9 @@
                             <label for="TempoInfusao" class="form-label"><b>Tempo de Infusão</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <input type="text" id="TempoInfusao" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('TempoInfusao')): ?>is-invalid<?php endif ?>" autofocus maxlength="100" name="TempoInfusao" value="<?php echo $data['TempoInfusao']; ?>"/>
+                                <input type="text" id="TempoInfusao" <?= $opt['disabled'] ?>
+                                    class="form-control <?php if($validation->getError('TempoInfusao')): ?>is-invalid<?php endif ?>"
+                                    maxlength="100" name="TempoInfusao" value="<?php echo $data['TempoInfusao']; ?>"/>
 
                                 <?php if ($validation->getError('TempoInfusao')): ?>
                                     <div class="invalid-feedback">
@@ -306,8 +330,10 @@
                             <label for="idTabPreschuap_Posologia" class="form-label"><b>Posologia</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
-                                <select <?= $opt['disabled'] ?> class="form-select <?php if($validation->getError('idTabPreschuap_Posologia')): ?>is-invalid<?php endif ?>" id="idTabPreschuap_Posologia"
-                                    name="idTabPreschuap_Posologia" data-placeholder="Selecione uma opção" data-allow-clear="1">
+                                <select <?= $opt['disabled'] ?>
+                                    class="form-select <?php if($validation->getError('idTabPreschuap_Posologia')): ?>is-invalid<?php endif ?>"
+                                    id="idTabPreschuap_Posologia" name="idTabPreschuap_Posologia" data-placeholder="Selecione uma opção"
+                                    data-allow-clear="1">
                                     <option></option>
                                     <?php
                                     foreach ($select['Posologia']->getResultArray() as $val) {
@@ -331,7 +357,9 @@
                 <?php } else { ?>
                     <label for="Item" class="form-label"><b>Item</b> <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
-                        <input type="text" id="Item" <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>" autofocus name="Item" value="<?php echo $data['Item']; ?>"/>
+                        <input type="text" id="Item" <?= $opt['disabled'] ?>
+                            class="form-control <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>" autofocus maxlength="100"
+                            name="Item" value="<?php echo $data['Item']; ?>"/>
                         <?= $opt['button'] ?>
                         <?php if ($validation->getError('Item')): ?>
                             <div class="invalid-feedback">

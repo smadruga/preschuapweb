@@ -16,22 +16,37 @@
     foreach($prescricao['array'] as $v) {
     ?>
 
-    <div class="accordion" id="accordionExample">
+    <div class="accordion" id="accordion">
         <div class="accordion-item">
             <h2 class="accordion-header" id="heading<?= $v['idPreschuap_Prescricao'] ?>">
-                <button class="accordion-button collapsed bg-info text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $v['idPreschuap_Prescricao'] ?>" aria-expanded="true" aria-controls="collapse<?= $v['idPreschuap_Prescricao'] ?>">
-                    <b>Prescrição #<?= $v['idPreschuap_Prescricao'] ?></b>
+                <button class="accordion-button collapsed bg-info text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $v['idPreschuap_Prescricao'] ?>" aria-expanded="false" aria-controls="collapse<?= $v['idPreschuap_Prescricao'] ?>">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6 text-start"><b>Prescrição #<?= $v['idPreschuap_Prescricao'] ?></b></div>
+                            <div class="col-6 text-end">
+                                <?php
+                                if($v['Concluido'] == 1)
+                                    echo '<span class="badge bg-primary text-white"><i class="fa-solid fa-check-circle"></i> Fechada</span>';
+                                else
+                                    echo '<span class="badge bg-warning text-white"><i class="fa-solid fa-triangle-exclamation"></i> Aberta</span>';
+                                ?>
+                            </div>
+                        </div>
+                    </div>
                 </button>
             </h2>
-            <div id="collapse<?= $v['idPreschuap_Prescricao'] ?>" class="accordion-collapse" aria-labelledby="heading<?= $v['idPreschuap_Prescricao'] ?>">
+            <div id="collapse<?= $v['idPreschuap_Prescricao'] ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $v['idPreschuap_Prescricao'] ?>">
                 <div class="accordion-body">
                     <div>
-                        <a class="btn btn-outline-warning" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Editar</a>
-                        <a class="btn btn-outline-danger" href="<?= base_url('prescricao/manage_prescricao/excluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-trash-can"></i> Excluir</a>
-                        <a class="btn btn-outline-success" href="<?= base_url('prescricao/manage_prescricao/concluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-check-circle"></i> Concluir</a>
-                        <a class="btn btn-outline-info" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
-                        <a class="btn btn-outline-info" href="<?= base_url('prescricao/manage_prescricao/copiar') ?>" role="button"><i class="fa-solid fa-copy"></i> Copiar</a>
-                        <a class="btn btn-outline-info" href="<?= base_url('prescricao/manage_prescricao/continuar') ?>" role="button"><i class="fa-solid fa-repeat"></i> Continuar</a>
+                        <?php if($v['Concluido'] == 1) { ?>
+                            <a class="btn btn-outline-info" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
+                            <a class="btn btn-outline-info" href="<?= base_url('prescricao/manage_prescricao/copiar') ?>" role="button"><i class="fa-solid fa-copy"></i> Copiar</a>
+                            <a class="btn btn-outline-info" href="<?= base_url('prescricao/manage_prescricao/continuar') ?>" role="button"><i class="fa-solid fa-repeat"></i> Continuar</a>
+                        <?php } else { ?>
+                            <a class="btn btn-outline-warning" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Editar</a>
+                            <a class="btn btn-outline-danger" href="<?= base_url('prescricao/manage_prescricao/excluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-trash-can"></i> Excluir</a>
+                            <a class="btn btn-outline-success" href="<?= base_url('prescricao/manage_prescricao/concluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-check-circle"></i> Concluir</a>                        
+                        <?php } ?>
                     </div>
 
                     <hr />

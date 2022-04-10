@@ -42,6 +42,7 @@ class PrescricaoModel extends Model
                                         'InformacaoComplementar',
                                         'ReacaoAdversa',
                                         'idTabPreschuap_Alergia',
+                                        'Concluido',
                                     ];
 
     /**
@@ -49,7 +50,7 @@ class PrescricaoModel extends Model
     *
     * @return void
     */
-    public function read_prescricao($data, $buscaid = FALSE)
+    public function read_prescricao($data, $buscaid = FALSE, $row = FALSE)
     {
 
         $where = ($buscaid) ? 'p.idPreschuap_Prescricao = '.$data : 'p.Prontuario = '.$data;
@@ -88,6 +89,7 @@ class PrescricaoModel extends Model
                 , p.InformacaoComplementar
                 , p.ReacaoAdversa
                 , ta.Alergia
+                , p.Concluido
             FROM
                 preschuapweb.Preschuap_Prescricao as p
                     left join TabPreschuap_Categoria as tc on p.idTabPreschuap_Categoria = tc.idTabPreschuap_Categoria
@@ -112,7 +114,7 @@ class PrescricaoModel extends Model
         #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 
 
-        if($buscaid) {
+        if($buscaid && $row) {
             return $query->getRowArray();
         }
         else {

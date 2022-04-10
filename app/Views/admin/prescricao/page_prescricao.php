@@ -25,7 +25,7 @@
                         <a class="btn btn-info" href="#" role="button"><i class="fa-solid fa-copy"></i> Copiar última Prescrição</a>
                     </div>
                     <div class="col">
-                        Copia todos os dados da última prescrição do paciente.
+                        Copia todos os dados da última prescrição concluída do paciente.
                     </div>
                 </div>
                 <hr>
@@ -34,7 +34,7 @@
                         <a class="btn btn-info" href="#" role="button"><i class="fa-solid fa-repeat"></i> Continuar último Tratamento</a>
                     </div>
                     <div class="col">
-                        Continua o tratamento do paciente, copiando alguns dados e atualizando os demais campos.
+                        Continua o tratamento do paciente, com base na última prescrição concluída, copiando alguns dados e atualizando os demais campos.
                     </div>
                 </div>
             </div>

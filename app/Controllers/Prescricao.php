@@ -93,16 +93,6 @@ class Prescricao extends BaseController
 
         $v['prescricao']['conselho'] = $prescricao->get_conselho($v['prescricao']['array'][0]['Cpf']);
 
-        /*
-        echo "<pre>";
-        print_r($v['prescricao']);
-        echo "</pre>";
-        echo "<pre>";
-        print_r($v['medicamento']);
-        echo "</pre>";
-        #exit('oi'.$_SESSION['Paciente']['prontuario']);
-        #*/
-
         return view('admin/prescricao/print_prescricao', $v);
 
     }
@@ -294,6 +284,8 @@ class Prescricao extends BaseController
                     $v['medicamento'] = $tabela->list_medicamento_bd($v['data']['idTabPreschuap_Protocolo'], TRUE);
 
                 }
+                if($action == 'concluir')
+                    $v['data']['Concluido'] = 1;
 
                 unset(
                     $v['data']['csrf_test_name'],
@@ -304,16 +296,6 @@ class Prescricao extends BaseController
                 );
 
                 $v['campos'] = array_keys($v['data']);
-
-                /*
-                echo "<pre>";
-                print_r($v['data']['medicamento']->getResultArray());
-                echo "</pre>";
-                echo "<pre>";
-                print_r($v['data']);
-                echo "</pre>";
-                exit('oi');
-                #*/
 
                 if($action == 'editar' || $action == 'concluir') {
 
@@ -379,16 +361,6 @@ class Prescricao extends BaseController
 
                             $val['Calculo'] = str_replace(",",".",$val['Calculo']);
 
-                                /*
-                                echo "<pre>";
-                                print_r($v['data']);
-                                echo "</pre>";
-                                echo "<pre>";
-                                print_r($val);
-                                echo "</pre>";
-                                echo '<hr /></hr>';
-                                #exit('oi');
-                                #*/
                             $v['mid'] = $medicamento->insert($val);
 
                             if($v['mid']) {
@@ -397,7 +369,7 @@ class Prescricao extends BaseController
                             }
 
                         }
-#exit('oi');
+
                         session()->setFlashdata('success', 'Item adicionado com sucesso!');
                         return redirect()->to('prescricao/manage_medicamento/'.$v['id']);
 
@@ -448,7 +420,7 @@ class Prescricao extends BaseController
         $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias
 
         $v['idPreschuap_Prescricao']    = ($id) ? $id : $this->request->getVar('idPreschuap_Prescricao');
-        $v['data']['prescricao']        = $prescricao->read_prescricao($v['idPreschuap_Prescricao'], TRUE); #Carrega os itens da tabela selecionada
+        $v['data']['prescricao']        = $prescricao->read_prescricao($v['idPreschuap_Prescricao'], TRUE, TRUE); #Carrega os itens da tabela selecionada
         $v['data']['medicamento']       = $medicamento->read_medicamento($v['idPreschuap_Prescricao']); #Carrega os itens da tabela selecionada
         $v['data']['submit']            = '';
 
@@ -521,37 +493,32 @@ class Prescricao extends BaseController
                     $v['anterior'][$i]['Ajuste']        = str_replace(",",".",$v['data']['medicamento'][$i]['Ajuste']);
                     $v['anterior'][$i]['Calculo']       = str_replace(",",".",$v['data']['medicamento'][$i]['Calculo2']);
 
+                    if(
+                        $v['data']['bd'][$i]['TipoAjuste'] != $v['anterior'][$i]['TipoAjuste']
+                        || $v['data']['bd'][$i]['Ajuste'] != $v['anterior'][$i]['Ajuste']
+                        || $v['data']['bd'][$i]['Calculo'] != $v['anterior'][$i]['Calculo']
+                        )
+                        $v['diff'][$i] = 1;
                 }
-
-                /*
-                echo "<pre>";
-                #print_r($v['campos']);
-                echo "</pre>";
-                echo "<pre>";
-                print_r($v['data']['bd']);
-                echo "</pre>";
-                echo "<pre>";
-                print_r($v['anterior']);
-                echo "</pre>";
-                #exit('oi');
-                #*/
 
                 if($medicamento->updateBatch($v['data']['bd'], 'idPreschuap_Prescricao_Medicamento')) {
 
                     $i=0;
                     foreach ($v['data']['bd'] as $val) {
 
-                        $v['id'] = $val['idPreschuap_Prescricao_Medicamento'];
-                        unset($val['idPreschuap_Prescricao_Medicamento']);
+                        if (isset($v['diff'][$i])) {
+                            $v['id'] = $val['idPreschuap_Prescricao_Medicamento'];
+                            unset($val['idPreschuap_Prescricao_Medicamento']);
 
-                        $v['campos'] = array_keys($val);
+                            $v['campos'] = array_keys($val);
 
-                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Protocolo_Medicamento', 'UPDATE', $v['id']), TRUE);
-                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'][$i], $val, $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
+                            $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Protocolo_Medicamento', 'UPDATE', $v['id']), TRUE);
+                            $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'][$i], $val, $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
+                        }
 
                         $i++;
                     }
-#exit('oiojoiuo');
+
                     session()->setFlashdata('success', 'Dados atualizados com sucesso!');
 
                 }

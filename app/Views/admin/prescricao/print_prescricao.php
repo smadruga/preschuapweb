@@ -12,7 +12,7 @@ foreach($prescricao['array'] as $v) {
 
                 <div class="ms-1 me-1">
                     <div class="row">
-                        <div class="col-6 container border border-dark"><b>
+                        <div class="col-5 container border border-dark"><b>
                             <div class="row">
                                 <div class="col-2 ps-3 pt-2">
                                     <img src="<?= base_url('/assets/img/huap.png') ?>" width="100%" /><br />
@@ -27,7 +27,7 @@ foreach($prescricao['array'] as $v) {
                             </div>
                         </b></div>
 
-                        <div class="col-6 container border border-dark pt-2 border-start-0">
+                        <div class="col container border border-dark pt-2 border-start-0">
                             <div class="row">
                                 <div class="col"><b>Prontuário: <?= $v['Prontuario'] ?></b></div>
                             </div>
@@ -60,7 +60,7 @@ foreach($prescricao['array'] as $v) {
             <th class="border border-dark">Medicamento</th>
             <th class="border border-dark">Dose</th>
             <th class="border border-dark">Ajuste</th>
-            <th class="border border-dark">Cálculo (mg)</th>
+            <th class="border border-dark">Cálculo</th>
             <th class="border border-dark">Via</th>
             <th class="border border-dark">Diluente</th>
             <th class="border border-dark">Volume (ml)</th>
@@ -81,7 +81,7 @@ foreach($prescricao['array'] as $v) {
             <td class="border border-dark"><?= $m['EtapaTerapia'] ?></td>
             <td class="border border-dark"><?= $m['Medicamento'] ?></td>
             <td class="border border-dark"><?= $m['Dose'] ?></td>
-            <td class="border border-dark"><?= $m['Ajuste'] ?></td>
+            <td class="border border-dark"><?= $m['Ajuste2'] ?></td>
             <td class="border border-dark"><?= $m['Calculo'] ?></td>
             <td class="border border-dark"><?= $m['ViaAdministracao'] ?></td>
             <td class="border border-dark"><?= $m['Diluente'] ?></td>
