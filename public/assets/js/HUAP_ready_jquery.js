@@ -34,9 +34,12 @@ $(document).ready(function() {
         language: "pt-BR",
     });
 
-    //$("#submit").attr("disabled", true);
     $('#submit').one('submit', function() {
         $(this).find('input[type="submit"]').attr('disabled','disabled');
+    });
+
+    $(".click").click(function () {
+        $(this).replaceWith('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Aguarde...</span></div>');
     });
 
 });
