@@ -22,7 +22,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-4">
-                        <a class="btn btn-info" href="#" role="button"><i class="fa-solid fa-copy"></i> Copiar última Prescrição</a>
+                        <a class="btn btn-info" href="<?= base_url('prescricao/copy_prescricao') ?>" role="button"><i class="fa-solid fa-copy"></i> Copiar última Prescrição</a>
                     </div>
                     <div class="col">
                         Copia todos os dados da última prescrição concluída do paciente.
@@ -31,7 +31,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-4">
-                        <a class="btn btn-info" href="#" role="button"><i class="fa-solid fa-repeat"></i> Continuar último Tratamento</a>
+                        <a class="btn btn-info" href="<?= base_url('prescricao/copy_prescricao/0/1') ?>" role="button"><i class="fa-solid fa-repeat"></i> Continuar último Tratamento</a>
                     </div>
                     <div class="col">
                         Continua o tratamento do paciente, com base na última prescrição concluída, copiando alguns dados e atualizando os demais campos.

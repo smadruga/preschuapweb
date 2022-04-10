@@ -544,5 +544,74 @@ class Prescricao extends BaseController
 
     }
 
+    /**
+    * Cria, edita, excluir e gerencia uma prescrição
+    *
+    * @return void
+    */
+    public function copy_prescricao($id = FALSE, $continue = FALSE)
+    {
+
+        $tabela         = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
+        $prescricao     = new PrescricaoModel(); #Inicia o objeto baseado na TabelaModel
+        $medicamento    = new PrescricaoMedicamentoModel(); #Inicia o objeto baseado na TabelaModel
+        $auditoria      = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
+        $auditorialog   = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
+        $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias
+
+        if(!$id)
+            $id = $prescricao->get_last_id($_SESSION['Paciente']['prontuario']);
+
+        $v['data']['prescricao']    = $prescricao->find($id); #Carrega os itens da tabela selecionada
+        unset($v['data']['prescricao']['idPreschuap_Prescricao'],$v['data']['prescricao']['Concluido']);
+        $v['data']['medicamento']   = $medicamento->where('idPreschuap_Prescricao', $id)->findAll(); #Carrega os itens da tabela selecionada
+
+        if($continue) {
+            $v['data']['prescricao']['DataPrescricao'] = date('Y-m-d', time());
+            $v['data']['prescricao']['Dia']++;
+            $v['data']['prescricao']['Ciclo']++;
+        }
+        
+        $v['campos'] = array_keys($v['data']['prescricao']);
+        $v['anterior'] = array();
+        $v['id']['prescricao'] = $prescricao->insert($v['data']['prescricao']); #insere os dados e recebe o id de retorno
+
+        if($v['id']['prescricao']) {
+
+            $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao', 'CREATE', $v['id']['prescricao']), TRUE);
+            $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data']['prescricao'], $v['campos'], $v['id']['prescricao'], $v['auditoria']), TRUE);
+
+            foreach ($v['data']['medicamento'] as $key => $val) {
+
+                $v['anterior'] = array();
+                unset($val['idPreschuap_Prescricao_Medicamento']);
+                $val['idPreschuap_Prescricao'] = $v['id']['prescricao']; #Insere o id da prescrição gerado no primeiro insert
+                $v['campos'] = array_keys($val);
+                $v['id']['medicamento'] = $medicamento->insert($val); #insere os dados e recebe o id de retorno
+
+                if($v['id']) {
+                    $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao_Medicamento', 'CREATE', $v['id']['medicamento']), TRUE);
+                    $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $val, $v['campos'], $v['id']['medicamento'], $v['auditoria']), TRUE);
+                }
+
+            }
+            session()->setFlashdata('success', 'Dados atualizados com sucesso!');
+        }
+        else
+            session()->setFlashdata('nothing', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+
+        return redirect()->to('prescricao/list_prescricao');
+
+        /*
+        echo "<pre>";
+        print_r($val);
+        echo "</pre>";
+        echo "<pre>";
+        print_r($v['campos']);
+        echo "</pre>";
+        #exit('oi');
+        #*/
+
+    }
 
 }

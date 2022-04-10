@@ -162,4 +162,39 @@ class PrescricaoModel extends Model
 
     }
 
+    /**
+    * Captura o id da prescrição concluída mais recente.
+    *
+    * @return void
+    */
+    public function get_last_id($prontuario)
+    {
+
+        $db = \Config\Database::connect();
+        $query = $db->query('
+            SELECT
+                idPreschuap_Prescricao
+            FROM
+                Preschuap_Prescricao
+            WHERE
+                Prontuario = '.$prontuario.'
+                AND Concluido = 1
+            ORDER BY idPreschuap_Prescricao DESC
+            LIMIT 0,1;
+        ');
+
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit($data.'<><>');
+        #*/
+        #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
+
+        $query = $query->getRowArray();
+        return $query['idPreschuap_Prescricao'];
+
+    }
+
 }
