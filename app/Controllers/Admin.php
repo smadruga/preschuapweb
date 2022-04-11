@@ -87,9 +87,8 @@ class Admin extends BaseController
         $v['mysql'] = $usuario->get_user_mysql($v['Pesquisar']);
 
         #se encontrar o usuário já cadastrado na base do mysql já encaminha direto para a página dele
-        if ($v['mysql']) {
+        if ($v['mysql'])
             return redirect()->to('admin/show_user/'.$v['mysql']['Usuario']);
-        }
 
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
@@ -103,6 +102,7 @@ class Admin extends BaseController
         echo "<pre>";
         print_r($v['ad']);
         echo "</pre>";
+        exit('1111');
         #*/
 
         #se o resultado for zero retorna erro
@@ -111,13 +111,11 @@ class Admin extends BaseController
             return redirect()->to('admin/find_user');
         }
         #se o resultado for um vai direto para a página de importação
-        elseif ($v['ad']['entries']['count'] == 1) {
+        elseif ($v['ad']['entries']['count'] == 1)
             return view('admin/usuario/form_confirma_importacao', $v);
-        }
         #se o resultado for mais que um vai para uma lista de opções
-        else {
+        else
             return view('admin/usuario/list_usuarios', $v);
-        }
 
         #exit($v['Pesquisar']);
 
@@ -446,7 +444,9 @@ class Admin extends BaseController
         @ldap_bind($v['ldap']['ldap_conn'], env('ldap.usr'), env('ldap.pwd'));
 
         #filtros (campos de busca NOME, USUÁRIO e CPF)
-        $v['ldap']['ldap_filter'] = "(|(cn=*$data*)(samaccountname=$data)(employeeID=$data))";
+        #$v['ldap']['ldap_filter'] = "(|(cn=*$data*)(samaccountname=$data)(employeeID=$data))";
+        #filtros (campos de busca USUÁRIO e CPF)
+        $v['ldap']['ldap_filter'] = "(|(samaccountname=$data)(employeeID=$data))";
         #campos que serão retornados após pesquisa
         $v['ldap']['ldap_att'] = array("cn", "samaccountname", "employeeID", "othermailbox");
         #resultado da pesquisa
@@ -458,6 +458,7 @@ class Admin extends BaseController
         echo "<pre>";
         print_r($v['ldap']);
         echo "</pre>";
+        echo '<hr />';
         #*/
 
         #se o resultado for zero retorna FALSE

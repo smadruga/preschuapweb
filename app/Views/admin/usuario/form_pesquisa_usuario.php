@@ -6,8 +6,6 @@
         <?= csrf_field() ?>
         <?php $validation = \Config\Services::validation(); ?>
 
-        <?= $this->include('layouts/div_flashdata') ?>
-
         <div class="card">
             <div class="card-header">
                 <b>Gerenciar Usuário</b>
@@ -24,7 +22,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="form-text">
-                    Informe parte do Nome, CPF ou login/e-mail EBSERH do usuário.
+                    Informe CPF ou login/e-mail EBSERH do usuário.
                 </div>
             </div>
         </div>

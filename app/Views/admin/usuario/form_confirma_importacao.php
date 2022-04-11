@@ -6,8 +6,6 @@
         <?= csrf_field() ?>
         <?php $validation = \Config\Services::validation(); ?>
 
-        <?= $this->include('layouts/div_flashdata') ?>
-
         <div class="card">
             <div class="card-header bg-warning">
                 <b>Confirmar a importação do usuário abaixo?</b>
