@@ -148,7 +148,7 @@ class Prescricao extends BaseController
                 'IndiceMassaCorporal'               => '',
                 'SuperficieCorporal'                => '',
 
-                'DescricaoServico'                  => '',
+                #'DescricaoServico'                  => '',
                 'InformacaoComplementar'            => '',
                 'ReacaoAdversa'                     => '',
                 'idTabPreschuap_Alergia'            => '',
@@ -172,12 +172,16 @@ class Prescricao extends BaseController
 
             $v['data']['ClearanceCreatinina']   = (!$v['data']['ClearanceCreatinina']) ? $v['func']->calc_ClearanceCreatinina($v['data']['Peso'], $_SESSION['Paciente']['idade'], $_SESSION['Paciente']['sexo'], $v['data']['CreatininaSerica']) : $v['data']['ClearanceCreatinina'];
             $v['data']['IndiceMassaCorporal']   = (!$v['data']['IndiceMassaCorporal']) ? $v['func']->calc_IndiceMassaCorporal($v['data']['Peso'], $v['data']['Altura']) : $v['data']['IndiceMassaCorporal'];
-            $v['data']['SuperficieCorporal']   = (!$v['data']['SuperficieCorporal']) ? $v['func']->calc_SuperficieCorporal($v['data']['Peso'], $v['data']['Altura']) : $v['data']['SuperficieCorporal'];
+            $v['data']['SuperficieCorporal']    = (!$v['data']['SuperficieCorporal']) ? $v['func']->calc_SuperficieCorporal($v['data']['Peso'], $v['data']['Altura']) : $v['data']['SuperficieCorporal'];
 
             $v['data']['DataPrescricao']        = date("d/m/Y", strtotime($v['data']['DataPrescricao']));
 
             $v['data']['Peso']                  = str_replace(".",",",$v['data']['Peso']);
             $v['data']['CreatininaSerica']      = str_replace(".",",",$v['data']['CreatininaSerica']);
+
+            $v['data']['ClearanceCreatinina']   = str_replace(".",",",$v['data']['ClearanceCreatinina']);
+            $v['data']['IndiceMassaCorporal']   = str_replace(".",",",$v['data']['IndiceMassaCorporal']);
+            $v['data']['SuperficieCorporal']    = str_replace(".",",",$v['data']['SuperficieCorporal']);
         }
 
         $v['select'] = [
@@ -244,9 +248,9 @@ class Prescricao extends BaseController
                     'Ciclo'                             => 'required|integer',
                     'Aplicabilidade'                    => 'required',
                     'idTabPreschuap_Categoria'          => ['label' => 'CID Categoria', 'rules' => 'required'],
-                    'idTabPreschuap_Subcategoria'       => ['label' => 'CID Subcategoria', 'rules' => 'required'],
+                    #'idTabPreschuap_Subcategoria'       => ['label' => 'CID Subcategoria', 'rules' => 'required'],
                     'idTabPreschuap_Protocolo'          => ['label' => 'Protocolo', 'rules' => 'required'],
-                    'idTabPreschuap_TipoTerapia'        => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
+                    #'idTabPreschuap_TipoTerapia'        => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
                     'CiclosTotais'                      => ['label' => 'Total de Ciclos', 'rules' => 'required|integer'],
                     'EntreCiclos'                       => ['label' => 'Entre Ciclos', 'rules' => 'required|integer'],
 
@@ -254,10 +258,10 @@ class Prescricao extends BaseController
                     'CreatininaSerica'                  => ['label' => 'Creatinina Sérica', 'rules' => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]'],
                     'Altura'                            => 'required|integer',
 
-                    'DescricaoServico'                  => ['label' => 'Serviço', 'rules' => 'required'],
-                    'InformacaoComplementar'            => ['label' => 'Informação Complementar', 'rules' => 'required'],
-                    'ReacaoAdversa'                     => ['label' => 'Reação Adversa', 'rules' => 'required'],
-                    'idTabPreschuap_Alergia'            => ['label' => 'Alergia', 'rules' => 'required'],
+                    #'DescricaoServico'                  => ['label' => 'Serviço', 'rules' => 'required'],
+                    #'InformacaoComplementar'            => ['label' => 'Informação Complementar', 'rules' => 'required'],
+                    #'ReacaoAdversa'                     => ['label' => 'Reação Adversa', 'rules' => 'required'],
+                    #'idTabPreschuap_Alergia'            => ['label' => 'Alergia', 'rules' => 'required'],
                 ]);
             }
             else
@@ -270,7 +274,7 @@ class Prescricao extends BaseController
 
                 if($action == 'cadastrar' || $action == 'editar') {
 
-                    $v['data']['DataPrescricao']        = date("Y-m-d", strtotime($v['data']['DataPrescricao']));
+                    $v['data']['DataPrescricao']        = date("Y-m-d", strtotime(str_replace('/', '-', $v['data']['DataPrescricao'])));
 
                     $v['data']['Peso']                  = str_replace(",",".",$v['data']['Peso']);
                     $v['data']['CreatininaSerica']      = str_replace(",",".",$v['data']['CreatininaSerica']);
@@ -282,6 +286,10 @@ class Prescricao extends BaseController
                     $v['data']['idSishuap_Usuario']     = $_SESSION['Sessao']['idSishuap_Usuario'];
 
                     $v['medicamento'] = $tabela->list_medicamento_bd($v['data']['idTabPreschuap_Protocolo'], TRUE);
+
+                    $v['data']['idTabPreschuap_Subcategoria']   = ($v['data']['idTabPreschuap_Subcategoria']) ? $v['data']['idTabPreschuap_Subcategoria'] : NULL;
+                    $v['data']['idTabPreschuap_TipoTerapia']    = ($v['data']['idTabPreschuap_TipoTerapia']) ? $v['data']['idTabPreschuap_TipoTerapia'] : NULL;
+                    $v['data']['idTabPreschuap_Alergia']        = ($v['data']['idTabPreschuap_Alergia']) ? $v['data']['idTabPreschuap_Alergia'] : NULL;
 
                 }
                 if($action == 'concluir')
@@ -571,7 +579,7 @@ class Prescricao extends BaseController
             $v['data']['prescricao']['Dia']++;
             $v['data']['prescricao']['Ciclo']++;
         }
-        
+
         $v['campos'] = array_keys($v['data']['prescricao']);
         $v['anterior'] = array();
         $v['id']['prescricao'] = $prescricao->insert($v['data']['prescricao']); #insere os dados e recebe o id de retorno

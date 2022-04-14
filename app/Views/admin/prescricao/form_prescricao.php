@@ -143,7 +143,7 @@
 
                 <div class="row">
                     <div class="col">
-                        <label for="idTabPreschuap_Subcategoria" class="form-label"><b>CID Subcategoria</b> <b class="text-danger">*</b></label>
+                        <label for="idTabPreschuap_Subcategoria" class="form-label"><b>CID Subcategoria</b></label>
                         <div class="input-group mb-3">
 
                             <select <?= $opt['disabled'] ?>
@@ -194,7 +194,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <label for="idTabPreschuap_TipoTerapia" class="form-label"><b>Tipo de Terapia</b> <b class="text-danger">*</b></label>
+                        <label for="idTabPreschuap_TipoTerapia" class="form-label"><b>Tipo de Terapia</b></label>
                         <div class="input-group mb-3">
 
                             <select <?= $opt['disabled'] ?>
@@ -299,7 +299,7 @@
 
                 <div class="row">
                     <div class="col">
-                        <label for="idTabPreschuap_Alergia" class="form-label"><b>Alergia</b> <b class="text-danger">*</b></label>
+                        <label for="idTabPreschuap_Alergia" class="form-label"><b>Alergia</b></label>
                         <div class="input-group mb-3">
 
                             <select <?= $opt['disabled'] ?>
@@ -322,25 +322,11 @@
                             <?php endif; ?>
                         </div>
                     </div>
-                    <div class="col">
-                        <label for="DescricaoServico" class="form-label"><b>Serviço</b> <b class="text-danger">*</b></label>
-                        <div class="input-group mb-3">
-                            <input type="text" id="DescricaoServico" <?= $opt['disabled'] ?>
-                                class="form-control <?php if($validation->getError('DescricaoServico')): ?>is-invalid<?php endif ?>"
-                                maxlength="100" name="DescricaoServico" value="<?php echo $data['DescricaoServico']; ?>"/>
-
-                            <?php if ($validation->getError('DescricaoServico')): ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('DescricaoServico') ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col">
-                        <label for="InformacaoComplementar" class="form-label"><b>Informação Complementar</b> <b class="text-danger">*</b></label>
+                        <label for="InformacaoComplementar" class="form-label"><b>Informação Complementar</b></label>
                         <div class="input-group mb-3">
 
                             <textarea <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('InformacaoComplementar')): ?>is-invalid<?php endif ?>" id="InformacaoComplementar" name="InformacaoComplementar" rows="3"><?php echo $data['InformacaoComplementar']; ?></textarea>
@@ -356,7 +342,7 @@
 
                 <div class="row">
                     <div class="col">
-                        <label for="ReacaoAdversa" class="form-label"><b>Reação Adversa</b> <b class="text-danger">*</b></label>
+                        <label for="ReacaoAdversa" class="form-label"><b>Reação Adversa Anterior</b></label>
                         <div class="input-group mb-3">
 
                             <textarea <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('ReacaoAdversa')): ?>is-invalid<?php endif ?>" id="ReacaoAdversa" name="ReacaoAdversa" rows="3"><?php echo $data['ReacaoAdversa']; ?></textarea>
