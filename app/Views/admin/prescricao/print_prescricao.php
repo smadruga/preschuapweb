@@ -5,10 +5,10 @@
 foreach($prescricao['array'] as $v) {
 ?>
 
-<table class="table ms-1" style="width:270mm;font-size:80%;">
+<table class="table ms-1" style="width:270mm;font-size:70%;">
     <thead>
         <tr>
-            <td class="border-0" colspan="11">
+            <td class="border-0" colspan="12">
 
                 <div class="ms-1 me-1">
                     <div class="row">
@@ -55,7 +55,7 @@ foreach($prescricao['array'] as $v) {
         </tr>
 
         <tr>
-            <th class="border border-dark">Ordem Infusão</th>
+            <th class="border border-dark">#</th>
             <th class="border border-dark">Etapa Terapia</th>
             <th class="border border-dark">Medicamento</th>
             <th class="border border-dark">Dose</th>
@@ -63,9 +63,10 @@ foreach($prescricao['array'] as $v) {
             <th class="border border-dark">Cálculo</th>
             <th class="border border-dark">Via</th>
             <th class="border border-dark">Diluente</th>
-            <th class="border border-dark">Volume (ml)</th>
+            <th class="border border-dark">Vol. (ml)</th>
             <th class="border border-dark">Tempo Infusão</th>
             <th class="border border-dark">Posologia</th>
+            <th class="border border-dark col-3">Aprazamento</th>
         </tr>
 
     </thead>
@@ -88,6 +89,7 @@ foreach($prescricao['array'] as $v) {
             <td class="border border-dark"><?= $m['Volume'] ?></td>
             <td class="border border-dark"><?= $m['TempoInfusao'] ?></td>
             <td class="border border-dark"><?= $m['Posologia'] ?></td>
+            <td class="border border-dark"></td>
         </tr>
 
         <?php
@@ -95,7 +97,7 @@ foreach($prescricao['array'] as $v) {
         ?>
 
         <tr>
-            <td class="border-0" colspan="11">
+            <td class="border-0" colspan="12">
 
                 <div class="ms-1 me-1">
                     <div class="row">
