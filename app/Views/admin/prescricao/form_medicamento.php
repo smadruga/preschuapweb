@@ -103,6 +103,13 @@
                     foreach($data['medicamento'] as $m) {
 
                         $dose = explode(" ", $m['Dose']);
+
+                        if($m['idTabPreschuap_Formula'] == 2 || $m['idTabPreschuap_Formula'] == 3)
+                            $u = explode("/", $m['Unidade']);
+                        else
+                            $u[0] = $m['Unidade'];
+
+                        #$calculo = explode(" ", $m['Calculo']);
                 ?>
                 <div class="row">
                     <div class="col"><b>Ordem de Infusão:</b> <span class="badge bg-primary"><?= $m['OrdemInfusao'] ?></span></div>
@@ -147,8 +154,8 @@
                         <div class="input-group mb-3">
                             <input type="text" id="Calculo<?= $i ?>" readonly
                                 class="form-control <?php if($validation->getError('Calculo'.$i)): ?>is-invalid<?php endif ?>"
-                                maxlength="10" name="Calculo<?= $i ?>" value="<?php echo $data['input'][$i]['Calculo']; ?>"/>
-                            <span class="input-group-text" id="basic-addon2"><?php echo $dose[1] ?></span>
+                                maxlength="10" name="Calculo<?= $i ?>" value="<?php echo $m['Calculo'] ?>"/>
+                            <span class="input-group-text" id="basic-addon2"><?php echo $u[0] ?></span>
                             <?php if ($validation->getError('Calculo'.$i)): ?>
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('Calculo'.$i) ?>
@@ -201,6 +208,8 @@
 
                 <input type="hidden" name="idPreschuap_Prescricao_Medicamento<?= $i ?>"
                     value="<?= $data['input'][$i]['idPreschuap_Prescricao_Medicamento'] ?>" />
+                <input type="hidden" name="Formula<?= $i ?>" id="Formula<?= $i ?>"
+                    value="<?= $m['idTabPreschuap_Formula'] ?>" />
 
                 <hr />
                 <?php
@@ -214,6 +223,9 @@
                 <a class="btn btn-warning" href="<?= base_url('prescricao/list_prescricao/') ?>"><i class="fa-solid fa-ban"></i> Cancelar</a>
 
                 <input type="hidden" name="idPreschuap_Prescricao" value="<?= $data['prescricao']['idPreschuap_Prescricao'] ?>" />
+                <input type="hidden" name="Peso" id="Peso" value="<?= $data['prescricao']['Peso'] ?>" />
+                <input type="hidden" name="SuperficieCorporal" id="SuperficieCorporal" value="<?= $data['prescricao']['SuperficieCorporal'] ?>" />
+
             </div>
         </div>
 

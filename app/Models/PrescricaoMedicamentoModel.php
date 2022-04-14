@@ -51,7 +51,7 @@ class PrescricaoMedicamentoModel extends Model
                 , if(pm.Ajuste is not null, format(pm.Ajuste, 3, "pt_BR"), "") as Ajuste
                 , pm.Ajuste as Ajuste2
                 , pm.TipoAjuste
-                , concat(format(pm.Calculo, 3, "pt_BR")," ",tum.Representacao) as Calculo
+                , format(pm.Calculo, 3, "pt_BR") as Calculo
                 , format(pm.Calculo, 3, "pt_BR") as Calculo2
                 , tpm.idTabPreschuap_Protocolo
                 , tpm.OrdemInfusao
@@ -63,6 +63,8 @@ class PrescricaoMedicamentoModel extends Model
                 , format(tpm.Volume, 3, "pt_BR") as Volume
                 , tpm.TempoInfusao
                 , tps.Posologia
+                , tum.Representacao as Unidade
+                , tum.idTabPreschuap_Formula
             FROM
                 preschuapweb.Preschuap_Prescricao_Medicamento as pm
                 , preschuapweb.TabPreschuap_Protocolo_Medicamento as tpm
@@ -96,7 +98,15 @@ class PrescricaoMedicamentoModel extends Model
                 else
                     $val['Ajuste2'] = $val['Ajuste'];
 
+                if($val['idTabPreschuap_Formula'] == 2 || $val['idTabPreschuap_Formula'] == 3) {
+                    $u = explode("/", $val['Unidade']);
+                    $val['Calculo'] = $val['Calculo'].' '.$u[0];
+                }
+                else
+                    $val['Calculo'] = $val['Calculo'].' '.$val['Unidade'];
+
                 $data['medicamento'][$val['idPreschuap_Prescricao']][] = $val;
+
             }
 
             return $data['medicamento'];
@@ -104,18 +114,16 @@ class PrescricaoMedicamentoModel extends Model
         else
             return $query->getResultArray();
 
-
-        /*
-        echo $db->getLastQuery();
-        echo "<pre>";
-        print_r($query->getResultArray());
-        echo "</pre>";
-        echo "<pre>";
-        print_r($data['medicamento']);
-        echo "</pre>";
-        exit('oi');
-        #*/
-
+            /*
+            #echo $db->getLastQuery();
+            echo "<pre>";
+            #print_r($query->getResultArray());
+            echo "</pre>";
+            echo "<pre>";
+            print_r($data);
+            echo "</pre>";
+            exit('oi');
+            #*/
 
     }
 

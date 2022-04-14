@@ -360,9 +360,9 @@ class Prescricao extends BaseController
 
                             if($val['idTabPreschuap_Formula'] == 2)
                                 $val['Calculo'] = ($val['Dose']*$v['data']['Peso']);
-                            elseif($val['idTabPreschuap_Formula'] == 3)
-                                $val['Calculo'] = $v['func']->calc_DoseCarboplatina($val['Dose'], $v['data']['ClearanceCreatinina']);
                             elseif($val['idTabPreschuap_Formula'] == 4)
+                                $val['Calculo'] = $v['func']->calc_DoseCarboplatina($val['Dose'], $v['data']['ClearanceCreatinina']);
+                            elseif($val['idTabPreschuap_Formula'] == 3)
                                 $val['Calculo'] = ($val['Dose']*$v['data']['SuperficieCorporal']);
                             else
                                 $val['Calculo'] = $val['Dose'];
