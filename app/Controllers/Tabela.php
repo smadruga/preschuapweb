@@ -430,8 +430,8 @@ class Tabela extends BaseController
 
                     if ($v['tabela'] == 'Protocolo_Medicamento') {
                         $v['data']['Item'] = $v['data']['idTabPreschuap_Medicamento'];
-                        $v['data']['Dose'] = str_replace(".",",",$v['data']['Dose']);
-                        $v['data']['Volume'] = str_replace(".",",",$v['data']['Volume']);
+                        $v['data']['Dose'] = ($v['data']['Dose']) ? str_replace(".",",",$v['data']['Dose']) : $v['data']['Dose'];
+                        $v['data']['Volume'] = ($v['data']['Volume']) ? str_replace(".",",",$v['data']['Volume']) : $v['data']['Volume'];
                     }
                     else
                         $v['data']['Item'] = $v['data'][$v['tabela']];
