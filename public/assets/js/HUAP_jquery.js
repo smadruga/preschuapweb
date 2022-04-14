@@ -161,16 +161,37 @@ function ajuste(campo) {
     var dose    = $("#Dose"+campo).val();
     var ajuste  = $("#Ajuste"+campo).val();
     var tipo    = $("#TipoAjuste"+campo).val();
-
+    var formula = $("#Formula"+campo).val();
+    var peso    = $("#Peso").val();
+    var sc      = $("#SuperficieCorporal").val();
+console.log(' >> '+formula+' <> '+peso+' <> '+sc+' <> ');
     if(dose && ajuste && tipo) {
 
         dose    = dose.replace(".","").replace(",",".");
         ajuste  = ajuste.replace(".","").replace(",",".");
+        peso    = peso.replace(".","").replace(",",".");
+        sc      = sc.replace(".","").replace(",",".");
 
         if(tipo == 'porcentagem') {
-            r = (dose * (ajuste/100));
-            r = parseFloat(dose) + parseFloat(r);
-            r = r.toFixed(3);
+
+            if(formula == 2) {
+                r = (dose * (ajuste/100));
+                r = parseFloat(dose) + parseFloat(r);
+                r = parseFloat(peso) * parseFloat(r);
+                r = r.toFixed(3);
+            }
+            else if(formula == 3) {
+                r = (dose * (ajuste/100));
+                r = parseFloat(dose) + parseFloat(r);
+                r = parseFloat(sc) * parseFloat(r);
+                r = r.toFixed(3);
+            }
+            else {
+                r = (dose * (ajuste/100));
+                r = parseFloat(dose) + parseFloat(r);
+                r = r.toFixed(3);
+            }
+
         }
         else
             r = ajuste;
