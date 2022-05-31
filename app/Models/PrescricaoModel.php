@@ -73,12 +73,12 @@ class PrescricaoModel extends Model
                 , p.CiclosTotais
                 , p.EntreCiclos
 
-                , format(p.Peso, 3, "pt_BR") as Peso
-                , format(p.CreatininaSerica, 3, "pt_BR") as CreatininaSerica
+                , format(p.Peso, 2, "pt_BR") as Peso
+                , format(p.CreatininaSerica, 2, "pt_BR") as CreatininaSerica
                 , Altura
-                , format(p.ClearanceCreatinina, 3, "pt_BR") as ClearanceCreatinina
-                , format(p.IndiceMassaCorporal, 3, "pt_BR") as IndiceMassaCorporal
-                , format(p.SuperficieCorporal, 3, "pt_BR") as SuperficieCorporal
+                , format(p.ClearanceCreatinina, 2, "pt_BR") as ClearanceCreatinina
+                , format(p.IndiceMassaCorporal, 2, "pt_BR") as IndiceMassaCorporal
+                , format(p.SuperficieCorporal, 2, "pt_BR") as SuperficieCorporal
 
                 , u.Nome
                 , u.Cpf
