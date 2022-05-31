@@ -59,7 +59,6 @@ foreach($prescricao['array'] as $v) {
             <th class="border border-dark">Etapa Terapia</th>
             <th class="border border-dark">Medicamento</th>
             <th class="border border-dark">Dose</th>
-            <th class="border border-dark">Ajuste</th>
             <th class="border border-dark">Cálculo</th>
             <th class="border border-dark">Via</th>
             <th class="border border-dark">Diluente</th>
@@ -82,7 +81,6 @@ foreach($prescricao['array'] as $v) {
             <td class="border border-dark"><?= $m['EtapaTerapia'] ?></td>
             <td class="border border-dark"><?= $m['Medicamento'] ?></td>
             <td class="border border-dark"><?= $m['Dose'] ?></td>
-            <td class="border border-dark"><?= $m['Ajuste2'] ?></td>
             <td class="border border-dark"><?= $m['Calculo'] ?></td>
             <td class="border border-dark"><?= $m['ViaAdministracao'] ?></td>
             <td class="border border-dark"><?= $m['Diluente'] ?></td>
@@ -126,7 +124,19 @@ foreach($prescricao['array'] as $v) {
                     </div>
                     <div class="row">
                         <div class="col-6 border border-dark">
-                            <div class="col"><b>Reações Adversas Anteriores:</b> <?= ($v['ReacaoAdversa']) ? '<br>'.nl2br($v['ReacaoAdversa']) : NULL ?></div>
+                            <div class="col"><b>Informações Complementares:</b>
+                                <?= ($v['InformacaoComplementar']) ? '<br>'.nl2br($v['InformacaoComplementar']) : NULL ?>
+                                <?php
+                                $ajuste = NULL;
+                                foreach($medicamento[$v['idPreschuap_Prescricao']] as $m) {
+                                    if($m['Ajuste2'] && $m['TipoAjuste'] == 'substituicao')
+                                        $ajuste .= '<br /> Cálculo de ' . $m['Medicamento'] . ' substituído por ' . $m['Ajuste2'];
+                                    elseif($m['Ajuste2'] && $m['TipoAjuste'] == 'porcentagem')
+                                        $ajuste .= '<br /> Cálculo de ' . $m['Medicamento'] . ' ajustado em ' . $m['Ajuste2'];
+                                }
+                                echo ($ajuste) ? '<br />AJUSTES: ' . $ajuste : NULL;
+                                ?>
+                            </div>
                         </div>
                         <div class="col border border-dark border-start-0">
                             <div class="col"><b>Observações do Protocolo:</b> <?= $v['Observacoes'] ?><br /><br /></div>
@@ -137,7 +147,7 @@ foreach($prescricao['array'] as $v) {
                             <div class="col"><b>Alergias:</b> <?= ($v['Alergia']) ? '<br>'.nl2br($v['Alergia']) : NULL ?></div>
                         </div>
                         <div class="col-4 border border-dark border-top-0 border-start-0">
-                            <div class="col"><b>Informações Complementares:</b> <?= ($v['InformacaoComplementar']) ? '<br>'.nl2br($v['InformacaoComplementar']) : NULL ?></div>
+                            <div class="col"><b>Reações Adversas Anteriores:</b> <?= ($v['ReacaoAdversa']) ? '<br>'.nl2br($v['ReacaoAdversa']) : NULL ?></div>
                         </div>
                         <div class="col border border-dark border-top-0 border-start-0">
                             <div class="col">

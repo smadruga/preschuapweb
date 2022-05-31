@@ -93,6 +93,13 @@ class Prescricao extends BaseController
 
         $v['prescricao']['conselho'] = $prescricao->get_conselho($v['prescricao']['array'][0]['Cpf']);
 
+        /*
+        echo "<pre>";
+        print_r($v['medicamento']);
+        echo "</pre>";
+        exit('oi');
+        #*/
+
         return view('admin/prescricao/print_prescricao', $v);
 
     }
