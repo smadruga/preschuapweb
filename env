@@ -15,13 +15,13 @@
 #--------------------------------------------------------------------
 
 # CI_ENVIRONMENT = production
-# CI_ENVIRONMENT = development
+CI_ENVIRONMENT = development
 
 #--------------------------------------------------------------------
 # APP
 #--------------------------------------------------------------------
 
-# app.baseURL = ''
+app.baseURL = 'http://prescteste.com/'
 # app.forceGlobalSecureRequests = false
 
 # app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
@@ -38,19 +38,27 @@
 # DATABASE
 #--------------------------------------------------------------------
 
-# database.default.hostname = localhost
-# database.default.database = ci4
-# database.default.username = root
-# database.default.password = root
-# database.default.DBDriver = MySQLi
-# database.default.DBPrefix =
+database.default.hostname = 10.88.1.211
+database.default.database = preschuapweb
+database.default.username = apphuap
+database.default.password = 20apphuap22
+database.default.DBDriver = MySQLi
+database.default.DBPrefix =
 
-# database.tests.hostname = localhost
-# database.tests.database = ci4
-# database.tests.username = root
-# database.tests.password = root
-# database.tests.DBDriver = MySQLi
-# database.tests.DBPrefix =
+#database.default.hostname = localhost
+#database.default.database = preschuapweb
+#database.default.username = rodrigo
+#database.default.password = pituca82
+#database.default.DBDriver = MySQLi
+#database.default.DBPrefix =
+
+database.aghux.hostname = 10.88.1.246
+database.aghux.database = dbaghu
+database.aghux.port     = 6544
+database.aghux.username = ugen_integra
+database.aghux.password = q6nqRWMnNR
+database.aghux.DBDriver = Postgre
+database.aghux.schema   = agh
 
 #--------------------------------------------------------------------
 # CONTENT SECURITY POLICY
@@ -133,8 +141,20 @@
 # curlrequest.shareOptions = true
 
 #--------------------------------------------------------------------
-# AD EBSERH
+# LDAP (AD HUAP/EBSERH)
 #--------------------------------------------------------------------
 
-# srv.ldap1 = 
-# srv.ldap2 = 
+srv.ldap1 = 10.88.1.31
+srv.ldap2 = 10.88.1.32
+
+ldap.usr = EBSERHNET\adm.rcampos
+ldap.pwd = 
+ldap.dn = OU=Usuarios,OU=HUAP,OU=EBSERH,DC=ebserhnet,DC=ebserh,DC=gov,DC=br
+
+#--------------------------------------------------------------------
+# SESSION CONFIG - Tempo definido em segundos
+#--------------------------------------------------------------------
+
+huap.session.expires = 7200
+
+#srv.baseurl = http://prescteste.com/

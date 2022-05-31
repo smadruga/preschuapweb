@@ -151,7 +151,7 @@ class Prescricao extends BaseController
                 #'DescricaoServico'                  => '',
                 'InformacaoComplementar'            => '',
                 'ReacaoAdversa'                     => '',
-                'idTabPreschuap_Alergia'            => '',
+                'Alergia'            => '',
                 'ClearanceCreatinina'               => '',
                 'IndiceMassaCorporal'               => '',
                 'SuperficieCorporal'                => '',
@@ -261,7 +261,7 @@ class Prescricao extends BaseController
                     #'DescricaoServico'                  => ['label' => 'Serviço', 'rules' => 'required'],
                     #'InformacaoComplementar'            => ['label' => 'Informação Complementar', 'rules' => 'required'],
                     #'ReacaoAdversa'                     => ['label' => 'Reação Adversa', 'rules' => 'required'],
-                    #'idTabPreschuap_Alergia'            => ['label' => 'Alergia', 'rules' => 'required'],
+                    #'Alergia'            => ['label' => 'Alergia', 'rules' => 'required'],
                 ]);
             }
             else
@@ -289,7 +289,7 @@ class Prescricao extends BaseController
 
                     $v['data']['idTabPreschuap_Subcategoria']   = ($v['data']['idTabPreschuap_Subcategoria']) ? $v['data']['idTabPreschuap_Subcategoria'] : NULL;
                     $v['data']['idTabPreschuap_TipoTerapia']    = ($v['data']['idTabPreschuap_TipoTerapia']) ? $v['data']['idTabPreschuap_TipoTerapia'] : NULL;
-                    $v['data']['idTabPreschuap_Alergia']        = ($v['data']['idTabPreschuap_Alergia']) ? $v['data']['idTabPreschuap_Alergia'] : NULL;
+                    #$v['data']['idTabPreschuap_Alergia']        = ($v['data']['idTabPreschuap_Alergia']) ? $v['data']['idTabPreschuap_Alergia'] : NULL;
 
                 }
                 if($action == 'concluir')

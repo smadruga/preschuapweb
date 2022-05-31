@@ -134,7 +134,7 @@ foreach($prescricao['array'] as $v) {
                     </div>
                     <div class="row">
                         <div class="col-4 border border-dark border-top-0">
-                            <div class="col"><b>Alergia:</b> <?= $v['Alergia'] ?></div>
+                            <div class="col"><b>Alergias:</b> <?= ($v['Alergia']) ? '<br>'.nl2br($v['Alergia']) : NULL ?></div>
                         </div>
                         <div class="col-4 border border-dark border-top-0 border-start-0">
                             <div class="col"><b>Informações Complementares:</b> <?= ($v['InformacaoComplementar']) ? '<br>'.nl2br($v['InformacaoComplementar']) : NULL ?></div>

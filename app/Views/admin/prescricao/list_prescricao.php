@@ -100,9 +100,16 @@
                         <hr />
 
                         <div class="row">
-                            <div class="col"><b>Alergia:</b> <?= $v['Alergia'] ?></div>
                             <div class="col"><b>Serviço:</b> <?= $v['DescricaoServico'] ?></div>
                         </div>
+
+                        <br />
+
+                        <div class="row">
+                            <div class="col"><b>Alergias:</b> <?= ($v['Alergia']) ? '<br>'.nl2br($v['Alergia']) : NULL ?></div>
+                        </div>
+
+                        <br />
 
                         <div class="row">
                             <div class="col"><b>Reações Adversas:</b> <?= ($v['ReacaoAdversa']) ? '<br>'.nl2br($v['ReacaoAdversa']) : NULL ?></div>

@@ -62,9 +62,16 @@
                 <hr />
 
                 <div class="row">
-                    <div class="col"><b>Alergia:</b> <?= $data['prescricao']['Alergia'] ?></div>
                     <div class="col"><b>Serviço:</b> <?= $data['prescricao']['DescricaoServico'] ?></div>
                 </div>
+
+                <br />
+
+                <div class="row">
+                    <div class="col"><b>Alergias:</b> <?= ($data['prescricao']['Alergia']) ? '<br>'.nl2br($data['prescricao']['Alergia']) : NULL ?></div>
+                </div>
+
+                <br />
 
                 <div class="row">
                     <div class="col"><b>Reações Adversas:</b> <?= ($data['prescricao']['ReacaoAdversa']) ? '<br>'.nl2br($data['prescricao']['ReacaoAdversa']) : NULL ?></div>

@@ -299,25 +299,14 @@
 
                 <div class="row">
                     <div class="col">
-                        <label for="idTabPreschuap_Alergia" class="form-label"><b>Alergia</b></label>
+                        <label for="Alergia" class="form-label"><b>Alergias</b></label>
                         <div class="input-group mb-3">
 
-                            <select <?= $opt['disabled'] ?>
-                                class="form-select <?php if($validation->getError('idTabPreschuap_Alergia')): ?>is-invalid<?php endif ?>"
-                                id="idTabPreschuap_Alergia" name="idTabPreschuap_Alergia" data-placeholder="Selecione uma opção"
-                                data-allow-clear="1">
-                                <option></option>
-                                <?php
-                                foreach ($select['Alergia']->getResultArray() as $val) {
-                                    $selected = ($data['idTabPreschuap_Alergia'] == $val['idTabPreschuap_Alergia']) ? 'selected' : '';
-                                    echo '<option value="'.$val['idTabPreschuap_Alergia'].'" '.$selected.'>'.$val['Alergia'].'</option>';
-                                }
-                                ?>
-                            </select>
+                            <textarea <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('Alergia')): ?>is-invalid<?php endif ?>" id="Alergia" name="Alergia" rows="3"><?php echo $data['Alergia']; ?></textarea>
 
-                            <?php if ($validation->getError('idTabPreschuap_Alergia')): ?>
+                            <?php if ($validation->getError('Alergia')): ?>
                                 <div class="invalid-feedback">
-                                    <?= $validation->getError('idTabPreschuap_Alergia') ?>
+                                    <?= $validation->getError('Alergia') ?>
                                 </div>
                             <?php endif; ?>
                         </div>
