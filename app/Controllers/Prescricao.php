@@ -12,6 +12,9 @@ use App\Models\AuditoriaLogModel;
 use CodeIgniter\RESTful\ResourceController;
 use App\Libraries\HUAP_Functions;
 
+use App\Libraries\Pdf;
+//use App\Libraries\phpwkhtmltopdf\src\Pdf;
+
 class Prescricao extends BaseController
 {
     private $v;
@@ -74,6 +77,21 @@ class Prescricao extends BaseController
     public function print_prescricao($data)
     {
 
+        // You can pass a filename, a HTML string, an URL or an options array to the constructor
+        $pdf = new Pdf('https://www.google.com');
+
+        // On some systems you may have to set the path to the wkhtmltopdf executable
+        #$pdf->binary = '/usr/local/bin/wkhtmltopdf';
+
+        if (!$pdf->saveAs('teste.pdf')) {
+            #$error = $pdf->getError();
+            exit('oi');
+        }
+        else {
+            exit('sei lá');
+        }
+
+/*
         $prescricao = new PrescricaoModel();
         $medicamento = new PrescricaoMedicamentoModel();
 
@@ -98,10 +116,10 @@ class Prescricao extends BaseController
         print_r($v['medicamento']);
         echo "</pre>";
         exit('oi');
-        #*/
+        #/
 
         return view('admin/prescricao/print_prescricao', $v);
-
+*/
     }
 
     /**

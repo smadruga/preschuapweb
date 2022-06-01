@@ -21,7 +21,6 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-table"></i> Tabelas</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Alergia') ?>"><i class="fa-solid fa-table-list"></i> Alergia</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Diluente') ?>"><i class="fa-solid fa-table-list"></i> Diluente</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/EtapaTerapia') ?>"><i class="fa-solid fa-table-list"></i> Etapa da Terapia</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Medicamento') ?>"><i class="fa-solid fa-table-list"></i> Medicamento</a>

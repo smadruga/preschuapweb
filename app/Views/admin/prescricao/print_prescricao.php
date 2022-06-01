@@ -20,8 +20,9 @@ foreach($prescricao['array'] as $v) {
                                 </div>
                                 <div class="col pt-2">
                                     HOSPITAL UNIVERSITÁRIO ANTONIO PEDRO - HUAP<br />
+                                    GERÊNCIA DE ATENÇÃO A SAÚDE - GAS<br />
                                     DIVISÃO DE GESTÃO DO CUIDADO - DGC<br />
-                                    UNIDADE DE HEMATOLOGIA E CANCEROLOGIA<br />
+                                    UNIDADE DE HEMATOLOGIA E ONCOLOGIA - UHON<br />
                                     PRESCRIÇÃO MÉDICA DO PACIENTE
                                 </div>
                             </div>

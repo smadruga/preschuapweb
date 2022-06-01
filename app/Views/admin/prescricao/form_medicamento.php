@@ -12,7 +12,7 @@
             <div class="card-header <?= $opt['bg'] ?> text-white">
                 <b><?= $opt['title'] ?></b>
             </div>
-            <div class="card-body has-validation">
+            <div class="card-body has-validation row g-3">
 
                 <div class="row">
                     <div class="col"><b>Prescrição:</b> #<?= $data['prescricao']['idPreschuap_Prescricao'] ?></div>
@@ -141,77 +141,75 @@
                     <div class="col"><b>Posologia:</b> <?= $m['Posologia'] ?></div>
                 </div>
 
-                <div class="row">
-                    <div class="col">
-                        <label for="Dose<?= $i ?>" class="form-label"><b>Dose</b> <b class="text-danger">*</b></label>
-                        <div class="input-group mb-3">
-                            <input type="text" id="Dose<?= $i ?>" disabled
-                                class="form-control <?php if($validation->getError('Dose'.$i)): ?>is-invalid<?php endif ?>"
-                                name="Dose<?= $i ?>" value="<?php echo $dose[0] ?>"/>
-                            <span class="input-group-text" id="basic-addon2"><?php echo $dose[1] ?></span>
-                            <?php if ($validation->getError('Dose'.$i)): ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('Dose'.$i) ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                <div class="col-md-6">
+                    <label for="Dose<?= $i ?>" class="form-label"><b>Dose</b> <b class="text-danger">*</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Dose<?= $i ?>" disabled
+                            class="form-control <?php if($validation->getError('Dose'.$i)): ?>is-invalid<?php endif ?>"
+                            name="Dose<?= $i ?>" value="<?php echo $dose[0] ?>"/>
+                        <span class="input-group-text" id="basic-addon2"><?php echo $dose[1] ?></span>
+                        <?php if ($validation->getError('Dose'.$i)): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('Dose'.$i) ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
-                    <div class="col">
-                        <label for="Calculo<?= $i ?>" class="form-label"><b>Cálculo</b> <b class="text-danger">*</b></label>
-                        <div class="input-group mb-3">
-                            <input type="text" id="Calculo<?= $i ?>" readonly
-                                class="form-control <?php if($validation->getError('Calculo'.$i)): ?>is-invalid<?php endif ?>"
-                                maxlength="10" name="Calculo<?= $i ?>" value="<?php echo $m['Calculo'] ?>"/>
-                            <span class="input-group-text" id="basic-addon2"><?php echo $u[0] ?></span>
-                            <?php if ($validation->getError('Calculo'.$i)): ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('Calculo'.$i) ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="Calculo<?= $i ?>" class="form-label"><b>Cálculo</b> <b class="text-danger">*</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Calculo<?= $i ?>" readonly
+                            class="form-control <?php if($validation->getError('Calculo'.$i)): ?>is-invalid<?php endif ?>"
+                            maxlength="10" name="Calculo<?= $i ?>" value="<?php echo $m['Calculo'] ?>"/>
+                        <span class="input-group-text" id="basic-addon2"><?php echo $u[0] ?></span>
+                        <?php if ($validation->getError('Calculo'.$i)): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('Calculo'.$i) ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col">
-                        <label for="Ajuste<?= $i ?>" class="form-label"><b>Ajuste</b> <b class="text-danger">*</b></label>
-                        <div class="input-group mb-3">
-                            <input type="text" id="Ajuste<?= $i ?>" <?= $opt['disabled'] ?>
-                                class="form-control <?php if($validation->getError('Ajuste'.$i)): ?>is-invalid<?php endif ?>"
-                                maxlength="9" name="Ajuste<?= $i ?>" placeholder="Apenas números" onkeyup="ajuste(<?= $i ?>)"
-                                value="<?php echo $data['input'][$i]['Ajuste']; ?>"/>
 
-                            <?php if ($validation->getError('Ajuste'.$i)): ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('Ajuste'.$i) ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <label for="TipoAjuste<?= $i ?>" class="form-label"><b>Tipo de Ajuste</b> <b class="text-danger">*</b></label>
-                        <div class="input-group mb-3">
+                <div class="col-md-6">
+                    <label for="Ajuste<?= $i ?>" class="form-label"><b>Ajuste</b> <b class="text-danger">*</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Ajuste<?= $i ?>" <?= $opt['disabled'] ?>
+                            class="form-control <?php if($validation->getError('Ajuste'.$i)): ?>is-invalid<?php endif ?>"
+                            maxlength="9" name="Ajuste<?= $i ?>" placeholder="Apenas números" onkeyup="ajuste(<?= $i ?>)"
+                            value="<?php echo $data['input'][$i]['Ajuste']; ?>"/>
 
-                            <select <?= $opt['disabled'] ?>
-                                class="form-select <?php if($validation->getError('TipoAjuste'.$i)): ?>is-invalid<?php endif ?>"
-                                id="TipoAjuste<?= $i ?>" name="TipoAjuste<?= $i ?>" onchange="ajuste(<?= $i ?>)"
-                                data-placeholder="Selecione uma opção" data-allow-clear="1">
-                                <?php
-                                foreach ($select['TipoAjuste'] as $key => $val) {
-                                    $selected = ($data['input'][$i]['TipoAjuste'] == $key) ? 'selected' : '';
-                                    echo '<option value="'.$key.'" '.$selected.'>'.$val.'</option>';
-                                }
-                                ?>
-                            </select>
-
-                            <?php if ($validation->getError('TipoAjuste'.$i)): ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('TipoAjuste'.$i) ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                        <?php if ($validation->getError('Ajuste'.$i)): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('Ajuste'.$i) ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <label for="TipoAjuste<?= $i ?>" class="form-label"><b>Tipo de Ajuste</b> <b class="text-danger">*</b></label>
+                    <div class="input-group mb-3">
+
+                        <select <?= $opt['disabled'] ?>
+                            class="form-select <?php if($validation->getError('TipoAjuste'.$i)): ?>is-invalid<?php endif ?>"
+                            id="TipoAjuste<?= $i ?>" name="TipoAjuste<?= $i ?>" onchange="ajuste(<?= $i ?>)"
+                            data-placeholder="Selecione uma opção" data-allow-clear="1">
+                            <?php
+                            foreach ($select['TipoAjuste'] as $key => $val) {
+                                $selected = ($data['input'][$i]['TipoAjuste'] == $key) ? 'selected' : '';
+                                echo '<option value="'.$key.'" '.$selected.'>'.$val.'</option>';
+                            }
+                            ?>
+                        </select>
+
+                        <?php if ($validation->getError('TipoAjuste'.$i)): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('TipoAjuste'.$i) ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
 
                 <input type="hidden" name="idPreschuap_Prescricao_Medicamento<?= $i ?>"
                     value="<?= $data['input'][$i]['idPreschuap_Prescricao_Medicamento'] ?>" />
