@@ -18,6 +18,7 @@ class PrescricaoMedicamentoModel extends Model
                                         'idTabPreschuap_Protocolo_Medicamento',
                                         'Ajuste',
                                         'TipoAjuste',
+                                        'idTabPreschuap_MotivoAjusteDose',
                                         'Calculo',
                                         'idTabPreschuap_Protocolo',
                                         'OrdemInfusao',
@@ -51,6 +52,9 @@ class PrescricaoMedicamentoModel extends Model
                 , if(pm.Ajuste is not null, format(pm.Ajuste, 2, "pt_BR"), "") as Ajuste
                 , pm.Ajuste as Ajuste2
                 , pm.TipoAjuste
+                , CASE WHEN pm.TipoAjuste = "substituicao" THEN "Substituição" ELSE "Porcentagem" END as TipoAjusteDescricao
+                , pm.idTabPreschuap_MotivoAjusteDose
+                , tmad.MotivoAjusteDose
                 , format(pm.Calculo, 2, "pt_BR") as Calculo
                 , format(pm.Calculo, 2, "pt_BR") as Calculo2
                 , tpm.idTabPreschuap_Protocolo
@@ -67,6 +71,7 @@ class PrescricaoMedicamentoModel extends Model
                 , tum.idTabPreschuap_Formula
             FROM
                 preschuapweb.Preschuap_Prescricao_Medicamento as pm
+                    LEFT JOIN preschuapweb.TabPreschuap_MotivoAjusteDose as tmad ON pm.idTabPreschuap_MotivoAjusteDose = tmad.idTabPreschuap_MotivoAjusteDose
                 , preschuapweb.TabPreschuap_Protocolo_Medicamento as tpm
                 , preschuapweb.TabPreschuap_EtapaTerapia as tet
                 , preschuapweb.TabPreschuap_Medicamento as tm
@@ -74,6 +79,7 @@ class PrescricaoMedicamentoModel extends Model
                 , preschuapweb.TabPreschuap_ViaAdministracao as tva
                 , preschuapweb.TabPreschuap_Diluente as td
                 , preschuapweb.TabPreschuap_Posologia as tps
+                /*, preschuapweb.TabPreschuap_MotivoAjusteDose as tmad*/
             WHERE
             	pm.idTabPreschuap_Protocolo_Medicamento = tpm.idTabPreschuap_Protocolo_Medicamento
                 and tpm.idTabPreschuap_EtapaTerapia = tet.idTabPreschuap_EtapaTerapia
@@ -82,6 +88,7 @@ class PrescricaoMedicamentoModel extends Model
                 and tpm.idTabPreschuap_ViaAdministracao = tva.idTabPreschuap_ViaAdministracao
                 and tpm.idTabPreschuap_Diluente = td.idTabPreschuap_Diluente
                 and tpm.idTabPreschuap_Posologia = tps.idTabPreschuap_Posologia
+                /*and pm.idTabPreschuap_MotivoAjusteDose = tmad.idTabPreschuap_MotivoAjusteDose*/
 
             	AND idPreschuap_Prescricao in ('.$id.')
 

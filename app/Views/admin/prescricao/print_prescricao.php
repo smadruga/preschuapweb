@@ -130,10 +130,11 @@ foreach($prescricao['array'] as $v) {
                                 <?php
                                 $ajuste = NULL;
                                 foreach($medicamento[$v['idPreschuap_Prescricao']] as $m) {
+                                    $motivo = ($m['MotivoAjusteDose']) ? ' - Motivo: '.$m['MotivoAjusteDose'] : NULL;
                                     if($m['Ajuste2'] && $m['TipoAjuste'] == 'substituicao')
-                                        $ajuste .= '<br /> Cálculo de ' . $m['Medicamento'] . ' substituído por ' . $m['Ajuste2'];
+                                        $ajuste .= '<br /> Cálculo de ' . $m['Medicamento'] . ' substituído por ' . $m['Ajuste2'] . $motivo;
                                     elseif($m['Ajuste2'] && $m['TipoAjuste'] == 'porcentagem')
-                                        $ajuste .= '<br /> Cálculo de ' . $m['Medicamento'] . ' ajustado em ' . $m['Ajuste2'];
+                                        $ajuste .= '<br /> Cálculo de ' . $m['Medicamento'] . ' ajustado em ' . $m['Ajuste2'] . $motivo;
                                 }
                                 echo ($ajuste) ? '<br />AJUSTES: ' . $ajuste : NULL;
                                 ?>

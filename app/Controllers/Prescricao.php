@@ -12,9 +12,6 @@ use App\Models\AuditoriaLogModel;
 use CodeIgniter\RESTful\ResourceController;
 use App\Libraries\HUAP_Functions;
 
-use App\Libraries\Pdf;
-//use App\Libraries\phpwkhtmltopdf\src\Pdf;
-
 class Prescricao extends BaseController
 {
     private $v;
@@ -77,21 +74,6 @@ class Prescricao extends BaseController
     public function print_prescricao($data)
     {
 
-        // You can pass a filename, a HTML string, an URL or an options array to the constructor
-        $pdf = new Pdf('https://www.google.com');
-
-        // On some systems you may have to set the path to the wkhtmltopdf executable
-        #$pdf->binary = '/usr/local/bin/wkhtmltopdf';
-
-        if (!$pdf->saveAs('teste.pdf')) {
-            #$error = $pdf->getError();
-            exit('oi');
-        }
-        else {
-            exit('sei lá');
-        }
-
-/*
         $prescricao = new PrescricaoModel();
         $medicamento = new PrescricaoMedicamentoModel();
 
@@ -116,10 +98,10 @@ class Prescricao extends BaseController
         print_r($v['medicamento']);
         echo "</pre>";
         exit('oi');
-        #/
+        #*/
 
         return view('admin/prescricao/print_prescricao', $v);
-*/
+
     }
 
     /**
@@ -210,11 +192,10 @@ class Prescricao extends BaseController
         }
 
         $v['select'] = [
-            'Categoria'         => $tabela->list_tabela_bd('Categoria', FALSE, FALSE, '*', 'idTabPreschuap_Categoria', TRUE), #Carrega os itens da tabela selecionada
-            'Subcategoria'      => $tabela->list_tabela_bd('Subcategoria', FALSE, FALSE, '*', 'idTabPreschuap_Subcategoria', TRUE), #Carrega os itens da tabela selecionada
-            'Protocolo'         => $tabela->list_tabela_bd('Protocolo', FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
-            'TipoTerapia'       => $tabela->list_tabela_bd('TipoTerapia', FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
-            'Alergia'           => $tabela->list_tabela_bd('Alergia', FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
+            'Categoria'         => $tabela->list_tabela_bd('Categoria',     FALSE, FALSE, '*', 'idTabPreschuap_Categoria', TRUE), #Carrega os itens da tabela selecionada
+            'Subcategoria'      => $tabela->list_tabela_bd('Subcategoria',  FALSE, FALSE, '*', 'idTabPreschuap_Subcategoria', TRUE), #Carrega os itens da tabela selecionada
+            'Protocolo'         => $tabela->list_tabela_bd('Protocolo',     FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
+            'TipoTerapia'       => $tabela->list_tabela_bd('TipoTerapia',   FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
             'Aplicabilidade'    => ['CANCEROLOGIA', 'HEMATOLOGIA'],
         ];
 
@@ -467,6 +448,7 @@ class Prescricao extends BaseController
                 $v['data']['input'][$key]['idPreschuap_Prescricao_Medicamento'] = $val['idPreschuap_Prescricao_Medicamento'];
 
                 $v['data']['input'][$key]['TipoAjuste']                         = $val['TipoAjuste'];
+                $v['data']['input'][$key]['idTabPreschuap_MotivoAjusteDose']    = $val['idTabPreschuap_MotivoAjusteDose'];
                 $v['data']['input'][$key]['Calculo']                            = $val['Calculo2'];
 
                 if($val['Ajuste2'] == 0 || !$val['Ajuste2'])
@@ -489,6 +471,7 @@ class Prescricao extends BaseController
                 $v['data']['input'][$i]['idPreschuap_Prescricao_Medicamento'] = $v['data']['input']['idPreschuap_Prescricao_Medicamento'.$i];
                 $v['data']['input'][$i]['Ajuste']                             = $v['data']['input']['Ajuste'.$i];
                 $v['data']['input'][$i]['TipoAjuste']                         = $v['data']['input']['TipoAjuste'.$i];
+                $v['data']['input'][$i]['idTabPreschuap_MotivoAjusteDose']    = $v['data']['input']['idTabPreschuap_MotivoAjusteDose'.$i];
                 $v['data']['input'][$i]['Calculo']                            = $v['data']['input']['Calculo'.$i];
 
                 $inputs = $this->validate(['Ajuste'.$i => ['label' => 'Ajuste', 'rules' => 'permit_empty|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]']]);
@@ -503,9 +486,12 @@ class Prescricao extends BaseController
             'action'    => 'editar',
         ];
 
-        $v['select']['TipoAjuste']  = [
-            'porcentagem'   => 'Porcentagem sobre a dose',
-            'substituicao'  => 'Substituir dose pelo ajuste'
+        $v['select'] = [
+            'TipoAjuste'        => [
+                'porcentagem'   => 'Porcentagem sobre a dose',
+                'substituicao'  => 'Substituir dose pelo ajuste'
+            ],
+            'MotivoAjusteDose'  => $tabela->list_tabela_bd('MotivoAjusteDose', FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
         ];
 
         if($v['data']['input']['submit']) {
@@ -518,18 +504,21 @@ class Prescricao extends BaseController
                 for ($i = 0; $i < count($v['data']['medicamento']); $i++) {
                     $v['data']['bd'][$i]['idPreschuap_Prescricao_Medicamento'] = $v['data']['input'][$i]['idPreschuap_Prescricao_Medicamento'];
 
-                    $v['data']['bd'][$i]['TipoAjuste']  = $v['data']['input'][$i]['TipoAjuste'];
-                    $v['data']['bd'][$i]['Ajuste']      = str_replace(",",".",$v['data']['input'][$i]['Ajuste']);
-                    $v['data']['bd'][$i]['Calculo']     = str_replace(",",".",$v['data']['input'][$i]['Calculo']);
+                    $v['data']['bd'][$i]['TipoAjuste']                      = $v['data']['input'][$i]['TipoAjuste'];
+                    $v['data']['bd'][$i]['idTabPreschuap_MotivoAjusteDose'] = $v['data']['input'][$i]['idTabPreschuap_MotivoAjusteDose'];
+                    $v['data']['bd'][$i]['Ajuste']                          = str_replace(",",".",$v['data']['input'][$i]['Ajuste']);
+                    $v['data']['bd'][$i]['Calculo']                         = str_replace(",",".",$v['data']['input'][$i]['Calculo']);
 
-                    $v['anterior'][$i]['TipoAjuste']    = $v['data']['medicamento'][$i]['TipoAjuste'];
-                    $v['anterior'][$i]['Ajuste']        = str_replace(",",".",$v['data']['medicamento'][$i]['Ajuste']);
-                    $v['anterior'][$i]['Calculo']       = str_replace(",",".",$v['data']['medicamento'][$i]['Calculo2']);
+                    $v['anterior'][$i]['TipoAjuste']                        = $v['data']['medicamento'][$i]['TipoAjuste'];
+                    $v['anterior'][$i]['idTabPreschuap_MotivoAjusteDose']                  = $v['data']['medicamento'][$i]['idTabPreschuap_MotivoAjusteDose'];
+                    $v['anterior'][$i]['Ajuste']                            = str_replace(",",".",$v['data']['medicamento'][$i]['Ajuste']);
+                    $v['anterior'][$i]['Calculo']                           = str_replace(",",".",$v['data']['medicamento'][$i]['Calculo2']);
 
                     if(
-                        $v['data']['bd'][$i]['TipoAjuste'] != $v['anterior'][$i]['TipoAjuste']
-                        || $v['data']['bd'][$i]['Ajuste'] != $v['anterior'][$i]['Ajuste']
-                        || $v['data']['bd'][$i]['Calculo'] != $v['anterior'][$i]['Calculo']
+                           $v['data']['bd'][$i]['TipoAjuste']                       != $v['anterior'][$i]['TipoAjuste']
+                        || $v['data']['bd'][$i]['idTabPreschuap_MotivoAjusteDose']  != $v['anterior'][$i]['idTabPreschuap_MotivoAjusteDose']
+                        || $v['data']['bd'][$i]['Ajuste']                           != $v['anterior'][$i]['Ajuste']
+                        || $v['data']['bd'][$i]['Calculo']                          != $v['anterior'][$i]['Calculo']
                         )
                         $v['diff'][$i] = 1;
                 }
@@ -568,7 +557,7 @@ class Prescricao extends BaseController
         print_r($v['data']);
         echo "</pre>";
         echo "<pre>";
-        #print_r($v['data']['medicamento']);
+        print_r($v['select']);
         echo "</pre>";
         #exit('oi');
         #*/

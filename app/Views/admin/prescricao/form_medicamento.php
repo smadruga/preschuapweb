@@ -171,7 +171,7 @@
                 </div>
 
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="Ajuste<?= $i ?>" class="form-label"><b>Ajuste</b> <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
                         <input type="text" id="Ajuste<?= $i ?>" <?= $opt['disabled'] ?>
@@ -186,7 +186,7 @@
                         <?php endif; ?>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="TipoAjuste<?= $i ?>" class="form-label"><b>Tipo de Ajuste</b> <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
 
@@ -209,7 +209,30 @@
                         <?php endif; ?>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <label for="idTabPreschuap_MotivoAjusteDose<?= $i ?>" class="form-label"><b>Motivo do Ajuste</b></label>
+                    <div class="input-group mb-3">
 
+                        <select <?= $opt['disabled'] ?>
+                            class="form-select <?php if($validation->getError('idTabPreschuap_MotivoAjusteDose'.$i)): ?>is-invalid<?php endif ?>"
+                            id="idTabPreschuap_MotivoAjusteDose<?= $i ?>" name="idTabPreschuap_MotivoAjusteDose<?= $i ?>" onchange="ajuste(<?= $i ?>)"
+                            data-placeholder="Selecione uma opção" data-allow-clear="1">
+                            <option value="">Selecione uma opção</option>
+                            <?php
+                            foreach ($select['MotivoAjusteDose']->getResultArray() as $val) {
+                                $selected = ($data['input'][$i]['idTabPreschuap_MotivoAjusteDose'] == $val['idTabPreschuap_MotivoAjusteDose']) ? 'selected' : '';
+                                echo '<option value="'.$val['idTabPreschuap_MotivoAjusteDose'].'" '.$selected.'>'.$val['MotivoAjusteDose'].'</option>';
+                            }
+                            ?>
+                        </select>
+
+                        <?php if ($validation->getError('idTabPreschuap_MotivoAjusteDose'.$i)): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('idTabPreschuap_MotivoAjusteDose'.$i) ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
 
                 <input type="hidden" name="idPreschuap_Prescricao_Medicamento<?= $i ?>"
                     value="<?= $data['input'][$i]['idPreschuap_Prescricao_Medicamento'] ?>" />
@@ -223,9 +246,11 @@
                 }
                 ?>
 
-                <?= $opt['button'] ?>
-                <!--<a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i> Cancelar</a>-->
-                <a class="btn btn-warning" href="<?= base_url('prescricao/list_prescricao/') ?>"><i class="fa-solid fa-ban"></i> Cancelar</a>
+                <div class="col-md-12">
+                    <?= $opt['button'] ?>
+                    <!--<a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i> Cancelar</a>-->
+                    <a class="btn btn-warning" href="<?= base_url('prescricao/list_prescricao/') ?>"><i class="fa-solid fa-ban"></i> Cancelar</a>
+                </div>
 
                 <input type="hidden" name="idPreschuap_Prescricao" value="<?= $data['prescricao']['idPreschuap_Prescricao'] ?>" />
                 <input type="hidden" name="Peso" id="Peso" value="<?= $data['prescricao']['Peso'] ?>" />

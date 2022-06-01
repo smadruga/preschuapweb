@@ -161,12 +161,6 @@
                         </div>
 
                         <div class="row">
-                            <div class="col"><b>Dose:</b> <?= $m['Dose'] ?></div>
-                            <div class="col"><b>Ajuste:</b> <?= $m['Ajuste2'] ?></div>
-                            <div class="col"><b>Cálculo:</b> <?= $m['Calculo'] ?></div>
-                        </div>
-
-                        <div class="row">
                             <div class="col"><b>Diluente:</b> <?= $m['Diluente'] ?></div>
                             <div class="col"><b>Volume:</b> <?= $m['Volume'] ?> ml</div>
                         </div>
@@ -175,6 +169,22 @@
                             <div class="col"><b>TempoInfusão:</b> <?= $m['TempoInfusao'] ?></div>
                             <div class="col"><b>Posologia:</b> <?= $m['Posologia'] ?></div>
                         </div>
+
+                        <div class="row">
+                            <div class="col"><b>Dose:</b> <?= $m['Dose'] ?></div>
+                            <div class="col"><b>Cálculo:</b> <?= $m['Calculo'] ?></div>
+                        </div>
+
+                        <?php if ($m['Ajuste2']) { ?>
+                        <div class="row">
+                            <div class="col"><b>Ajuste:</b> <?= $m['Ajuste2'] ?></div>
+                            <div class="col"><b>Tipo de Ajuste:</b> <?= $m['TipoAjusteDescricao'] ?></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col"><b>Motivo do Ajuste:</b> <?= $m['MotivoAjusteDose'] ?></div>
+                        </div>
+                        <?php } ?>
 
                         <hr />
                         <?php
