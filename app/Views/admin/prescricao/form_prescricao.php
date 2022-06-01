@@ -14,18 +14,6 @@
             </div>
             <div class="card-body has-validation row g-3">
 
-                <div class="col-md-12">
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                        <select class="form-select" id="inputGroupSelect01">
-                            <option selected>Choose...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                </div>
-
                 <div class="col-md-4">
                     <label for="DataPrescricao" class="form-label">Data da Prescrição <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
@@ -44,10 +32,18 @@
                 <div class="col-md-4">
                     <label for="Dia" class="form-label">Dia <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
-                        <input type="text" id="Dia" <?= $opt['disabled'] ?>
-                            class="form-control <?php if($validation->getError('Dia')): ?>is-invalid<?php endif ?>"
-                            name="Dia" value="<?php echo $data['Dia']; ?>" maxlength="2"/>
-                        <span class="input-group-text" id="basic-addon2">dia(s)</span>
+                        <span class="input-group-text">D</span>
+                        <select <?= $opt['disabled'] ?>
+                            class="form-select <?php if($validation->getError('Dia')): ?>is-invalid<?php endif ?>"
+                            id="Dia" name="Dia" data-placeholder="Selecione uma opção" data-allow-clear="1">
+                            <option value=""></option>
+                            <?php
+                            for ($val = 1; $val <= 50; $val++) {
+                                $selected = ($data['Dia'] == $val) ? 'selected' : '';
+                                echo '<option value="'.$val.'" '.$selected.'>'.$val.'</option>';
+                            }
+                            ?>
+                        </select>
                         <?php if ($validation->getError('Dia')): ?>
                             <div class="invalid-feedback">
                                 <?= $validation->getError('Dia') ?>
@@ -58,10 +54,18 @@
                 <div class="col-md-4">
                     <label for="Ciclo" class="form-label">Ciclo <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
-                        <input type="text" id="Ciclo" <?= $opt['disabled'] ?>
-                            class="form-control <?php if($validation->getError('Ciclo')): ?>is-invalid<?php endif ?>"
-                            maxlength="10" name="Ciclo" value="<?php echo $data['Ciclo']; ?>" maxlength="2"/>
-                        <span class="input-group-text" id="basic-addon2">ciclo(s)</span>
+                        <span class="input-group-text" id="basic-addon2">CICLO</span>
+                        <select <?= $opt['disabled'] ?>
+                            class="form-select <?php if($validation->getError('Ciclo')): ?>is-invalid<?php endif ?>"
+                            id="Ciclo" name="Ciclo" data-placeholder="Selecione uma opção" data-allow-clear="1">
+                            <option value=""></option>
+                            <?php
+                            for ($val = 1; $val <= 50; $val++) {
+                                $selected = ($data['Ciclo'] == $val) ? 'selected' : '';
+                                echo '<option value="'.$val.'" '.$selected.'>'.$val.'</option>';
+                            }
+                            ?>
+                        </select>
                         <?php if ($validation->getError('Ciclo')): ?>
                             <div class="invalid-feedback">
                                 <?= $validation->getError('Ciclo') ?>
