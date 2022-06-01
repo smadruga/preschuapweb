@@ -14,6 +14,18 @@
             </div>
             <div class="card-body has-validation row g-3">
 
+                <div class="col-md-12">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                        <select class="form-select" id="inputGroupSelect01">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="col-md-4">
                     <label for="DataPrescricao" class="form-label">Data da Prescrição <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
@@ -93,7 +105,7 @@
                         <select <?= $opt['disabled'] ?>
                             class="form-select <?php if($validation->getError('Aplicabilidade')): ?>is-invalid<?php endif ?>"
                             id="Aplicabilidade" name="Aplicabilidade" data-placeholder="Selecione uma opção" data-allow-clear="1">
-                            <option></option>
+                            <option value="">Selecione uma opção</option>
                             <?php
                             foreach ($select['Aplicabilidade'] as $val) {
                                 $selected = ($data['Aplicabilidade'] == $val) ? 'selected' : '';
@@ -115,10 +127,10 @@
                     <div class="input-group mb-3">
 
                         <select <?= $opt['disabled'] ?>
-                            class="form-select <?php if($validation->getError('idTabPreschuap_Categoria')): ?>is-invalid<?php endif ?>"
+                            class="form-select select2 <?php if($validation->getError('idTabPreschuap_Categoria')): ?>is-invalid<?php endif ?>"
                             id="idTabPreschuap_Categoria" name="idTabPreschuap_Categoria" data-placeholder="Selecione uma opção"
                             data-allow-clear="1">
-                            <option></option>
+                            <option value="">Selecione uma opção</option>
                             <?php
                             foreach ($select['Categoria']->getResultArray() as $val) {
                                 $selected = ($data['idTabPreschuap_Categoria'] == $val['idTabPreschuap_Categoria']) ? 'selected' : '';
@@ -140,10 +152,10 @@
                     <div class="input-group mb-3">
 
                         <select <?= $opt['disabled'] ?>
-                            class="form-select <?php if($validation->getError('idTabPreschuap_Subcategoria')): ?>is-invalid<?php endif ?>"
+                            class="form-select select2 <?php if($validation->getError('idTabPreschuap_Subcategoria')): ?>is-invalid<?php endif ?>"
                             id="idTabPreschuap_Subcategoria" name="idTabPreschuap_Subcategoria" data-placeholder="Selecione uma opção"
                             data-allow-clear="1">
-                            <option></option>
+                            <option value="">Selecione uma opção</option>
                             <?php
                             foreach ($select['Subcategoria']->getResultArray() as $val) {
                                 $selected = ($data['idTabPreschuap_Subcategoria'] == $val['idTabPreschuap_Subcategoria']) ? 'selected' : '';
@@ -165,10 +177,10 @@
                     <div class="input-group mb-3">
 
                         <select <?= $opt['disabled'] ?>
-                            class="form-select <?php if($validation->getError('idTabPreschuap_Protocolo')): ?>is-invalid<?php endif ?>"
+                            class="form-select select2 <?php if($validation->getError('idTabPreschuap_Protocolo')): ?>is-invalid<?php endif ?>"
                             id="idTabPreschuap_Protocolo" name="idTabPreschuap_Protocolo" data-placeholder="Selecione uma opção"
                             data-allow-clear="1">
-                            <option></option>
+                            <option value="">Selecione uma opção</option>
                             <?php
                             foreach ($select['Protocolo']->getResultArray() as $val) {
                                 $selected = ($data['idTabPreschuap_Protocolo'] == $val['idTabPreschuap_Protocolo']) ? 'selected' : '';
@@ -192,7 +204,7 @@
                             class="form-select <?php if($validation->getError('idTabPreschuap_TipoTerapia')): ?>is-invalid<?php endif ?>"
                             id="idTabPreschuap_TipoTerapia" name="idTabPreschuap_TipoTerapia" data-placeholder="Selecione uma opção"
                             data-allow-clear="1">
-                            <option></option>
+                            <option value="">Selecione uma opção</option>
                             <?php
                             foreach ($select['TipoTerapia']->getResultArray() as $val) {
                                 $selected = ($data['idTabPreschuap_TipoTerapia'] == $val['idTabPreschuap_TipoTerapia']) ? 'selected' : '';

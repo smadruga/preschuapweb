@@ -28,8 +28,8 @@ $(document).ready(function() {
         }
     });
 
-    //inicializa o select2
-    $('select').select2({
+    //inicializa o select2 apenas em inputs com class select2 indicado
+    $('.select2').select2({
         theme: "bootstrap-5",
         language: "pt-BR",
     });
