@@ -3,7 +3,11 @@
 
 <main>
 
-    <?php if ($tabela != 'Categoria' && $tabela != 'Subcategoria') { ?>
+    <?php if ( ($tabela != 'Categoria' && $tabela != 'Subcategoria') ||
+                (
+                    ($tabela == 'Categoria' || $tabela == 'Subcategoria') && ($opt['action'] == 'habilitar' || $opt['action'] == 'desabilitar')
+                )
+            ) { ?>
 
         <form method="post" action="<?= base_url('tabela/list_tabela/'.$tabela) ?>">
             <?= csrf_field() ?>
@@ -21,7 +25,7 @@
                             <div class="input-group mb-3">
                                 <input type="text" id="Item" <?= $opt['disabled'] ?>  maxlength="100"
                                     class="form-control <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>"
-                                    autofocus name="Item" value="<?php echo $data['Item']; ?>"/>
+                                    autofocus name="Item" value="<?php echo esc($data['Item']); ?>"/>
 
                                 <?php if ($validation->getError('Item')): ?>
                                     <div class="invalid-feedback">
@@ -52,13 +56,50 @@
                         </div>
                         <br />
                         <?= $opt['button'] ?>
+                    <?php } elseif ($tabela == 'Categoria' || $tabela == 'Subcategoria') { ?>
+                        <div class="col-md-6">
+                            <label for="Item" class="form-label"><b>Item</b> <b class="text-danger">*</b></label>
+                            <div class="input-group mb-3">
+                                <input type="text" id="Item" <?= $opt['disabled'] ?>  maxlength="100"
+                                    class="form-control <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>"
+                                    autofocus name="Item" value="<?php echo esc($data['Item']); ?>"/>
+
+                                <?php if ($validation->getError('Item')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('Item') ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="form-text">
+                                Descrição sobre o item.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Codigo" class="form-label"><b>Código</b> <b class="text-danger">*</b></label>
+                            <div class="input-group mb-3">
+                                <input type="text" id="Codigo" <?= $opt['disabled'] ?>
+                                    class="form-control <?php if($validation->getError('Codigo')): ?>is-invalid<?php endif ?>"
+                                    maxlength="10" name="Codigo" value="<?php echo $data['idTabPreschuap_'.$tabela]; ?>"/>
+
+                                <?php if ($validation->getError('Codigo')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('Codigo') ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="form-text">
+                                Código do item.
+                            </div>
+                        </div>
+                        <br />
+                        <?= $opt['button'] ?>
                     <?php } elseif ($tabela == 'Protocolo') { ?>
                         <div class="col-md-6">
                             <label for="Item" class="form-label"><b>Protocolo</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
                                 <input <?= $opt['disabled'] ?> type="text" id="Item" <?= $opt['disabled'] ?> maxlength="100"
                                     class="form-control <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>"
-                                    autofocus name="Item" value="<?php echo $data['Item']; ?>"/>
+                                    autofocus name="Item" value="<?php echo esc($data['Item']); ?>"/>
 
                                 <?php if ($validation->getError('Item')): ?>
                                     <div class="invalid-feedback">
@@ -348,7 +389,7 @@
                             <div class="input-group mb-3">
                                 <input type="text" id="Item" <?= $opt['disabled'] ?>
                                     class="form-control <?php if($validation->getError('Item')): ?>is-invalid<?php endif ?>" autofocus maxlength="100"
-                                    name="Item" value="<?php echo $data['Item']; ?>"/>
+                                    name="Item" value="<?php echo esc($data['Item']); ?>"/>
                                 <?php if ($validation->getError('Item')): ?>
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('Item') ?>

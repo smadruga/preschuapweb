@@ -185,8 +185,8 @@ class Tabela extends BaseController
                 ];
             if($action == 'habilitar')
                 $v['opt'] = [
-                    'bg'        => 'bg-info',
-                    'button'    => '<div class="col-md-12"><button class="btn btn-info" id="submit" type="submit"><i class="fa-solid fa-circle-exclamation"></i> Habilitar</button></div>',
+                    'bg'        => 'bg-success',
+                    'button'    => '<div class="col-md-12"><button class="btn btn-success" id="submit" type="submit"><i class="fa-solid fa-circle-check"></i> Habilitar</button></div>',
                     'title'     => 'Habilitar item - Tabela: '.$v['tabela'],
                     'disabled'  => 'disabled',
                     'action'    => 'habilitar',
@@ -274,7 +274,10 @@ class Tabela extends BaseController
 
                 /*
                 echo "<pre>";
-                #print_r($v['select']);
+                print_r($v['tabela']);
+                echo "</pre>";
+                echo "<pre>";
+                print_r($v['id']);
                 echo "</pre>";
                 echo "<pre>";
                 print_r($v['data']);
@@ -284,7 +287,8 @@ class Tabela extends BaseController
 
                 if($tabela->update_item($v['data'], $v['tabela'], $v['id']) ) {
 
-                    $this->sort_medicamento($v['data']['idTabPreschuap_Protocolo'], TRUE);
+                    if ($v['tabela'] == 'Protocolo_Medicamento')
+                        $this->sort_medicamento($v['data']['idTabPreschuap_Protocolo'], TRUE);
 
                     $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('TabPreschuap_'.$v['tabela'], 'UPDATE', $v['id']), TRUE);
                     $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
