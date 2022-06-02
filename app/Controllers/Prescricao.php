@@ -609,6 +609,7 @@ class Prescricao extends BaseController
                 unset($val['idPreschuap_Prescricao_Medicamento']);
                 $val['idPreschuap_Prescricao'] = $v['id']['prescricao']; #Insere o id da prescrição gerado no primeiro insert
                 $v['campos'] = array_keys($val);
+                $val['idTabPreschuap_MotivoAjusteDose'] = ($val['idTabPreschuap_MotivoAjusteDose'] == 0) ? NULL : $val['idTabPreschuap_MotivoAjusteDose'];
                 $v['id']['medicamento'] = $medicamento->insert($val); #insere os dados e recebe o id de retorno
 
                 if($v['id']) {
@@ -617,6 +618,7 @@ class Prescricao extends BaseController
                 }
 
             }
+
             session()->setFlashdata('success', 'Dados atualizados com sucesso!');
         }
         else
