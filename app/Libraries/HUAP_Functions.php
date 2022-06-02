@@ -36,12 +36,19 @@ class HUAP_Functions
     */
     function dateDifference($date_1 , $date_2 , $differenceFormat = '%d' )
     {
-        $datetime1 = date_create($date_1);
-        $datetime2 = date_create($date_2);
+        //Create a date object out of a string (e.g. from a database):
+        $date1 = date_create_from_format('Y-m-d H:i:s', $date_1);
 
-        $interval = date_diff($datetime1, $datetime2);
+        //Create a date object out of today's date:
+        $date2 = date_create_from_format('Y-m-d H:i:s', $date_2);
 
-        return $interval->format($differenceFormat);
+        //Create a comparison of the two dates and store it in an array:
+        $diff = (array) date_diff($date1, $date2);
+
+        //Output the array:
+        #echo '<pre>'.print_r($diff,1).'</pre>';
+
+        return $diff['days'];
     }
 
     /**
