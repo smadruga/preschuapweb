@@ -169,6 +169,7 @@ class Prescricao extends BaseController
         else {
             #Captura os inputs do Formulário
             $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+            $v['data']['Aplicabilidade'] = (!isset($v['data']['Aplicabilidade'])) ? NULL : $v['data']['Aplicabilidade'];
         }
 
         if(($action == 'editar' || $action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) {

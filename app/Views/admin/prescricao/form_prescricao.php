@@ -109,7 +109,7 @@
                         <select <?= $opt['disabled'] ?>
                             class="form-select <?php if($validation->getError('Aplicabilidade')): ?>is-invalid<?php endif ?>"
                             id="Aplicabilidade" name="Aplicabilidade" data-placeholder="Selecione uma opção" data-allow-clear="1">
-                            <option value="">Selecione uma opção</option>
+                            <option></option>
                             <?php
                             foreach ($select['Aplicabilidade'] as $val) {
                                 $selected = ($data['Aplicabilidade'] == $val) ? 'selected' : '';
