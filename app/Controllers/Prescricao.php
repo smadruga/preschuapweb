@@ -506,7 +506,8 @@ class Prescricao extends BaseController
                     $v['data']['bd'][$i]['idPreschuap_Prescricao_Medicamento'] = $v['data']['input'][$i]['idPreschuap_Prescricao_Medicamento'];
 
                     $v['data']['bd'][$i]['TipoAjuste']                      = $v['data']['input'][$i]['TipoAjuste'];
-                    $v['data']['bd'][$i]['idTabPreschuap_MotivoAjusteDose'] = $v['data']['input'][$i]['idTabPreschuap_MotivoAjusteDose'];
+                    $v['data']['bd'][$i]['idTabPreschuap_MotivoAjusteDose'] =
+                        (!$v['data']['input'][$i]['idTabPreschuap_MotivoAjusteDose'] || $v['data']['input'][$i]['idTabPreschuap_MotivoAjusteDose'] == 0) ? NULL : $v['data']['input'][$i]['idTabPreschuap_MotivoAjusteDose'];
                     $v['data']['bd'][$i]['Ajuste']                          = str_replace(",",".",$v['data']['input'][$i]['Ajuste']);
                     $v['data']['bd'][$i]['Calculo']                         = str_replace(",",".",$v['data']['input'][$i]['Calculo']);
 
