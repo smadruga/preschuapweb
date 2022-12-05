@@ -16,7 +16,7 @@
         <link href="<?= base_url('/assets/css/simple-datatables@latest-style.css') ?>" rel="stylesheet">
         <link href="<?= base_url('/assets/css/bootswatch-flatly-bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?= base_url('/assets/bootstrap-table-1.19.1/dist/bootstrap-table.min.css') ?>" rel="stylesheet">
-        <link href="<?= base_url('/assets/fontawesome-free-6.0.0-web/css/all.min.css') ?>" rel="stylesheet">
+        <link href="<?= base_url('/assets/fontawesome/css/all.min.css') ?>" rel="stylesheet">
 
         <!-- Favicons -->
         <link href="<?= base_url('/favicon.ico') ?>" rel="shortcut icon" type="image/png"/>
