@@ -142,7 +142,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="Dose<?= $i ?>" class="form-label"><b>Dose</b> <b class="text-danger">*</b></label>
+                    <label for="Dose<?= $i ?>" class="form-label"><b>Dose do Protocolo</b> <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
                         <input type="text" id="Dose<?= $i ?>" disabled
                             class="form-control <?php if($validation->getError('Dose'.$i)): ?>is-invalid<?php endif ?>"
@@ -156,7 +156,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="Calculo<?= $i ?>" class="form-label"><b>Cálculo</b> <b class="text-danger">*</b></label>
+                    <label for="Calculo<?= $i ?>" class="form-label"><b>Cálculo Final</b> <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
                         <input type="text" id="Calculo<?= $i ?>" readonly
                             class="form-control <?php if($validation->getError('Calculo'.$i)): ?>is-invalid<?php endif ?>"

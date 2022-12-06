@@ -59,8 +59,8 @@ foreach($prescricao['array'] as $v) {
             <th class="border border-dark">#</th>
             <th class="border border-dark">Etapa Terapia</th>
             <th class="border border-dark">Medicamento</th>
-            <th class="border border-dark">Dose</th>
-            <th class="border border-dark">Cálculo</th>
+            <th class="border border-dark">Dose do Protocolo</th>
+            <th class="border border-dark">Cálculo Final</th>
             <th class="border border-dark">Via</th>
             <th class="border border-dark">Diluente</th>
             <th class="border border-dark">Vol. (ml)</th>

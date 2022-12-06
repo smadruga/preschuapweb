@@ -171,8 +171,8 @@
                         </div>
 
                         <div class="row">
-                            <div class="col"><b>Dose:</b> <?= $m['Dose'] ?></div>
-                            <div class="col"><b>Cálculo:</b> <?= $m['Calculo'] ?></div>
+                            <div class="col"><b>Dose do Protocolo:</b> <?= $m['Dose'] ?></div>
+                            <div class="col"><b>Cálculo Final:</b> <?= $m['Calculo'] ?></div>
                         </div>
 
                         <?php if ($m['Ajuste2']) { ?>
