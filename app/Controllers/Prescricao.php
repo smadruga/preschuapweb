@@ -596,8 +596,12 @@ class Prescricao extends BaseController
             $v['data']['prescricao']['Ciclo']++;
         }
 
+        #alterações específicas para o comando COPIAR PRESCRIÇÃO
+        $v['data']['prescricao']['InformacaoComplementar'] = '';
+
         $v['campos'] = array_keys($v['data']['prescricao']);
         $v['anterior'] = array();
+
         $v['id']['prescricao'] = $prescricao->insert($v['data']['prescricao']); #insere os dados e recebe o id de retorno
 
         if($v['id']['prescricao']) {
