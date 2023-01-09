@@ -82,7 +82,6 @@ class Admin extends BaseController
         #caso a pesquisa seja um cpf verifica se há pontos e traços e os elimina
         $v['Pesquisar'] = preg_replace('/^([0-9]{3})\.?([0-9]{3})\.?([0-9]{3})\-?([0-9]{2})$/i', '$1$2$3$4', $v['Pesquisar']);
 
-
         $usuario = new UsuarioModel();
         $v['mysql'] = $usuario->get_user_mysql($v['Pesquisar']);
 
@@ -110,7 +109,7 @@ class Admin extends BaseController
             session()->setFlashdata('failed', 'Nenhum usuário encontrado. Tente novamente.');
             return redirect()->to('admin/find_user');
         }
-        #se o resultado for um vai direto para a página de importação
+        #se o resultado for igual a 1(um) vai direto para a página de importação
         elseif ($v['ad']['entries']['count'] == 1)
             return view('admin/usuario/form_confirma_importacao', $v);
         #se o resultado for mais que um vai para uma lista de opções
@@ -139,9 +138,15 @@ class Admin extends BaseController
         $agent = $this->request->getUserAgent();
         $request = \Config\Services::request();
 
-        #Captura usuário a ser immportado
+        #Captura usuário a ser importado
         $v = $this->request->getVar(['Usuario']);
         $v['ad'] = $this->get_user_ad($v['Usuario']);
+
+        #Para evitar erro de Unique Key de CPF ou usuário no BD caso o usuário tenha sido importado durante uma lentidão pontual da rede.
+        $usuario = new UsuarioModel();
+        $v['mysql'] = $usuario->get_user_mysql($v['Usuario']);
+        if ($v['mysql'])
+            return redirect()->to('admin/show_user/'.$v['mysql']['Usuario']);
 
         $v['data'] = [
             'Usuario'           => (isset($v['ad']['entries'][0]['samaccountname'][0])) ? esc($v['ad']['entries'][0]['samaccountname'][0]) : '',
