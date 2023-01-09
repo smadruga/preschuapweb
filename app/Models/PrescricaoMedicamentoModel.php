@@ -107,15 +107,24 @@ class PrescricaoMedicamentoModel extends Model
 
                 if($val['idTabPreschuap_Formula'] == 2 || $val['idTabPreschuap_Formula'] == 3) {
                     $u = explode("/", $val['Unidade']);
+                    $u[0] = ($u[0] == 'auc') ? 'mg' : $u[0];
                     $val['Calculo'] = $val['Calculo'].' '.$u[0];
                 }
-                else
+                else {
+                    $val['Unidade'] = ($val['Unidade'] == 'auc') ? 'mg' : $val['Unidade'];
                     $val['Calculo'] = $val['Calculo'].' '.$val['Unidade'];
+                }
 
                 $data['medicamento'][$val['idPreschuap_Prescricao']][] = $val;
 
             }
 
+            /*
+            echo "<pre>";
+            print_r($data);
+            echo "</pre>";
+            exit('oi');
+            #*/
             return $data['medicamento'];
         }
         else

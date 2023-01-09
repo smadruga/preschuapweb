@@ -116,7 +116,8 @@
                         else
                             $u[0] = $m['Unidade'];
 
-                        #$calculo = explode(" ", $m['Calculo']);
+                        $u[0] = ($u[0] == 'auc') ? 'mg' : $u[0];
+
                 ?>
                 <div class="row">
                     <div class="col"><b>Ordem de Infusão:</b> <span class="badge bg-primary"><?= $m['OrdemInfusao'] ?></span></div>
