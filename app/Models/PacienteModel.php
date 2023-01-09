@@ -98,7 +98,7 @@ class PacienteModel extends Model
             $where = 'dt_nascimento = \''.$func->mascara_data($data, 'db').'\'';
         elseif($func->check_date($data, 'checkdate'))
             $where = 'dt_nascimento = \''.$func->mascara_data($data, 'inverter').'\'';
-        elseif(is_numeric($data))
+        elseif(is_numeric($data) && strlen($data) <= 9)
             $where = 'prontuario = \''.$data.'\'';
         else
             $where = 'nome ilike \'%'.$data.'%\' OR nome ilike \'%'.$func->remove_accents($data).'%\'';
