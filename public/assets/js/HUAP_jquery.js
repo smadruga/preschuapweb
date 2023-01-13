@@ -164,13 +164,24 @@ function ajuste(campo) {
     var formula = $("#Formula"+campo).val();
     var peso    = $("#Peso").val();
     var sc      = $("#SuperficieCorporal").val();
-console.log(' >> '+formula+' <> '+peso+' <> '+sc+' <> ');
+    var co      = $("#CalculoOriginal"+campo).val();
+    var min     = $("#CalculoLimiteMinimo"+campo).val();
+    var max     = $("#CalculoLimiteMaximo"+campo).val();
+    var r       = null;
+
+    //console.log(' >>000 '+formula+' <> '+peso+' <> '+sc+' <> '+co+' <> '+min+' <> '+max+' <<<<> ');
+
     if(dose && ajuste && tipo) {
 
         dose    = dose.replace(".","").replace(",",".");
         ajuste  = ajuste.replace(".","").replace(",",".");
         peso    = peso.replace(".","").replace(",",".");
         sc      = sc.replace(".","").replace(",",".");
+        co      = co.replace(".","").replace(",",".");
+        min     = min.replace(".","").replace(",",".");
+        max     = max.replace(".","").replace(",",".");
+
+        //console.log(' >>111 '+formula+' <> '+peso+' <> '+sc+' <> '+co+' <> '+min+' <> '+max+' <<<<> ');
 
         if(tipo == 'porcentagem') {
 
@@ -193,10 +204,21 @@ console.log(' >> '+formula+' <> '+peso+' <> '+sc+' <> ');
             }
 
         }
-        else
-            r = ajuste;
+        else 
+            r = parseFloat(ajuste);
+                    
+        console.log(' >>aaa dose: '+dose+' <> ajuste: '+ajuste+' <> tipo: '+tipo+' <> campo: '+campo+' <> r: '+r+' <> '+co+' <> '+min+' <> '+max+' <<<<> ');
 
-        //console.log(' >> '+dose+' <> '+ajuste+' <> '+tipo+' <> '+campo+' <> '+r);
+        if(min && (r > min))
+            r = min;
+        if(max && (r > max))
+            r = max;
+        //else
+            //console.log(' r ');
+        
+         //r = (ajuste) ? ajuste : co;
+
+        console.log(' >>bbb '+dose+' <> '+ajuste+' <> '+tipo+' <> '+campo+' <> r: '+r+' <> '+co+' <> '+min+' <> '+max+' <<<<> ');
 
         r = r.replace(".",",");
 

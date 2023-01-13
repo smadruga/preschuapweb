@@ -34,12 +34,16 @@ class TabelaModel extends Model
                     , tpm.TempoInfusao
                     , tpm.idTabPreschuap_Posologia
                     , tum.idTabPreschuap_Formula
+                    , format(tpm2.CalculoLimiteMinimo, 2, "pt_BR") AS CalculoLimiteMinimo
+	                , format(tpm2.CalculoLimiteMaximo, 2, "pt_BR") AS CalculoLimiteMaximo
                 FROM
                     TabPreschuap_Protocolo_Medicamento AS tpm
                     , TabPreschuap_UnidadeMedida AS tum
+                    , TabPreschuap_Medicamento AS tpm2
                 WHERE
                     idTabPreschuap_Protocolo = '.$data.'
                     and tpm.idTabPreschuap_UnidadeMedida = tum.idTabPreschuap_UnidadeMedida
+                    and tpm2.idTabPreschuap_Medicamento = tpm.idTabPreschuap_Medicamento  
                 ORDER BY OrdemInfusao ASC'
             );
         }
@@ -72,6 +76,8 @@ class TabelaModel extends Model
                     , tpm.DataCadastro
                     , date_format(tpm.DataCadastro, "%d/%m/%Y %H:%i") as Cadastro
                     , tpm.Inativo
+                    , format(tm.CalculoLimiteMinimo, 2, "pt_BR") as CalculoLimiteMinimo
+                    , format(tm.CalculoLimiteMaximo, 2, "pt_BR") as CalculoLimiteMaximo
                 FROM
                 	TabPreschuap_Protocolo_Medicamento 		AS tpm
                     , TabPreschuap_EtapaTerapia 			AS tet
@@ -92,6 +98,14 @@ class TabelaModel extends Model
                 ORDER BY Inativo ASC, tpm.idTabPreschuap_Protocolo ASC, tpm.OrdemInfusao ASC
             ');
         }
+
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit('oi222');
+        #*/
 
         return $query;
 

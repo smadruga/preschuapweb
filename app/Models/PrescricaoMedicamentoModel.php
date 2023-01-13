@@ -61,6 +61,8 @@ class PrescricaoMedicamentoModel extends Model
                 , tpm.OrdemInfusao
                 , tet.EtapaTerapia
                 , tm.Medicamento
+                , format(tm.CalculoLimiteMinimo, 2, "pt_BR") as CalculoLimiteMinimo
+                , format(tm.CalculoLimiteMaximo, 2, "pt_BR") as CalculoLimiteMaximo
                 , concat(format(tpm.Dose, 2, "pt_BR")," ",tum.Representacao) as Dose
                 , tva.ViaAdministracao
                 , td.Diluente
@@ -94,6 +96,17 @@ class PrescricaoMedicamentoModel extends Model
 
             ORDER BY pm.idPreschuap_Prescricao asc, tpm.OrdemInfusao asc
         ');
+
+            /*
+            echo $db->getLastQuery();
+            echo "<pre>";
+            print_r($query->getResultArray());
+            echo "</pre>";
+            echo "<pre>";
+            print_r($data);
+            echo "</pre>";
+            exit('oi222');
+            #*/
 
         if(isset($data['where'])) {
             foreach($query->getResultArray() as $val) {
@@ -131,9 +144,9 @@ class PrescricaoMedicamentoModel extends Model
             return $query->getResultArray();
 
             /*
-            #echo $db->getLastQuery();
+            echo $db->getLastQuery();
             echo "<pre>";
-            #print_r($query->getResultArray());
+            print_r($query->getResultArray());
             echo "</pre>";
             echo "<pre>";
             print_r($data);

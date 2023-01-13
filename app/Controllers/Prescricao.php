@@ -309,7 +309,7 @@ class Prescricao extends BaseController
                     $v['data']['submit'],
                     $v['data']['action'],
                 );
-
+            
                 $v['campos'] = array_keys($v['data']);
 
                 if($action == 'editar' || $action == 'concluir') {
@@ -359,8 +359,14 @@ class Prescricao extends BaseController
 
                         $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao', 'CREATE', $v['id']), TRUE);
                         $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
-
+                        $i=0;
                         foreach ($v['medicamento']->getResultArray() as $val) {
+                            #/*
+                            echo "<pre>";
+                            print_r($val);
+                            echo "</pre>";
+                            echo '<br> >>'.$i;
+                            #*/
 
                             $val['idPreschuap_Prescricao'] = $v['id'];
                             $v['campos'] = array_keys($val);
@@ -373,18 +379,24 @@ class Prescricao extends BaseController
                                 $val['Calculo'] = ($val['Dose']*$v['data']['SuperficieCorporal']);
                             else
                                 $val['Calculo'] = $val['Dose'];
-
+   
+                            if(isset($val['CalculoLimiteMaximo']) && ($val['Calculo'] > $val['CalculoLimiteMaximo']))
+                                $val['Calculo'] = $val['CalculoLimiteMaximo'];
+                            elseif(isset($val['CalculoLimiteMinimo']) && ($val['Calculo'] > $val['CalculoLimiteMinimo']))
+                                $val['Calculo'] = $val['CalculoLimiteMinimo'];
+                            
                             $val['Calculo'] = str_replace(",",".",$val['Calculo']);
-
+                            
                             $v['mid'] = $medicamento->insert($val);
 
                             if($v['mid']) {
                                 $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao_Medicamento', 'CREATE', $v['mid']), TRUE);
                                 $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $val, $v['campos'], $v['mid'], $v['auditoria']), TRUE);
                             }
+                            $i++;
 
                         }
-
+                        
                         session()->setFlashdata('success', 'Item adicionado com sucesso!');
                         return redirect()->to('prescricao/manage_medicamento/'.$v['id']);
 
@@ -478,7 +490,7 @@ class Prescricao extends BaseController
                 $inputs = $this->validate(['Ajuste'.$i => ['label' => 'Ajuste', 'rules' => 'permit_empty|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]']]);
             }
         }
-
+        
         $v['opt'] = [
             'bg'        => 'bg-warning',
             'button'    => '<button class="btn btn-info" id="submit" name="submit" value="1" type="submit"><i class="fa-solid fa-save"></i> Salvar</button>',
@@ -494,7 +506,7 @@ class Prescricao extends BaseController
             ],
             'MotivoAjusteDose'  => $tabela->list_tabela_bd('MotivoAjusteDose', FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
         ];
-
+        
         if($v['data']['input']['submit']) {
 
             #Realiza a validação e retorna ao formulário se false

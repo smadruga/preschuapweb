@@ -239,6 +239,13 @@
                     value="<?= $data['input'][$i]['idPreschuap_Prescricao_Medicamento'] ?>" />
                 <input type="hidden" name="Formula<?= $i ?>" id="Formula<?= $i ?>"
                     value="<?= $m['idTabPreschuap_Formula'] ?>" />
+                <input type="hidden" name="CalculoOriginal<?= $i ?>" id="CalculoOriginal<?= $i ?>"
+                    value="<?= $m['Calculo'] ?>" />
+                <input type="hidden" name="CalculoLimiteMinimo<?= $i ?>" id="CalculoLimiteMinimo<?= $i ?>"
+                    value="<?= $m['CalculoLimiteMinimo'] ?>" />
+                <input type="hidden" name="CalculoLimiteMaximo<?= $i ?>" id="CalculoLimiteMaximo<?= $i ?>"
+                    value="<?= $m['CalculoLimiteMaximo'] ?>" />
+                    
 
                 <hr />
                 <?php
