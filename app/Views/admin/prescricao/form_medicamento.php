@@ -178,6 +178,7 @@
                         <input type="text" id="Ajuste<?= $i ?>" <?= $opt['disabled'] ?>
                             class="form-control <?php if($validation->getError('Ajuste'.$i)): ?>is-invalid<?php endif ?>"
                             maxlength="9" name="Ajuste<?= $i ?>" placeholder="Apenas números" onkeyup="ajuste(<?= $i ?>)"
+                            
                             value="<?php echo $data['input'][$i]['Ajuste']; ?>"/>
 
                         <?php if ($validation->getError('Ajuste'.$i)): ?>
@@ -245,6 +246,8 @@
                     value="<?= $m['CalculoLimiteMinimo'] ?>" />
                 <input type="hidden" name="CalculoLimiteMaximo<?= $i ?>" id="CalculoLimiteMaximo<?= $i ?>"
                     value="<?= $m['CalculoLimiteMaximo'] ?>" />
+                <input type="hidden" name="CalculoFinalOriginal<?= $i ?>" id="CalculoFinalOriginal<?= $i ?>"
+                    value="<?php echo $m['Calculo'] ?>" />
                     
 
                 <hr />

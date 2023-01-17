@@ -170,7 +170,8 @@ function ajuste(campo) {
     var max     = $("#CalculoLimiteMaximo"+campo).val();
     var r       = null;
 
-    //console.log(' >>000 '+formula+' <> '+peso+' <> '+sc+' <> '+co+' <> '+min+' <> '+max+' <<<<> ');
+    //console.log(' >>000 formula: '+formula+' <> peso: '+peso+' <> '+sc+' <> '+co+' <> '+min+' <> '+max+' <<<<> ajuste > '+ajuste+' campo:> '+campo);
+    //console.log(' >>000 dose: '+dose+' ajuste: '+ajuste+' tipo: '+tipo+' calculo: '+calculo);
 
     if(dose && ajuste && tipo) {
 
@@ -216,5 +217,10 @@ function ajuste(campo) {
         $('#Calculo'+campo).val(r);
 
     }
+    else {
+        $("#Calculo"+campo).val($("#CalculoFinalOriginal"+campo).val());
+    }
+
 
 }
+
