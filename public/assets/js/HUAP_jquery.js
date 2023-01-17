@@ -159,6 +159,7 @@ function ajuste(campo) {
 
     //busca os valores
     var dose    = $("#Dose"+campo).val();
+    var calculo = $("#Calculo"+campo).val();
     var ajuste  = $("#Ajuste"+campo).val();
     var tipo    = $("#TipoAjuste"+campo).val();
     var formula = $("#Formula"+campo).val();
@@ -174,6 +175,7 @@ function ajuste(campo) {
     if(dose && ajuste && tipo) {
 
         dose    = dose.replace(".","").replace(",",".");
+        calculo = calculo.replace(".","").replace(",",".");
         ajuste  = ajuste.replace(".","").replace(",",".");
         peso    = peso.replace(".","").replace(",",".");
         sc      = sc.replace(".","").replace(",",".");
@@ -186,39 +188,28 @@ function ajuste(campo) {
         if(tipo == 'porcentagem') {
 
             if(formula == 2) {
-                r = (dose * (ajuste/100));
-                r = parseFloat(dose) + parseFloat(r);
+                r = (calculo * (ajuste/100));
+                r = parseFloat(calculo) + parseFloat(r);
                 r = parseFloat(peso) * parseFloat(r);
-                r = r.toFixed(3);
+                r = r.toFixed(2);
             }
             else if(formula == 3) {
-                r = (dose * (ajuste/100));
-                r = parseFloat(dose) + parseFloat(r);
+                r = (calculo * (ajuste/100));
+                r = parseFloat(calculo) + parseFloat(r);
                 r = parseFloat(sc) * parseFloat(r);
-                r = r.toFixed(3);
+                r = r.toFixed(2);
             }
             else {
-                r = (dose * (ajuste/100));
-                r = parseFloat(dose) + parseFloat(r);
-                r = r.toFixed(3);
+                r = (calculo * (ajuste/100));
+                r = parseFloat(calculo) + parseFloat(r);
+                r = r.toFixed(2);
             }
 
         }
-        else 
+        else {
             r = parseFloat(ajuste);
-                    
-        console.log(' >>aaa dose: '+dose+' <> ajuste: '+ajuste+' <> tipo: '+tipo+' <> campo: '+campo+' <> r: '+r+' <> '+co+' <> '+min+' <> '+max+' <<<<> ');
-
-        if(min && (r > min))
-            r = min;
-        if(max && (r > max))
-            r = max;
-        //else
-            //console.log(' r ');
-        
-         //r = (ajuste) ? ajuste : co;
-
-        console.log(' >>bbb '+dose+' <> '+ajuste+' <> '+tipo+' <> '+campo+' <> r: '+r+' <> '+co+' <> '+min+' <> '+max+' <<<<> ');
+            r = r.toFixed(2);
+        }
 
         r = r.replace(".",",");
 

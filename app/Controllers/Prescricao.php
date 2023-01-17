@@ -501,8 +501,8 @@ class Prescricao extends BaseController
 
         $v['select'] = [
             'TipoAjuste'        => [
-                'porcentagem'   => 'Porcentagem sobre a dose',
-                'substituicao'  => 'Substituir dose pelo ajuste'
+                'porcentagem'   => 'Porcentagem sobre o cálulo final',
+                'substituicao'  => 'Substituir cálculo final pelo ajuste'
             ],
             'MotivoAjusteDose'  => $tabela->list_tabela_bd('MotivoAjusteDose', FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
         ];
