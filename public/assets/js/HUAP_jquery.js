@@ -150,7 +150,6 @@ function doseCarboplatina() {
  * Função que calcula o ajuste da dose da prescrição
  *
  *
- *
  * @param {decimal} peso
  * @param {int} altura
  * @returns {decimal}
@@ -159,7 +158,6 @@ function ajuste(campo) {
 
     //busca os valores
     var dose    = $("#Dose"+campo).val();
-    var calculo = $("#Calculo"+campo).val();
     var ajuste  = $("#Ajuste"+campo).val();
     var tipo    = $("#TipoAjuste"+campo).val();
     var formula = $("#Formula"+campo).val();
@@ -169,6 +167,7 @@ function ajuste(campo) {
     var min     = $("#CalculoLimiteMinimo"+campo).val();
     var max     = $("#CalculoLimiteMaximo"+campo).val();
     var r       = null;
+    var calculo = $("#CalculoFinalOriginal"+campo).val();
 
     //console.log(' >>000 formula: '+formula+' <> peso: '+peso+' <> '+sc+' <> '+co+' <> '+min+' <> '+max+' <<<<> ajuste > '+ajuste+' campo:> '+campo);
     //console.log(' >>000 dose: '+dose+' ajuste: '+ajuste+' tipo: '+tipo+' calculo: '+calculo);
@@ -192,26 +191,36 @@ function ajuste(campo) {
                 r = (calculo * (ajuste/100));
                 r = parseFloat(calculo) + parseFloat(r);
                 r = parseFloat(peso) * parseFloat(r);
-                r = r.toFixed(2);
             }
             else if(formula == 3) {
                 r = (calculo * (ajuste/100));
                 r = parseFloat(calculo) + parseFloat(r);
                 r = parseFloat(sc) * parseFloat(r);
-                r = r.toFixed(2);
             }
             else {
                 r = (calculo * (ajuste/100));
                 r = parseFloat(calculo) + parseFloat(r);
-                r = r.toFixed(2);
             }
 
         }
         else {
             r = parseFloat(ajuste);
-            r = r.toFixed(2);
         }
 
+        //console.log(' r: '+r+' max: '+max+' min: '+min+' ajuste: '+ajuste+' tipo: '+tipo+' formula: '+formula);
+        if(min && (r < min)) {
+            r = min;
+        }            
+        else if(max && (r > max)) {
+            r = max;
+        }            
+        else {
+            r = r;
+            r = parseFloat(r);
+        }
+        //console.log(' r: '+r+' max: '+max+' min: '+min);
+        
+        r = Number(r).toFixed(2);
         r = r.replace(".",",");
 
         $('#Calculo'+campo).val(r);
@@ -221,6 +230,4 @@ function ajuste(campo) {
         $("#Calculo"+campo).val($("#CalculoFinalOriginal"+campo).val());
     }
 
-
 }
-
