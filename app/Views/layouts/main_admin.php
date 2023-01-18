@@ -31,7 +31,7 @@
 
         <?= $this->renderSection('content') ?>
 
-        <script src="<?= base_url('/assets/js/jquery-3.6.0.min.js') ?>" crossorigin="anonymous"></script>
+        <script src="<?= base_url('/assets/js/jquery.min.js') ?>" crossorigin="anonymous"></script>
         <script src="<?= base_url('/assets/select2/dist/js/select2.min.js') ?>" crossorigin="anonymous"></script>
         <script src="<?= base_url('/assets/select2/dist/js/i18n/pt-BR.js') ?>" crossorigin="anonymous"></script>
         <script src="<?= base_url('/assets/bootstrap/dist/js/bootstrap.bundle.min.js') ?>" crossorigin="anonymous"></script>
