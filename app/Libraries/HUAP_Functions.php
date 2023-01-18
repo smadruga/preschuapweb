@@ -241,7 +241,8 @@ class HUAP_Functions
             #Se houver data e hora
             if ($pm && $data) {
                 $info = explode(" ", $data);
-                $data = DateTime::createFromFormat('d-m-Y', $info[0]);
+                //$data = DateTime::createFromFormat('d-m-Y', $info[0]);
+                $data = Time::createFromFormat('d-m-Y', $info[0]);
                 $data = $data->format('Y-m-d');
 
                 if ($hora)
