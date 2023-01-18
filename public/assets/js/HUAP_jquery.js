@@ -190,12 +190,12 @@ function ajuste(campo) {
             if(formula == 2) {
                 r = (calculo * (ajuste/100));
                 r = parseFloat(calculo) + parseFloat(r);
-                r = parseFloat(peso) * parseFloat(r);
+                //r = parseFloat(peso) * parseFloat(r);
             }
             else if(formula == 3) {
                 r = (calculo * (ajuste/100));
                 r = parseFloat(calculo) + parseFloat(r);
-                r = parseFloat(sc) * parseFloat(r);
+                //r = parseFloat(sc) * parseFloat(r);
             }
             else {
                 r = (calculo * (ajuste/100));
