@@ -50,7 +50,7 @@ class Paciente extends BaseController
     */
     public function get_paciente($paciente = false)
     {
-
+        
         if(!$paciente) {
 
             #Captura os inputs do Formulário
@@ -71,13 +71,13 @@ class Paciente extends BaseController
         }
         else
             $v['Pesquisar'] = $paciente;
-
+            
         $paciente = new PacienteModel();
         $v['paciente'] = $paciente->get_paciente_bd($v['Pesquisar']);
-
+        
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
-
+        
         /*
         echo "<pre>";
         print_r($v);
@@ -97,7 +97,7 @@ class Paciente extends BaseController
         else {
             $_SESSION['pager']['count'] = $v['paciente']['count'];
             $_SESSION['pager']['Pesquisar'] = $v['Pesquisar'];
-            return redirect()->to('paciente/list_paciente');
+            return redirect()->to('paciente/list_paciente/list');
         }
             #return view('admin/paciente/list_paciente', $v);
 
