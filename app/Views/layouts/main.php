@@ -44,7 +44,7 @@
 
     <?= $this->renderSection('content') ?>
 
-    <script src="<?= base_url('/assets/js/jquery-3.6.0.min.js') ?>" crossorigin="anonymous"></script>
+    <script src="<?= base_url('/assets/js/jquery.min.js') ?>" crossorigin="anonymous"></script>
     <script src="<?= base_url('/assets/bootstrap-show-password-1.2.1/dist/bootstrap-show-password.min.js') ?>" crossorigin="anonymous"></script>
 
 </body>
