@@ -138,11 +138,12 @@
 
                         <hr />
 
-                        <div class="text-center">
-                            <a class="btn btn-warning" href="<?= base_url('prescricao/manage_medicamento/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Ajustar Doses</a>
-                        </div>
-
-                        <hr />
+                        <?php if($v['Concluido'] != 1) { ?>
+                            <div class="text-center">
+                                <a class="btn btn-warning" href="<?= base_url('prescricao/manage_medicamento/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Ajustar Doses</a>
+                            </div>
+                            <hr />
+                        <?php } ?>
 
                         <?php
                         if(!isset($medicamento[$v['idPreschuap_Prescricao']])) {
@@ -170,7 +171,7 @@
 
                         <div class="row">
                             <div class="col"><b>Diluente:</b> <?= $m['Diluente'] ?></div>
-                            <div class="col"><b>Volume:</b> <?= ($m['Volume'] != '0,00') ? $m['Volume'] . 'ml' : NULL ?></div>
+                            <div class="col"><b>Volume:</b> <?= ($m['Volume'] == '0,00' || !$m['Volume'] ) ? NULL : $m['Volume'] . 'ml' ?></div>
                         </div>
 
                         <div class="row">

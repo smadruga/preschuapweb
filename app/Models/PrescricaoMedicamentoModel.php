@@ -98,7 +98,7 @@ class PrescricaoMedicamentoModel extends Model
             ORDER BY pm.idPreschuap_Prescricao asc, tpm.OrdemInfusao asc
         ');
 
-            /*
+           /*
             echo $db->getLastQuery();
             echo "<pre>";
             print_r($query->getResultArray());
@@ -106,7 +106,7 @@ class PrescricaoMedicamentoModel extends Model
             echo "<pre>";
             print_r($data);
             echo "</pre>";
-            exit('oi222');
+            #exit('oi222');
             #*/
 
         if(isset($data['where'])) {
