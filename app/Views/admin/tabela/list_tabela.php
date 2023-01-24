@@ -1,5 +1,9 @@
 <hr>
 
+<div class="alert alert-info" role="alert">
+    <b><i class="fa-solid fa-circle-exclamation"></i> IMPORTANTE:</b> A edição dos itens da tabela é permitida até <b>30 dias após a Data de Cadastro</b>.
+</div>
+
 <table class="table table-hover table-bordered" id="table"
     data-toggle="table"
     data-locale="pt-BR"
@@ -37,7 +41,7 @@
                 $manage = '<a href="'.base_url('tabela/list_tabela/'.$tabela.'/habilitar/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Habilitar"><i class="fa-solid fa-circle-check"></i></a>';
             }
 
-            $diff = ($func->dateDifference($v['DataCadastro'], date('Y-m-d H:i:s')) < 7 && $tabela != 'Categoria' && $tabela != 'Subcategoria') ? '<a href="'.base_url('tabela/list_tabela/'.$tabela.'/editar/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" ><i class="fa-solid fa-pen-to-square"></i></a>' : NULL;
+            $diff = ($func->dateDifference($v['DataCadastro'], date('Y-m-d H:i:s')) < 30 && $tabela != 'Categoria' && $tabela != 'Subcategoria') ? '<a href="'.base_url('tabela/list_tabela/'.$tabela.'/editar/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar" ><i class="fa-solid fa-pen-to-square"></i></a>' : NULL;
 
             $medicamentos = ($tabela == 'Protocolo') ? '<a href="'.base_url('tabela/list_tabela/Protocolo_Medicamento/cadastrar/'.$v['idTabPreschuap_'.$tabela]).'" type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Medicamentos"><i class="fa-solid fa-pills"></i></a>' : NULL;
 

@@ -4,6 +4,10 @@
 
 <hr>
 
+<div class="alert alert-info" role="alert">
+    <b><i class="fa-solid fa-circle-exclamation"></i> IMPORTANTE:</b> A edição dos itens da tabela é permitida até <b>30 dias após a Data de Cadastro</b>.
+</div>
+
 <table class="table table-hover table-bordered" id="table"
     data-toggle="table"
     data-locale="pt-BR"
