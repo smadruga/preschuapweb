@@ -128,12 +128,21 @@
                         </div>
 
                         <hr />
-                            <div class="text-center">
-                                <b>
-                                    <h4><span class="badge bg-primary">PROTOCOLO: <?= $v['Protocolo'] ?></b></span></h4>
-                                    <a class="btn btn-outline-warning" href="<?= base_url('prescricao/manage_medicamento/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Ajustar Doses</a>
-                                </b>
-                            </div>
+
+                        <div class="text-center">
+                            <b>
+                                <h4><span class="badge bg-primary">PROTOCOLO: <?= $v['Protocolo'] ?></b></span></h4>
+                            </b>
+                        </div>                                
+                        <div><strong>Observações do Protocolo: </strong> <?= $v['Observacoes'] ?></div>
+
+                        <hr />
+
+                        <div class="text-center">
+                            <a class="btn btn-warning" href="<?= base_url('prescricao/manage_medicamento/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Ajustar Doses</a>
+                        </div>
+
+
                         <hr />
 
                         <?php
