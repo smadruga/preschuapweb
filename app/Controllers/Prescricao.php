@@ -361,7 +361,7 @@ class Prescricao extends BaseController
                         $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
                         $i=0;
                         foreach ($v['medicamento']->getResultArray() as $val) {
-                            #/*
+                            /*
                             echo "<pre>";
                             print_r($val);
                             echo "</pre>";

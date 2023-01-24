@@ -89,12 +89,16 @@
                     <div class="col"><b>Médico(a) Prescritor(a):</b> <?= $data['prescricao']['Nome'] ?></div>
                 </div>
 
+
                 <hr />
+
                     <div class="text-center">
                         <b>
                             <h4><span class="badge bg-primary">PROTOCOLO: <?= $data['prescricao']['Protocolo'] ?></b></span></h4>
                         </b>
-                    </div>
+                </div>                                
+                <div><strong>Observações do Protocolo: </strong> <?= $data['prescricao']['Observacoes'] ?></div>
+
                 <hr />
 
                 <?php
@@ -134,7 +138,7 @@
 
                 <div class="row">
                     <div class="col"><b>Diluente:</b> <?= $m['Diluente'] ?></div>
-                    <div class="col"><b>Volume:</b> <?= $m['Volume'] ?> ml</div>
+                    <div class="col"><b>Volume:</b> <?= ($m['Volume'] != '0,00') ? $m['Volume'] . 'ml' : NULL ?></div>
                 </div>
 
                 <div class="row">

@@ -85,7 +85,7 @@ foreach($prescricao['array'] as $v) {
             <td class="border border-dark"><?= $m['Calculo'] ?></td>
             <td class="border border-dark"><?= $m['ViaAdministracao'] ?></td>
             <td class="border border-dark"><?= $m['Diluente'] ?></td>
-            <td class="border border-dark"><?= $m['Volume'] ?></td>
+            <td class="border border-dark"><?= ($m['Volume'] != '0,00') ? $m['Volume'] . 'ml' : NULL ?></td>
             <td class="border border-dark"><?= $m['TempoInfusao'] ?></td>
             <td class="border border-dark"><?= $m['Posologia'] ?></td>
             <td class="border border-dark"></td>

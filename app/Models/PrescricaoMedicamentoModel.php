@@ -75,11 +75,12 @@ class PrescricaoMedicamentoModel extends Model
                 preschuapweb.Preschuap_Prescricao_Medicamento as pm
                     LEFT JOIN preschuapweb.TabPreschuap_MotivoAjusteDose as tmad ON pm.idTabPreschuap_MotivoAjusteDose = tmad.idTabPreschuap_MotivoAjusteDose
                 , preschuapweb.TabPreschuap_Protocolo_Medicamento as tpm
+                    LEFT JOIN TabPreschuap_Diluente AS td ON tpm.idTabPreschuap_Diluente = td.idTabPreschuap_Diluente
                 , preschuapweb.TabPreschuap_EtapaTerapia as tet
                 , preschuapweb.TabPreschuap_Medicamento as tm
                 , preschuapweb.TabPreschuap_UnidadeMedida as tum
                 , preschuapweb.TabPreschuap_ViaAdministracao as tva
-                , preschuapweb.TabPreschuap_Diluente as td
+                /*, preschuapweb.TabPreschuap_Diluente as td*/
                 , preschuapweb.TabPreschuap_Posologia as tps
                 /*, preschuapweb.TabPreschuap_MotivoAjusteDose as tmad*/
             WHERE
@@ -88,7 +89,7 @@ class PrescricaoMedicamentoModel extends Model
                 and tpm.idTabPreschuap_Medicamento = tm.idTabPreschuap_Medicamento
                 and tpm.idTabPreschuap_UnidadeMedida = tum.idTabPreschuap_UnidadeMedida
                 and tpm.idTabPreschuap_ViaAdministracao = tva.idTabPreschuap_ViaAdministracao
-                and tpm.idTabPreschuap_Diluente = td.idTabPreschuap_Diluente
+                /*and tpm.idTabPreschuap_Diluente = td.idTabPreschuap_Diluente*/
                 and tpm.idTabPreschuap_Posologia = tps.idTabPreschuap_Posologia
                 /*and pm.idTabPreschuap_MotivoAjusteDose = tmad.idTabPreschuap_MotivoAjusteDose*/
 
