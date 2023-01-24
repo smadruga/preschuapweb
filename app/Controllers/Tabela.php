@@ -313,6 +313,13 @@ class Tabela extends BaseController
             }
         }
         else {
+            
+            /*
+            echo "<pre>";
+            print_r($v['data']);
+            echo "</pre>";
+            exit('oi');
+            #*/
 
             if(isset($v['data']['Item'])) {
 
@@ -331,7 +338,7 @@ class Tabela extends BaseController
                         'idTabPreschuap_Categoria'      => ['label' => 'Categoria', 'rules' => 'required'],
                         'Observacoes'                   => ['label' => 'Observações', 'rules' => 'required'],
                     ]);
-                elseif($v['tabela'] == 'Protocolo_Medicamento')
+                elseif($v['tabela'] == 'Protocolo_Medicamento') {
                     #Critérios de validação
                     $inputs = $this->validate([
                         'Item'                              => ['label' => 'Medicamento', 'rules' => 'required'],
@@ -339,12 +346,16 @@ class Tabela extends BaseController
                         'Dose'                              => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
                         'idTabPreschuap_UnidadeMedida'      => ['label' => 'Unidade de Medida', 'rules' => 'required'],
                         'idTabPreschuap_ViaAdministracao'   => ['label' => 'Via de Administração', 'rules' => 'required'],
-                        'idTabPreschuap_Diluente'           => ['label' => 'Diluente', 'rules' => 'required'],
-                        'Volume'                            => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
-                        'TempoInfusao'                      => ['label' => 'Tempo de Infusão', 'rules' => 'required'],
                         'idTabPreschuap_Posologia'          => ['label' => 'Posologia', 'rules' => 'required'],
-
                     ]);
+                    if($v['data']['idTabPreschuap_ViaAdministracao'] == 2)
+                        $inputs = $this->validate([
+                            'idTabPreschuap_Diluente'           => ['label' => 'Diluente', 'rules' => 'required'],
+                            'Volume'                            => 'required|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]',
+                            'TempoInfusao'                      => ['label' => 'Tempo de Infusão', 'rules' => 'required'],
+
+                        ]);
+                }
                 else
                     #Critérios de validação
                     $inputs = $this->validate([
@@ -367,6 +378,8 @@ class Tabela extends BaseController
                         $v['data']['idTabPreschuap_Medicamento'] = $v['data']['Item'];
                         $v['data']['Dose'] = str_replace(",",".",$v['data']['Dose']);
                         $v['data']['Volume'] = str_replace(",",".",$v['data']['Volume']);
+                        $v['data']['idTabPreschuap_Diluente'] = (!$v['data']['idTabPreschuap_Diluente'] || $v['data']['idTabPreschuap_Diluente'] == '') ? 
+                            NULL : $v['data']['idTabPreschuap_Diluente'];
                         unset($v['data'][$v['tabela']]);
                     }
 
@@ -375,7 +388,7 @@ class Tabela extends BaseController
                         $v['data']['Item'],
                         $v['data']['action']
                     );
-                    /*
+                    /*                    
                     echo "<pre>";
                     print_r($v);
                     echo "</pre>";

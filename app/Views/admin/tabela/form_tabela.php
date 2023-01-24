@@ -198,6 +198,13 @@
                         <?= $opt['button'] ?>
 
                     <?php } elseif ($tabela == 'Protocolo_Medicamento') { ?>
+                        <div class="col-md-12">
+                            <b>OBSERVAÇÃO:</b><br>
+                            - Campos marcados com <b class="text-danger">*</b> (asterisco vermelho) são obrigatórios para todos os medicamentos;<br>
+                            - Campos marcados com <b class="text-info">*</b> (asterisco azul) são obrigatórios <b>apenas</b> para os medicamentos marcados como VIA ENDOVENOSA no campo VIA DE ADMINISTRAÇÃO.<br><br>
+                        </div>
+                        
+                        
                         <div class="col-md-8">
                             <label for="Item" class="form-label"><b>Medicamento</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
@@ -301,7 +308,7 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label for="idTabPreschuap_Diluente" class="form-label"><b>Diluente</b> <b class="text-danger">*</b></label>
+                            <label for="idTabPreschuap_Diluente" class="form-label"><b>Diluente</b> <b class="text-info">*</b></label>
                             <div class="input-group mb-3">
 
                                 <select <?= $opt['disabled'] ?>
@@ -326,7 +333,7 @@
                         </div>
 
                         <div class="col-md-3">
-                            <label for="Volume" class="form-label"><b>Volume</b> <b class="text-danger">*</b></label>
+                            <label for="Volume" class="form-label"><b>Volume</b> <b class="text-info">*</b></label>
                             <div class="input-group mb-3">
 
                                 <input type="text" id="Volume" <?= $opt['disabled'] ?> placeholder="0,00"
@@ -341,7 +348,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <label for="TempoInfusao" class="form-label"><b>Tempo de Infusão</b> <b class="text-danger">*</b></label>
+                            <label for="TempoInfusao" class="form-label"><b>Tempo de Infusão</b> <b class="text-info">*</b></label>
                             <div class="input-group mb-3">
 
                                 <input type="text" id="TempoInfusao" <?= $opt['disabled'] ?>

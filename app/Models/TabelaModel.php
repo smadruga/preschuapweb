@@ -79,21 +79,19 @@ class TabelaModel extends Model
                     , format(tm.CalculoLimiteMinimo, 2, "pt_BR") as CalculoLimiteMinimo
                     , format(tm.CalculoLimiteMaximo, 2, "pt_BR") as CalculoLimiteMaximo
                 FROM
-                	TabPreschuap_Protocolo_Medicamento 		AS tpm
+                    TabPreschuap_Protocolo_Medicamento AS tpm
+                        LEFT JOIN TabPreschuap_Diluente AS td ON tpm.idTabPreschuap_Diluente = td.idTabPreschuap_Diluente
                     , TabPreschuap_EtapaTerapia 			AS tet
                     , TabPreschuap_Medicamento 				AS tm
                     , TabPreschuap_UnidadeMedida 			AS tum
                     , TabPreschuap_ViaAdministracao 		AS tva
-                    , TabPreschuap_Diluente 				AS td
                     , TabPreschuap_Posologia 				AS tpo
                 WHERE
                 	tpm.idTabPreschuap_EtapaTerapia 		= tet.idTabPreschuap_EtapaTerapia
                     and tpm.idTabPreschuap_Medicamento 		= tm.idTabPreschuap_Medicamento
                     and tpm.idTabPreschuap_UnidadeMedida 	= tum.idTabPreschuap_UnidadeMedida
                     and tpm.idTabPreschuap_ViaAdministracao = tva.idTabPreschuap_ViaAdministracao
-                    and tpm.idTabPreschuap_Diluente 		= td.idTabPreschuap_Diluente
                     and tpm.idTabPreschuap_Posologia 		= tpo.idTabPreschuap_Posologia
-
                     and tpm.idTabPreschuap_Protocolo = '.$data.'
                 ORDER BY Inativo ASC, tpm.idTabPreschuap_Protocolo ASC, tpm.OrdemInfusao ASC
             ');
@@ -174,6 +172,7 @@ class TabelaModel extends Model
         $builder = $db->table('TabPreschuap_'.$tabela);
 
         $builder->where(['idTabPreschuap_'.$tabela => $id]);
+
         return $builder->update($data);
 
     }
