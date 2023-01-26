@@ -314,20 +314,6 @@
                 </div>
 
                 <div class="col-md-12">
-                    <label for="InformacaoComplementar" class="form-label">Informação Complementar</b></label>
-                    <div class="input-group mb-3">
-
-                        <textarea <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('InformacaoComplementar')): ?>is-invalid<?php endif ?>" id="InformacaoComplementar" name="InformacaoComplementar" rows="3"><?php echo $data['InformacaoComplementar']; ?></textarea>
-
-                        <?php if ($validation->getError('InformacaoComplementar')): ?>
-                            <div class="invalid-feedback">
-                                <?= $validation->getError('InformacaoComplementar') ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
                     <label for="ReacaoAdversa" class="form-label">Reação Adversa Anterior</b></label>
                     <div class="input-group mb-3">
 
@@ -341,6 +327,19 @@
                     </div>
                 </div>
 
+                <div class="col-md-12">
+                    <label for="InformacaoComplementar" class="form-label">Informação Complementar</b></label>
+                    <div class="input-group mb-3">
+
+                        <textarea <?= $opt['disabled'] ?> class="form-control <?php if($validation->getError('InformacaoComplementar')): ?>is-invalid<?php endif ?>" id="InformacaoComplementar" name="InformacaoComplementar" rows="3"><?php echo $data['InformacaoComplementar']; ?></textarea>
+
+                        <?php if ($validation->getError('InformacaoComplementar')): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('InformacaoComplementar') ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
 
                 <input type="hidden" name="Idade" id="Idade" value="<?= $_SESSION['Paciente']['idade'] ?>" />
                 <input type="hidden" name="Sexo" id="Sexo" value="<?= $_SESSION['Paciente']['sexo'] ?>" />

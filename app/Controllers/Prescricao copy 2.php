@@ -314,7 +314,7 @@ class Prescricao extends BaseController
             
                 $v['campos'] = array_keys($v['data']);
 
-                if($action == 'concluir') {
+                if($action == 'editar' || $action == 'concluir') {
 
                     $v['id'] = $v['data']['idPreschuap_Prescricao'];
                     $v['anterior'] = $prescricao->find($v['id']);
@@ -329,74 +329,6 @@ class Prescricao extends BaseController
                     }
                     else
                         session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
-
-                }
-                elseif($action == 'editar') {
-                            
-                    $v['id'] = $v['data']['idPreschuap_Prescricao'];
-                    $v['anterior'] = $prescricao->find($v['id']);
-
-                    if($prescricao->update($v['id'], $v['data']) ) {
-
-                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao', 'UPDATE', $v['id']), TRUE);
-                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
-                        
-                        if($v['anterior']['idTabPreschuap_Protocolo'] && ($v['anterior']['idTabPreschuap_Protocolo'] != $v['data']['idTabPreschuap_Protocolo'])) {
-
-                            if($medicamento->where('idPreschuap_Prescricao', $v['id'])->delete()) {
-
-                                $v['medicamento'] = $tabela->list_medicamento_bd($v['data']['idTabPreschuap_Protocolo'], TRUE);
-        
-                                $i=0;
-                                foreach ($v['medicamento']->getResultArray() as $val) {
-                                    /*
-                                    echo "<pre>";
-                                    print_r($val);
-                                    echo "</pre>";
-                                    echo '<br> >>'.$i;
-                                    #*/
-        
-                                    $val['idPreschuap_Prescricao'] = $v['id'];
-                                    $v['campos'] = array_keys($val);
-        
-                                    if($val['idTabPreschuap_Formula'] == 2)
-                                        $val['Calculo'] = ($val['Dose']*$v['data']['Peso']);
-                                    elseif($val['idTabPreschuap_Formula'] == 4)
-                                        $val['Calculo'] = $v['func']->calc_DoseCarboplatina($val['Dose'], $v['data']['ClearanceCreatinina']);
-                                    elseif($val['idTabPreschuap_Formula'] == 3)
-                                        $val['Calculo'] = ($val['Dose']*$v['data']['SuperficieCorporal']);
-                                    else
-                                        $val['Calculo'] = $val['Dose'];
-        
-                                    if(isset($val['CalculoLimiteMaximo']) && ($val['Calculo'] > $val['CalculoLimiteMaximo']))
-                                        $val['Calculo'] = $val['CalculoLimiteMaximo'];
-                                    elseif(isset($val['CalculoLimiteMinimo']) && ($val['Calculo'] > $val['CalculoLimiteMinimo']))
-                                        $val['Calculo'] = $val['CalculoLimiteMinimo'];
-                                    
-                                    $val['Calculo'] = str_replace(",",".",$val['Calculo']);
-                                    
-                                    $v['mid'] = $medicamento->insert($val);
-        
-                                    if($v['mid']) {
-                                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao_Medicamento', 'CREATE', $v['mid']), TRUE);
-                                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $val, $v['campos'], $v['mid'], $v['auditoria']), TRUE);
-                                    }
-                                    $i++;
-        
-                                }
-                            }
-                            else {
-                                exit('ERRO. CONTATE O SETOR DE TI');
-                            }
-                                
-                        }
-                            
-                    session()->setFlashdata('success', 'Item atualizado com sucesso!');
-
-                    }
-                    else {
-                        session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
-                    }
 
                 }
                 elseif($action == 'excluir') {

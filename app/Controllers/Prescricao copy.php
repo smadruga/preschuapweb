@@ -280,7 +280,7 @@ class Prescricao extends BaseController
             if (!$inputs && ($action == 'cadastrar' || $action == 'editar'))
                 $v['validation'] = $this->validator;
             else {
-
+#echo ('>>>> '.$action);
                 if($action == 'cadastrar' || $action == 'editar') {
 
                     $v['data']['DataPrescricao']        = date("Y-m-d", strtotime(str_replace('/', '-', $v['data']['DataPrescricao'])));
@@ -314,34 +314,31 @@ class Prescricao extends BaseController
             
                 $v['campos'] = array_keys($v['data']);
 
-                if($action == 'concluir') {
-
-                    $v['id'] = $v['data']['idPreschuap_Prescricao'];
-                    $v['anterior'] = $prescricao->find($v['id']);
-
-                    if($prescricao->update($v['id'], $v['data']) ) {
-
-                        $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao', 'UPDATE', $v['id']), TRUE);
-                        $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
-
-                        session()->setFlashdata('success', 'Item atualizado com sucesso!');
-
-                    }
-                    else
-                        session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
-
-                }
-                elseif($action == 'editar') {
+                if($action == 'editar' || $action == 'concluir') {
                             
                     $v['id'] = $v['data']['idPreschuap_Prescricao'];
                     $v['anterior'] = $prescricao->find($v['id']);
 
+                }
+                    
+#/*
+echo '<br>##################oi<br>'.$action;
+
+echo "<pre>";
+print_r($v['data']);
+echo "</pre>"; 
+echo "<pre>";
+print_r($v['anterior']);
+echo "</pre>"; 
+ 
+exit('oi');
+#*/
+
                     if($prescricao->update($v['id'], $v['data']) ) {
 
                         $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao', 'UPDATE', $v['id']), TRUE);
                         $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], TRUE), TRUE);
-                        
-                        if($v['anterior']['idTabPreschuap_Protocolo'] && ($v['anterior']['idTabPreschuap_Protocolo'] != $v['data']['idTabPreschuap_Protocolo'])) {
+                        if($v['anterior']['idTabPreschuap_Protocolo'] != $v['data']['idTabPreschuap_Protocolo']) {
 
                             if($medicamento->where('idPreschuap_Prescricao', $v['id'])->delete()) {
 
@@ -385,18 +382,14 @@ class Prescricao extends BaseController
         
                                 }
                             }
-                            else {
+                            else
                                 exit('ERRO. CONTATE O SETOR DE TI');
-                            }
-                                
-                        }
                             
-                    session()->setFlashdata('success', 'Item atualizado com sucesso!');
+                        session()->setFlashdata('success', 'Item atualizado com sucesso!');
 
                     }
-                    else {
+                    else
                         session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
-                    }
 
                 }
                 elseif($action == 'excluir') {

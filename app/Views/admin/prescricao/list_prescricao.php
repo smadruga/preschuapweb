@@ -99,11 +99,11 @@
 
                         <hr />
 
-                        <div class="row">
+                        <!--<div class="row">
                             <div class="col"><b>Serviço:</b> <?= $v['DescricaoServico'] ?></div>
                         </div>
 
-                        <br />
+                        <br />-->
 
                         <div class="row">
                             <div class="col"><b>Alergias:</b> <?= ($v['Alergia']) ? '<br>'.nl2br($v['Alergia']) : NULL ?></div>
