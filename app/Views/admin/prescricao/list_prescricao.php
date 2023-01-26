@@ -140,6 +140,7 @@
 
                         <?php if($v['Concluido'] != 1) { ?>
                             <div class="text-center">
+                                <a class="btn btn-warning" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-arrow-right-arrow-left"></i> Trocar Protocolo</a>
                                 <a class="btn btn-warning" href="<?= base_url('prescricao/manage_medicamento/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Ajustar Doses</a>
                             </div>
                             <hr />

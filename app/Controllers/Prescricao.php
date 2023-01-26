@@ -165,11 +165,13 @@ class Prescricao extends BaseController
 
                 'submit'                            => '',
             ];
+            $v['data']['Aplicabilidade'] = (!isset($v['data']['Aplicabilidade'])) ? NULL : $v['data']['Aplicabilidade'];
         }
         else {
             #Captura os inputs do Formulário
             $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-            $v['data']['Aplicabilidade'] = (!isset($v['data']['Aplicabilidade'])) ? NULL : $v['data']['Aplicabilidade'];
+            #echo '111111111oi';
+            #$v['data']['Aplicabilidade'] = (!isset($v['data']['Aplicabilidade'])) ? NULL : $v['data']['Aplicabilidade'];
         }
 
         if(($action == 'editar' || $action == 'excluir' || $action == 'concluir') && !$v['data']['submit']) {
@@ -337,7 +339,6 @@ class Prescricao extends BaseController
                     $v['data'] = array();
 
                     if($medicamento->where('idPreschuap_Prescricao', $v['id'])->delete() && $prescricao->delete($v['id'])) {
-                    #if(1) {
 
                         $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Prescricao', 'DELETE', $v['id']), TRUE);
                         $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria'], FALSE, TRUE), TRUE);
