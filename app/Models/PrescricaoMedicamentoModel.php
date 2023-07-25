@@ -157,21 +157,4 @@ class PrescricaoMedicamentoModel extends Model
 
     }
 
-    /**
-    * Retorna lista de medicamentos vinculada a prescrição indicada..
-    *
-    * @return void
-    */
-    public function get_medicamentos($data)    {
-
-        $db = \Config\Database::connect();
-        #$query = $db->getWhere(['idPreschuap_Prescricao' => $data]);
-
-        $query = $db->query('
-            SELECT * FROM Preschuap_Prescricao_Medicamento WHERE idPreschuap_Prescricao = '.$data.'
-        ');
-        return $query->getResultArray();
-
-    }
-
 }

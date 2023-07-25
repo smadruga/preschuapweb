@@ -332,21 +332,9 @@ class Prescricao extends BaseController
 
                 }
                 elseif($action == 'editar') {
-                    
+                            
                     $v['id'] = $v['data']['idPreschuap_Prescricao'];
                     $v['anterior'] = $prescricao->find($v['id']);
-
-                    #$aa = $v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], FALSE, TRUE);
-                    /*
-                    echo "<pre>";
-                    print_r($aa);
-                    echo "</pre>";
-                    echo '<br><br><br>';
-                    echo "<pre>";
-                    print_r($v);
-                    echo "</pre>";
-                    #*/
-                    #exit('oi');
 
                     if($prescricao->update($v['id'], $v['data']) ) {
 
@@ -401,40 +389,6 @@ class Prescricao extends BaseController
                                 exit('ERRO. CONTATE O SETOR DE TI');
                             }
                                 
-                        }
-                        else {
-
-                            $m = $v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], FALSE, TRUE);
-                            foreach ($m as $c => $r) {
-                                echo '<br>';
-                                echo 'chave: '.$c.' <> valor: '.$r['Campo'].' >> '.$r['ValorAnterior'];
-                                if($r['Campo'] == 'Peso' || $r['Campo'] == 'Altura' || $r['Campo'] == 'CreatininaSerica' || 
-                                    $r['Campo'] == 'ClearanceCreatinina' || $r['Campo'] == 'IndiceMassaCorporal' || $r['Campo'] == 'SuperficieCorporal') {
-                                    
-                                    $v['medicamento'] = $medicamento->get_medicamentos($v['id']);
-                                        
-
-                                    #break;
-                                }
-                            }
-                            #/*
-                            echo "<pre>";
-                            print_r($m);
-                            echo "</pre>";
-
-                            echo '<br>';
-
-                            echo "<pre>";
-                            print_r($v['medicamento']);
-                            echo "</pre>";
-
-                            echo "<pre>";
-                            print_r($v);
-                            echo "</pre>";
-                            #*/
-                            exit('oi2');
-
-
                         }
                             
                     session()->setFlashdata('success', 'Item atualizado com sucesso!');
