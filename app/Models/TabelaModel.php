@@ -18,6 +18,8 @@ class TabelaModel extends Model
 
         $db = \Config\Database::connect();
 
+        #$inativo = ($inativo) ? ' '
+
         if($simples) {
             $query = $db->query(
                 'SELECT
@@ -42,6 +44,7 @@ class TabelaModel extends Model
                     , TabPreschuap_Medicamento AS tpm2
                 WHERE
                     idTabPreschuap_Protocolo = '.$data.'
+                    and tpm.Inativo = 0
                     and tpm.idTabPreschuap_UnidadeMedida = tum.idTabPreschuap_UnidadeMedida
                     and tpm2.idTabPreschuap_Medicamento = tpm.idTabPreschuap_Medicamento  
                 ORDER BY OrdemInfusao ASC'

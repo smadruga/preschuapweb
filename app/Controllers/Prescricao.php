@@ -435,6 +435,7 @@ class Prescricao extends BaseController
                             print_r($val);
                             echo "</pre>";
                             echo '<br> >>'.$i;
+                            exit('###');
                             #*/
 
                             $val['idPreschuap_Prescricao'] = $v['id'];
