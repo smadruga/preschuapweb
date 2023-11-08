@@ -51,7 +51,7 @@ $routes->group('admin', function ($routes) {
     $routes->get('show_user/(:any)', 'Admin::show_user/$1');
     $routes->get('list_perfil/(:any)', 'Admin::list_perfil/$1');
     $routes->post('set_perfil', 'Admin::set_perfil');
-    $routes->get('del_perfil', 'Admin::del_perfil');
+    $routes->get('del_perfil/(:any)', 'Admin::del_perfil/$1');
     $routes->match(['get', 'post'], 'disable_user/(:any)', 'Admin::disable_user/$1');
     $routes->match(['get', 'post'], 'enable_user/(:any)', 'Admin::enable_user/$1');
     $routes->add('teste', 'Admin::teste');
