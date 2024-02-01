@@ -1,9 +1,13 @@
-CUIDADO AO ATUALIZAR OS SEGUINTES ARQUIVOS:
+CUIDADO AO ATUALIZAR OS SEGUINTES ARQUIVOS/PASTAS:
 
--app.php
--constants.php
--cookie.php
--database.php
--pager.php
--paths.php
--routes.php
+-public (atualizar todos exceto favicon.ico)
+
+-app/controllers
+
+-app/config/app.php
+-app/config/constants.php
+-app/config/cookie.php
+-app/config/database.php
+-app/config/pager.php
+-app/config/paths.php
+-app/config/routes.php
