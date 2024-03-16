@@ -42,6 +42,11 @@
                         <!--<div class="dropdown-divider"></div>-->
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('agenda') ?>"><i class="fa-solid fa-calendar-days"></i> Agenda
+                        <span class="visually-hidden"></span>
+                    </a>
+                </li>
                 <?php } ?>
             </ul>
             <div class="ms-3 me-3 text-warning fs-6 text-center">
