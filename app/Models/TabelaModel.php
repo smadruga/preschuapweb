@@ -254,4 +254,27 @@ class TabelaModel extends Model
 
     }
 
+    /**
+    * Retorna o item no banco de dados de acordo com seu id
+    *
+    * @return array
+    */
+    public function list_tabela_aghux ($id, $table, $where = NULL, $order = NULL)
+    {
+
+        $where = (isset($where)) ? 'WHERE '.$where : NULL;
+        $order = (isset($order)) ? 'ORDER BY '.$order : NULL;
+
+        $db = \Config\Database::connect('aghux');
+        return $query = $db->query('
+            SELECT
+                ' . $id . '
+            FROM
+                ' . $table . '
+            ' . $where . '
+            ' . $order . '
+        ');
+
+    }    
+
 }
