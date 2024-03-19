@@ -35,7 +35,7 @@ class Agenda extends BaseController
 
         if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
             $v['data'] = [
-                'Data'          => date('d/m/Y', time()),
+                'Data'          => '',
                 'Especialidade' => '',
                 'Sala'          => '',
                 'Procedimento'  => '',
@@ -45,7 +45,7 @@ class Agenda extends BaseController
             $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         }
 
-        $v['data']['dtquery'] = $v['func']->mascara_data($v['data']['Data'], 'db');
+        #$v['data']['dtquery'] = $v['func']->mascara_data($v['data']['Data'], 'db');
 
         $v['select'] = [
             'Especialidade' => $tabela->list_tabela_aghux('aae.seq, aae.nome_especialidade', 'agh.agh_especialidades aae', 'aae.clc_codigo in (1, 3)', 'nome_especialidade ASC'), #Carrega os itens da tabela selecionada
@@ -67,7 +67,6 @@ class Agenda extends BaseController
         else
             $v['agenda'] = 0;
 
-        #return redirect()->to('prescricao/manage_medicamento/'.$v['id']);
         /*
         echo "<pre>";
         print_r($v);

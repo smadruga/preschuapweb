@@ -65,73 +65,45 @@
 
     <table class="table table-hover table-bordered">
         <thead>
-            <?php
-            $d = explode('-', $data['Data']);
-            $semana = intval(date('W', mktime(0,0,0,$d[1],$d[2],$d[0])));
-            $dianum = date('w', mktime(0,0,0,$d[1],$d[2],$d[0]));
-            $semana = ($dianum == 0) ? $semana+1 : $semana;
-            $dt = date('Y-m-d', mktime(0,0,0,$d[1],$d[2],$d[0]));
-
-            for($i=0; $i<=$dianum; $i++)
-                $date[$i] = $func->mascara_data(date('Y-m-d', strtotime($dt . ' - '.($dianum-$i).' day')),'barras');
-
-            for($i=6; $i>$dianum; $i--)
-                $date[$i] = $func->mascara_data(date('Y-m-d', strtotime($dt . ' + '.($i-$dianum).' day')),'barras');
-
-            echo '
             <tr>
-                <th scope="col" class="text-center bg-secondary"></th>
-                <th scope="col" class="text-center bg-secondary">DOM</th>
-                <th scope="col" class="text-center bg-secondary">SEG</th>
-                <th scope="col" class="text-center bg-secondary">TER</th>
-                <th scope="col" class="text-center bg-secondary">QUA</th>
-                <th scope="col" class="text-center bg-secondary">QUI</th>
-                <th scope="col" class="text-center bg-secondary">SEX</th>
-                <th scope="col" class="text-center bg-secondary">SÁB</th>
-            </tr>  
-            <tr>
-                <th scope="col" class="text-center bg-secondary">HORÁRIO</th>                                
-                <th scope="col" class="text-center bg-secondary">'.$date[0].'</th>
-                <th scope="col" class="text-center bg-secondary">'.$date[1].'</th>
-                <th scope="col" class="text-center bg-secondary">'.$date[2].'</th>
-                <th scope="col" class="text-center bg-secondary">'.$date[3].'</th>
-                <th scope="col" class="text-center bg-secondary">'.$date[4].'</th>
-                <th scope="col" class="text-center bg-secondary">'.$date[5].'</th>
-                <th scope="col" class="text-center bg-secondary">'.$date[6].'</th>
-            </tr>            
-            ';
-            ?>
+                <th scope="col">Horário</th>
+                <th scope="col">Prontuário</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Procedimento</th>
+                <th scope="col">Equipe</th>
+            </tr>   
         </thead>
         
+        <?php
+            $dtinicio   = date("Y-m-d H:i:s", mktime(7,0,0));
+            $dtfim      = date("Y-m-d H:i:s", mktime(19,0,0));
+            $date       = date('Y-m-d H:i:s', strtotime($dtinicio . ' + 0 minute'));
+        ?>
+
         <tbody>
             <?php
-
-            $dtinicio   = date("H:i:s", mktime(7,0,0));
-            $dtfim      = date("H:i:s", mktime(19,0,0));
-            $hr         = date('H:i:s', strtotime($dtinicio . ' + 0 minute'));
-
-            for($i=0; $hr<$dtfim; $i+=10) {
-                $hr = date('H:i:s', strtotime($dtinicio . ' + ' . $i . ' minute'));
-
-            echo '
+                #<tr class="table-info">
+                for($i=0; $date<$dtfim; $i+=10) {
+                    $date = date('H:i:s', strtotime($dtinicio . ' + ' . $i . ' minute'));
+            ?>
             <tr>
-                <th scope="col" class="bg-secondary">'. $hr .'</th>
-                <th>'. $i .'</th>
-                <th>
-                    <a tabindex="0" class="btn btn-warning" role="button" data-bs-toggle="popover" 
-                        data-bs-trigger="focus" data-bs-title="NOME" html="true"
-                        data-bs-content="prontario: 313546 - especialidade: endoscopia - procedimento: faca neles - equipe: galera boa">27651613</a>
-                </th>
+                <th scope="col"><?= $date ?></th>
+                <th><?php echo $i ?></th>
                 <th></th>
                 <th></th>
                 <th></th>
             </tr>
-            ';
-            
-            }
+            <?php
+                
+                }
             ?>
-        </tbody>        
+        </tbody>
         
+        <tfoot>
+            <tr>
+                <th></th>
+            </tr>
+        </tfoot>
     </table>
 
     <div class="text-center">

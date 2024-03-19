@@ -213,7 +213,7 @@ class HUAP_Functions
 
         #retorna a data no formato invertido, no formato apropriado para banco de dados.
         elseif ($opt == 'db') {
-
+            
             #caso a data já esteja invertida mas ainda não esteja no formato para bd
             if ($invertido) {
                 if ($data > 18000000) {
@@ -222,12 +222,15 @@ class HUAP_Functions
                 }
                 else
                     $data = ($hora) ? '0000-00-00 00:00:00' : '0000-00-00';
-
             }
             #caso a data não esteja invertida
             else {
+                
                 if ($pm && $data) {
+                    echo Time::createFromFormat('d/m/Y', "20/01/2021")->format("Y-m-d");
+                    exit('<br>oioioi<br>'.$data); 
                     $data = ($hora) ? Time::createFromFormat('d/m/Y H:i', $data) : Time::createFromFormat('d/m/Y', $data);
+                    
                     $data = ($hora) ? $data->format('Y-m-d H:i') : $data->format('Y-m-d');
                 }
                 else
