@@ -19,9 +19,11 @@ class AgendaModel extends Model
     *
     * @return void
     */
-    public function list_agenda($data, $esp, $sala, $proc)
+    public function list_agenda($dtinicio, $dtfim, $esp, $sala, $proc)
     {
 
+        #echo '>>><br>'.$data.'<br>'.$esp.'<br>'.$sala.'<br>'.$proc;
+        #exit();
         $db = \Config\Database::connect('aghux');
        
         $query = $db->query('
@@ -29,7 +31,7 @@ class AgendaModel extends Model
             select
                 agd.seq
                 , agd.sci_seqp sala
-                , agd.dt_agenda dataAgenda
+                , to_char(agd.dt_agenda, \'yyyy-mm-dd\') dataAgenda
                 , agd.dthr_prev_inicio
                 , agd.dthr_prev_fim
                 , pac.prontuario prontuario
@@ -77,7 +79,7 @@ class AgendaModel extends Model
                 and agd.ind_situacao in (\'AG\', \'ES\')
                 and agd.unf_seq = 229
                 and htc.unf_seq = 229
-                and agd.dt_agenda between \'' . $data . ' 00:00\' and \'' . $data . ' 23:59\'
+                and agd.dt_agenda between \'' . $dtinicio . ' 00:00\' and \'' . $dtfim . ' 23:59\'
                 and esp.seq = ' . $esp . '
                 and agd.sci_seqp = ' . $sala . '
                 and pci.seq = ' . $proc . '
@@ -102,41 +104,46 @@ class AgendaModel extends Model
                 , uni_func.descricao
                 , esp.seq 
             order by
-                agd.dthr_prev_inicio desc	
+                agd.dthr_prev_inicio asc	
                 , agd.sci_seqp
                 , agd.dt_agenda
                 , htc.turno
         ');
+
         #$query = $query->getRowArray();
         $q['count'] = $query->getNumRows();
         $q['array'] = $query->getResultArray();
-
+         
+        #Detalhar os horários a cada 10 minutos e criar um array multidimensional
+        #onde cada data será um nível e as horas subníveis, com as informações do paciente.
+        $q['marcacoes'] = array();
         foreach ($q['array'] as $val) {
-            echo $val['prontuario'].'<br />';
+           
+            #$q['marcacoes'][$val['dataagenda']][$val['dthr_prev_inicio']] = $val;
             #/*
-            $dtinicio   = date("Y-m-d H:i:s", mktime(7,0,0));
-            $dtfim      = date("Y-m-d H:i:s", mktime(19,0,0));
-            $date       = date('Y-m-d H:i:s', strtotime($dtinicio . ' + 0 minute'));
-            #*/
-            #$dtinicio   = $q['array']['dthr_prev_inicio'];
-            $date       = $val['dthr_prev_inicio'];
-            $dtfim      = $val['dthr_prev_fim'];
-            #$date       = date('Y-m-d H:i:s', strtotime($dtinicio . ' + 0 minute'));
-
-            for($i=0; $date<$dtfim; $i+=10){
-                $q['agenda'] = $val;
+            $hr         = date('H:i:s', strtotime($val['dthr_prev_inicio']));
+            $hrinicio   = date('H:i:s', strtotime($val['dthr_prev_inicio']));
+            $hrfim      = date('H:i:s', strtotime($val['dthr_prev_fim']));
+            #echo '<br>>>origem: '.$val['prontuario'].' <> '.$hr.' <> '.$hrfim;
+            
+            for($i=0; $hr<$hrfim; $i+=10){
+                $q['marcacoes'][$val['dataagenda']][$hr] = $val;
+                $hr = date('H:i:s', strtotime($hrinicio . ' + ' . $i . ' minute'));
+                #echo '<br>>>>>derivado: '.$val['prontuario'].' <> '.$hr.' <> '.$hrfim;
             }
-        }
+            #*/
 
-        #/*
+        }
+        
+        /*
         #echo $db->getLastQuery();
         echo "<pre>";
-        print_r($q['array']);
+        #print_r($q['array']);
         echo "</pre>";
         echo "<pre>";
-        print_r($q['agenda']);
+        print_r($q['marcacoes']);
         echo "</pre>";
-        exit($data);
+        exit();
         #*/
         
         return $q;

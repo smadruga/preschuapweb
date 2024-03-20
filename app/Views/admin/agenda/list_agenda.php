@@ -63,20 +63,15 @@
         <br /><br />
     </div>
 
+    <?php
+
+    if ($data['Data'] && $data['Especialidade'] && $data['Sala'] && $data['Procedimento']) {
+
+    ?>
+
     <table class="table table-hover table-bordered">
         <thead>
             <?php
-            $d = explode('-', $data['Data']);
-            $semana = intval(date('W', mktime(0,0,0,$d[1],$d[2],$d[0])));
-            $dianum = date('w', mktime(0,0,0,$d[1],$d[2],$d[0]));
-            $semana = ($dianum == 0) ? $semana+1 : $semana;
-            $dt = date('Y-m-d', mktime(0,0,0,$d[1],$d[2],$d[0]));
-
-            for($i=0; $i<=$dianum; $i++)
-                $date[$i] = $func->mascara_data(date('Y-m-d', strtotime($dt . ' - '.($dianum-$i).' day')),'barras');
-
-            for($i=6; $i>$dianum; $i--)
-                $date[$i] = $func->mascara_data(date('Y-m-d', strtotime($dt . ' + '.($i-$dianum).' day')),'barras');
 
             echo '
             <tr>
@@ -91,13 +86,13 @@
             </tr>  
             <tr>
                 <th scope="col" class="text-center bg-secondary">HORÁRIO</th>                                
-                <th scope="col" class="text-center bg-secondary">'.$date[0].'</th>
-                <th scope="col" class="text-center bg-secondary">'.$date[1].'</th>
-                <th scope="col" class="text-center bg-secondary">'.$date[2].'</th>
-                <th scope="col" class="text-center bg-secondary">'.$date[3].'</th>
-                <th scope="col" class="text-center bg-secondary">'.$date[4].'</th>
-                <th scope="col" class="text-center bg-secondary">'.$date[5].'</th>
-                <th scope="col" class="text-center bg-secondary">'.$date[6].'</th>
+                <th scope="col" class="text-center bg-secondary">'.$cabecalho[0].'</th>
+                <th scope="col" class="text-center bg-secondary">'.$cabecalho[1].'</th>
+                <th scope="col" class="text-center bg-secondary">'.$cabecalho[2].'</th>
+                <th scope="col" class="text-center bg-secondary">'.$cabecalho[3].'</th>
+                <th scope="col" class="text-center bg-secondary">'.$cabecalho[4].'</th>
+                <th scope="col" class="text-center bg-secondary">'.$cabecalho[5].'</th>
+                <th scope="col" class="text-center bg-secondary">'.$cabecalho[6].'</th>
             </tr>            
             ';
             ?>
@@ -106,38 +101,160 @@
         <tbody>
             <?php
 
-            $dtinicio   = date("H:i:s", mktime(7,0,0));
-            $dtfim      = date("H:i:s", mktime(19,0,0));
-            $hr         = date('H:i:s', strtotime($dtinicio . ' + 0 minute'));
+            $hrinicio   = date("H:i:s", mktime(7,0,0));
+            $hrfim      = date("H:i:s", mktime(19,0,0));
+            $hr         = date('H:i:s', strtotime($hrinicio . ' + 0 minute'));
 
-            for($i=0; $hr<$dtfim; $i+=10) {
-                $hr = date('H:i:s', strtotime($dtinicio . ' + ' . $i . ' minute'));
+            for($i=0; $hr<$hrfim; $i+=10) {
+                $hr = date('H:i:s', strtotime($hrinicio . ' + ' . $i . ' minute'));
 
-            echo '
+            ?>
+
             <tr>
-                <th scope="col" class="bg-secondary">'. $hr .'</th>
-                <th>'. $i .'</th>
-                <th>
-                    <a tabindex="0" class="btn btn-warning" role="button" data-bs-toggle="popover" 
-                        data-bs-trigger="focus" data-bs-title="NOME" html="true"
-                        data-bs-content="prontario: 313546 - especialidade: endoscopia - procedimento: faca neles - equipe: galera boa">27651613</a>
-                </th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th scope="col" class="bg-secondary"><?= $hr ?></th>
+                
+                <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][0]][$hr])) ? 
+                    '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
+                    
+                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][0]][$hr]['nome'] .'<br/><br/>
+                    <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][0]][$hr]['especialidade'] .'<br/><br/>
+                    <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][0]][$hr]['procedimento'] .'<br/><br/>
+                    <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][0]][$hr]['equipe'] .'<br/>
+                
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][0]][$hr]['prontuario'] : NULL ?></td>
+                
+                <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][1]][$hr])) ? 
+                    '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
+
+                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['nome'] .'<br/><br/>
+                    <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['especialidade'] .'<br/><br/>
+                    <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['procedimento'] .'<br/><br/>
+                    <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['equipe'] .'<br/>
+                
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['prontuario'] : NULL ?></td>
+                
+                <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][2]][$hr])) ? 
+                    '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
+                    
+                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][2]][$hr]['nome'] .'<br/><br/>
+                    <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][2]][$hr]['especialidade'] .'<br/><br/>
+                    <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][2]][$hr]['procedimento'] .'<br/><br/>
+                    <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][2]][$hr]['equipe'] .'<br/>
+                
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][2]][$hr]['prontuario'] : NULL ?></td>
+                
+                <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][3]][$hr])) ? 
+                    '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
+                    
+                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][3]][$hr]['nome'] .'<br/><br/>
+                    <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][3]][$hr]['especialidade'] .'<br/><br/>
+                    <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][3]][$hr]['procedimento'] .'<br/><br/>
+                    <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][3]][$hr]['equipe'] .'<br/>
+                
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][3]][$hr]['prontuario'] : NULL ?></td>
+
+                <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][4]][$hr])) ? 
+                    '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
+                    
+                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][4]][$hr]['nome'] .'<br/><br/>
+                    <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][4]][$hr]['especialidade'] .'<br/><br/>
+                    <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][4]][$hr]['procedimento'] .'<br/><br/>
+                    <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][4]][$hr]['equipe'] .'<br/>
+                
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][4]][$hr]['prontuario'] : NULL ?></td>
+
+                <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][5]][$hr])) ? 
+                    '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
+                    
+                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][5]][$hr]['nome'] .'<br/><br/>
+                    <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][5]][$hr]['especialidade'] .'<br/><br/>
+                    <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][5]][$hr]['procedimento'] .'<br/><br/>
+                    <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][5]][$hr]['equipe'] .'<br/>
+                
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][5]][$hr]['prontuario'] : NULL ?></td>
+
+                <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][6]][$hr])) ? 
+                    '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
+                    
+                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][6]][$hr]['nome'] .'<br/><br/>
+                    <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][6]][$hr]['especialidade'] .'<br/><br/>
+                    <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][6]][$hr]['procedimento'] .'<br/><br/>
+                    <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][6]][$hr]['equipe'] .'<br/>
+                
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][6]][$hr]['prontuario'] : NULL ?></td>
             </tr>
-            ';
-            
+
+            <?php
             }
             ?>
         </tbody>        
         
     </table>
 
-    <div class="text-center">
-        <a class="btn btn-warning" href="<?= base_url('paciente/find_paciente') ?>"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
-        <br /><br />
-    </div>
+    <?php
+
+    /*
+
+            echo '
+            <tr>
+                <th scope="col" class="bg-secondary">'. $hr .'</th>
+                <td>'. $cabecalho['dt'][0] . ' <> ' .$hr .'</td>
+                <td>'. $agenda['marcacoes'][$cabecalho['dt'][1]]['07:00:00']['prontuario'] .'</td>    
+                <td>'. $agenda['marcacoes'][$cabecalho['dt'][1]]['07:10:00']['prontuario'] .'</td>    
+                <td>'. $agenda['marcacoes'][$cabecalho['dt'][1]]['07:20:00']['prontuario'] .'</td>    
+                <td>'. $agenda['marcacoes'][$cabecalho['dt'][1]]['07:30:00']['prontuario'] .'</td>    
+                <td>'. $agenda['marcacoes'][$cabecalho['dt'][1]]['07:40:00']['prontuario'] .'</td>    
+                <td>'. isset($agenda['marcacoes'][$cabecalho['dt'][1]]['07:50:00']['prontuario']) ? 's' : 'n' .'</td>    
+            </tr>
+            ';
+
+    <td>'. (isset($agenda['marcacoes'][$cabecalho['dt'][1]][$hr])) ? $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['prontuario'] : NULL .'</td>    
+
+
+<td>'. $cabecalho['dt'][0] . ' <> ' .$hr .'</td>
+                <td>'. $cabecalho['dt'][1] . ' <> ' .$hr .'</td>    
+                <td>'. $cabecalho['dt'][2] . ' <> ' .$hr .'</td>
+                <td>'. $cabecalho['dt'][3] . ' <> ' .$hr .'</td>
+                <td>'. $cabecalho['dt'][4] . ' <> ' .$hr .'</td>
+                <td>'. $cabecalho['dt'][5] . ' <> ' .$hr .'</td>
+                <td>'. $cabecalho['dt'][6] . ' <> ' .$hr .'</td>
+
+    <td>'. (isset($agenda['marcacoes'][$cabecalho['dt'][0]][$hr])) ? $agenda['marcacoes'][$cabecalho['dt'][0]][$hr] : NULL .'</td>
+     <tr>
+        <th scope="col" class="bg-secondary">'. $hr .'</th>
+        <td>'. $i .'</td>
+        <td>
+            <a tabindex="0" class="btn btn-warning" role="button" data-bs-toggle="popover" 
+                data-bs-trigger="focus" data-bs-title="NOME" html="true"
+                data-bs-content="prontario: 313546 - especialidade: endoscopia - procedimento: faca neles - equipe: galera boa">27651613</a>
+        </td>
+        <td>
+            <button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
+                
+                    <b>Nome:</b> fulana de tal<br/>
+                    <b>Especialidade:</b> Endoscopia<br/>
+                    <b>Procedimento:</b> faca na muringa<br/>
+                    <b>Equipe:</b> todos habilitados<br/>
+                
+            ">
+                27354168
+            </button>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    */
+    }
+    else {
+        echo '
+            <div class="alert alert-secondary text-center" role="alert">
+                <b>Sem resultados.</b>
+            </div>        
+        ';
+    }
+
+    ?>
+
 </main>
 
 <?= $this->endSection() ?>
