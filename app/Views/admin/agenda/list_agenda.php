@@ -116,72 +116,72 @@
                 <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][0]][$hr])) ? 
                     '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
                     
-                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][0]][$hr]['nome'] .'<br/><br/>
+                    <b>Prontuário:</b> '    . $agenda['marcacoes'][$cabecalho['dt'][0]][$hr]['prontuario'] .'<br/><br/>
                     <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][0]][$hr]['especialidade'] .'<br/><br/>
                     <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][0]][$hr]['procedimento'] .'<br/><br/>
                     <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][0]][$hr]['equipe'] .'<br/>
                 
-                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][0]][$hr]['prontuario'] : NULL ?></td>
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][0]][$hr]['nome'] : NULL ?></td>
                 
                 <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][1]][$hr])) ? 
                     '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
 
-                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['nome'] .'<br/><br/>
+                    <b>Prontuário:</b> '    . $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['prontuario'] .'<br/><br/>
                     <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['especialidade'] .'<br/><br/>
                     <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['procedimento'] .'<br/><br/>
                     <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['equipe'] .'<br/>
                 
-                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['prontuario'] : NULL ?></td>
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][1]][$hr]['nome'] : NULL ?></td>
                 
                 <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][2]][$hr])) ? 
                     '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
                     
-                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][2]][$hr]['nome'] .'<br/><br/>
+                    <b>Prontuário:</b> '    . $agenda['marcacoes'][$cabecalho['dt'][2]][$hr]['prontuario'] .'<br/><br/>
                     <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][2]][$hr]['especialidade'] .'<br/><br/>
                     <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][2]][$hr]['procedimento'] .'<br/><br/>
                     <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][2]][$hr]['equipe'] .'<br/>
                 
-                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][2]][$hr]['prontuario'] : NULL ?></td>
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][2]][$hr]['nome'] : NULL ?></td>
                 
                 <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][3]][$hr])) ? 
                     '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
                     
-                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][3]][$hr]['nome'] .'<br/><br/>
+                    <b>Prontuário:</b> '    . $agenda['marcacoes'][$cabecalho['dt'][3]][$hr]['prontuario'] .'<br/><br/>
                     <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][3]][$hr]['especialidade'] .'<br/><br/>
                     <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][3]][$hr]['procedimento'] .'<br/><br/>
                     <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][3]][$hr]['equipe'] .'<br/>
                 
-                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][3]][$hr]['prontuario'] : NULL ?></td>
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][3]][$hr]['nome'] : NULL ?></td>
 
                 <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][4]][$hr])) ? 
                     '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
                     
-                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][4]][$hr]['nome'] .'<br/><br/>
+                    <b>Prontuário:</b> '    . $agenda['marcacoes'][$cabecalho['dt'][4]][$hr]['prontuario'] .'<br/><br/>
                     <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][4]][$hr]['especialidade'] .'<br/><br/>
                     <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][4]][$hr]['procedimento'] .'<br/><br/>
                     <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][4]][$hr]['equipe'] .'<br/>
                 
-                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][4]][$hr]['prontuario'] : NULL ?></td>
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][4]][$hr]['nome'] : NULL ?></td>
 
                 <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][5]][$hr])) ? 
                     '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
                     
-                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][5]][$hr]['nome'] .'<br/><br/>
+                    <b>Prontuário:</b> '    . $agenda['marcacoes'][$cabecalho['dt'][5]][$hr]['prontuario'] .'<br/><br/>
                     <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][5]][$hr]['especialidade'] .'<br/><br/>
                     <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][5]][$hr]['procedimento'] .'<br/><br/>
                     <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][5]][$hr]['equipe'] .'<br/>
                 
-                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][5]][$hr]['prontuario'] : NULL ?></td>
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][5]][$hr]['nome'] : NULL ?></td>
 
                 <td><?= (isset($agenda['marcacoes'][$cabecalho['dt'][6]][$hr])) ? 
                     '<button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="
                     
-                    <b>Nome:</b> '          . $agenda['marcacoes'][$cabecalho['dt'][6]][$hr]['nome'] .'<br/><br/>
+                    <b>Prontuário:</b> '    . $agenda['marcacoes'][$cabecalho['dt'][6]][$hr]['prontuario'] .'<br/><br/>
                     <b>Especialidade:</b> ' . $agenda['marcacoes'][$cabecalho['dt'][6]][$hr]['especialidade'] .'<br/><br/>
                     <b>Procedimento:</b> '  . $agenda['marcacoes'][$cabecalho['dt'][6]][$hr]['procedimento'] .'<br/><br/>
                     <b>Equipe:</b> '        . $agenda['marcacoes'][$cabecalho['dt'][6]][$hr]['equipe'] .'<br/>
                 
-                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][6]][$hr]['prontuario'] : NULL ?></td>
+                    ">'                     . $agenda['marcacoes'][$cabecalho['dt'][6]][$hr]['nome'] : NULL ?></td>
             </tr>
 
             <?php
