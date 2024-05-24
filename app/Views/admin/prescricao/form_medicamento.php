@@ -146,7 +146,7 @@
                     <div class="col"><b>Posologia:</b> <?= $m['Posologia'] ?></div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="Dose<?= $i ?>" class="form-label"><b>Dose do Protocolo</b> <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
                         <input type="text" id="Dose<?= $i ?>" disabled
@@ -160,7 +160,23 @@
                         <?php endif; ?>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <label for="Ajuste<?= $i ?>" class="form-label"><b>Ajuste</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Ajuste<?= $i ?>" <?= $opt['disabled'] ?>
+                            class="form-control <?php if($validation->getError('Ajuste'.$i)): ?>is-invalid<?php endif ?>"
+                            maxlength="9" name="Ajuste<?= $i ?>" placeholder="Apenas números" onkeyup="ajuste(<?= $i ?>)"
+                            
+                            value="<?php echo $data['input'][$i]['Ajuste']; ?>"/>
+
+                        <?php if ($validation->getError('Ajuste'.$i)): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('Ajuste'.$i) ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>                
+                <div class="col-md-4">
                     <label for="Calculo<?= $i ?>" class="form-label"><b>Cálculo Final</b> <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
                         <input type="text" id="Calculo<?= $i ?>" readonly
@@ -175,24 +191,7 @@
                     </div>
                 </div>
 
-
-                <div class="col-md-4">
-                    <label for="Ajuste<?= $i ?>" class="form-label"><b>Ajuste</b> <b class="text-danger">*</b></label>
-                    <div class="input-group mb-3">
-                        <input type="text" id="Ajuste<?= $i ?>" <?= $opt['disabled'] ?>
-                            class="form-control <?php if($validation->getError('Ajuste'.$i)): ?>is-invalid<?php endif ?>"
-                            maxlength="9" name="Ajuste<?= $i ?>" placeholder="Apenas números" onkeyup="ajuste(<?= $i ?>)"
-                            
-                            value="<?php echo $data['input'][$i]['Ajuste']; ?>"/>
-
-                        <?php if ($validation->getError('Ajuste'.$i)): ?>
-                            <div class="invalid-feedback">
-                                <?= $validation->getError('Ajuste'.$i) ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-                <div class="col-md-4">
+                <!--<div class="col-md-4">
                     <label for="TipoAjuste<?= $i ?>" class="form-label"><b>Tipo de Ajuste</b> <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
 
@@ -238,7 +237,7 @@
                             </div>
                         <?php endif; ?>
                     </div>
-                </div>
+                </div>-->
 
                 <input type="hidden" name="idPreschuap_Prescricao_Medicamento<?= $i ?>"
                     value="<?= $data['input'][$i]['idPreschuap_Prescricao_Medicamento'] ?>" />

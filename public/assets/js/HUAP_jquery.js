@@ -159,7 +159,8 @@ function ajuste(campo) {
     //busca os valores
     var dose    = $("#Dose"+campo).val();
     var ajuste  = $("#Ajuste"+campo).val();
-    var tipo    = $("#TipoAjuste"+campo).val();
+    //var tipo    = $("#TipoAjuste"+campo).val();
+    var tipo    = 2;
     var formula = $("#Formula"+campo).val();
     var peso    = $("#Peso").val();
     var sc      = $("#SuperficieCorporal").val();

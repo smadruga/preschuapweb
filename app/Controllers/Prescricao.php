@@ -530,7 +530,8 @@ class Prescricao extends BaseController
             foreach ($v['data']['medicamento'] as $key => $val) {
                 $v['data']['input'][$key]['idPreschuap_Prescricao_Medicamento'] = $val['idPreschuap_Prescricao_Medicamento'];
 
-                $v['data']['input'][$key]['TipoAjuste']                         = $val['TipoAjuste'];
+                #$v['data']['input'][$key]['TipoAjuste']                         = $val['TipoAjuste'];
+                $v['data']['input'][$key]['TipoAjuste']                         = 2;
                 $v['data']['input'][$key]['idTabPreschuap_MotivoAjusteDose']    = $val['idTabPreschuap_MotivoAjusteDose'];
                 $v['data']['input'][$key]['Calculo']                            = $val['Calculo2'];
 
@@ -553,8 +554,10 @@ class Prescricao extends BaseController
             for ($i = 0; $i < count($v['data']['medicamento']); $i++) {
                 $v['data']['input'][$i]['idPreschuap_Prescricao_Medicamento'] = $v['data']['input']['idPreschuap_Prescricao_Medicamento'.$i];
                 $v['data']['input'][$i]['Ajuste']                             = $v['data']['input']['Ajuste'.$i];
-                $v['data']['input'][$i]['TipoAjuste']                         = $v['data']['input']['TipoAjuste'.$i];
-                $v['data']['input'][$i]['idTabPreschuap_MotivoAjusteDose']    = $v['data']['input']['idTabPreschuap_MotivoAjusteDose'.$i];
+                #$v['data']['input'][$i]['TipoAjuste']                         = $v['data']['input']['TipoAjuste'.$i];
+                $v['data']['input'][$i]['TipoAjuste']                         = 2;
+                #$v['data']['input'][$i]['idTabPreschuap_MotivoAjusteDose']    = $v['data']['input']['idTabPreschuap_MotivoAjusteDose'.$i];
+                $v['data']['input'][$i]['idTabPreschuap_MotivoAjusteDose']    = NULL;
                 $v['data']['input'][$i]['Calculo']                            = $v['data']['input']['Calculo'.$i];
 
                 $inputs = $this->validate(['Ajuste'.$i => ['label' => 'Ajuste', 'rules' => 'permit_empty|regex_match[/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:(\.|,)\d+)?$/]']]);
