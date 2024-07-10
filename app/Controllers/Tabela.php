@@ -243,6 +243,7 @@ class Tabela extends BaseController
         if($v['tabela'] == 'Protocolo') {
             $v['select']['TipoTerapia']     = $tabela->list_tabela_bd('TipoTerapia', FALSE, FALSE, '*', FALSE, $notinativo); #Carrega os itens da tabela selecionada
             $v['select']['Categoria']       = $tabela->list_tabela_bd('Categoria', FALSE, FALSE, '*', 'idTabPreschuap_Categoria'); #Carrega os itens da tabela selecionada
+            $v['select']['TipoAgendamento'] = $tabela->list_tabela_bd('TipoAgendamento', FALSE, FALSE, '*', 'idTabPreschuap_TipoAgendamento'); #Carrega os itens da tabela selecionada
             $v['select']['Aplicabilidade']  = ['CANCEROLOGIA', 'HEMATOLOGIA'];
 
         }
@@ -255,6 +256,13 @@ class Tabela extends BaseController
             $v['select']['Diluente']            = $tabela->list_tabela_bd('Diluente', FALSE, FALSE, FALSE, FALSE, $notinativo); #Carrega os itens da tabela selecionada
             $v['select']['Posologia']           = $tabela->list_tabela_bd('Posologia', FALSE, FALSE, FALSE, FALSE, $notinativo); #Carrega os itens da tabela selecionada
         }
+
+        /*
+        echo "<pre>";
+        print_r($v['select']);
+        echo "</pre>";
+        exit('oi');
+        #*/
 
         if($action == 'habilitar' || $action == 'desabilitar') {
 
@@ -276,7 +284,8 @@ class Tabela extends BaseController
                 echo "<pre>";
                 print_r($v['tabela']);
                 echo "</pre>";
-                echo "<pre>";
+                exit('oi');
+                /*echo "<pre>";
                 print_r($v['id']);
                 echo "</pre>";
                 echo "<pre>";
@@ -316,7 +325,7 @@ class Tabela extends BaseController
             
             /*
             echo "<pre>";
-            print_r($v['data']);
+            print_r($v['select']);
             echo "</pre>";
             exit('oi');
             #*/
@@ -335,6 +344,7 @@ class Tabela extends BaseController
                         'Item'                          => ['label' => 'Protocolo', 'rules' => 'required'],
                         'Aplicabilidade'                => 'required',
                         'idTabPreschuap_TipoTerapia'    => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
+                        'idTabPreschuap_TipoAgendamento'=> ['label' => 'Tipo de Agendamento', 'rules' => 'required'],
                         'idTabPreschuap_Categoria'      => ['label' => 'Categoria', 'rules' => 'required'],
                         'Observacoes'                   => ['label' => 'Observações', 'rules' => 'required'],
                     ]);
@@ -461,6 +471,7 @@ class Tabela extends BaseController
                         'Codigo'                        =>  '',
                         'Aplicabilidade'                =>  '',
                         'idTabPreschuap_TipoTerapia'    =>  '',
+                        'idTabPreschuap_TipoAgendamento'=>  '',
                         'idTabPreschuap_Categoria'      =>  '',
                         'Observacoes'                   =>  '',
 

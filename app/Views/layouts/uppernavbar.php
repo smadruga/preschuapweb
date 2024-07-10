@@ -30,6 +30,7 @@
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/MotivoAjusteDose') ?>"><i class="fa-solid fa-table-list"></i> Motivo de Ajuste de Dose</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Posologia') ?>"><i class="fa-solid fa-table-list"></i> Posologia</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Protocolo') ?>"><i class="fa-solid fa-table-list"></i> Protocolo</a>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/TipoAgendamento') ?>"><i class="fa-solid fa-table-list"></i> Tipo de Agendamento</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/TipoTerapia') ?>"><i class="fa-solid fa-table-list"></i> Tipo de Terapia</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/ViaAdministracao') ?>"><i class="fa-solid fa-table-list"></i> Via de Administração</a>
                     </div>

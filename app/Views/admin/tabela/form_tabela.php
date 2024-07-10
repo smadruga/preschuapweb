@@ -108,7 +108,7 @@
                                 <?php endif; ?>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <label for="Aplicabilidade" class="form-label"><b>Aplicabilidade</b> <b class="text-danger">*</b></label>
                             <div class="input-group mb-3">
 
@@ -127,6 +127,30 @@
                                 <?php if ($validation->getError('Aplicabilidade')): ?>
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('Aplicabilidade') ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="idTabPreschuap_TipoAgendamento" class="form-label"><b>Tipo de Agendamento</b> <b class="text-danger">*</b></label>
+                            <div class="input-group mb-3">
+
+                                <select <?= $opt['disabled'] ?>
+                                    class="form-select <?php if($validation->getError('idTabPreschuap_TipoAgendamento')): ?>is-invalid<?php endif ?>"
+                                    id="idTabPreschuap_TipoAgendamento" name="idTabPreschuap_TipoAgendamento" data-placeholder="Selecione uma opção"
+                                    data-allow-clear="1">
+                                    <option></option>
+                                    <?php
+                                    foreach ($select['TipoAgendamento']->getResultArray() as $val) {
+                                        $selected = ($data['idTabPreschuap_TipoAgendamento'] == $val['idTabPreschuap_TipoAgendamento']) ? 'selected' : '';
+                                        echo '<option value="'.$val['idTabPreschuap_TipoAgendamento'].'" '.$selected.'>'.$val['TipoAgendamento'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+
+                                <?php if ($validation->getError('idTabPreschuap_TipoAgendamento')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('idTabPreschuap_TipoAgendamento') ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
