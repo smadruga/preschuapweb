@@ -14,7 +14,7 @@
             <div class="ps-2 pe-2"></div>
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('paciente/find_paciente') ?>"><i class="fa-solid fa-file-medical"></i> Prescrição
+                    <a class="nav-link" href="<?= base_url('paciente/find_paciente') ?>"><i class="fa-solid fa-hospital-user"></i> Paciente
                         <span class="visually-hidden"></span>
                     </a>
                 </li>

@@ -42,6 +42,7 @@
                             <a class="btn btn-outline-info" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
                             <a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-copy"></i> Copiar</a>
                             <!--<a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idPreschuap_Prescricao'].'/1') ?>" role="button"><i class="fa-solid fa-repeat"></i> Continuar</a>-->
+                            <a class="btn btn-outline-info click" href="<?= base_url('agenda/agenda_prescricao/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-calendar"></i> Agendar</a>
                         <?php } else { ?>
                             <a class="btn btn-outline-warning" id="click" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Editar</a>
                             <a class="btn btn-outline-danger" id="click" href="<?= base_url('prescricao/manage_prescricao/excluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-trash-can"></i> Excluir</a>
