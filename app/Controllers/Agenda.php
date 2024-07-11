@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\PacienteModel;
+use App\Models\PrescricaoModel;
 use App\Models\AgendaModel;
 use App\Models\TabelaModel;
 
@@ -30,22 +31,39 @@ class Agenda extends BaseController
     {
 
         $tabela         = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
-        $paciente       = new PacienteModel(); #Inicia o objeto baseado na TabelaModel
+        $prescricao     = new PrescricaoModel(); #Inicia o objeto baseado na TabelaModel
         $auditoria      = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
         $auditorialog   = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
         $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias
 
-        return view('admin/agenda/form_agenda', $v);
+        if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+            $v['data'] = [
+                'idPreschuap_Agenda'                => '',
+                'Prontuario'                        => '',
+                'DataAgendamento'                   => date('d/m/Y', time()),
+                'Turno'                             => '',
+                'Observacoes'                       => '',
+                'idPreschuap_Prescricao'            => '',                
+
+                'submit'                            => '',
+            ];
+
+            $v['data']['prescricao'] = $prescricao->read_prescricao($id, true, true);
+        }
+        else {
+            #Captura os inputs do Formulário
+            $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+            #echo '111111111oi';
+        }
 
         /*
         echo "<pre>";
-        print_r($val);
+        print_r($v['data']);
         echo "</pre>";
-        echo "<pre>";
-        print_r($v['campos']);
-        echo "</pre>";
-        #exit('oi');
+        exit('oi');
         #*/
+
+        return view('admin/agenda/form_agenda', $v);
 
     }
 }

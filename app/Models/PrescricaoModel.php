@@ -68,6 +68,7 @@ class PrescricaoModel extends Model
                 , concat(tc.idTabPreschuap_Categoria, " - ", tc.Categoria) as Categoria
                 , concat(ts.idTabPreschuap_Subcategoria, " - ", ts.Subcategoria) as Subcategoria
                 , tp.Protocolo
+                , p.idTabPreschuap_Protocolo
                 , tp.Observacoes
                 , ttt.TipoTerapia
                 , p.CiclosTotais
