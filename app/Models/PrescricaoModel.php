@@ -91,6 +91,9 @@ class PrescricaoModel extends Model
                 , p.ReacaoAdversa
                 , p.Alergia
                 , p.Concluido
+
+                , tp.idTabPreschuap_TipoAgendamento 
+                , tta.TipoAgendamento 
             FROM
                 preschuapweb.Preschuap_Prescricao as p
                     left join TabPreschuap_Categoria as tc on p.idTabPreschuap_Categoria = tc.idTabPreschuap_Categoria
@@ -99,6 +102,7 @@ class PrescricaoModel extends Model
                     left join TabPreschuap_TipoTerapia as ttt on p.idTabPreschuap_TipoTerapia = ttt.idTabPreschuap_TipoTerapia
                     left join Sishuap_Usuario as u on p.idSishuap_Usuario = u.idSishuap_Usuario
                     left join TabPreschuap_MotivoCancelamento as tmc on p.idTabPreschuap_MotivoCancelamento = tmc.idTabPreschuap_MotivoCancelamento
+                    left join TabPreschuap_TipoAgendamento as tta on tp.idTabPreschuap_TipoAgendamento = tta.idTabPreschuap_TipoAgendamento
             WHERE
                 '.$where.'
             ORDER BY p.idPreschuap_Prescricao DESC
