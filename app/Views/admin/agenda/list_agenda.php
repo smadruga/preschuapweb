@@ -2,33 +2,62 @@
 <?= $this->section('subcontent') ?>
 
 <main class="container">
-    <form method="post" action="<?= base_url('paciente/get_paciente') ?>">
-        <?= csrf_field() ?>
-        <?php $validation = \Config\Services::validation(); ?>
+<br><br>
+    <div class="alert alert-primary" role="alert">
 
-        <?= $this->include('layouts/div_flashdata') ?>
-
-        <div class="card">
-            <div class="card-header">
-                <b>Pesquisar Prescrição</b>
-            </div>
-            <div class="card-body has-validation">
-                <div class="input-group mb-3">
-                    <input type="text" id="Pesquisar" class="form-control <?php if($validation->getError('Pesquisar')): ?>is-invalid<?php endif ?>" autofocus name="Pesquisar" value="<?php echo set_value('Pesquisar'); ?>"/>
-                    <button class="btn btn-info" id="submit" type="submit"><i class="fa-solid fa-search"></i> Pesquisar</button>
-                    <?php if ($validation->getError('Pesquisar')): ?>
-                        <div class="invalid-feedback">
-                            <?= $validation->getError('Pesquisar') ?>
-                        </div>
-                    <?php endif; ?>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col text-end">
+                    <button type="button" class="btn btn-info btn-sm"><< Anterior</button>
                 </div>
-                <div class="form-text">
-                    Informe o número da prescrição.
+                <div class="col text-center">
+                    <b>DATA: <?= $agenda['dataptbr'] ?></b>
+                </div>
+                <div class="col text-start">
+                    <button type="button" class="btn btn-info btn-sm">Próximo>></button>
                 </div>
             </div>
         </div>
 
-    </form>
+    </div>
+
+    <hr>
+
+
+    <div class="alert alert-secondary text-center" role="alert">
+        <b>TURNO: MANHÃ</b>
+    </div>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <td>#</td>
+            <td>Tipo</td>
+            <td>Prontuário</td>
+            <td>Nome</td>
+            <td>Protocolo</td>
+            <td>Medicamento</td>
+            <td>Via</td>
+            <td>Dose</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <div class="alert alert-secondary text-center" role="alert">
+        <b>TURNO: TARDE</b>
+    </div>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <td>#</td>
+            <td>Tipo</td>
+            <td>Prontuário</td>
+            <td>Nome</td>
+            <td>Protocolo</td>
+            <td>Medicamento</td>
+            <td>Via</td>
+            <td>Dose</td>
+        </tr>
+    </table>
+
 </main>
 
 <?= $this->endSection() ?>

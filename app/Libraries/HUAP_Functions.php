@@ -3,6 +3,7 @@
 namespace App\Libraries;
 
 use CodeIgniter\I18n\Time;
+use DateTime;
 
 class HUAP_Functions
 {
@@ -1072,6 +1073,30 @@ class HUAP_Functions
     	}
 
     	return $string;
+    }
+
+    /**
+    * Função que descreve o dia da semana em português
+    *
+    * @return double
+    */
+    function dia_da_semana($data) {
+
+        $date = new DateTime($data);
+        $diaen = $date->format('l'); // 'l' para nome completo do dia da semana
+        
+        $diaptbr = [
+            'Sunday'    => 'Domingo',
+            'Monday'    => 'Segunda-feira',
+            'Tuesday'   => 'Terça-feira',
+            'Wednesday' => 'Quarta-feira',
+            'Thursday'  => 'Quinta-feira',
+            'Friday'    => 'Sexta-feira',
+            'Saturday'  => 'Sábado',
+        ];
+
+        return $diaptbr[$diaen];
+
     }
 
 }

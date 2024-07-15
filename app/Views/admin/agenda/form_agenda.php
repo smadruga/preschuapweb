@@ -77,9 +77,12 @@
 
                 <div class="col-md-12">
                     <input type="hidden" name="idPreschuap_Prescricao" id="idPreschuap_Prescricao" value="<?= $data['prescricao']['idPreschuap_Prescricao'] ?>" />
-                    <button class="btn btn-info" id="submit" name="submit" value="1" type="submit">
-                        <i class="fa-solid fa-check-circle"></i> Salvar
+                    <button class="btn btn-primary" id="submit" name="submit" value="1" type="submit">
+                        <i class="fa-solid fa-calendar-check"></i> Salvar e Concluir
                     </button>
+                    <button class="btn btn-info" id="submit" name="submit" value="2" type="submit">
+                        <i class="fa-solid fa-calendar-plus"></i> Salvar e Novo Agendamento
+                    </button>                    
                 </div>
 
             </div>
