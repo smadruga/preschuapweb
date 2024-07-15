@@ -30,6 +30,7 @@
     <table class="table table-striped table-bordered">
         <tr>
             <td>#</td>
+            <td>Obs</td>
             <td>Tipo</td>
             <td>Prontuário</td>
             <td>Nome</td>
@@ -48,6 +49,7 @@
     <table class="table table-striped table-bordered">
         <tr>
             <td>#</td>
+            <td>Obs</td>
             <td>Tipo</td>
             <td>Prontuário</td>
             <td>Nome</td>

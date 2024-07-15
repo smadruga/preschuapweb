@@ -31,14 +31,22 @@ class AgendaModel extends Model
         $db = \Config\Database::connect();
         $query = $db->query('
             SELECT 
-                pa.*
-                , pp.Prontuario 
-                , tpp.Protocolo 
-                , tpp.idTabPreschuap_TipoAgendamento 
+                tpp.idTabPreschuap_TipoAgendamento 	
+                , pp.Prontuario
+                , tpp.Protocolo
+                , ppm.idTabPreschuap_Medicamento 
+                , tpm.Medicamento 
+                , ppm.idTabPreschuap_ViaAdministracao 
+                , tpva.Codigo 
+                , ppm.Dose
+                , pa.*
             FROM 
                 Preschuap_Agenda pa
-                    JOIN Preschuap_Prescricao pp on pa.idPreschuap_Prescricao = pp.idPreschuap_Prescricao
-                    JOIN TabPreschuap_Protocolo tpp on pp.idTabPreschuap_Protocolo = tpp.idTabPreschuap_Protocolo 
+                    JOIN Preschuap_Prescricao pp				ON pa.idPreschuap_Prescricao 		= pp.idPreschuap_Prescricao
+                    JOIN TabPreschuap_Protocolo tpp 			ON pp.idTabPreschuap_Protocolo 		= tpp.idTabPreschuap_Protocolo 
+                    JOIN Preschuap_Prescricao_Medicamento ppm 	ON pp.idPreschuap_Prescricao 		= ppm.idPreschuap_Prescricao 
+                        JOIN TabPreschuap_ViaAdministracao tpva 	ON ppm.idTabPreschuap_ViaAdministracao 	= tpva.idTabPreschuap_ViaAdministracao 
+                        JOIN TabPreschuap_Medicamento tpm 			ON ppm.idTabPreschuap_Medicamento 		= tpm.idTabPreschuap_Medicamento 
             WHERE 
                 pa.DataAgendamento = \'2024-07-12\'
             ORDER BY 
@@ -49,6 +57,21 @@ class AgendaModel extends Model
         ');
         $query = $query->getResultArray();
 
+        $agenda = array();
+        foreach($query as $v) {
+            #$agenda[$v['Turno']][] = $v;
+            echo "<pre>";
+            print_r($v);
+            echo "</pre>";            
+            /*foreach($v as $x) {
+                #echo '<br>'.$x['idPreschuap_Agenda'];
+                echo "<pre>";
+                print_r($x);
+                echo "</pre>";
+            }*/
+        }
+            
+
         $wherein = '(';
         foreach($query as $v)
             $wherein .= $v['Prontuario'].',';
@@ -56,18 +79,16 @@ class AgendaModel extends Model
         $wherein = substr($wherein, 0, -1).')';
 
         $paciente = $this->list_paciente_aghux($wherein);
-        $i=0;
-        $pacarray = [];
-        foreach ($paciente->getResultArray() as $v) {
+        $pacarray = array();
+        foreach ($paciente->getResultArray() as $v) 
             $pacarray[$v['prontuario']] = $v['nome'];
-        }
 
 
-        $q['agenda']    = $query;
+        $q['agenda']    = $agenda;
         $q['paciente']  = $pacarray;
 
 
-        /*
+        #/*
         #echo $db->getLastQuery();
         echo "<pre>";
         print_r($q);
