@@ -64,13 +64,16 @@
                     <div class="input-group mb-3">
                         <input type="text" id="Observacoes" <?= $opt['disabled'] ?>
                             class="form-control <?php if($validation->getError('Observacoes')): ?>is-invalid<?php endif ?>"
-                            name="Observacoes" value="<?php echo $data['Observacoes']; ?>" maxlength="20"/>
+                            name="Observacoes" value="<?php echo $data['Observacoes']; ?>" maxlength="15"/>
                         <?php if ($validation->getError('Observacoes')): ?>
                             <div class="invalid-feedback">
                                 <?= $validation->getError('Observacoes') ?>
                             </div>
                         <?php endif; ?>
                     </div>
+                    <div class="form-text">
+                        Máximo 15 caracteres
+                    </div>                    
                 </div>             
 
                 <hr />

@@ -32,13 +32,17 @@ class AgendaModel extends Model
         $query = $db->query('
             SELECT 
                 tpp.idTabPreschuap_TipoAgendamento 	
+                , pa.Turno 
+                , ppm.idTabPreschuap_EtapaTerapia 
+                , ppm.idTabPreschuap_ViaAdministracao 
+                , ppm.idTabPreschuap_Medicamento 
                 , pp.Prontuario
                 , tpp.Protocolo
                 , ppm.idTabPreschuap_Medicamento 
                 , tpm.Medicamento 
                 , ppm.idTabPreschuap_ViaAdministracao 
                 , tpva.Codigo 
-                , ppm.Dose
+                , format(ppm.Dose, 2, "pt_BR") as Dose
                 , pa.*
             FROM 
                 Preschuap_Agenda pa
@@ -59,18 +63,22 @@ class AgendaModel extends Model
 
         $agenda = array();
         foreach($query as $v) {
-            #$agenda[$v['Turno']][] = $v;
-            echo "<pre>";
-            print_r($v);
-            echo "</pre>";            
-            /*foreach($v as $x) {
-                #echo '<br>'.$x['idPreschuap_Agenda'];
-                echo "<pre>";
-                print_r($x);
-                echo "</pre>";
-            }*/
+            if($v['idTabPreschuap_TipoAgendamento'] == 1 && $v['idTabPreschuap_EtapaTerapia'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 2) {
+                $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
+            }
+            elseif ($v['idTabPreschuap_TipoAgendamento'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 4)
+                $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
+            elseif ($v['idTabPreschuap_TipoAgendamento'] == 3 || $v['idTabPreschuap_TipoAgendamento'] == 4 || $v['idTabPreschuap_TipoAgendamento'] == 5)
+                $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
         }
             
+
+        /*
+        echo "<pre>";
+        print_r($agenda);
+        echo "</pre>";
+        exit('e<><>e');
+        #*/
 
         $wherein = '(';
         foreach($query as $v)
@@ -84,11 +92,11 @@ class AgendaModel extends Model
             $pacarray[$v['prontuario']] = $v['nome'];
 
 
-        $q['agenda']    = $agenda;
-        $q['paciente']  = $pacarray;
+        $q['agendamento']   = $agenda;
+        $q['paciente']      = $pacarray;
 
 
-        #/*
+        /*
         #echo $db->getLastQuery();
         echo "<pre>";
         print_r($q);

@@ -111,7 +111,7 @@ class Agenda extends BaseController
 
         /*
         echo "<pre>";
-        print_r($v['data']);
+        print_r($v['agenda']);
         echo "</pre>";
         exit('oi');
         #*/
