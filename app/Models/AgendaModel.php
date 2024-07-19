@@ -37,6 +37,7 @@ class AgendaModel extends Model
                 , ppm.idTabPreschuap_ViaAdministracao 
                 , ppm.idTabPreschuap_Medicamento 
                 , pp.Prontuario
+                , tpp.idTabPreschuap_Protocolo
                 , tpp.Protocolo
                 , ppm.idTabPreschuap_Medicamento 
                 , tpm.Medicamento 
@@ -57,19 +58,23 @@ class AgendaModel extends Model
                 pa.Turno ASC 
                 , tpp.idTabPreschuap_TipoAgendamento ASC 
                 , pa.idPreschuap_Agenda ASC
+                , ppm.idTabPreschuap_Medicamento ASC
             ;
         ');
         $query = $query->getResultArray();
 
         $agenda = array();
         foreach($query as $v) {
-            if($v['idTabPreschuap_TipoAgendamento'] == 1 && $v['idTabPreschuap_EtapaTerapia'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 2) {
+            
+            $v['badge'] = $this->badge($v['idTabPreschuap_TipoAgendamento']);
+
+            if($v['idTabPreschuap_TipoAgendamento'] == 1 && $v['idTabPreschuap_EtapaTerapia'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 2) 
                 $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
-            }
             elseif ($v['idTabPreschuap_TipoAgendamento'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 4)
                 $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
             elseif ($v['idTabPreschuap_TipoAgendamento'] == 3 || $v['idTabPreschuap_TipoAgendamento'] == 4 || $v['idTabPreschuap_TipoAgendamento'] == 5)
                 $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
+                
         }
             
 
@@ -141,6 +146,36 @@ class AgendaModel extends Model
         #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 
         return $query;
+
+    }
+
+    /**
+    * Função que adciona um badge de acordo com o tipo de agendamento.
+    *
+    * @return text
+    */    
+    public function badge($data)
+    {
+
+        if($data == 1)
+            $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Salão de Quimioterapia"><i class="fa-solid fa-couch"></i></span>';
+        elseif($data == 2)
+            $badge = '<span class="badge bg-success text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Injeção"><i class="fa-solid fa-syringe"></i></span>';
+        elseif($data == 3)
+            $badge = '<span class="badge bg-warning text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Medicação de Suporte"><i class="fa-solid fa-pills"></i></span>';
+        elseif($data == 4)
+            $badge = '<span class="badge bg-danger text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Internação"><i class="fa-solid fa-bed"></i></span>';
+        else
+            $badge = '<span class="badge bg-info text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Intratecal"><i class="fa-solid fa-house-medical"></i></span>';
+
+        /*
+        echo "<pre>";
+        #print_r($v['data']);
+        echo "</pre>";
+        exit($badge.'oi'.$data);
+        #*/
+
+        return $badge;
 
     }
 

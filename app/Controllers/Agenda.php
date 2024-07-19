@@ -120,34 +120,4 @@ class Agenda extends BaseController
 
     }
 
-    /**
-    * Função que adciona um badge de acordo com o tipo de agendamento.
-    *
-    * @return text
-    */    
-    public function badge($data)
-    {
-
-        if($data == 1)
-            $badge = '<span class="badge bg-primary text-white"><i class="fa-solid fa-couch"></i></span>';
-        elseif($data == 2)
-            $badge = '<span class="badge bg-primary text-white"><i class="fa-solid fa-syringe"></i></span>';
-        elseif($data == 3)
-            $badge = '<span class="badge bg-primary text-white"><i class="fa-solid fa-pills"></i></span>';
-        elseif($data == 4)
-            $badge = '<span class="badge bg-primary text-white"><i class="fa-solid fa-bed"></i></span>';
-        else
-            $badge = '<span class="badge bg-primary text-white"><i class="fa-solid fa-house-medical"></i></span>';
-
-        /*
-        echo "<pre>";
-        print_r($v['data']);
-        echo "</pre>";
-        exit('oi');
-        #*/
-
-        return $badge;
-
-    }
-
 }
