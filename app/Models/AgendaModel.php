@@ -25,8 +25,12 @@ class AgendaModel extends Model
     *
     * @return void
     */
-    public function list_agenda($agenda)
+    public function list_agenda($data)
     {
+
+        $data = ($data) ? $data : date('Y-m-d'); 
+
+#exit('>>>'.$data);
 
         $db = \Config\Database::connect();
         $query = $db->query('
@@ -53,7 +57,7 @@ class AgendaModel extends Model
                         JOIN TabPreschuap_ViaAdministracao tpva 	ON ppm.idTabPreschuap_ViaAdministracao 	= tpva.idTabPreschuap_ViaAdministracao 
                         JOIN TabPreschuap_Medicamento tpm 			ON ppm.idTabPreschuap_Medicamento 		= tpm.idTabPreschuap_Medicamento 
             WHERE 
-                pa.DataAgendamento = \'2024-07-12\'
+                pa.DataAgendamento = '.$data.'
             ORDER BY 
                 pa.Turno ASC 
                 , tpp.idTabPreschuap_TipoAgendamento ASC 
@@ -62,6 +66,29 @@ class AgendaModel extends Model
             ;
         ');
         $query = $query->getResultArray();
+        $qnr = count($query);
+
+        #/*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit('e<><>eas42423asfsd'.$qnr);
+        #*/
+
+        if (!$query) {
+            $q = array();
+            return $q;
+        }
+            
+        
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit('e<><>eas42423asfsd'.$qnr);
+        #*/
 
         $agenda = array();
         foreach($query as $v) {
@@ -90,7 +117,7 @@ class AgendaModel extends Model
             $wherein .= $v['Prontuario'].',';
 
         $wherein = substr($wherein, 0, -1).')';
-
+#exit($wherein);
         $paciente = $this->list_paciente_aghux($wherein);
         $pacarray = array();
         foreach ($paciente->getResultArray() as $v) 
@@ -101,8 +128,8 @@ class AgendaModel extends Model
         $q['paciente']      = $pacarray;
 
 
-        /*
-        #echo $db->getLastQuery();
+        #/*
+        echo $db->getLastQuery();
         echo "<pre>";
         print_r($q);
         echo "</pre>";

@@ -104,10 +104,19 @@ class Agenda extends BaseController
 
         $v['agenda'] = $agenda->list_agenda($data);
 
-        $v['agenda']['databd'] = ($data) ? $data : date('Y-m-d'); 
+        $v['agenda']['databd'] = ($data) ? $data : date('Y-m-d');
 
-        $dataptbr = new DateTime();
-        $v['agenda']['dataptbr'] = $dataptbr->format('d/m/Y').' - '.$v['func']->dia_da_semana($v['agenda']['databd']); // Output: 08/07/2024
+        // Gerar URLs para navegação
+        $prox = date('Y-m-d', strtotime($v['agenda']['databd'] . ' +1 day'));
+        $ant = date('Y-m-d', strtotime($v['agenda']['databd'] . ' -1 day'));
+
+        $v['agenda']['ProxUrl'] = site_url('agenda/index/' . $prox);
+        $v['agenda']['AntUrl'] = site_url('agenda/index/' . $ant);
+
+        $dataptbr = date_create($data); // Cria um objeto DateTime a partir da string de data
+        $v['agenda']['dataptbr'] = ($dataptbr) ?  date_format($dataptbr, 'd/m/Y') : date('d/m/Y');
+
+        $v['agenda']['data'] = $v['agenda']['dataptbr'].' - '.$v['func']->dia_da_semana($v['agenda']['databd']); 
 
         /*
         echo "<pre>";
