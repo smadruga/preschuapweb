@@ -56,6 +56,17 @@ class Agenda extends BaseController
             #Captura os inputs do Formulário
             $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             
+            $validation = \Config\Services::validation();
+            $valid = $this->validate([
+                'DataAgendamento' => 'required|valid_date',
+                'Turno' => 'required',
+                'Observacoes' => 'max_length[15]',
+            ]);
+
+            if (!$valid) {
+                return redirect()->back()->withInput()->with('validation', $validation);
+            }
+
             $submit = $v['data']['submit'];
             $id     = $v['data']['idPreschuap_Prescricao'];
             unset($v['data']['csrf_test_name'],$v['data']['submit']);
@@ -102,9 +113,14 @@ class Agenda extends BaseController
         $agenda         = new AgendaModel(); #Inicia o objeto baseado na TabelaModel
         $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias do HUAP
 
-        $v['agenda'] = $agenda->list_agenda($data);
+        $datapost = $this->request->getPost('data');
+        if($datapost) 
+            $data = $datapost;
+        else
+            $data = ($data) ? $data : date('Y-m-d');
 
-        $v['agenda']['databd'] = ($data) ? $data : date('Y-m-d');
+        $v['agenda'] = $agenda->list_agenda($data);
+        $v['agenda']['databd'] = $data;
 
         // Gerar URLs para navegação
         $prox = date('Y-m-d', strtotime($v['agenda']['databd'] . ' +1 day'));

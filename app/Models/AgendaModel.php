@@ -57,7 +57,7 @@ class AgendaModel extends Model
                         JOIN TabPreschuap_ViaAdministracao tpva 	ON ppm.idTabPreschuap_ViaAdministracao 	= tpva.idTabPreschuap_ViaAdministracao 
                         JOIN TabPreschuap_Medicamento tpm 			ON ppm.idTabPreschuap_Medicamento 		= tpm.idTabPreschuap_Medicamento 
             WHERE 
-                pa.DataAgendamento = '.$data.'
+                pa.DataAgendamento = \''.$data.'\'
             ORDER BY 
                 pa.Turno ASC 
                 , tpp.idTabPreschuap_TipoAgendamento ASC 
@@ -67,8 +67,9 @@ class AgendaModel extends Model
         ');
         $query = $query->getResultArray();
         $qnr = count($query);
-
-        #/*
+//pa.DataAgendamento = '.$data.'
+//pa.DataAgendamento = \'2024-07-25\'
+        /*
         echo $db->getLastQuery();
         echo "<pre>";
         print_r($query);
@@ -128,12 +129,12 @@ class AgendaModel extends Model
         $q['paciente']      = $pacarray;
 
 
-        #/*
+        /*
         echo $db->getLastQuery();
         echo "<pre>";
         print_r($q);
         echo "</pre>";
-        exit('<><>');
+        #exit('<><>');
         #*/
         #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 

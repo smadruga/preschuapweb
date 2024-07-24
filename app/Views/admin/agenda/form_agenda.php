@@ -22,45 +22,48 @@
                 
                 <hr>
                 
-                
-                    <div class="col-md-4">
-                        <label for="DataAgendamento" class="form-label">Data do Agendamento <b class="text-danger">*</b></label>
-                        <div class="input-group mb-3">
-                            <input type="date" id="DataAgendamento" <?= $opt['disabled'] ?> maxlength="10"
-                                class="form-control <?php if($validation->getError('DataAgendamento')): ?>is-invalid<?php endif ?>"
-                                autofocus name="DataAgendamento" value="<?php echo $data['DataAgendamento']; ?>"/>
-                            <?php if ($validation->getError('DataAgendamento')): ?>
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('DataAgendamento') ?>
-                                </div>
-                            <?php endif; ?>
+                <div class="col-md-4">
+                    <label for="DataAgendamento" class="form-label">Data do Agendamento <b class="text-danger">*</b></label>
+                    <div class="input-group mb-3">
+                        <input type="date" id="DataAgendamento" <?= $opt['disabled'] ?> maxlength="10"
+                            class="form-control <?php if($validation->getError('DataAgendamento')): ?>is-invalid<?php endif ?>"
+                            autofocus name="DataAgendamento" value="<?php echo $data['DataAgendamento']; ?>"/>
+                        <?php if ($validation->getError('DataAgendamento')): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('DataAgendamento') ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            
+                <div class="col-md-2">
+                    <label for="Turno" class="form-label">Turno <b class="text-danger">*</b></label>
+                    
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Turno" value="M" id="Turno">
+                            <label class="form-check-label" for="Turno">
+                                Manhã
+                            </label>
                         </div>
-                    </div>
-                
-                
-                
-                    <div class="col-md-2">
-                        <label for="Turno" class="form-label">Turno <b class="text-danger">*</b></label>
-                        
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="Turno" value="M" id="Turno">
-                                <label class="form-check-label" for="Turno">
-                                    Manhã
-                                </label>
-                            </div>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="Turno" value="T" id="Turno">
-                                <label class="form-check-label" for="Turno">
-                                    Tarde
-                                </label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Turno" value="T" id="Turno">
+                            <label class="form-check-label" for="Turno">
+                                Tarde
+                            </label>
+                            <div class="invalid-feedback">
+                                <?php if ($validation->getError('Turno')): ?>
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('Turno') ?>
+                                    </div>
+                                <?php endif; ?>
                             </div>
-                        
-                    </div>
-                
+                        </div>
 
+                </div>
+                
                 <div class="col-md-6">
-                    <label for="Observacoes" class="form-label">Observações <b class="text-danger">*</b></label>
+                    <label for="Observacoes" class="form-label">Observações</label>
                     <div class="input-group mb-3">
                         <input type="text" id="Observacoes" <?= $opt['disabled'] ?>
                             class="form-control <?php if($validation->getError('Observacoes')): ?>is-invalid<?php endif ?>"

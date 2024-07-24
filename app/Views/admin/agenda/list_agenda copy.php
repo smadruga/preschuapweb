@@ -6,13 +6,28 @@
     <div class="alert alert-primary" role="alert" >
         <div class="container text-center" >
             <div class="row">
-                <div class="col text-end">
+                <div class="col-2 text-end">
                     <!-- Link para a página anterior -->
-                    <a href="<?= esc($agenda['AntUrl']) ?>" class="btn btn-info" role="button" aria-label="Anterior" style="text-decoration:none">
+                    <a href="<?= esc($agenda['AntUrl']) ?>" class="btn btn-info btn-sm" role="button" aria-label="Anterior" style="text-decoration:none">
                         <i class="fa-solid fa-backward"></i> Anterior
                     </a>
                 </div>
-                <div class="col text-center">
+                <div class="col-2 text-center">
+                    <b>DATA: <?= esc($agenda['dataptbr']) ?></b>
+                </div>
+                <div class="col-2 text-start">
+                    <!-- Link para a próxima página -->
+                    <a href="<?= esc($agenda['ProxUrl']) ?>" class="btn btn-info btn-sm" role="button" aria-label="Próximo" style="text-decoration:none">
+                        Próximo <i class="fa-solid fa-forward"></i>
+                    </a>
+                </div>
+                <div class="col-3 text-center">
+                    <a href="<?= base_url('agenda/index') ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
+                        <i class="fa-solid fa-person-walking-arrow-loop-left"></i> Exibir Hoje
+                    </a>
+                </div>
+
+                <div class="col-3 text-center">
                     <form method="post" action="<?= base_url('agenda/index') ?>">
                         <div class="input-group">
                             <input type="date" name="data" class="form-control" value="<?= esc($agenda['databd']) ?>" required>
@@ -20,19 +35,6 @@
                         </div>
                     </form>
                 </div>
-                <div class="col text-start">
-                    <!-- Link para a próxima página -->
-                    <a href="<?= esc($agenda['ProxUrl']) ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
-                        Próximo <i class="fa-solid fa-forward"></i>
-                    </a>
-                </div>
-                <div class="col-2 text-start">
-                    <a href="<?= base_url('agenda/index') ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
-                        <i class="fa-solid fa-person-walking-arrow-loop-left"></i> Exibir Hoje
-                    </a>
-                </div>
-
-
             </div>
         </div>
     </div>
