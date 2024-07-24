@@ -31,7 +31,11 @@
                         <i class="fa-solid fa-person-walking-arrow-loop-left"></i> Exibir Hoje
                     </a>
                 </div>
-
+                <div class="col-2 text-start">
+                    <a href="<?= base_url('agenda/index') ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
+                    <i class="fa-solid fa-print"></i> Imprimir
+                    </a>
+                </div>
 
             </div>
         </div>

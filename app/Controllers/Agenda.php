@@ -24,6 +24,37 @@ class Agenda extends BaseController
     }
 
     /**
+    * Gera a versão para impressão da Prescrição Médica
+    *
+    * @return mixed
+    */
+    public function print_agenda($data)
+    {
+
+        $agenda         = new AgendaModel(); #Inicia o objeto baseado na TabelaModel
+        $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias do HUAP
+
+        $v['agenda'] = $agenda->list_agenda($data);
+        $v['agenda']['databd'] = $data;
+
+        $dataptbr = date_create($data); // Cria um objeto DateTime a partir da string de data
+        $v['agenda']['dataptbr'] = ($dataptbr) ?  date_format($dataptbr, 'd/m/Y') : date('d/m/Y');
+
+        $v['agenda']['data'] = $v['agenda']['dataptbr'].' - '.$v['func']->dia_da_semana($v['agenda']['databd']); 
+
+        /*
+        echo "<pre>";
+        print_r($v['medicamento']);
+        echo "</pre>";
+        exit('oi');
+        #*/
+
+        return view('admin/prescricao/print_prescricao', $v);
+
+    }
+
+
+    /**
     * Formulário para agendamento de prescrição
     *
     * @return void
