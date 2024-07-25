@@ -28,11 +28,13 @@ class Agenda extends BaseController
     *
     * @return mixed
     */
-    public function print_agenda($data)
+    public function print_agenda($data = FALSE)
     {
 
         $agenda         = new AgendaModel(); #Inicia o objeto baseado na TabelaModel
         $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias do HUAP
+
+        $data = ($data) ? $data : date('Y-m-d');
 
         $v['agenda'] = $agenda->list_agenda($data);
         $v['agenda']['databd'] = $data;
@@ -49,7 +51,7 @@ class Agenda extends BaseController
         exit('oi');
         #*/
 
-        return view('admin/prescricao/print_prescricao', $v);
+        return view('admin/agenda/print_agenda', $v);
 
     }
 

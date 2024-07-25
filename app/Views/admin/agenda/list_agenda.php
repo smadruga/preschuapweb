@@ -12,7 +12,7 @@
                         <i class="fa-solid fa-backward"></i> Anterior
                     </a>
                 </div>
-                <div class="col text-center">
+                <div class="col-3 text-center">
                     <form method="post" action="<?= base_url('agenda/index') ?>">
                         <div class="input-group">
                             <input type="date" name="data" class="form-control" value="<?= esc($agenda['databd']) ?>" required>
@@ -32,7 +32,7 @@
                     </a>
                 </div>
                 <div class="col-2 text-start">
-                    <a href="<?= base_url('agenda/index') ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
+                    <a href="<?= base_url('agenda/print_agenda/'.$agenda['databd']) ?>" target="_blank" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
                     <i class="fa-solid fa-print"></i> Imprimir
                     </a>
                 </div>
@@ -104,6 +104,7 @@
                                         $inc++;
 
                                     echo "                     
+                                        <tr><td colspan='9'><br></td></tr>
                                         <tr>
                                             {$th}
                                             <th>{$x['badge']}</th>
@@ -156,7 +157,7 @@
 
         <br><br>
                
-        <?php endforeach; ?>
+    <?php endforeach; ?>
 
 </main>
 
