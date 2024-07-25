@@ -9,8 +9,9 @@ Entrar <?= $this->endSection() ?>
 
         <?= $this->include('layouts/div_flashdata') ?>
 
-        <a href="/" /><img class="mb-4" src="<?= base_url() ?>/assets/img/caduceus/caduceus-128.png" alt=""></a>
-        <h1 class="h3 mb-3 fw-normal"><?= HUAP_APPNAME ?></h1>
+        <h1 class="h3 mb-3 fw-normal">O PreschuapWeb agora é <br>OncoRede</h1>
+        <a href="/" /><img class="mb-4" src="<?= base_url() ?>/assets/img/oncorede/oncorede.png" alt="" width="100%"></a>
+        <!--<h1 class="h3 mb-3 fw-normal"><?= HUAP_APPNAME ?></h1>-->
 
         <div class="card-body p-4">
             <div class="form-group mb-3 has-validation text-start">
