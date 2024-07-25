@@ -6,4 +6,8 @@
         height: 297mm;
     }
 
+    .page-break {
+        page-break-before: always;
+    }
+
 }
