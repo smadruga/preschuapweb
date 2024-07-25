@@ -104,6 +104,7 @@
                                         $inc++;
 
                                     echo "                     
+                                        <tr><td colspan='9'><br></td></tr>
                                         <tr>
                                             {$th}
                                             <th>{$x['badge']}</th>
