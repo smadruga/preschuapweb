@@ -31,6 +31,7 @@ foreach($prescricao['array'] as $v) {
                         <div class="col container border border-dark pt-2 border-start-0">
                             <div class="row">
                                 <div class="col"><b>Prontuário: <?= $v['Prontuario'] ?></b></div>
+                                <div class="col"><b>Prescrição Nº: #<?= $v['idPreschuap_Prescricao'] ?></b></div>
                             </div>
                             <div class="row">
                                 <div class="col"><b>Paciente: <?= $_SESSION['Paciente']['nome'] ?></b></div>
