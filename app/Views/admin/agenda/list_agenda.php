@@ -26,14 +26,16 @@
                         <i class="fa-solid fa-forward"></i>
                     </a>
                 </div>
-                <div class="col-2 text-start">
-                    <a href="<?= base_url('agenda/index') ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
-                        <i class="fa-solid fa-person-walking-arrow-loop-left"></i> Exibir Hoje
+
+                <div class="col-3 text-center btn-group" role="group" aria-label="Basic example">
+                    <a href="<?= base_url('agenda/agenda_mes') ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
+                        <i class="fa-solid fa-calendar-day"></i> Mês
                     </a>
-                </div>
-                <div class="col-2 text-start">
+                    <a href="<?= base_url('agenda/index') ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
+                        <i class="fa-solid fa-person-walking-arrow-loop-left"></i> Hoje
+                    </a>
                     <a href="<?= base_url('agenda/print_agenda/'.$agenda['databd']) ?>" target="_blank" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
-                    <i class="fa-solid fa-print"></i> Imprimir
+                        <i class="fa-solid fa-print"></i> Imprimir
                     </a>
                 </div>
 
@@ -117,7 +119,7 @@
                                             <th>".esc($x['Codigo'])."</th>
                                             <th>".esc($x['Dose'])."</th>
                                             <th>
-                                                <a href=".base_url('agenda/del_agendamento/'.$x['idPreschuap_Agenda'].'/'.$agenda['databd'])." class='btn btn-danger btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' data-bs-placement='top' data-bs-title='Próximo'>
+                                                <a href=".base_url('agenda/del_agendamento/'.$x['idPreschuap_Agenda'].'/'.$agenda['databd'])." class='btn btn-danger btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' data-bs-placement='top' data-bs-title='Excluir Agendamento'>
                                                     <i class='fa-regular fa-trash-can'></i>
                                                 </a>
                                             </th>
