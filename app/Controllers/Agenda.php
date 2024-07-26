@@ -28,6 +28,44 @@ class Agenda extends BaseController
     *
     * @return mixed
     */
+    public function del_agendamento($id = FALSE, $data = FALSE) {
+
+        $agenda         = new AgendaModel(); #Inicia o objeto baseado na TabelaModel
+        $auditoria      = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
+        $auditorialog   = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
+        $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias do HUAP
+
+        $v['anterior'] = $agenda->find($id);
+        $v['campos'] = array_keys($v['anterior']);
+        $v['data'] = array();
+
+        /*
+        echo "<pre>";
+        print_r($v);
+        echo "</pre>";
+        exit('DEL = '.$id.' data = '.$data);
+        #*/
+
+        if($agenda->where('idPreschuap_Agenda', $id)->delete()) {
+
+            $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Agenda', 'DELETE', $id), TRUE);
+            $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $id, $v['auditoria'], FALSE, TRUE), TRUE);
+
+            session()->setFlashdata('success', 'Item excluído com sucesso!');
+
+        }
+        else
+            session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+
+        return redirect()->to('agenda/index/'.$data);
+
+    }
+
+    /**
+    * Gera a versão para impressão da Prescrição Médica
+    *
+    * @return mixed
+    */
     public function print_agenda($data = FALSE)
     {
 

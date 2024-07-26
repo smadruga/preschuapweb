@@ -8,8 +8,8 @@
             <div class="row">
                 <div class="col text-end">
                     <!-- Link para a página anterior -->
-                    <a href="<?= esc($agenda['AntUrl']) ?>" class="btn btn-info" role="button" aria-label="Anterior" style="text-decoration:none">
-                        <i class="fa-solid fa-backward"></i> Anterior
+                    <a href="<?= esc($agenda['AntUrl']) ?>" class="btn btn-info" role="button" aria-label="Anterior" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Anterior">
+                        <i class="fa-solid fa-backward"></i>
                     </a>
                 </div>
                 <div class="col-3 text-center">
@@ -22,8 +22,8 @@
                 </div>
                 <div class="col text-start">
                     <!-- Link para a próxima página -->
-                    <a href="<?= esc($agenda['ProxUrl']) ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
-                        Próximo <i class="fa-solid fa-forward"></i>
+                    <a href="<?= esc($agenda['ProxUrl']) ?>" class="btn btn-info" role="button" aria-label="Próximo" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Próximo">
+                        <i class="fa-solid fa-forward"></i>
                     </a>
                 </div>
                 <div class="col-2 text-start">
@@ -59,6 +59,7 @@
                 <td>Medicamento</td>
                 <td>Via</td>
                 <td>Dose</td>
+                <td></td>
             </tr>
             <tbody>
                 <?php
@@ -83,7 +84,7 @@
                             $ant = $agn = '';
                             foreach ($v as $x) {
                                 if ($i > 0 && $x['idTabPreschuap_TipoAgendamento'] != $agn) {
-                                    echo '<tr><td colspan="9"><br></td></tr>';
+                                    echo '<tr><td colspan="10"><br></td></tr>';
                                 }
 
                                 if ($ant != $x['idPreschuap_Agenda'].'#'.$x['idTabPreschuap_Protocolo']) {
@@ -104,7 +105,7 @@
                                         $inc++;
 
                                     echo "                     
-                                        <tr><td colspan='9'><br></td></tr>
+                                        <tr><td colspan='10'><br></td></tr>
                                         <tr>
                                             {$th}
                                             <th>{$x['badge']}</th>
@@ -114,7 +115,12 @@
                                             <th>".esc($x['Protocolo'])."</th>
                                             <th>".esc($x['Medicamento'])."</th>
                                             <th>".esc($x['Codigo'])."</th>
-                                            <th>".esc($x['Dose'])."</th>                                 
+                                            <th>".esc($x['Dose'])."</th>
+                                            <th>
+                                                <a href=".base_url('agenda/del_agendamento/'.$x['idPreschuap_Agenda'].'/'.$agenda['databd'])." class='btn btn-danger btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' data-bs-placement='top' data-bs-title='Próximo'>
+                                                    <i class='fa-regular fa-trash-can'></i>
+                                                </a>
+                                            </th>
                                         </tr>
                                     ";
                                     $ant = $x['idPreschuap_Agenda'].'#'.$x['idTabPreschuap_Protocolo'];
@@ -124,7 +130,8 @@
                                             <th colspan="6"></th>
                                             <th>'.esc($x['Medicamento']).'</th>
                                             <th>'.esc($x['Codigo']).'</th>
-                                            <th>'.esc($x['Dose']).'</th>                                 
+                                            <th>'.esc($x['Dose']).'</th>  
+                                            <th></th>
                                         </tr>
                                     ';                        
                                 }
@@ -136,7 +143,7 @@
             </tbody>        
             <tfoot>
                 <tr>
-                    <th colspan="9" class="text-center">
+                    <th colspan="10" class="text-center">
                         <table width="100%">
                             <tr>
                                 <th><span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Salão de Quimioterapia"><i class="fa-solid fa-couch"></i></span> <?= $sq ?></th>
