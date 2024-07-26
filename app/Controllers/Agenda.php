@@ -154,10 +154,11 @@ class Agenda extends BaseController
         $auditorialog   = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
         $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias
 
-        if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+        if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {         
+
             $v['data'] = [
                 'idPreschuap_Agenda'                => '',
-                'DataAgendamento'                   => date('d/m/Y', time()),
+                'DataAgendamento'                   => '',
                 'Turno'                             => '',
                 'Observacoes'                       => '',
                 'idPreschuap_Prescricao'            => '',                
@@ -171,13 +172,16 @@ class Agenda extends BaseController
         else {
             #Captura os inputs do Formulário
             $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-            
+        
+            $v['data']['DataAgendamento'] = $v['func']->mascara_data($v['data']['DataAgendamento'], 'bd');
+            #$v['data']['DataAgendamento'] = '2024-05-01';
+
             $validation = \Config\Services::validation();
             $valid = $this->validate([
                 'DataAgendamento' => 'required|valid_date',
                 'Turno' => 'required',
                 'Observacoes' => 'max_length[15]',
-            ]);
+            ]);            
 
             if (!$valid) {
                 return redirect()->back()->withInput()->with('validation', $validation);
@@ -189,6 +193,14 @@ class Agenda extends BaseController
             
             $v['id'] = $agenda->insert($v['data']);
             session()->setFlashdata('success', 'Agendamento realizado com sucesso!');
+     
+        /*
+        echo "<pre>";
+        print_r($v['data']);
+        echo "</pre>";
+        exit('oi333');
+        #echo 'oi'.$submit;
+        #*/
             
             if ($submit == 2) 
                 return redirect()->to('agenda/agenda_prescricao/'.$id);
@@ -208,12 +220,12 @@ class Agenda extends BaseController
             $v['data']['prescricao']['badge'] = '<span class="badge bg-primary text-white"><i class="fa-solid fa-house-medical"></i></span>';
 
         $v['opt']['disabled'] = NULL;
-
+        
         /*
         echo "<pre>";
         print_r($v['data']);
         echo "</pre>";
-        exit('oi');
+        exit('oi1111');
         #echo 'oi'.$submit;
         #*/
 

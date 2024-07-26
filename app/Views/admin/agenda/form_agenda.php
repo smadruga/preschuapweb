@@ -27,7 +27,7 @@
                     <div class="input-group mb-3">
                         <input type="date" id="DataAgendamento" <?= $opt['disabled'] ?> maxlength="10"
                             class="form-control <?php if($validation->getError('DataAgendamento')): ?>is-invalid<?php endif ?>"
-                            autofocus name="DataAgendamento" value="<?php echo $data['DataAgendamento']; ?>"/>
+                            autofocus name="DataAgendamento" value="<?php echo $data['DataAgendamento'] ?>"/>
                         <?php if ($validation->getError('DataAgendamento')): ?>
                             <div class="invalid-feedback">
                                 <?= $validation->getError('DataAgendamento') ?>
