@@ -47,7 +47,7 @@ class AgendaModel extends Model
                 , tpm.Medicamento 
                 , ppm.idTabPreschuap_ViaAdministracao 
                 , tpva.Codigo 
-                , format(ppm.Dose, 2, "pt_BR") as Dose
+                , format(ppm.Ajuste, 2, "pt_BR") as Dose
                 , pa.*
             FROM 
                 Preschuap_Agenda pa
