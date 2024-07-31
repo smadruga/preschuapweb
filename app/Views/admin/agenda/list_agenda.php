@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="col-3 text-center btn-group" role="group" aria-label="Basic example">
-                    <a href="<?= base_url('agenda/agenda_mes') ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
+                    <a href="<?= base_url('agenda/show_agenda_mes') ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
                         <i class="fa-solid fa-calendar-day"></i> Mês
                     </a>
                     <a href="<?= base_url('agenda/index') ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">

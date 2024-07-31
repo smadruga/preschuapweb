@@ -23,7 +23,7 @@ class Agenda extends BaseController
 
     }
 
-    public function agenda_mes($year = null, $month = null)
+    public function show_agenda_mes($year = null, $month = null)
     {
         if ($year === null) {
             $year = date('Y');
@@ -33,9 +33,7 @@ class Agenda extends BaseController
             $month = date('m');
         }
 
-        $data = $this->generateCalendar($year, $month);
-
-        return view('admin/agenda/page_agenda_mes', $data);
+        return view('admin/agenda/page_agenda_mes');
     }
 
     private function generateCalendar($year, $month)

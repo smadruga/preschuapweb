@@ -10,25 +10,4 @@
         page-break-before: always;
     }
 
-    .calendar {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 5px;
-    }
-    .calendar-day {
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        padding: 10px;
-        min-height: 100px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
-    .calendar-day.hidden {
-        visibility: hidden;
-    }
-    .calendar-header {
-        text-align: center;
-    }
-
 }
