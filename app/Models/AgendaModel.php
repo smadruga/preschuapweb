@@ -20,7 +20,110 @@ class AgendaModel extends Model
                                     'idPreschuap_Prescricao'
                                     ];
 
-/**
+    /**
+    * Captura o id da prescrição concluída mais recente.
+    *
+    * @return void
+    */
+    public function list_agenda_mes($mes, $ano)
+    {
+        
+        $db = \Config\Database::connect();
+        $query = $db->query('
+            SELECT 
+                pa.idPreschuap_Agenda
+                , pa.DataAgendamento
+                , tpp.idTabPreschuap_TipoAgendamento 	
+            FROM 
+                Preschuap_Agenda pa
+                    JOIN Preschuap_Prescricao pp				ON pa.idPreschuap_Prescricao 		= pp.idPreschuap_Prescricao
+                    JOIN TabPreschuap_Protocolo tpp 			ON pp.idTabPreschuap_Protocolo 		= tpp.idTabPreschuap_Protocolo 
+            WHERE 
+                MONTH(pa.DataAgendamento) = '.$mes.' AND YEAR(pa.DataAgendamento) = '.$ano.'
+            ORDER BY 
+                pa.DataAgendamento ASC 
+                , pa.idPreschuap_Agenda ASC 
+            ;
+        ');
+        $query = $query->getResultArray();
+        $qnr = count($query);
+
+        #/*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit('e<><>eas42423asfsd'.$qnr);
+        #*/
+
+        if (!$query || ($mes && $ano)) {
+            $q = array();
+            return $q;
+        }
+            
+        
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit('e<><>eas42423asfsd'.$qnr);
+        #*/
+
+        $agenda = array();
+        foreach($query as $v) {
+            
+            $v['badge'] = $this->badge($v['idTabPreschuap_TipoAgendamento']);
+
+            if($v['idTabPreschuap_TipoAgendamento'] == 1 && $v['idTabPreschuap_EtapaTerapia'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 2) 
+                $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
+            elseif ($v['idTabPreschuap_TipoAgendamento'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 4)
+                $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
+            elseif ($v['idTabPreschuap_TipoAgendamento'] == 3 || $v['idTabPreschuap_TipoAgendamento'] == 4 || $v['idTabPreschuap_TipoAgendamento'] == 5)
+                $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
+                
+        }
+            
+
+        /*
+        echo "<pre>";
+        print_r($agenda);
+        echo "</pre>";
+        exit('e<><>e');
+        #*/
+
+        $wherein = '(';
+        foreach($query as $v)
+            $wherein .= $v['Prontuario'].',';
+
+        $wherein = substr($wherein, 0, -1).')';
+#exit($wherein);
+        $paciente = $this->list_paciente_aghux($wherein);
+        $pacarray = array();
+        foreach ($paciente->getResultArray() as $v) 
+            $pacarray[$v['prontuario']] = $v['nome'];
+
+
+        $q['agendamento']   = $agenda;
+        $q['paciente']      = $pacarray;
+
+
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($q);
+        echo "</pre>";
+        exit('<><>');
+        #*/
+        #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
+
+        #$query = $query->getRowArray();
+        return $q;
+
+    }
+
+
+    /**
     * Captura o id da prescrição concluída mais recente.
     *
     * @return void
@@ -28,7 +131,7 @@ class AgendaModel extends Model
     public function list_agenda($data)
     {
 
-        $data = ($data) ? $data : date('Y-m-d'); 
+        #$data = ($data) ? $data : date('Y-m-d'); 
 
 #exit('>>>'.$data);
 
@@ -105,7 +208,6 @@ class AgendaModel extends Model
                 
         }
             
-
         /*
         echo "<pre>";
         print_r($agenda);

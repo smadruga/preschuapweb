@@ -23,48 +23,19 @@ class Agenda extends BaseController
 
     }
 
-    public function show_agenda_mes($year = null, $month = null)
+    public function show_agenda_mes($mes = null, $ano = null)
     {
-        if ($year === null) {
-            $year = date('Y');
-        }
 
-        if ($month === null) {
-            $month = date('m');
-        }
+        $agenda         = new AgendaModel(); #Inicia o objeto baseado na TabelaModel
+        $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias do HUAP
 
-        return view('admin/agenda/page_agenda_mes');
+        $mes = ($mes) ? $mes : date('m');
+        $ano = ($ano) ? $ano : date('Y');
+
+        $v['mes'] = $agenda->list_agenda(NULL, $mes, $ano);
+
+        return view('admin/agenda/page_agenda_mes', $v);
     }
-
-    private function generateCalendar($year, $month)
-    {
-        $firstDayOfMonth = new DateTime("$year-$month-01");
-        $daysInMonth = $firstDayOfMonth->format('t');
-        $dayOfWeek = $firstDayOfMonth->format('w');
-
-        // Create a DateTime object for the previous and next months
-        $prevMonth = clone $firstDayOfMonth;
-        $prevMonth->modify('-1 month');
-        $nextMonth = clone $firstDayOfMonth;
-        $nextMonth->modify('+1 month');
-
-        $calendar = [
-            'year' => $year,
-            'month' => $month,
-            'daysInMonth' => $daysInMonth,
-            'dayOfWeek' => $dayOfWeek,
-            'prevMonth' => [
-                'year' => $prevMonth->format('Y'),
-                'month' => $prevMonth->format('m')
-            ],
-            'nextMonth' => [
-                'year' => $nextMonth->format('Y'),
-                'month' => $nextMonth->format('m')
-            ]
-        ];
-
-        return $calendar;
-    }    
 
     /**
     * Gera a versão para impressão da Prescrição Médica
