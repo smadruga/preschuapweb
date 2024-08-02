@@ -32,9 +32,16 @@ class Agenda extends BaseController
         $mes = ($mes) ? $mes : date('m');
         $ano = ($ano) ? $ano : date('Y');
 
-        $v['mes'] = $agenda->list_agenda(NULL, $mes, $ano);
+        $v['agenda'] = $agenda->list_agenda_mes($mes, $ano);
 
-        return view('admin/agenda/page_agenda_mes', $v);
+        /*
+        echo "<pre>";
+        print_r($v);
+        echo "</pre>";
+        #exit('e<><>eas42423asfsd');
+        #*/
+        
+        return view('admin/agenda/list_agenda_mes', $v);
     }
 
     /**

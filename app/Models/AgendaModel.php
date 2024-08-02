@@ -45,77 +45,29 @@ class AgendaModel extends Model
                 , pa.idPreschuap_Agenda ASC 
             ;
         ');
-        $query = $query->getResultArray();
-        $qnr = count($query);
 
-        #/*
-        echo $db->getLastQuery();
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit('e<><>eas42423asfsd'.$qnr);
-        #*/
+        $q = array();
+        foreach ($query->getResultArray() as $v) {
+            
+            if(!isset($q[$v['DataAgendamento']]['Dia'])) 
+                $q[$v['DataAgendamento']]['Dia'] = 0;
+            if(!isset($q[$v['DataAgendamento']][$v['idTabPreschuap_TipoAgendamento']])) 
+                $q[$v['DataAgendamento']][$v['idTabPreschuap_TipoAgendamento']] = 0;
+            
 
-        if (!$query || ($mes && $ano)) {
-            $q = array();
-            return $q;
+            $q[$v['DataAgendamento']]['Dia']++;
+            $q[$v['DataAgendamento']][$v['idTabPreschuap_TipoAgendamento']]++;
+            
         }
-            
-        
-        /*
-        echo $db->getLastQuery();
-        echo "<pre>";
-        print_r($query);
-        echo "</pre>";
-        exit('e<><>eas42423asfsd'.$qnr);
-        #*/
-
-        $agenda = array();
-        foreach($query as $v) {
-            
-            $v['badge'] = $this->badge($v['idTabPreschuap_TipoAgendamento']);
-
-            if($v['idTabPreschuap_TipoAgendamento'] == 1 && $v['idTabPreschuap_EtapaTerapia'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 2) 
-                $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
-            elseif ($v['idTabPreschuap_TipoAgendamento'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 4)
-                $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
-            elseif ($v['idTabPreschuap_TipoAgendamento'] == 3 || $v['idTabPreschuap_TipoAgendamento'] == 4 || $v['idTabPreschuap_TipoAgendamento'] == 5)
-                $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
-                
-        }
-            
-
-        /*
-        echo "<pre>";
-        print_r($agenda);
-        echo "</pre>";
-        exit('e<><>e');
-        #*/
-
-        $wherein = '(';
-        foreach($query as $v)
-            $wherein .= $v['Prontuario'].',';
-
-        $wherein = substr($wherein, 0, -1).')';
-#exit($wherein);
-        $paciente = $this->list_paciente_aghux($wherein);
-        $pacarray = array();
-        foreach ($paciente->getResultArray() as $v) 
-            $pacarray[$v['prontuario']] = $v['nome'];
-
-
-        $q['agendamento']   = $agenda;
-        $q['paciente']      = $pacarray;
-
+        $q['Total'] = $query->getNumRows();
 
         /*
         echo $db->getLastQuery();
         echo "<pre>";
         print_r($q);
         echo "</pre>";
-        exit('<><>');
+        #exit('e<><>eas42423asfsd');
         #*/
-        #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 
         #$query = $query->getRowArray();
         return $q;
