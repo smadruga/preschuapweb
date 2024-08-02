@@ -2,9 +2,44 @@
 <?= $this->section('subcontent') ?>
 
 <main class="container">
+
+    <div class="alert alert-primary" role="alert" >
+        <div class="container text-center" >
+            <div class="row">
+                <div class="col text-end">
+                    <!-- Link para a página anterior -->
+                    <a href="<?= esc($agenda['AntUrl']) ?>" class="btn btn-info" role="button" aria-label="Anterior" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Anterior">
+                        <i class="fa-solid fa-backward"></i>
+                    </a>
+                </div>
+                <div class="col-4 text-center">
+                    <form method="post" action="<?= base_url('agenda/show_agenda_mes') ?>">
+                        <div class="input-group">
+                            <input type="month" name="month" class="form-control" value="<?= esc($agenda['month']) ?>" required>
+                            <button type="submit" class="btn btn-info"><i class="fa-solid fa-person-walking-arrow-right"></i> Ir para Data</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col text-start">
+                    <!-- Link para a próxima página -->
+                    <a href="<?= esc($agenda['ProxUrl']) ?>" class="btn btn-info" role="button" aria-label="Próximo" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Próximo">
+                        <i class="fa-solid fa-forward"></i>
+                    </a>
+                </div>
+
+                <div class="col-2 text-center btn-group" role="group" aria-label="Basic example">
+                    <a href="<?= base_url('agenda/show_agenda_mes/') ?>" class="btn btn-info" role="button" aria-label="Próximo" style="text-decoration:none">
+                        <i class="fa-solid fa-person-walking-arrow-loop-left"></i> Hoje
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
     <div class="alert" role="alert">
         <table class="table">
-            <thead>
+            <thead class="border border-2 border-dark">
                 <tr class="text-center">
                     <th>DOM</th>
                     <th>SEG</th>
@@ -18,10 +53,8 @@
             <tbody>
                 <tr>
                     <?php
-                        $d = '01';
-                        $m = '07';
-                        $y = '2024';
-                        $dataorigem = new DateTime("$y-$m-$d");
+
+                        $dataorigem = new DateTime("$ano-$mes-1");
                         $mo = $dataorigem->format('m');
                         $j = 0;
 
@@ -43,7 +76,9 @@
                                 <td>
                                     <div class='card'>
                                         <div class='card-header text-center'>
-                                            ".$data->format('d')."
+                                            <a href='".esc(site_url('agenda/index/'.$data->format('Y-m-d')))."' class='btn btn-info text-decoration-none' role='button'>
+                                                ".$data->format('d')."
+                                            </a>
                                         </div>
                                         <div class='card-body'>
                                             <table class='col-12'>

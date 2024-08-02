@@ -74,6 +74,7 @@ class AgendaModel extends Model
 
     }
 
+
     /**
     * Captura o id da prescrição concluída mais recente.
     *
@@ -82,9 +83,7 @@ class AgendaModel extends Model
     public function list_agenda($data)
     {
 
-        #$data = ($data) ? $data : date('Y-m-d'); 
-
-#exit('>>>'.$data);
+        $data = ($data) ? $data : date('Y-m-d'); 
 
         $db = \Config\Database::connect();
         $query = $db->query('

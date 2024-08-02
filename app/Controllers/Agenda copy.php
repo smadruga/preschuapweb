@@ -63,7 +63,7 @@ class Agenda extends BaseController
         
         return view('admin/agenda/list_agenda_mes', $v);
     }
-    
+
     /**
     * Gera a versão para impressão da Prescrição Médica
     *
@@ -241,24 +241,31 @@ class Agenda extends BaseController
         if($datapost) 
             $data = $datapost;
         else
-            $data = ($data) ? $data : date('Y-m-d');
+            $data = (!$data) ? date('Y-m-d') : NULL;
 
         $v['agenda'] = $agenda->list_agenda($data);
         $v['agenda']['databd'] = $data;
 
+                #/*
+                echo "<pre>";
+                print_r($v['agenda']);
+                echo "</pre>";
+                exit('oi');
+                #*/
+
         // Gerar URLs para navegação
-        $prox = date('Y-m-d', strtotime($v['agenda']['databd'] . ' +1 day'));
-        $ant = date('Y-m-d', strtotime($v['agenda']['databd'] . ' -1 day'));
+        $prox   = date('Y-m-d', strtotime($v['agenda']['databd'] . ' +1 day'));
+        $ant    = date('Y-m-d', strtotime($v['agenda']['databd'] . ' -1 day'));
 
         $v['agenda']['ProxUrl'] = site_url('agenda/index/' . $prox);
-        $v['agenda']['AntUrl'] = site_url('agenda/index/' . $ant);
+        $v['agenda']['AntUrl']  = site_url('agenda/index/' . $ant);
 
         $dataptbr = date_create($data); // Cria um objeto DateTime a partir da string de data
         $v['agenda']['dataptbr'] = ($dataptbr) ?  date_format($dataptbr, 'd/m/Y') : date('d/m/Y');
 
         $v['agenda']['data'] = $v['agenda']['dataptbr'].' - '.$v['func']->dia_da_semana($v['agenda']['databd']); 
 
-        /*
+        #/*
         echo "<pre>";
         print_r($v['agenda']);
         echo "</pre>";
