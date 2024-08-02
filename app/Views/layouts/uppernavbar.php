@@ -43,12 +43,19 @@
                         <!--<div class="dropdown-divider"></div>-->
                     </div>
                 </li>
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a class="nav-link" href="<?= base_url('agenda') ?>"><i class="fa-solid fa-calendar-days"></i> Agenda
                         <span class="visually-hidden"></span>
                     </a>
-                </li>
+                </li>-->        
                 <?php } ?>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-calendar-days"></i> Agenda</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<?= base_url('agenda') ?>"><i class="fa-solid fa-calendar-days"></i> Diário</a>
+                        <a class="dropdown-item" href="<?= base_url('agenda/show_agenda_mes') ?>"><i class="fa-solid fa-calendar-days"></i> Mensal</a>
+                    </div>
+                </li>        
             </ul>
             <div class="ms-3 me-3 text-warning fs-6 text-center">
                 <span><i class="fa-solid fa-circle-user"></i> <?= $_SESSION['Sessao']['Nome'] ?><br></span>
