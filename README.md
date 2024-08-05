@@ -1,6 +1,6 @@
 # PreschuapWeb
 
-## O que é?
+## Apresentação
 
 PreschuapWeb é uma aplicação desenvolvida para atender a Unidade de Hematologia e Oncologia do Hospital Universitário Antonio Pedro (HUAP/UFF/EBSERH). Este projeto é parte do Mestrado Profissional em Sistemas de Gestão (MSG/UFF) de Rodrigo Campos. O principal objetivo é fornecer uma ferramenta que facilite a elaboração de prescrições oncológicas eletrônicas, com foco na segurança do paciente, além de oferecer recursos para o agendamento da administração de medicamentos.
 
