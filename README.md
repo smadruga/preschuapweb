@@ -23,3 +23,6 @@ As prescrições são baseadas em diversas tabelas cadastradas no banco de dados
   - 2 processadores cada<br>
   - 4GB de memória RAM<br>
   - 40GB de espaço em disco<br>
+
+**Desenvolvido pela Unidade de Sistemas de Informação e Inteligência de Dados - USID/SETISD**<br>
+**Hospital Universitário Antonio Pedro - HUAP/UFF/EBSERH**
