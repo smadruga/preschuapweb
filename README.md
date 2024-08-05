@@ -8,18 +8,18 @@ As prescrições são baseadas em diversas tabelas cadastradas no banco de dados
 
 ## Requisitos mínimos
 
-**- Linguagem de programação:** PHP 8.1.3 e JavaScript
-**- Linguagem de marcação (estruturação):** HTML5
-**- Linguagem de estilo:** CSS
-**- Banco de dados:** MySQL 8
-**- Framework:** CodeIgniter 4, Bootstrap 5
-**- Servidor Web:** Apache 2
-**- Versionamento e repositório do código:** GitHub
+**- Linguagem de programação:** PHP 8.1.3 e JavaScript<br>
+**- Linguagem de marcação (estruturação):** HTML5<br>
+**- Linguagem de estilo:** CSS<br>
+**- Banco de dados:** MySQL 8<br>
+**- Framework:** CodeIgniter 4, Bootstrap 5<br>
+**- Servidor Web:** Apache 2<br>
+**- Versionamento e repositório do código:** GitHub<br>
 
 ## Infraestrutura recomendada:
 
-  - 2 máquinas virtuais (app e bd)
-  - Sistema Operacional Debian
-  - 2 processadores cada
-  - 4GB de memória RAM
-  - 40GB de espaço em disco
+  - 2 máquinas virtuais (app e bd)<br>
+  - Sistema Operacional Debian<br>
+  - 2 processadores cada<br>
+  - 4GB de memória RAM<br>
+  - 40GB de espaço em disco<br>
