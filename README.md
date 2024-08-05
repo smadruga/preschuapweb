@@ -6,6 +6,8 @@ PreschuapWeb é uma aplicação desenvolvida para atender a Unidade de Hematolog
 
 As prescrições são baseadas em diversas tabelas cadastradas no banco de dados, sendo a principal delas a tabela de Protocolos Terapêuticos. As prescrições oncológicas são construídas em torno do protocolo terapêutico escolhido, que possui medicamentos e doses previamente cadastrados com base na literatura existente. A aplicação inclui fórmulas para o cálculo correto das dosagens a serem administradas.
 
+Registrado no INPI. Processo No: BR512023003825-3
+
 ## Requisitos mínimos
 
 **- Linguagem de programação:** PHP 8.1.3 e JavaScript<br>
@@ -24,6 +26,6 @@ As prescrições são baseadas em diversas tabelas cadastradas no banco de dados
   - 4GB de memória RAM<br>
   - 40GB de espaço em disco<br>
 
-**Registrado no INPI. Processo No: BR512023003825-3**
+
 **Desenvolvido pela Unidade de Sistemas de Informação e Inteligência de Dados - USID/SETISD**<br>
 **Hospital Universitário Antonio Pedro - HUAP/UFF/EBSERH**
