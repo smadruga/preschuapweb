@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\UsuarioModel;
 use App\Models\PerfilModel;
+use App\Models\PermissaoModuloModel;
 use App\Models\TabPerfilModel;
 use App\Models\AuditoriaModel;
 use App\Models\AuditoriaLogModel;
@@ -352,6 +353,7 @@ class Admin extends BaseController
     {
 
         $usuario = new UsuarioModel();
+        $permissao = new PermissaoModuloModel();
         $auditoria = new AuditoriaModel();
         $auditorialog = new AuditoriaLogModel();
         $func = new HUAP_Functions();
@@ -361,11 +363,23 @@ class Admin extends BaseController
         if(!$v['Desabilitar'])
             return view('admin/usuario/form_desabilita_usuario', $v);
 
+        /*
+
         $v['data'] = array(
             'Inativo' => 1,
         );
+        
         $v['anterior'] = $usuario->find($data);
         $v['campos'] = array_keys($v['data']);
+        */
+        
+        $v['anterior'] = $permissao->get_permission_bd($data, env('mod.cod'));
+        
+        /*$v['data'] = array(
+            'idSishuap_Usuario' => $data,
+            'idTab_Modulo' => env('mod.cod'),
+        );*/
+        $v['campos'] = array_keys($v['anterior']);
 
         /*
         echo "<pre>";
@@ -374,16 +388,19 @@ class Admin extends BaseController
         exit();
         #*/
 
-        $usuario->update($data, $v['data']);
+        #$usuario->delete($data, $v['data']);
+        #echo $permissao->delete(['idSishuap_Usuario' => $data]);
+        $permissao->where('idSishuap_Usuario', $data);
+        $permissao->delete();
 
-        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'UPDATE', $data), TRUE);
-        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $data, $v['auditoria'], TRUE), TRUE);
+        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_PermissaoModulo', 'DELETE', $data), TRUE);       
+        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], NULL, $v['campos'], $data, $v['auditoria'], FALSE, TRUE), TRUE);
 
-        session()->setFlashdata('success', 'Usuário desativado com sucesso!');
+        session()->setFlashdata('success', 'Usuário bloqueado com sucesso!');
         return redirect()->to('admin/show_user/'.$_SESSION['Usuario']['Usuario']);
 
     }
-
+    
     /**
     * Desabilita no sistema o usuário selecionado
     *
@@ -393,6 +410,7 @@ class Admin extends BaseController
     {
 
         $usuario = new UsuarioModel();
+        $permissao = new PermissaoModuloModel();
         $auditoria = new AuditoriaModel();
         $auditorialog = new AuditoriaLogModel();
         $func = new HUAP_Functions();
@@ -402,10 +420,12 @@ class Admin extends BaseController
         if(!$v['Habilitar'])
             return view('admin/usuario/form_habilita_usuario', $v);
 
-        $v['data'] = array(
-            'Inativo' => 0,
+        $v['data'] = array( 
+            //'Inativo' => 0,
+            'idSishuap_Usuario' => $data,
+            'idTab_Modulo' => env('mod.cod'),
         );
-        $v['anterior'] = $usuario->find($data);
+        #$v['anterior'] = $usuario->find($data);
         $v['campos'] = array_keys($v['data']);
 
         /*
@@ -415,12 +435,13 @@ class Admin extends BaseController
         exit();
         #*/
 
-        $usuario->update($data, $v['data']);
+        #$usuario->update($data, $v['data']);
+        $permissao = $permissao->insert($v['data'], TRUE);
 
-        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'UPDATE', $data), TRUE);
-        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $data, $v['auditoria'], TRUE), TRUE);
+        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_PermissaoModulo', 'CREATE', $data), TRUE);
+        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log(NULL, $v['data'], $v['campos'], $data, $v['auditoria']), TRUE);
 
-        session()->setFlashdata('success', 'Usuário ativado com sucesso!');
+        session()->setFlashdata('success', 'Usuário desbloqueado com sucesso!');
         return redirect()->to('admin/show_user/'.$_SESSION['Usuario']['Usuario']);
 
     }
