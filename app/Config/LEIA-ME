@@ -4,10 +4,10 @@ CUIDADO AO ATUALIZAR OS SEGUINTES ARQUIVOS/PASTAS:
 
 -app/controllers
 
--app/config/app.php
--app/config/constants.php
--app/config/cookie.php
--app/config/database.php
--app/config/pager.php
--app/config/paths.php
--app/config/routes.php
+1-app/config/app.php
+2-app/config/constants.php
+3-app/config/cookie.php
+4-app/config/database.php
+5-app/config/pager.php
+6-app/config/paths.php
+7-app/config/routes.php

@@ -7,29 +7,11 @@ use App\Libraries\HUAP_Functions;
 
 class PacienteModel extends Model
 {
-    protected $DBGroup              = 'aghux';
-    protected $table                = 'aip_pacientes';
-    protected $primaryKey           = 'codigo';
-    protected $useAutoIncrement     = true;
-    protected $returnType           = 'array';
-    protected $protectFields        = true;
-    protected $allowedFields        = [
-                                        'codigo',
-                                        'nome',
-                                        'nome_mae',
-                                        'dt_nascimento',
-                                        'sexo',
-                                        'cpf',
-                                        'prontuario',
-                                        'prnt_ativo',
-                                        'nro_cartao_saude',
-                                        'id_sistema_legado',
-                                        'email',
-                                        'ddd_fone_residencial',
-                                        'fone_residencial',
-                                        'ddd_fone_recado',
-                                        'fone_recado',
-                                    ];
+
+    protected $table      = 'aip_pacientes';
+    protected $primaryKey = 'codigo';
+
+    protected $DBGroup    = 'aghux';
 
     /**
     * Tela inicial do preschuapweb
@@ -89,7 +71,7 @@ class PacienteModel extends Model
     */
     public function get_paciente_bd($data, $limit = NULL, $offset = NULL)
     {
-
+        
         $func = new HUAP_Functions();
 
         if($func->check_cpf($data))

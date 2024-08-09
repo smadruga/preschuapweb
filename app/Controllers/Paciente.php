@@ -74,6 +74,7 @@ class Paciente extends BaseController
             
         $paciente = new PacienteModel();
         $v['paciente'] = $paciente->get_paciente_bd($v['Pesquisar']);
+
         
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();

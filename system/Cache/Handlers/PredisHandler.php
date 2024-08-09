@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -12,6 +14,7 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Exceptions\CriticalError;
+use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Exception;
 use Predis\Client;
@@ -19,6 +22,8 @@ use Predis\Collection\Iterator\Keyspace;
 
 /**
  * Predis cache handler
+ *
+ * @see \CodeIgniter\Cache\Handlers\PredisHandlerTest
  */
 class PredisHandler extends BaseHandler
 {
@@ -42,6 +47,9 @@ class PredisHandler extends BaseHandler
      */
     protected $redis;
 
+    /**
+     * Note: Use `CacheFactory::getHandler()` to instantiate.
+     */
     public function __construct(Cache $config)
     {
         $this->prefix = $config->prefix;
@@ -80,22 +88,12 @@ class PredisHandler extends BaseHandler
             return null;
         }
 
-        switch ($data['__ci_type']) {
-            case 'array':
-            case 'object':
-                return unserialize($data['__ci_value']);
-
-            case 'boolean':
-            case 'integer':
-            case 'double': // Yes, 'double' is returned and NOT 'float'
-            case 'string':
-            case 'NULL':
-                return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : null;
-
-            case 'resource':
-            default:
-                return null;
-        }
+        return match ($data['__ci_type']) {
+            'array', 'object' => unserialize($data['__ci_value']),
+            // Yes, 'double' is returned and NOT 'float'
+            'boolean', 'integer', 'double', 'string', 'NULL' => settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : null,
+            default => null,
+        };
     }
 
     /**
@@ -127,8 +125,8 @@ class PredisHandler extends BaseHandler
             return false;
         }
 
-        if ($ttl) {
-            $this->redis->expireat($key, time() + $ttl);
+        if ($ttl !== 0) {
+            $this->redis->expireat($key, Time::now()->getTimestamp() + $ttl);
         }
 
         return true;
@@ -146,6 +144,8 @@ class PredisHandler extends BaseHandler
 
     /**
      * {@inheritDoc}
+     *
+     * @return int
      */
     public function deleteMatching(string $pattern)
     {
@@ -204,11 +204,11 @@ class PredisHandler extends BaseHandler
         $data = array_combine(['__ci_value'], $this->redis->hmget($key, ['__ci_value']));
 
         if (isset($data['__ci_value']) && $data['__ci_value'] !== false) {
-            $time = time();
+            $time = Time::now()->getTimestamp();
             $ttl  = $this->redis->ttl($key);
 
             return [
-                'expire' => $ttl > 0 ? time() + $ttl : null,
+                'expire' => $ttl > 0 ? $time + $ttl : null,
                 'mtime'  => $time,
                 'data'   => $data['__ci_value'],
             ];

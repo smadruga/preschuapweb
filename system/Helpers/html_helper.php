@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -70,9 +72,9 @@ if (! function_exists('_list')) {
                 $out .= $val;
             } else {
                 $out .= $key
-                        . "\n"
-                        . _list($type, $val, '', $depth + 4)
-                        . str_repeat(' ', $depth + 2);
+                    . "\n"
+                    . _list($type, $val, '', $depth + 4)
+                    . str_repeat(' ', $depth + 2);
             }
 
             $out .= "</li>\n";
@@ -108,7 +110,7 @@ if (! function_exists('img')) {
         $img = '<img';
 
         // Check for a relative URI
-        if (! preg_match('#^([a-z]+:)?//#i', $src['src']) && strpos($src['src'], 'data:') !== 0) {
+        if (! preg_match('#^([a-z]+:)?//#i', $src['src']) && ! str_starts_with($src['src'], 'data:')) {
             if ($indexPage === true) {
                 $img .= ' src="' . site_url($src['src']) . '"';
             } else {
@@ -128,7 +130,7 @@ if (! function_exists('img')) {
             unset($attributes['alt'], $attributes['src']);
         }
 
-        return $img . stringify_attributes($attributes) . ' />';
+        return $img . stringify_attributes($attributes) . _solidus() . '>';
     }
 }
 
@@ -179,7 +181,7 @@ if (! function_exists('doctype')) {
         $config   = new DocTypes();
         $doctypes = $config->list;
 
-        return $doctypes[$type] ?? false;
+        return $doctypes[$type] ?? '';
     }
 }
 
@@ -195,7 +197,7 @@ if (! function_exists('script_tag')) {
     function script_tag($src = '', bool $indexPage = false): string
     {
         $cspNonce = csp_script_nonce();
-        $cspNonce = $cspNonce ? ' ' . $cspNonce : $cspNonce;
+        $cspNonce = $cspNonce !== '' ? ' ' . $cspNonce : $cspNonce;
         $script   = '<script' . $cspNonce . ' ';
         if (! is_array($src)) {
             $src = ['src' => $src];
@@ -214,7 +216,7 @@ if (! function_exists('script_tag')) {
             }
         }
 
-        return $script . 'type="text/javascript"></script>';
+        return rtrim($script) . '></script>';
     }
 }
 
@@ -222,15 +224,21 @@ if (! function_exists('link_tag')) {
     /**
      * Link
      *
-     * Generates link to a CSS file
+     * Generates link tag
      *
-     * @param array|string $href      Stylesheet href or an array
-     * @param bool         $indexPage should indexPage be added to the CSS path.
+     * @param array<string, bool|string>|string $href      Stylesheet href or an array
+     * @param bool                              $indexPage should indexPage be added to the CSS path.
      */
-    function link_tag($href = '', string $rel = 'stylesheet', string $type = 'text/css', string $title = '', string $media = '', bool $indexPage = false, string $hreflang = ''): string
-    {
-        $link = '<link ';
-
+    function link_tag(
+        $href = '',
+        string $rel = 'stylesheet',
+        string $type = 'text/css',
+        string $title = '',
+        string $media = '',
+        bool $indexPage = false,
+        string $hreflang = ''
+    ): string {
+        $attributes = [];
         // extract fields if needed
         if (is_array($href)) {
             $rel       = $href['rel'] ?? $rel;
@@ -243,34 +251,30 @@ if (! function_exists('link_tag')) {
         }
 
         if (! preg_match('#^([a-z]+:)?//#i', $href)) {
-            if ($indexPage === true) {
-                $link .= 'href="' . site_url($href) . '" ';
-            } else {
-                $link .= 'href="' . slash_item('baseURL') . $href . '" ';
-            }
+            $attributes['href'] = $indexPage ? site_url($href) : slash_item('baseURL') . $href;
         } else {
-            $link .= 'href="' . $href . '" ';
+            $attributes['href'] = $href;
         }
 
         if ($hreflang !== '') {
-            $link .= 'hreflang="' . $hreflang . '" ';
+            $attributes['hreflang'] = $hreflang;
         }
 
-        $link .= 'rel="' . $rel . '" ';
+        $attributes['rel'] = $rel;
 
-        if (! in_array($rel, ['alternate', 'canonical'], true)) {
-            $link .= 'type="' . $type . '" ';
+        if ($type !== '' && $rel !== 'canonical' && $hreflang === '' && ! ($rel === 'alternate' && $media !== '')) {
+            $attributes['type'] = $type;
         }
 
         if ($media !== '') {
-            $link .= 'media="' . $media . '" ';
+            $attributes['media'] = $media;
         }
 
         if ($title !== '') {
-            $link .= 'title="' . $title . '" ';
+            $attributes['title'] = $title;
         }
 
-        return $link . '/>';
+        return '<link' . stringify_attributes($attributes) . _solidus() . '>';
     }
 }
 
@@ -311,7 +315,7 @@ if (! function_exists('video')) {
             $video .= _space_indent() . $track . "\n";
         }
 
-        if (! empty($unsupportedMessage)) {
+        if ($unsupportedMessage !== '') {
             $video .= _space_indent()
                     . $unsupportedMessage
                     . "\n";
@@ -357,7 +361,7 @@ if (! function_exists('audio')) {
             $audio .= "\n" . _space_indent() . $track;
         }
 
-        if (! empty($unsupportedMessage)) {
+        if ($unsupportedMessage !== '') {
             $audio .= "\n" . _space_indent() . $unsupportedMessage . "\n";
         }
 
@@ -375,7 +379,7 @@ if (! function_exists('_media')) {
     {
         $media = '<' . $name;
 
-        if (empty($attributes)) {
+        if ($attributes === '') {
             $media .= '>';
         } else {
             $media .= ' ' . $attributes . '>';
@@ -391,7 +395,7 @@ if (! function_exists('_media')) {
             $media .= _space_indent() . $track . "\n";
         }
 
-        if (! empty($unsupportedMessage)) {
+        if ($unsupportedMessage !== '') {
             $media .= _space_indent() . $unsupportedMessage . "\n";
         }
 
@@ -419,11 +423,11 @@ if (! function_exists('source')) {
         $source = '<source src="' . $src
                 . '" type="' . $type . '"';
 
-        if (! empty($attributes)) {
+        if ($attributes !== '') {
             $source .= ' ' . $attributes;
         }
 
-        return $source . ' />';
+        return $source . _solidus() . '>';
     }
 }
 
@@ -442,7 +446,7 @@ if (! function_exists('track')) {
                 . '" kind="' . $kind
                 . '" srclang="' . $srcLanguage
                 . '" label="' . $label
-                . '" />';
+                . '"' . _solidus() . '>';
     }
 }
 
@@ -467,7 +471,7 @@ if (! function_exists('object')) {
         $object = '<object data="' . $data . '" '
                 . $attributes . '>';
 
-        if (! empty($params)) {
+        if ($params !== []) {
             $object .= "\n";
         }
 
@@ -496,7 +500,7 @@ if (! function_exists('param')) {
         return '<param name="' . $name
                 . '" type="' . $type
                 . '" value="' . $value
-                . '" ' . $attributes . ' />';
+                . '" ' . $attributes . _solidus() . '>';
     }
 }
 
@@ -518,7 +522,7 @@ if (! function_exists('embed')) {
 
         return '<embed src="' . $src
                 . '" type="' . $type . '" '
-                . $attributes . " />\n";
+                . $attributes . _solidus() . ">\n";
     }
 }
 

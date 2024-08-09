@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,8 +13,9 @@
 
 namespace CodeIgniter\Session\Handlers;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
-use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use ReturnTypeWillChange;
 
 /**
@@ -62,24 +65,22 @@ class FileHandler extends BaseHandler
      */
     protected $sessionIDRegex = '';
 
-    public function __construct(AppConfig $config, string $ipAddress)
+    public function __construct(SessionConfig $config, string $ipAddress)
     {
         parent::__construct($config, $ipAddress);
 
-        if (! empty($config->sessionSavePath)) {
-            $this->savePath = rtrim($config->sessionSavePath, '/\\');
-            ini_set('session.save_path', $config->sessionSavePath);
+        if (! empty($this->savePath)) {
+            $this->savePath = rtrim($this->savePath, '/\\');
+            ini_set('session.save_path', $this->savePath);
         } else {
             $sessionPath = rtrim(ini_get('session.save_path'), '/\\');
 
-            if (! $sessionPath) {
+            if ($sessionPath === '') {
                 $sessionPath = WRITEPATH . 'session';
             }
 
             $this->savePath = $sessionPath;
         }
-
-        $this->matchIP = $config->sessionMatchIP;
 
         $this->configureSessionIDRegex();
     }
@@ -276,7 +277,7 @@ class FileHandler extends BaseHandler
             return false;
         }
 
-        $ts = time() - $max_lifetime;
+        $ts = Time::now()->getTimestamp() - $max_lifetime;
 
         $pattern = $this->matchIP === true ? '[0-9a-f]{32}' : '';
 

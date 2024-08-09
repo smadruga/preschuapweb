@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -9,8 +11,9 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
-use Config\Services;
+use Config\Validation;
 
 // CodeIgniter Form Helpers
 
@@ -27,13 +30,13 @@ if (! function_exists('form_open')) {
     function form_open(string $action = '', $attributes = [], array $hidden = []): string
     {
         // If no action is provided then set to the current url
-        if (! $action) {
-            $action = current_url(true);
+        if ($action === '') {
+            $action = (string) current_url(true);
         } // If an action is not a full URL then turn it into one
-        elseif (strpos($action, '://') === false) {
+        elseif (! str_contains($action, '://')) {
             // If an action has {locale}
-            if (strpos($action, '{locale}') !== false) {
-                $action = str_replace('{locale}', Services::request()->getLocale(), $action);
+            if (str_contains($action, '{locale}')) {
+                $action = str_replace('{locale}', service('request')->getLocale(), $action);
             }
 
             $action = site_url($action);
@@ -57,9 +60,9 @@ if (! function_exists('form_open')) {
         $form = '<form action="' . $action . '"' . $attributes . ">\n";
 
         // Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
-        $before = Services::filters()->getFilters()['before'];
+        $before = service('filters')->getFilters()['before'];
 
-        if ((in_array('csrf', $before, true) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"')) {
+        if ((in_array('csrf', $before, true) || array_key_exists('csrf', $before)) && str_contains($action, base_url()) && ! stripos($form, 'method="get"')) {
             $form .= csrf_field($csrfId ?? null);
         }
 
@@ -148,7 +151,7 @@ if (! function_exists('form_input')) {
             'value' => $value,
         ];
 
-        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . _solidus() . ">\n";
     }
 }
 
@@ -194,7 +197,7 @@ if (! function_exists('form_upload')) {
 
         $data['type'] = 'file';
 
-        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . _solidus() . ">\n";
     }
 }
 
@@ -286,7 +289,7 @@ if (! function_exists('form_dropdown')) {
         }
 
         // If no selected state was submitted we will attempt to set it automatically
-        if (empty($selected)) {
+        if ($selected === []) {
             if (is_array($data)) {
                 if (isset($data['name'], $_POST[$data['name']])) {
                     $selected = [$_POST[$data['name']]];
@@ -310,7 +313,7 @@ if (! function_exists('form_dropdown')) {
             $key = (string) $key;
 
             if (is_array($val)) {
-                if (empty($val)) {
+                if ($val === []) {
                     continue;
                 }
 
@@ -365,7 +368,7 @@ if (! function_exists('form_checkbox')) {
             $defaults['checked'] = 'checked';
         }
 
-        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . _solidus() . ">\n";
     }
 }
 
@@ -454,10 +457,8 @@ if (! function_exists('form_label')) {
             $label .= ' for="' . $id . '"';
         }
 
-        if (is_array($attributes) && $attributes) {
-            foreach ($attributes as $key => $val) {
-                $label .= ' ' . $key . '="' . $val . '"';
-            }
+        foreach ($attributes as $key => $val) {
+            $label .= ' ' . $key . '="' . $val . '"';
         }
 
         return $label . '>' . $labelText . '</label>';
@@ -542,15 +543,15 @@ if (! function_exists('set_value')) {
      * Grabs a value from the POST array for the specified field so you can
      * re-populate an input field or textarea
      *
-     * @param string          $field      Field name
-     * @param string|string[] $default    Default value
-     * @param bool            $htmlEscape Whether to escape HTML special characters or not
+     * @param string              $field      Field name
+     * @param list<string>|string $default    Default value
+     * @param bool                $htmlEscape Whether to escape HTML special characters or not
      *
-     * @return string|string[]
+     * @return list<string>|string
      */
     function set_value(string $field, $default = '', bool $htmlEscape = true)
     {
-        $request = Services::request();
+        $request = service('request');
 
         // Try any old input data we may have first
         $value = $request->getOldInput($field);
@@ -571,7 +572,7 @@ if (! function_exists('set_select')) {
      */
     function set_select(string $field, string $value = '', bool $default = false): string
     {
-        $request = Services::request();
+        $request = service('request');
 
         // Try any old input data we may have first
         $input = $request->getOldInput($field);
@@ -607,7 +608,7 @@ if (! function_exists('set_checkbox')) {
      */
     function set_checkbox(string $field, string $value = '', bool $default = false): string
     {
-        $request = Services::request();
+        $request = service('request');
 
         // Try any old input data we may have first
         $input = $request->getOldInput($field);
@@ -627,8 +628,11 @@ if (! function_exists('set_checkbox')) {
             return '';
         }
 
+        $session     = service('session');
+        $hasOldInput = $session->has('_ci_old_input');
+
         // Unchecked checkbox and radio inputs are not even submitted by browsers ...
-        if ((string) $input === '0' || ! empty($request->getPost()) || ! empty(old($field))) {
+        if ((string) $input === '0' || ! empty($request->getPost()) || $hasOldInput) {
             return ($input === $value) ? ' checked="checked"' : '';
         }
 
@@ -644,20 +648,14 @@ if (! function_exists('set_radio')) {
      */
     function set_radio(string $field, string $value = '', bool $default = false): string
     {
-        $request = Services::request();
+        $request = service('request');
 
         // Try any old input data we may have first
         $oldInput = $request->getOldInput($field);
 
         $postInput = $request->getPost($field);
 
-        if ($oldInput !== null) {
-            $input = $oldInput;
-        } elseif ($postInput !== null) {
-            $input = $postInput;
-        } else {
-            $input = $default;
-        }
+        $input = $oldInput ?? $postInput ?? $default;
 
         if (is_array($input)) {
             // Note: in_array('', array(0)) returns TRUE, do not use it
@@ -679,11 +677,93 @@ if (! function_exists('set_radio')) {
     }
 }
 
+if (! function_exists('validation_errors')) {
+    /**
+     * Returns the validation errors.
+     *
+     * First, checks the validation errors that are stored in the session.
+     * To store the errors in the session, you need to use `withInput()` with `redirect()`.
+     *
+     * The returned array should be in the following format:
+     *     [
+     *         'field1' => 'error message',
+     *         'field2' => 'error message',
+     *     ]
+     *
+     * @return array<string, string>
+     */
+    function validation_errors()
+    {
+        $errors = session('_ci_validation_errors');
+
+        // Check the session to see if any were
+        // passed along from a redirect withErrors() request.
+        if ($errors !== null && (ENVIRONMENT === 'testing' || ! is_cli())) {
+            return $errors;
+        }
+
+        $validation = service('validation');
+
+        return $validation->getErrors();
+    }
+}
+
+if (! function_exists('validation_list_errors')) {
+    /**
+     * Returns the rendered HTML of the validation errors.
+     *
+     * See Validation::listErrors()
+     */
+    function validation_list_errors(string $template = 'list'): string
+    {
+        $config = config(Validation::class);
+        $view   = service('renderer');
+
+        if (! array_key_exists($template, $config->templates)) {
+            throw ValidationException::forInvalidTemplate($template);
+        }
+
+        return $view->setVar('errors', validation_errors())
+            ->render($config->templates[$template]);
+    }
+}
+
+if (! function_exists('validation_show_error')) {
+    /**
+     * Returns a single error for the specified field in formatted HTML.
+     *
+     * See Validation::showError()
+     */
+    function validation_show_error(string $field, string $template = 'single'): string
+    {
+        $config = config(Validation::class);
+        $view   = service('renderer');
+
+        $errors = array_filter(validation_errors(), static fn ($key) => preg_match(
+            '/^' . str_replace(['\.\*', '\*\.'], ['\..+', '.+\.'], preg_quote($field, '/')) . '$/',
+            $key
+        ), ARRAY_FILTER_USE_KEY);
+
+        if ($errors === []) {
+            return '';
+        }
+
+        if (! array_key_exists($template, $config->templates)) {
+            throw ValidationException::forInvalidTemplate($template);
+        }
+
+        return $view->setVar('error', implode("\n", $errors))
+            ->render($config->templates[$template]);
+    }
+}
+
 if (! function_exists('parse_form_attributes')) {
     /**
      * Parse the form attributes
      *
      * Helper function used by some of the form helpers
+     *
+     * @internal
      *
      * @param array|string $attributes List of attributes
      * @param array        $default    Default values
@@ -697,7 +777,7 @@ if (! function_exists('parse_form_attributes')) {
                     unset($attributes[$key]);
                 }
             }
-            if (! empty($attributes)) {
+            if ($attributes !== []) {
                 $default = array_merge($default, $attributes);
             }
         }
