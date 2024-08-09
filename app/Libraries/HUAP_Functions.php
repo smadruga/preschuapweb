@@ -228,8 +228,8 @@ class HUAP_Functions
             else {
                 
                 if ($pm && $data) {
-                    echo Time::createFromFormat('d/m/Y', "20/01/2021")->format("Y-m-d");
-                    exit('<br>oioioi<br>'.$data); 
+                    Time::createFromFormat('d/m/Y', "20/01/2021")->format("Y-m-d");
+                    #exit('<br>oioioi<br>'.$data); 
                     $data = ($hora) ? Time::createFromFormat('d/m/Y H:i', $data) : Time::createFromFormat('d/m/Y', $data);
                     
                     $data = ($hora) ? $data->format('Y-m-d H:i') : $data->format('Y-m-d');
