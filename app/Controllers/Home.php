@@ -57,7 +57,7 @@ class Home extends ResourceController
 
         $func = new HUAP_Functions();
 
-        $usuario = new UsuarioModel();
+        $usuario = $permissao = new UsuarioModel();
         $usuario = $usuario->get_user_mysql($v['Usuario']);
 
         if (!isset($usuario) || !$usuario) {
@@ -77,6 +77,11 @@ class Home extends ResourceController
         }
         if (!$this->validate_ldap($v['Usuario'], $v['Senha'])) {
             session()->setFlashdata('failed', 'Erro ao autenticar. <br> Senha incorreta.');
+            return view('home/form_login');
+        }
+
+        if (!isset($usuario['Permissao']) || !$usuario['Permissao']) {            
+            session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário não possui permissão para acessar o módulo.');
             return view('home/form_login');
         }
 
@@ -101,12 +106,12 @@ class Home extends ResourceController
         $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         setcookie("SishuapCookie", "", time()+env('huap.session.expires'));
 
-        /*
+        #/*
         echo "<pre>";
         print_r($v);
-        echo "</pre>";
-        echo "<pre>";
-        print_r($_SESSION);
+        echo "</pre><br>oi";
+        echo "<pre><br>io";
+        print_r($_SESSION['Sessao']);
         echo "</pre>";
         exit('oi');
         #*/
