@@ -20,7 +20,7 @@
         <tbody>
             <?php for($i=0; $i<$ad['entries']['count']; $i++) { ?>
                 <tr>
-                    <td><?= (isset($ad['entries'][$i]['cn'][0])) ? esc(mb_convert_encoding($ad['entries'][$i]['cn'][0], "UTF-8", "ASCII")) : '' ?></td>
+                    <td><?= (isset($ad['entries'][$i]['cn'][0])) ? $ad['entries'][$i]['cn'][0] : '' ?></td>
                     <th><?= (isset($ad['entries'][$i]['samaccountname'][0])) ? esc($ad['entries'][$i]['samaccountname'][0]) : '' ?></th>
                     <td><?= (isset($ad['entries'][$i]['employeeid'][0])) ? esc($func->mascara_cpf($ad['entries'][$i]['employeeid'][0])) : '' ?></th>
                     <td><?= (isset($ad['entries'][$i]['othermailbox'][0])) ? esc($ad['entries'][$i]['othermailbox'][0]) : ''  ?></th>

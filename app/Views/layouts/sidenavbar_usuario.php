@@ -1,14 +1,3 @@
-<?php 
-    //if ($_SESSION['Usuario']['Inativo'] == 1) { 
-    if(!isset($_SESSION['Usuario']['Permissao']) || !$_SESSION['Usuario']['Permissao'] || $_SESSION['Usuario']['Permissao'] == 'NULL' )
-        echo 'não';
-    else
-        echo 'existe';
-        
-        exit(' <> pois e => ');
-    exit(' <> pois e => '.$_SESSION['Usuario']['Permissao']);
-?>
-
 <a href="<?= base_url('admin/show_user/'.$_SESSION['Usuario']['Usuario']) ?>" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
     <span class="fs-5"><?= $_SESSION['Usuario']['Nome'] ?></span>
 </a>
