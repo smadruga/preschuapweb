@@ -15,7 +15,6 @@ class PerfilModel extends Model
     protected $allowedFields        = [
                                         'idSishuap_Usuario',
                                         'idTab_Perfil',
-                                        'idTab_Modulo',
                                     ];
 
     /**
@@ -23,24 +22,23 @@ class PerfilModel extends Model
     *
     * @return array
     */
-    public function list_perfil_bd($data, $foreach = NULL, $modulo = NULL)
+    public function list_perfil_bd($data, $foreach = NULL)
     {
 
         $db = \Config\Database::connect();
         $query = $db->query('
-            SELECT
-                SP.idSishuap_Perfil
-                , TP.idTab_Perfil
-                , TP.Perfil
-                , TP.Descricao
-            FROM
-                Sishuap_Perfil AS SP
-                , Tab_Perfil AS TP
-            WHERE
-                SP.idTab_Perfil = TP.idTab_Perfil
-                AND SP.idSishuap_Usuario = ' . $data . '
-                AND SP.idTab_Modulo = ' . $modulo . '
-            ORDER BY TP.Perfil ASC
+        SELECT
+            SP.idSishuap_Perfil
+            , TP.idTab_Perfil
+            , TP.Perfil
+            , TP.Descricao
+        FROM
+            Sishuap_Perfil AS SP
+            , Tab_Perfil AS TP
+        WHERE
+            SP.idTab_Perfil = TP.idTab_Perfil
+            AND SP.idSishuap_Usuario = ' . $data . '
+        ORDER BY TP.Perfil ASC
         ');
 
         if ($foreach) {

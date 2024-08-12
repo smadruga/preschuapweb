@@ -30,21 +30,21 @@ class UsuarioModel extends Model
 
         $db = \Config\Database::connect();
         $query = $db->query('
-        SELECT
-            u.idSishuap_Usuario
-            , u.Nome
-            , u.Usuario
-            , u.Inativo
-            , u.Cpf
-            , u.EmailSecundario
-            , pm.idSishuap_Usuario as "Permissao"
-        FROM
-            Sishuap_Usuario u
-                LEFT JOIN Sishuap_PermissaoModulo pm ON u.idSishuap_Usuario = pm.idSishuap_Usuario
-        WHERE
-            u.Usuario = "' . $data . '"
-            OR u.Cpf = "' . $data . '"
-        ORDER BY u.Nome
+            SELECT
+                u.idSishuap_Usuario
+                , u.Nome
+                , u.Usuario
+                , u.Inativo
+                , u.Cpf
+                , u.EmailSecundario
+                , pm.idSishuap_Usuario as "Permissao"
+            FROM
+                Sishuap_Usuario u
+                    LEFT JOIN Sishuap_PermissaoModulo pm ON u.idSishuap_Usuario = pm.idSishuap_Usuario
+            WHERE
+                u.Usuario = "' . $data . '"
+                OR u.Cpf = "' . $data . '"
+            ORDER BY u.Nome
         ');
         /*
         echo $db->getLastQuery();

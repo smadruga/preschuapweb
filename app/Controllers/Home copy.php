@@ -68,12 +68,8 @@ class Home extends ResourceController
             session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário inativo.');
             return view('home/form_login');
         }
-        if (!isset($usuario['Permissao']) || !$usuario['Permissao']) {            
-            session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário não possui permissão para acessar o módulo.');
-            return view('home/form_login');
-        }
 
-        $perfil = $perfil->list_perfil_bd($usuario['idSishuap_Usuario'], TRUE, env('mod.cod'));
+        $perfil = $perfil->list_perfil_bd($usuario['idSishuap_Usuario'], TRUE);
 
         if (!isset($perfil) || !$perfil) {
             session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário não possui nenhum perfil associado.');
@@ -84,6 +80,11 @@ class Home extends ResourceController
             return view('home/form_login');
         }
 
+        if (!isset($usuario['Permissao']) || !$usuario['Permissao']) {            
+            session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário não possui permissão para acessar o módulo.');
+            return view('home/form_login');
+        }
+
         unset($v['Senha']);
         $_SESSION['Sessao'] = $usuario;
 
@@ -91,8 +92,6 @@ class Home extends ResourceController
         $_SESSION['Sessao']['Nome'] = $v['Nome'][0] . ' ' . $v['Nome'][count($v['Nome'])-1];
 
         $_SESSION['Sessao']['Perfil'] = $perfil;
-        $_SESSION['Sessao']['Modulo'] = env('mod.cod');
-        
         $acesso->insert($func->set_acesso('LOGIN'), TRUE);
 
         /**
@@ -107,12 +106,12 @@ class Home extends ResourceController
         $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
         setcookie("SishuapCookie", "", time()+env('huap.session.expires'));
 
-        /*
+        #/*
         echo "<pre>";
         print_r($v);
-        echo "</pre>";
-        echo "<pre>";
-        print_r($_SESSION);
+        echo "</pre><br>oi";
+        echo "<pre><br>io";
+        print_r($_SESSION['Sessao']);
         echo "</pre>";
         exit('oi');
         #*/

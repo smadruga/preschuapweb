@@ -97,7 +97,7 @@ class Admin extends BaseController
 
         #Pesquisa no AD pela palavra inserida no campo de pesquisa.
         $v['ad'] = $this->get_user_ad($v['Pesquisar']);
-        
+
         /*
         echo "<pre>";
         print_r($v['ad']);
@@ -151,7 +151,7 @@ class Admin extends BaseController
 
         $v['data'] = [
             'Usuario'           => (isset($v['ad']['entries'][0]['samaccountname'][0])) ? esc($v['ad']['entries'][0]['samaccountname'][0]) : '',
-            'Nome'              => (isset($v['ad']['entries'][0]['cn'][0])) ? $v['ad']['entries'][0]['cn'][0] : NULL,
+            'Nome'              => (isset($v['ad']['entries'][0]['cn'][0])) ? esc(mb_convert_encoding($v['ad']['entries'][0]['cn'][0], "UTF-8", "ASCII")) : NULL,
             'Cpf'               => (isset($v['ad']['entries'][0]['employeeid'][0])) ? esc($v['ad']['entries'][0]['employeeid'][0]) : NULL,
             'EmailSecundario'   => (isset($v['ad']['entries'][0]['othermailbox'][0])) ? $v['ad']['entries'][0]['othermailbox'][0] : NULL,
         ];
@@ -187,14 +187,13 @@ class Admin extends BaseController
 
         $usuario = new UsuarioModel();
 
-        #$_SESSION['Usuario'] = $usuario->getWhere(['Usuario' => $data])->getRowArray();
-        $_SESSION['Usuario'] = $usuario->get_user_mysql($data);
+        $_SESSION['Usuario'] = $usuario->getWhere(['Usuario' => $data])->getRowArray();
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
 
         /*
         echo "<pre>";
-        print_r($_SESSION['Usuario']);
+        print_r($session);
         echo "</pre>";
         exit();
         #*/
@@ -222,7 +221,7 @@ class Admin extends BaseController
         $v['select']['Perfil'] = $tabperfil->where('Inativo', NULL)->findAll();
 
         #Perfis já atribuídos ao usuário
-        $v['list']['Perfil'] = $perfil->list_perfil_bd($data, NULL, env('mod.cod'));
+        $v['list']['Perfil'] = $perfil->list_perfil_bd($data);
 
         #Verifica quais perfis os usuário já possui para exibir apenas aqueles ainda disponíveis pra escolha
         if($v['list']['Perfil'] !== FALSE) {
@@ -265,7 +264,7 @@ class Admin extends BaseController
         $v['select']['Perfil'] = $tabperfil->where('Inativo', NULL)->findAll();
 
         #Perfis já atribuídos ao usuário
-        $v['list']['Perfil'] = $perfil->list_perfil_bd($data, NULL, env('mod.cod'));
+        $v['list']['Perfil'] = $perfil->list_perfil_bd($data);
 
         #Verifica quais perfis os usuário já possui para exibir apenas aqueles ainda disponíveis pra escolha
         if($v['list']['Perfil'] !== FALSE) {
@@ -289,7 +288,6 @@ class Admin extends BaseController
         $v['data'] = [
             'idSishuap_Usuario' => $_SESSION['Usuario']['idSishuap_Usuario'],
             'idTab_Perfil'      => $v['Perfil'],
-            'idTab_Modulo'      => env('mod.cod'),
         ];
 
         $v['campos'] = array_keys($v['data']);
@@ -299,9 +297,6 @@ class Admin extends BaseController
         echo "<pre>";
         print_r($v);
         echo "</pre>";
-        echo "<pre>";
-        print_r($v['data']);
-        echo "</pre>";        
         exit();
         #*/
 
@@ -405,7 +400,7 @@ class Admin extends BaseController
         return redirect()->to('admin/show_user/'.$_SESSION['Usuario']['Usuario']);
 
     }
-
+    
     /**
     * Desabilita no sistema o usuário selecionado
     *
@@ -425,7 +420,7 @@ class Admin extends BaseController
         if(!$v['Habilitar'])
             return view('admin/usuario/form_habilita_usuario', $v);
 
-        $v['data'] = array(
+        $v['data'] = array( 
             //'Inativo' => 0,
             'idSishuap_Usuario' => $data,
             'idTab_Modulo' => env('mod.cod'),
@@ -461,12 +456,6 @@ class Admin extends BaseController
     */
     private function get_user_ad($data)
     {
-
-        
-        $v['ldap']['ldap_conn'] = ldap_connect(env('srv.ldap1'));
-        ldap_set_option($v['ldap']['ldap_conn'], LDAP_OPT_PROTOCOL_VERSION, 3);
-        
-/*
         #Tenta se conectar com o servidor LDAP Master
         if (FALSE !== $v['ldap']['ldap1']=@ldap_connect(env('srv.ldap1')))
             $v['ldap']['ldap_conn'] = $v['ldap']['ldap1'];
@@ -476,44 +465,12 @@ class Admin extends BaseController
         #Se nenhuma conexão acontecer é retornado false
         else
             return FALSE;
-*/
-        #/*
-                
-        if ($v['ldap']['ldap_conn']) {
-            $v['ldap']['bind'] = ldap_bind($v['ldap']['ldap_conn'], env('ldap.usr'), env('ldap.pwd'));
-        
-            if ($v['ldap']['bind']) {
-                # Filtros (campos de busca USUÁRIO e CPF)
-                $v['ldap']['ldap_filter'] = "(|(samaccountname=$data)(employeeID=$data))";
-                # Campos que serão retornados após pesquisa
-                $v['ldap']['ldap_att'] = ["cn", "samaccountname", "employeeID", "othermailbox"];
-        
-                # Resultado da pesquisa
-                $v['ldap']['result'] = ldap_search($v['ldap']['ldap_conn'], env('ldap.dn'), $v['ldap']['ldap_filter'], $v['ldap']['ldap_att']);
-        
-                if ($v['ldap']['result']) {
-                    $v['ldap']['entries'] = ldap_get_entries($v['ldap']['ldap_conn'], $v['ldap']['result']);
-                    
-                    # Verifica se houve resultados e imprime
-                    if ($v['ldap']['entries']['count'] <= 0) 
-                        $v['ldap']['entries']['count'] = 0;
 
-                } else {
-                    $v['ldap']['entries']['count'] = 0;
-                }
-            } else {
-                $v['ldap']['entries']['count'] = 0;
-            }
-        } else {
-            $v['ldap']['entries']['count'] = 0;
-        }
-        
-        #*/
-
-        /*
         #conexão com o usuário adm do ldap
         @ldap_bind($v['ldap']['ldap_conn'], env('ldap.usr'), env('ldap.pwd'));
 
+        #filtros (campos de busca NOME, USUÁRIO e CPF)
+        #$v['ldap']['ldap_filter'] = "(|(cn=*$data*)(samaccountname=$data)(employeeID=$data))";
         #filtros (campos de busca USUÁRIO e CPF)
         $v['ldap']['ldap_filter'] = "(|(samaccountname=$data)(employeeID=$data))";
         #campos que serão retornados após pesquisa
@@ -522,8 +479,6 @@ class Admin extends BaseController
         $v['ldap']['result'] = ldap_search($v['ldap']['ldap_conn'], env('ldap.dn'), $v['ldap']['ldap_filter'], $v['ldap']['ldap_att']);
         #organização do resultado da pesquisa
         $v['ldap']['entries'] = ldap_get_entries($v['ldap']['ldap_conn'], $v['ldap']['result']);
-        #*/
-
 
         /*
         echo "<pre>";
