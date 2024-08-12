@@ -148,16 +148,20 @@ class Tabela extends BaseController
         $v['func'] = new HUAP_Functions(); #Inicia a classe de funções próprias
 
         $v['tabela'] = $tab;
-        $action = (!$action) ? $this->request->getVar('action', FILTER_SANITIZE_FULL_SPECIAL_CHARS) : $action;
+        $action = (!$action) ? $this->request->getVar('action', FILTER_SANITIZE_STRING) : $action;
 
         #Captura os inputs do Formulário
-        $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_STRING));
         if($v['tabela'] == 'Protocolo')
             $v['data']['Aplicabilidade'] = (isset($v['data']['Aplicabilidade'])) ? $v['data']['Aplicabilidade'] : NULL;
-            /*echo "<pre>";
-            print_r($v['data']);
-            echo "</pre>";
-            exit('oi2');
+            
+        /*
+        echo "<pre>";
+        print_r($v['data']);
+        echo "</pre>";
+        exit('oi2');
+        #*/
+
         /*
         $opt = $this->get_opt($tab, $action, $data);
         $v['opt'] = $opt['opt'];
@@ -375,15 +379,14 @@ class Tabela extends BaseController
                 #Realiza a validação e retorna ao formulário se false
                 if (!$inputs)
                     $v['validation'] = $this->validator;
-                else {
 
                     $action = $v['data']['action'];
 
                     $v['data'][$v['tabela']] = $v['data']['Item'];
                     if($v['tabela'] == 'ViaAdministracao')
-                        $v['data']['Codigo'] = mb_strtoupper($v['data']['Codigo']);
+                        $v['data']['Codigo'] = mb_strtoupper($v['data']['Codigo'], 'UTF-8');
                     if($v['tabela'] == 'Protocolo')
-                        $v['data']['Protocolo'] = mb_strtoupper($v['data']['Item']);
+                        $v['data']['Protocolo'] = mb_strtoupper($v['data']['Item'], 'UTF-8');
                     if($v['tabela'] == 'Protocolo_Medicamento') {
                         $v['data']['idTabPreschuap_Medicamento'] = $v['data']['Item'];
                         $v['data']['Dose'] = str_replace(",",".",$v['data']['Dose']);
@@ -392,7 +395,14 @@ class Tabela extends BaseController
                             NULL : $v['data']['idTabPreschuap_Diluente'];
                         unset($v['data'][$v['tabela']]);
                     }
+                    else {
+                        /*
 
+                        echo utf8_decode($v['data']['Protocolo'])."<pre>";
+                        print_r($v['data']);
+                        echo "</pre>";
+                        exit('oi2333334442');
+                        #*/
                     unset(
                         $v['data']['csrf_test_name'],
                         $v['data']['Item'],
