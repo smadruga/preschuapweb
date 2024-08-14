@@ -25,6 +25,7 @@ class Agenda extends BaseController
 
     public function show_agenda_mes($year = null, $month = null)
     {
+
         if ($year === null) {
             $year = date('Y');
         }
@@ -36,36 +37,7 @@ class Agenda extends BaseController
         return view('admin/agenda/page_agenda_mes');
     }
 
-    private function generateCalendar($year, $month)
-    {
-        $firstDayOfMonth = new DateTime("$year-$month-01");
-        $daysInMonth = $firstDayOfMonth->format('t');
-        $dayOfWeek = $firstDayOfMonth->format('w');
-
-        // Create a DateTime object for the previous and next months
-        $prevMonth = clone $firstDayOfMonth;
-        $prevMonth->modify('-1 month');
-        $nextMonth = clone $firstDayOfMonth;
-        $nextMonth->modify('+1 month');
-
-        $calendar = [
-            'year' => $year,
-            'month' => $month,
-            'daysInMonth' => $daysInMonth,
-            'dayOfWeek' => $dayOfWeek,
-            'prevMonth' => [
-                'year' => $prevMonth->format('Y'),
-                'month' => $prevMonth->format('m')
-            ],
-            'nextMonth' => [
-                'year' => $nextMonth->format('Y'),
-                'month' => $nextMonth->format('m')
-            ]
-        ];
-
-        return $calendar;
-    }    
-
+    
     /**
     * Gera a versão para impressão da Prescrição Médica
     *

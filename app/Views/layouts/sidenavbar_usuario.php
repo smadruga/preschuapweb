@@ -10,7 +10,7 @@
     </li>
     <li class="nav-item">
         <a href="<?= base_url('admin/list_perfil/'.$_SESSION['Usuario']['idSishuap_Usuario']) ?>" class="nav-link text-white" aria-current="page">
-            <i class="fa-solid fa-chalkboard-user"></i> Perfil Perfil - <?= $_SESSION['Usuario']['Permissao'] ?>
+            <i class="fa-solid fa-chalkboard-user"></i> Perfil
         </a>
     </li>
     <li>

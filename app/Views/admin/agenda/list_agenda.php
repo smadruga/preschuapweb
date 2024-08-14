@@ -159,7 +159,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="9" class="text-center">Total: <?= $i ?> agendamentos</th>
+                    <th colspan="10" class="text-center">Total: <?= $i ?> agendamentos</th>
                 </tr>
             </tfoot>        
         </table>

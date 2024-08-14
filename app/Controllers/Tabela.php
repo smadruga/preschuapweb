@@ -261,9 +261,9 @@ class Tabela extends BaseController
             $v['select']['Posologia']           = $tabela->list_tabela_bd('Posologia', FALSE, FALSE, FALSE, FALSE, $notinativo); #Carrega os itens da tabela selecionada
         }
 
-        /*
+        #/*
         echo "<pre>";
-        print_r($v['select']);
+        print_r($v);
         echo "</pre>";
         exit('oi');
         #*/

@@ -35,11 +35,13 @@
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/ViaAdministracao') ?>"><i class="fa-solid fa-table-list"></i> Via de Administração</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('agenda') ?>"><i class="fa-solid fa-calendar-days"></i> Agenda
-                        <span class="visually-hidden"></span>
-                    </a>
-                </li>                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-calendar-days"></i> Agenda</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<?= base_url('agenda') ?>"><i class="fa-solid fa-calendar-days"></i> Diário</a>
+                        <a class="dropdown-item" href="<?= base_url('agenda/show_agenda_mes') ?>"><i class="fa-solid fa-calendar-days"></i> Mensal</a>
+                    </div>
+                </li>                                 
                 <?php if (isset($_SESSION['Sessao']['Perfil'][1]) || isset($_SESSION['Sessao']['Perfil'][2]) ) { ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-gear"></i> Configurações</a>
