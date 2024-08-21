@@ -154,3 +154,16 @@ ldap.dn = OU=Usuarios,OU=HUAP,OU=EBSERH,DC=ebserhnet,DC=ebserh,DC=gov,DC=br
 #--------------------------------------------------------------------
 
 huap.session.expires = 7200
+
+#--------------------------------------------------------------------
+# MÓDULO CONFIG
+#--------------------------------------------------------------------
+
+mod.name.min    = "preschuapweb"
+mod.name.max    = "PRESCHUAPWEB"
+mod.name.first  = "PreschuapWeb"
+mod.cod         = 26
+
+hu.nome         = "Hospital Universitário Antonio Pedro"
+hu.abrev        = "Huap-UFF"
+
