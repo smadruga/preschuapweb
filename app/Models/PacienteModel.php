@@ -63,14 +63,30 @@ class PacienteModel extends Model
             WHERE
                 codigo = '.$data.'
         ');
-
         $query = $query->getRowArray();
 
-        $query['telefone'] = ($query['ddd_fone_residencial'] || $query['fone_residencial']) ? $query['ddd_fone_residencial'].' '.$query['fone_residencial'].' (Residencial) ' : NULL;
-        $query['telefone'] .= ($query['ddd_fone_recado'] || $query['fone_recado']) ? $query['ddd_fone_recado'].' '.$query['fone_recado'].' (Recado) ' : NULL;
+        $query2 = $db->query('
+            SELECT
+                ddd
+                , nro_fone
+            FROM
+                aip_contatos_pacientes
+            WHERE
+                pac_codigo = '.$query['codigo'].'
+        ');
+
+        $query['telefone'] = NULL;
+        foreach ($query2->getResultArray() as $val)
+            $query['telefone'] .= $this->mascara_telefone($val['ddd'], $val['nro_fone']).' ';          
+     
+
+        #$query['telefone'] = ($query['ddd_fone_residencial'] || $query['fone_residencial']) ? $query['ddd_fone_residencial'].' '.$query['fone_residencial'].' (Residencial) ' : NULL;
+        #$query['telefone'] .= ($query['ddd_fone_recado'] || $query['fone_recado']) ? $query['ddd_fone_recado'].' '.$query['fone_recado'].' (Recado) ' : NULL;
+
+
 
         /*
-        echo $db->getLastQuery();
+        #echo $db->getLastQuery();
         echo "<pre>";
         print_r($query);
         echo "</pre>";
@@ -136,6 +152,22 @@ class PacienteModel extends Model
 
         return ($query->getNumRows() > 0) ? $q : FALSE ;
 
+    }
+
+    function mascara_telefone($ddd, $telefone) {
+        // Remove caracteres não numéricos do DDD e do telefone
+        $ddd = preg_replace('/[^0-9]/', '', $ddd);
+        $telefone = preg_replace('/[^0-9]/', '', $telefone);
+    
+        // Aplica a máscara ao telefone (ex: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX)
+        if (strlen($telefone) == 8) {
+            return preg_replace('/(\d{4})(\d{4})/', "($ddd) $1-$2", $telefone);
+        } elseif (strlen($telefone) == 9) {
+            return preg_replace('/(\d{5})(\d{4})/', "($ddd) $1-$2", $telefone);
+        }
+        
+        // Retorna o telefone sem formatação caso tenha tamanho inesperado
+        return "($ddd) $telefone";
     }
 
 }
