@@ -15,15 +15,12 @@ foreach($prescricao['array'] as $v) {
                         <div class="col-5 container border border-dark"><b>
                             <div class="row">
                                 <div class="col-2 ps-3 pt-2">
-                                    <img src="<?= base_url('/assets/img/huap.png') ?>" width="100%" /><br />
-                                    <img src="<?= base_url('/assets/img/ebserh.png') ?>" width="100%" />
+                                    <img src="<?= base_url('/logo-hu.png') ?>" width="100%" /><br />
+                                    <img src="<?= base_url('/logo-ebserh.png') ?>" width="100%" />
                                 </div>
                                 <div class="col pt-2">
-                                    HOSPITAL UNIVERSITÁRIO ANTONIO PEDRO - HUAP<br />
-                                    GERÊNCIA DE ATENÇÃO A SAÚDE - GAS<br />
-                                    DIVISÃO DE GESTÃO DO CUIDADO - DGC<br />
-                                    UNIDADE DE HEMATOLOGIA E ONCOLOGIA - UHON<br />
-                                    PRESCRIÇÃO MÉDICA DO PACIENTE
+                                    <?= strtoupper(env('hu.nome')." - ".env('hu.abrev')) ?><br />
+                                    <?= strtoupper(env('hu.head.print')) ?><br />
                                 </div>
                             </div>
                         </b></div>
