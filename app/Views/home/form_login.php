@@ -9,7 +9,7 @@ Entrar <?= $this->endSection() ?>
 
         <?= $this->include('layouts/div_flashdata') ?>
 
-        <a href="/" /><img class="mb-4" src="<?= base_url() ?>/assets/img/caduceus/caduceus-128.png" alt=""></a>
+        <a href="/"><img class="mb-4" src="<?= base_url() ?>/assets/img/caduceus/caduceus-128.png" alt=""></a>
         <h1 class="h3 mb-3 fw-normal"><?= HUAP_APPNAME ?></h1>
 
         <div class="card-body p-4">
