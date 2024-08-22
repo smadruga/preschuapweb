@@ -102,6 +102,7 @@ class AgendaModel extends Model
                 , ppm.idTabPreschuap_ViaAdministracao 
                 , tpva.Codigo 
                 , format(ppm.Calculo, 2, "pt_BR") as Dose
+                , pp.idPreschuap_Prescricao
                 , pa.*
             FROM 
                 Preschuap_Agenda pa
