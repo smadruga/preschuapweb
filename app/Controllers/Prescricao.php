@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\TabelaModel;
 use App\Models\PrescricaoModel;
 use App\Models\PrescricaoMedicamentoModel;
+use App\Models\AgendaModel;
 
 use App\Models\AuditoriaModel;
 use App\Models\AuditoriaLogModel;
@@ -29,8 +30,9 @@ class Prescricao extends BaseController
     public function list_prescricao()
     {
 
-        $prescricao = new PrescricaoModel();
-        $medicamento = new PrescricaoMedicamentoModel();
+        $prescricao     = new PrescricaoModel();
+        $medicamento    = new PrescricaoMedicamentoModel();
+        $agenda         = new AgendaModel();
 
         $v['pager'] = \Config\Services::pager();
         $request = \Config\Services::request();
@@ -49,17 +51,24 @@ class Prescricao extends BaseController
             $m['where'] = substr($m['where'], 0, -2);
 
             $v['medicamento'] = $medicamento->read_medicamento($m);
+            $v['agendamento'] = $agenda->list_agenda_prontuario($m['where']);
 
         }
 
         /*
         echo "<pre>";
-        print_r($v['prescricao']);
+        #print_r($v['prescricao']);
         echo "</pre>";
         echo "<pre>";
-        print_r($v['medicamento']);
+        #print_r($v['medicamento']);
         echo "</pre>";
-        #exit('oi'.$_SESSION['Paciente']['prontuario']);
+        echo "<pre>";
+        #print_r($v['agendamento']);
+        echo "</pre>";
+        echo "<pre>";
+        #print_r($v);
+        echo "</pre>";
+        exit('oi'.$_SESSION['Paciente']['prontuario']);
         #*/
 
         return view('admin/prescricao/list_prescricao', $v);
