@@ -57,6 +57,7 @@
                 <td>Obs</td>            
                 <td>Prontuário</td>
                 <td>Nome</td>
+                <td>Prescrição</td>
                 <td>Protocolo</td>
                 <td>Medicamento</td>
                 <td>Via</td>
@@ -86,7 +87,7 @@
                             $ant = $agn = '';
                             foreach ($v as $x) {
                                 if ($i > 0 && $x['idTabPreschuap_TipoAgendamento'] != $agn) {
-                                    echo '<tr><td colspan="10"><br></td></tr>';
+                                    echo '<tr><td colspan="11"><br></td></tr>';
                                 }
 
                                 if ($ant != $x['idPreschuap_Agenda'].'#'.$x['idTabPreschuap_Protocolo']) {
@@ -107,13 +108,14 @@
                                         $inc++;
 
                                     echo "                     
-                                        <tr><td colspan='10'><br></td></tr>
+                                        <tr><td colspan='11'><br></td></tr>
                                         <tr>
                                             {$th}
                                             <th>{$x['badge']}</th>
                                             <th>".esc($x['Observacoes'])."</th>
                                             <th>".esc($x['Prontuario'])."</th>
                                             <th>".esc($agenda['paciente'][$x['Prontuario']])."</th>
+                                            <th>#".esc($x['idPreschuap_Prescricao'])."</th>
                                             <th>".esc($x['Protocolo'])."</th>
                                             <th>".esc($x['Medicamento'])."</th>
                                             <th>".esc($x['Codigo'])."</th>
@@ -129,7 +131,7 @@
                                 } else {
                                     echo '
                                         <tr>
-                                            <th colspan="6"></th>
+                                            <th colspan="7"></th>
                                             <th>'.esc($x['Medicamento']).'</th>
                                             <th>'.esc($x['Codigo']).'</th>
                                             <th>'.esc($x['Dose']).'</th>  
@@ -145,7 +147,7 @@
             </tbody>        
             <tfoot>
                 <tr>
-                    <th colspan="10" class="text-center">
+                    <th colspan="11" class="text-center">
                         <table width="100%">
                             <tr>
                                 <th><span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" 
@@ -159,12 +161,11 @@
                                 <th><span class="badge bg-info text-white" data-bs-toggle="tooltip" data-bs-placement="top" 
                                     data-bs-title="Intratecal"><i class="fa-solid fa-house-medical"></i></span> <?= $inc ?></th>                        
                             </tr>
-                            </tr>
                         </table>                  
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="9" class="text-center">Total: <?= $i ?> agendamentos</th>
+                    <th colspan="11" class="text-center">Total: <?= $i ?> agendamentos</th>
                 </tr>
             </tfoot>        
         </table>
