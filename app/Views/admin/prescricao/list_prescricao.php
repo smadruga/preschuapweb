@@ -25,6 +25,9 @@
                             <div class="col-6 text-start"><b>Prescrição #<?= $v['idPreschuap_Prescricao'] ?></b></div>
                             <div class="col-6 text-end">
                                 <?php
+                                if(isset($agendamento[$v['idPreschuap_Prescricao']]))
+                                    echo '<span class="badge bg-danger text-white"><i class="fa-regular fa-calendar-check"></i> Agendado</span> ';
+
                                 if($v['Concluido'] == 1)
                                     echo '<span class="badge bg-primary text-white"><i class="fa-solid fa-check-circle"></i> Fechada</span>';
                                 else
@@ -204,6 +207,50 @@
                         ?>
 
                     </div>
+
+                    <?php
+                        if(!isset($agendamento[$v['idPreschuap_Prescricao']])) {
+                        ?>
+                        <div class="alert alert-secondary text-center" role="alert">
+                            Nenhum agendamento
+                        </div>
+                        <?php
+                        }
+                        
+                        else {
+                            $i=0;
+                            
+                            echo '
+                            <div class="alert alert-danger text-center" role="alert">
+                                AGENDAMENTOS
+                            </div>
+                            <table class="table bordered">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Data</th>
+                                    <th scope="col">Turno</th>
+                                    <th scope="col">Obs</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                            ';
+
+                            foreach($agendamento[$v['idPreschuap_Prescricao']] as $m) {
+                            $i++;
+                            echo '
+                            <tr>
+                                <th scope="row">'.$i.'</th>
+                                <td>'.$m['DataAgendamento'].'</td>
+                                <td>'.$m['Turno'].'</td>
+                                <td>'.$m['Observacoes'].'</td>
+                            </tr>
+                            ';
+
+                            } 
+                            echo '</table>';
+                        }
+                    ?>
                 </div>
             </div>
         </div>

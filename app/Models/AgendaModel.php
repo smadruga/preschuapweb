@@ -20,6 +20,48 @@ class AgendaModel extends Model
                                     'idPreschuap_Prescricao'
                                     ];
 
+    
+    /**
+    * Captura o id da prescrição concluída mais recente.
+    *
+    * @return void
+    */
+    public function list_agenda_prontuario($q) {
+        
+        $db = \Config\Database::connect();
+        $query = $db->query('
+            SELECT 
+                pa.idPreschuap_Prescricao 
+                , pa.idPreschuap_Agenda 
+                , CASE
+                    WHEN pa.Turno = "T" THEN "TARDE"
+                    ELSE "MANHÃ"
+                END as Turno
+                , date_format(pa.DataAgendamento, "%d/%m/%Y") as DataAgendamento
+                , pa.Observacoes 
+            FROM 
+                Preschuap_Agenda pa  
+            WHERE 
+                pa.idPreschuap_Prescricao in ('.$q.')
+            ORDER BY
+                pa.idPreschuap_Agenda ASC
+            ;
+        ');
+
+        foreach($query->getResultArray() as $val)
+            $data['agendamento'][$val['idPreschuap_Prescricao']][] = $val;
+
+        /*
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+        exit('oi');
+        #*/
+        return $data['agendamento'];
+
+    }
+    
+    
     /**
     * Captura o id da prescrição concluída mais recente.
     *
@@ -83,8 +125,6 @@ class AgendaModel extends Model
     {
 
         #$data = ($data) ? $data : date('Y-m-d'); 
-
-#exit('>>>'.$data);
 
         $db = \Config\Database::connect();
         $query = $db->query('
