@@ -57,7 +57,7 @@ class AgendaModel extends Model
         echo "</pre>";
         exit('oi');
         #*/
-        return $data['agendamento'];
+        return (isset($data['agendamento'])) ? $data['agendamento'] : false;
 
     }
     
