@@ -137,7 +137,7 @@
                                             
                                         </div>
                                         <div class='card-footer text-body-secondary text-center'>
-                                            Total:  ".$total."
+                                            Total:  ".($sq+$inj+$ms+$int+$inc)."
                                         </div>
                                     </div>
                                 </td>";
