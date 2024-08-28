@@ -6,6 +6,7 @@ use App\Models\PacienteModel;
 use App\Models\PrescricaoModel;
 use App\Models\AgendaModel;
 use App\Models\TabelaModel;
+use App\Models\AgendaMedicamentoOcultoModel;
 
 use App\Models\AuditoriaModel;
 use App\Models\AuditoriaLogModel;
@@ -22,6 +23,58 @@ class Agenda extends BaseController
     {
 
     }
+
+
+    public function hide_medicamento($data, $idagenda, $show, $medicamento = NULL)
+    {
+
+        $agenda         = new AgendaModel(); #Inicia o objeto baseado na TabelaModel
+        $oculto         = new AgendaMedicamentoOcultoModel(); #Inicia o objeto baseado na TabelaModel
+        $auditoria      = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
+        $auditorialog   = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
+        $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias 
+
+        /*
+        echo "<pre>";
+        print_r($v['agenda']);
+        echo "</pre>";
+        exit('oi');
+        #*/
+
+        if ($show == 1) {
+            exit($idagenda.' del '.$medicamento);
+        }
+        else {
+            exit($idagenda.' ins '.$medicamento).' >> '.$data;
+            
+            $v['agenda'] = [
+                'idPreschuap_AgendaMedicamentoOculto'   => '',
+                'idPreschuap_Agenda'                    => $idagenda,
+                'idPreschuap_Prescricao_Medicamento'    => $medicamento,
+            ];
+
+
+            $v['id']        = $oculto->insert($v['agenda']);
+            $v['campos']    = array_keys($v['agenda']);
+            $v['anterior']  = array();
+
+            if($v['id']) {
+
+                $v['auditoria']     = $auditoria->insert($v['func']->create_auditoria('AgendaMedicamentoOcultoModel', 'CREATE', $v['id']), TRUE);
+                $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['agenda'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
+
+                session()->setFlashdata('success', 'Operação realizada com sucesso!');
+
+            }
+            else
+                session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+        }
+
+
+        return view('agenda/index/', $data);
+
+    }
+    
 
     public function show_agenda_mes($mes = null, $ano = null)
     {
