@@ -86,6 +86,10 @@ $routes->group('migracao', function ($routes) {
     $routes->get('calcula_tabela', 'Migracao::calcula_tabela');
 });
 
+$routes->group('agenda', function ($routes) {
+    $routes->get('hide_medicamento/(:segment)/(:any)/(:any)/(:any)', 'Agenda::hide_medicamento/$1/$2/$3/$4');
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

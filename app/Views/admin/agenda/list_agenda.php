@@ -46,7 +46,7 @@
     <hr>
 
     <?php foreach (['M' => 'MANHÃ', 'T' => 'TARDE'] as $turno => $turnoNome): ?>
-        <div class="alert alert-secondary text-center" role="alert">
+        <div class="alert alert-secondary text-center" colspan='14' role="alert">
             <b>TURNO: <?= $turnoNome ?></b>
         </div>
 
@@ -54,7 +54,10 @@
             <tr class="table-secondary text-center">
                 <td>#</td>
                 <td>Tipo</td>
-                <td>Obs</td>            
+                <td>Obs</td> 
+                <td><i class="fa-regular fa-trash-can"></i></td>
+                <td><i class="fa-solid fa-pen-to-square"></i></td>
+                <td><i class="fa-solid fa-eye"></i></td>           
                 <td>Prontuário</td>
                 <td>Nome</td>
                 <td>Prescrição</td>
@@ -62,7 +65,7 @@
                 <td>Medicamento</td>
                 <td>Via</td>
                 <td>Dose</td>
-                <td></td>
+                <td><i class="fa-solid fa-eye-slash"></i></td>
             </tr>
             <tbody>
                 <?php
@@ -84,7 +87,7 @@
                         $counts = array_fill(1, 5, 0);
                         $i=$sq=$inj=$ms=$int=$inc=0;
                         foreach ($agenda['agendamento'][$turno] as $v) {
-                            $ant = $agn = '';
+                            $ant = $agn = '<i class="fa-regular fa-trash-can"></i>';
                             foreach ($v as $x) {
                                 if ($i > 0 && $x['idTabPreschuap_TipoAgendamento'] != $agn) {
                                     echo '<tr><td colspan="11"><br></td></tr>';
@@ -108,11 +111,32 @@
                                         $inc++;
 
                                     echo "                     
-                                        <tr><td colspan='11'><br></td></tr>
+                                        <tr><td colspan='14'><br></td></tr>
                                         <tr>
                                             {$th}
                                             <th>{$x['badge']}</th>
                                             <th>".esc($x['Observacoes'])."</th>
+                                            <th>
+                                                <a href=".base_url('agenda/del_agendamento/'.$x['idPreschuap_Agenda'].'/'.$agenda['databd'])." 
+                                                    class='btn btn-outline-danger btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
+                                                    data-bs-placement='top' data-bs-title='Excluir agendamento'>
+                                                    <i class='fa-regular fa-trash-can'></i>
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href=".base_url('agenda/edit_agendamento/'.$x['idPreschuap_Agenda'])." 
+                                                    class='btn btn-outline-warning btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
+                                                    data-bs-placement='top' data-bs-title='Editar agendamento'>
+                                                    <i class='fa-solid fa-pen-to-square'></i>
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href=".base_url('agenda/hide_medicamento/'.$agenda['databd'].'/'.$x['idPreschuap_Agenda'].'/1/')." 
+                                                    class='btn btn-outline-info btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
+                                                    data-bs-placement='top' data-bs-title='Reexibir todos medicamentos'>
+                                                    <i class='fa-solid fa-eye'></i>
+                                                </a>
+                                            </th>                                                                                        
                                             <th>".esc($x['Prontuario'])."</th>
                                             <th>".esc($agenda['paciente'][$x['Prontuario']])."</th>
                                             <th>#".esc($x['idPreschuap_Prescricao'])."</th>
@@ -121,21 +145,29 @@
                                             <th>".esc($x['Codigo'])."</th>
                                             <th>".esc($x['Dose'])."</th>
                                             <th>
-                                                <a href=".base_url('agenda/del_agendamento/'.$x['idPreschuap_Agenda'].'/'.$agenda['databd'])." class='btn btn-danger btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' data-bs-placement='top' data-bs-title='Excluir Agendamento'>
-                                                    <i class='fa-regular fa-trash-can'></i>
+                                                <a href=".base_url('agenda/hide_medicamento/'.$agenda['databd'].'/'.$x['idPreschuap_Agenda'].'/0/'.$x['idTabPreschuap_Medicamento'])." 
+                                                    class='btn btn-outline-info btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
+                                                    data-bs-placement='top' data-bs-title='Ocultar medicamento'>
+                                                    <i class='fa-solid fa-eye-slash'></i>
                                                 </a>
-                                            </th>
+                                            </th>                                            
                                         </tr>
                                     ";
                                     $ant = $x['idPreschuap_Agenda'].'#'.$x['idTabPreschuap_Protocolo'];
                                 } else {
                                     echo '
                                         <tr>
-                                            <th colspan="7"></th>
+                                            <th colspan="10"></th>
                                             <th>'.esc($x['Medicamento']).'</th>
                                             <th>'.esc($x['Codigo']).'</th>
                                             <th>'.esc($x['Dose']).'</th>  
-                                            <th></th>
+                                            <th>
+                                                <a href='.base_url("agenda/hide_medicamento/".$agenda['databd']."/".$x["idPreschuap_Agenda"]."/0/".$x["idTabPreschuap_Medicamento"]).'
+                                                    class="btn btn-outline-info btn-sm" role="button" aria-label="Excluir" data-bs-toggle="tooltip" 
+                                                    data-bs-placement="top" data-bs-title="Ocultar medicamento">
+                                                    <i class="fa-solid fa-eye-slash"></i>
+                                                </a>
+                                            </th>   
                                         </tr>
                                     ';                        
                                 }
@@ -147,7 +179,7 @@
             </tbody>        
             <tfoot>
                 <tr>
-                    <th colspan="11" class="text-center">
+                    <th colspan="14" class="text-center">
                         <table width="100%">
                             <tr>
                                 <th><span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" 
@@ -165,7 +197,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="11" class="text-center">Total: <?= $i ?> agendamentos</th>
+                    <th colspan="14" class="text-center">Total: <?= $i ?> agendamentos</th>
                 </tr>
             </tfoot>        
         </table>
