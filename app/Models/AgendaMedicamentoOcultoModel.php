@@ -15,7 +15,30 @@ class AgendaMedicamentoOcultoModel extends Model
     protected $allowedFields        = [
                                     'idPreschuap_AgendaMedicamentoOculto',
                                     'idPreschuap_Agenda',
-                                    'idPreschuap_Prescricao_Medicamento',
+                                    'idTabPreschuap_Medicamento',
                                     ];  
     
+    public function hide($data)
+    {
+
+        $db = \Config\Database::connect();
+        $builder = $db->table($this->table);
+
+        $builder->insert($data);
+        return $db->insertID();
+
+    }
+
+    public function show($data)
+    {
+
+        $db = \Config\Database::connect();
+        $builder = $db->table($this->table);
+
+        return $builder->delete($data);        
+
+    }
+
 }
+
+

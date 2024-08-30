@@ -42,19 +42,30 @@ class Agenda extends BaseController
         #*/
 
         if ($show == 1) {
-            exit($idagenda.' del '.$medicamento);
+            #exit($idagenda.' del '.$medicamento);
+
+            $v['agenda'] = [
+                'idPreschuap_Agenda' => $idagenda,
+            ];
+
+            if($oculto->show($v['agenda'])) {
+                session()->setFlashdata('success', 'Operação realizada com sucesso!');
+            }
+            else
+                session()->setFlashdata('failed', 'Não foi possível concluir a operação. Tente novamente ou procure o setor de Tecnologia da Informação.');
+            
         }
         else {
-            exit($idagenda.' ins '.$medicamento).' >> '.$data;
+            #exit($idagenda.' ins '.$medicamento.' >> agenda/index/'.$data);
             
             $v['agenda'] = [
                 'idPreschuap_AgendaMedicamentoOculto'   => '',
                 'idPreschuap_Agenda'                    => $idagenda,
-                'idPreschuap_Prescricao_Medicamento'    => $medicamento,
+                'idTabPreschuap_Medicamento'            => $medicamento,
             ];
 
 
-            $v['id']        = $oculto->insert($v['agenda']);
+            $v['id']        = $oculto->hide($v['agenda']);
             $v['campos']    = array_keys($v['agenda']);
             $v['anterior']  = array();
 
@@ -71,7 +82,7 @@ class Agenda extends BaseController
         }
 
 
-        return view('agenda/index/', $data);
+        return redirect()->to('agenda/index/'.$data);
 
     }
     
