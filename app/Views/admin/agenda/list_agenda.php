@@ -140,7 +140,9 @@
                                             <th>".esc($x['Prontuario'])."</th>
                                             <th>".esc($agenda['paciente'][$x['Prontuario']])."</th>
                                             <th>#".esc($x['idPreschuap_Prescricao'])."</th>
-                                            <th>".esc($x['Protocolo'])."</th>
+                                            <th>".esc($x['Protocolo'])."</th>";
+                                    if(!isset($agenda['oculto'][$x["idPreschuap_Agenda"]][$x["idTabPreschuap_Medicamento"]])) {
+                                        echo "
                                             <th>".esc($x['Medicamento'])."</th>
                                             <th>".esc($x['Codigo'])."</th>
                                             <th>".esc($x['Dose'])."</th>
@@ -150,26 +152,42 @@
                                                     data-bs-placement='top' data-bs-title='Ocultar medicamento'>
                                                     <i class='fa-solid fa-eye-slash'></i>
                                                 </a>
-                                            </th>                                            
+                                            </th>";
+                                    }
+                                    else {
+                                        echo "
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        ";
+                                    }
+                                    echo "
                                         </tr>
                                     ";
                                     $ant = $x['idPreschuap_Agenda'].'#'.$x['idTabPreschuap_Protocolo'];
                                 } else {
-                                    echo '
-                                        <tr>
-                                            <th colspan="10"></th>
-                                            <th>'.esc($x['Medicamento']).'</th>
-                                            <th>'.esc($x['Codigo']).'</th>
-                                            <th>'.esc($x['Dose']).'</th>  
-                                            <th>
-                                                <a href='.base_url("agenda/hide_medicamento/".$agenda['databd']."/".$x["idPreschuap_Agenda"]."/0/".$x["idTabPreschuap_Medicamento"]).'
-                                                    class="btn btn-outline-info btn-sm" role="button" aria-label="Excluir" data-bs-toggle="tooltip" 
-                                                    data-bs-placement="top" data-bs-title="Ocultar medicamento">
-                                                    <i class="fa-solid fa-eye-slash"></i>
-                                                </a>
-                                            </th>   
-                                        </tr>
-                                    ';                        
+                                    
+                                    if(!isset($agenda['oculto'][$x["idPreschuap_Agenda"]][$x["idTabPreschuap_Medicamento"]])) {
+                                    
+                                        echo '
+                                            <tr>
+                                                <th colspan="10"></th>
+                                                <th>'.esc($x['Medicamento']).'</th>
+                                                <th>'.esc($x['Codigo']).'</th>
+                                                <th>'.esc($x['Dose']).'</th>  
+                                                <th>
+                                                    <a href='.base_url("agenda/hide_medicamento/".$agenda['databd']."/".$x["idPreschuap_Agenda"]."/0/".$x["idTabPreschuap_Medicamento"]).'
+                                                        class="btn btn-outline-info btn-sm" role="button" aria-label="Excluir" data-bs-toggle="tooltip" 
+                                                        data-bs-placement="top" data-bs-title="Ocultar medicamento">
+                                                        <i class="fa-solid fa-eye-slash"></i>
+                                                    </a>
+                                                </th>   
+                                            </tr>
+                                        ';
+
+                                    }
+
                                 }
                                 $agn = $x['idTabPreschuap_TipoAgendamento'];
                             }
