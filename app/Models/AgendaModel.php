@@ -195,7 +195,7 @@ class AgendaModel extends Model
 
             if($v['idTabPreschuap_TipoAgendamento'] == 1 && $v['idTabPreschuap_EtapaTerapia'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 2) 
                 $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
-            elseif ($v['idTabPreschuap_TipoAgendamento'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 4)
+            elseif ($v['idTabPreschuap_TipoAgendamento'] == 2 && ($v['idTabPreschuap_ViaAdministracao'] == 3 || $v['idTabPreschuap_ViaAdministracao'] == 4))
                 $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
             elseif ($v['idTabPreschuap_TipoAgendamento'] == 3 || $v['idTabPreschuap_TipoAgendamento'] == 4 || $v['idTabPreschuap_TipoAgendamento'] == 5)
                 $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
