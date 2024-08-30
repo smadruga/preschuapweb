@@ -137,8 +137,14 @@
                                                     <i class='fa-solid fa-eye'></i>
                                                 </a>
                                             </th>                                                                                        
-                                            <th>".esc($x['Prontuario'])."</th>
-                                            <th>".esc($agenda['paciente'][$x['Prontuario']])."</th>
+                                            <th>
+                                                <a href=".base_url('paciente/show_paciente/'.$agenda['paciente'][$x['Prontuario']]['codigo'])."
+                                                    data-bs-toggle='tooltip' data-bs-placement='top' data-bs-title='Abrir Perfil' 
+                                                     style='text-decoration:none'>
+                                                    ".esc($agenda['paciente'][$x['Prontuario']]['prontuario'])."
+                                                </a>
+                                            </th>
+                                            <th>".esc($agenda['paciente'][$x['Prontuario']]['nome'])."</th>
                                             <th>#".esc($x['idPreschuap_Prescricao'])."</th>
                                             <th>".esc($x['Protocolo'])."</th>";
                                     if(!isset($agenda['oculto'][$x["idPreschuap_Agenda"]][$x["idTabPreschuap_Medicamento"]])) {
