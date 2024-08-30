@@ -175,12 +175,15 @@ class Agenda extends BaseController
     {
 
         $agenda         = new AgendaModel(); #Inicia o objeto baseado na TabelaModel
+        $oculto         = new AgendaMedicamentoOcultoModel(); #Inicia o objeto baseado na TabelaModel
         $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias do HUAP
 
         $data = ($data) ? $data : date('Y-m-d');
 
         $v['agenda'] = $agenda->list_agenda($data);
         $v['agenda']['databd'] = $data;
+
+        $v['agenda']['oculto'] = $oculto->list_oculto($v['agenda']['wherein_agenda']);
 
         $dataptbr = date_create($data); // Cria um objeto DateTime a partir da string de data
         $v['agenda']['dataptbr'] = ($dataptbr) ?  date_format($dataptbr, 'd/m/Y') : date('d/m/Y');
@@ -299,6 +302,7 @@ class Agenda extends BaseController
         $tabela         = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
         $prescricao     = new PrescricaoModel(); #Inicia o objeto baseado na TabelaModel
         $agenda         = new AgendaModel(); #Inicia o objeto baseado na TabelaModel
+        $oculto         = new AgendaMedicamentoOcultoModel(); #Inicia o objeto baseado na TabelaModel
         $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias do HUAP
 
         $datapost = $this->request->getPost('data');
@@ -309,6 +313,8 @@ class Agenda extends BaseController
 
         $v['agenda'] = $agenda->list_agenda($data);
         $v['agenda']['databd'] = $data;
+
+        $v['agenda']['oculto'] = $oculto->list_oculto($v['agenda']['wherein_agenda']);
 
         // Gerar URLs para navegação
         $prox = date('Y-m-d', strtotime($v['agenda']['databd'] . ' +1 day'));
@@ -326,7 +332,7 @@ class Agenda extends BaseController
         echo "<pre>";
         print_r($v['agenda']);
         echo "</pre>";
-        exit('oi');
+        #exit('oi');
         #*/
 
         return view('admin/agenda/list_agenda', $v);

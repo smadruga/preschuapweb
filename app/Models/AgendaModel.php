@@ -187,9 +187,11 @@ class AgendaModel extends Model
         #*/
 
         $agenda = array();
+        $wherein_agenda = array();
         foreach($query as $v) {
-            
+        
             $v['badge'] = $this->badge($v['idTabPreschuap_TipoAgendamento']);
+            $wherein_agenda[] = $v['idPreschuap_Agenda'];
 
             if($v['idTabPreschuap_TipoAgendamento'] == 1 && $v['idTabPreschuap_EtapaTerapia'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 2) 
                 $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
@@ -197,9 +199,10 @@ class AgendaModel extends Model
                 $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
             elseif ($v['idTabPreschuap_TipoAgendamento'] == 3 || $v['idTabPreschuap_TipoAgendamento'] == 4 || $v['idTabPreschuap_TipoAgendamento'] == 5)
                 $agenda[$v['Turno']][$v['idTabPreschuap_TipoAgendamento']][] = $v;
-                
+         
         }
-            
+        $wherein_agenda = array_unique($wherein_agenda);
+
         /*
         echo "<pre>";
         print_r($agenda);
@@ -210,6 +213,7 @@ class AgendaModel extends Model
         $wherein = '(';
         foreach($query as $v)
             $wherein .= $v['Prontuario'].',';
+        
 
         $wherein = substr($wherein, 0, -1).')';
 #exit($wherein);
@@ -221,6 +225,7 @@ class AgendaModel extends Model
 
         $q['agendamento']   = $agenda;
         $q['paciente']      = $pacarray;
+        $q['wherein_agenda']= $wherein_agenda;
 
 
         /*
@@ -228,7 +233,7 @@ class AgendaModel extends Model
         echo "<pre>";
         print_r($q);
         echo "</pre>";
-        #exit('<><>');
+        exit('<><>');
         #*/
         #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 

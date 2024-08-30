@@ -105,22 +105,39 @@ $currentTurnoIndex = 0;
                                     <th>".esc($x['Prontuario'])."</th>
                                     <th>".esc($agenda['paciente'][$x['Prontuario']])."</th>
                                     <th>#".esc($x['idPreschuap_Prescricao'])."</th>
-                                    <th>".esc($x['Protocolo'])."</th>
-                                    <th>".esc($x['Medicamento'])."</th>
-                                    <th>".esc($x['Codigo'])."</th>
-                                    <th>".esc($x['Dose'])."</th>                                 
+                                    <th>".esc($x['Protocolo'])."</th>";
+                                    if(!isset($agenda['oculto'][$x["idPreschuap_Agenda"]][$x["idTabPreschuap_Medicamento"]])) {
+                                        echo "
+                                            <th>".esc($x['Medicamento'])."</th>
+                                            <th>".esc($x['Codigo'])."</th>
+                                            <th>".esc($x['Dose'])."</th>
+                                        ";
+                                    }
+                                    else {
+                                        echo "
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                    ";
+                                    }
+
+                                echo "
                                 </tr>
                             ";
                             $ant = $x['idPreschuap_Agenda'].'#'.$x['idTabPreschuap_Protocolo'];
                         } else {
-                            echo '
-                                <tr style="padding: 10px; border: 1px solid; text-align: center;">
-                                    <th colspan="7"></th>
-                                    <th>'.esc($x['Medicamento']).'</th>
-                                    <th>'.esc($x['Codigo']).'</th>
-                                    <th>'.esc($x['Dose']).'</th>                                 
-                                </tr>
-                            ';                        
+
+                            if(!isset($agenda['oculto'][$x["idPreschuap_Agenda"]][$x["idTabPreschuap_Medicamento"]])) {
+                            
+                                echo '
+                                    <tr style="padding: 10px; border: 1px solid; text-align: center;">
+                                        <th colspan="7"></th>
+                                        <th>'.esc($x['Medicamento']).'</th>
+                                        <th>'.esc($x['Codigo']).'</th>
+                                        <th>'.esc($x['Dose']).'</th>                                 
+                                    </tr>
+                                ';       
+                            }                 
                         }
                         $agn = $x['idTabPreschuap_TipoAgendamento'];
                     }
