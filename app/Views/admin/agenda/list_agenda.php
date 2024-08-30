@@ -124,7 +124,7 @@
                                                 </a>
                                             </th>
                                             <th>
-                                                <a href=".base_url('agenda/edit_agendamento/'.$x['idPreschuap_Agenda'])." 
+                                                <a href='' 
                                                     class='btn btn-outline-warning btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
                                                     data-bs-placement='top' data-bs-title='Editar agendamento'>
                                                     <i class='fa-solid fa-pen-to-square'></i>
