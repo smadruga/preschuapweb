@@ -102,8 +102,8 @@ $currentTurnoIndex = 0;
                                     {$th}
                                     <th>{$x['badge']}</th>
                                     <th>".esc($x['Observacoes'])."</th>
-                                    <th>".esc($x['Prontuario'])."</th>
-                                    <th>".esc($agenda['paciente'][$x['Prontuario']])."</th>
+                                    <th>".esc($agenda['paciente'][$x['Prontuario']]['prontuario'])."</th>
+                                    <th>".esc($agenda['paciente'][$x['Prontuario']]['nome'])."</th>
                                     <th>#".esc($x['idPreschuap_Prescricao'])."</th>
                                     <th>".esc($x['Protocolo'])."</th>";
                                     if(!isset($agenda['oculto'][$x["idPreschuap_Agenda"]][$x["idTabPreschuap_Medicamento"]])) {

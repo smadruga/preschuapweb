@@ -219,8 +219,11 @@ class AgendaModel extends Model
 #exit($wherein);
         $paciente = $this->list_paciente_aghux($wherein);
         $pacarray = array();
-        foreach ($paciente->getResultArray() as $v) 
-            $pacarray[$v['prontuario']] = $v['nome'];
+        foreach ($paciente->getResultArray() as $v) {
+            $pacarray[$v['prontuario']]['nome']         = $v['nome'];
+            $pacarray[$v['prontuario']]['codigo']       = $v['codigo'];
+            $pacarray[$v['prontuario']]['prontuario']   = $v['prontuario'];
+        }
 
 
         $q['agendamento']   = $agenda;
@@ -254,6 +257,7 @@ class AgendaModel extends Model
         $query = $db->query('
             select 
                 ap.prontuario 
+                , ap.codigo
                 , ap.nome 
             from 
                 aip_pacientes ap 
