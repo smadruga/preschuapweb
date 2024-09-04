@@ -15,8 +15,8 @@
     </li>
     <li>
         <?php 
-        if ($_SESSION['Usuario']['Inativo'] == 1) { 
-        #if(!isset($_SESSION['Usuario']['Permissao']) || !$_SESSION['Usuario']['Permissao'] || $_SESSION['Usuario']['Permissao'] == 'NULL' ) {    
+        #if ($_SESSION['Usuario']['Inativo'] == 1) { 
+        if(!isset($_SESSION['Usuario']['Permissao']) || !$_SESSION['Usuario']['Permissao'] || $_SESSION['Usuario']['Permissao'] == 'NULL' ) {    
         ?>
         <a href="<?= base_url('admin/enable_user/'.$_SESSION['Usuario']['idSishuap_Usuario']) ?>" class="nav-link text-white" aria-current="page">
         <i class="fas fa-lock-open"></i> Desbloquear Usuário
