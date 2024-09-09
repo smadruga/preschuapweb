@@ -10,15 +10,14 @@ Registrado no INPI. Processo No: BR512023003825-3
 
 ## Requisitos mínimos
 
-**- Linguagem de programação:** PHP 8.1.3 e JavaScript<br>
+**- Linguagem de programação:** PHP 8.1 e JavaScript<br>
 **- Linguagem de marcação (estruturação):** HTML5<br>
 **- Linguagem de estilo:** CSS<br>
-**- Banco de dados:** MySQL 8<br>
-**- Framework:** CodeIgniter 4, Bootstrap 5<br>
+**- Banco de dados:** MySQL ou MariaDB<br>
 **- Servidor Web:** Apache 2<br>
 **- Versionamento e repositório do código:** GitHub<br>
 
-## Infraestrutura recomendada:
+## Infraestrutura necessária:
 
   - 2 máquinas virtuais (app e bd)<br>
   - Sistema Operacional Debian<br>
