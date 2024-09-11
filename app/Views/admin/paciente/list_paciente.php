@@ -16,7 +16,6 @@
                 <th scope="col">Prontuário</th>
                 <th scope="col">Nascimento</th>
                 <th scope="col">Nome Mãe</th>
-                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -29,7 +28,6 @@
                     <td '.$opt.'>'.$v['prontuario'].'</td>
                     <td '.$opt.'>'.$func->mascara_data($v['dt_nascimento'], 'barras', TRUE, FALSE, TRUE).'</th>
                     <td '.$opt.'>'.$v['nome_mae'].'</th>
-                    <td></th>
                 </tr>
                 ';
             }
