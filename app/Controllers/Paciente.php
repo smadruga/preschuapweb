@@ -72,11 +72,16 @@ class Paciente extends BaseController
         else
             $v['Pesquisar'] = $paciente;
             
-        $paciente = new PacienteModel();
-        $v['paciente'] = $paciente->get_paciente_bd($v['Pesquisar']);
-        
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
+        
+        if (!$v['func']->validar_dado($v['Pesquisar'])) {
+            session()->setFlashdata('failed', 'Formato inválido.');
+            return redirect()->to('paciente/find_paciente');
+        }
+
+        $paciente = new PacienteModel();
+        $v['paciente'] = $paciente->get_paciente_bd($v['Pesquisar']);
         
         /*
         echo "<pre>";

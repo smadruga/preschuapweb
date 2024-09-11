@@ -184,6 +184,24 @@ class HUAP_Functions
     }
 
     /**
+    *
+    * @return 
+    */
+    function validar_dado($valor) {
+        // Expressões regulares para cada tipo de dado
+        $regex_inteiro = '/^\d+$/';
+        $regex_nome = '/^[a-zA-Z ]+$/';
+        $regex_data = '/^\d{2}\/\d{2}\/\d{4}$/';
+    
+        // Verifica se o valor corresponde a algum dos padrões
+        if (preg_match($regex_inteiro, $valor) || preg_match($regex_nome, $valor) || preg_match($regex_data, $valor))
+            return TRUE;
+        else
+            return FALSE;
+
+    }
+
+    /**
     * Função que retorna a data formatada conforme desejado (formato gregoriano, invertido/banco de dados, separado)
     *
     * @return varchar
@@ -228,8 +246,8 @@ class HUAP_Functions
             else {
                 
                 if ($pm && $data) {
-                    echo Time::createFromFormat('d/m/Y', "20/01/2021")->format("Y-m-d");
-                    exit('<br>oioioi<br>'.$data); 
+                    #echo Time::createFromFormat('d/m/Y', "20/01/2021")->format("Y-m-d");
+                    #exit('<br>oioioi<br>'.$data); 
                     $data = ($hora) ? Time::createFromFormat('d/m/Y H:i', $data) : Time::createFromFormat('d/m/Y', $data);
                     
                     $data = ($hora) ? $data->format('Y-m-d H:i') : $data->format('Y-m-d');

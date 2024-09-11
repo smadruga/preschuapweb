@@ -8,7 +8,7 @@
 
         <div class="collapse navbar-collapse" id="navbarColor01">
             <form class="d-inline-flex" method="post" action="<?= base_url('paciente/get_paciente') ?>">
-                <input class="form-control me-sm-2" type="text" name="Pesquisar" placeholder="Nome prontuário ou nascimento">
+                <input class="form-control me-sm-2" type="text" name="Pesquisar" placeholder="Nome, prontuário ou nascimento">
                 <button class="btn btn-info my-2 my-sm-0" style="width: 150px" id="submit" type="submit"><i class="fa-solid fa-search"></i> Buscar</button>
             </form>
             <div class="ps-2 pe-2"></div>
