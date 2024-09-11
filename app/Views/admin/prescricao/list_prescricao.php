@@ -84,6 +84,10 @@
                             <div class="col"><b>Tipo de Terapia:</b> <?= $v['TipoTerapia'] ?></div>
                         </div>
 
+                        <div class="row">
+                            <div class="col"><b>Tipo de Agendamento:</b> <?= $v['TipoAgendamento'] ?></div>
+                        </div>
+
                         <hr />
 
                         <div class="row">
