@@ -41,7 +41,7 @@ class AgendaMedicamentoOcultoModel extends Model
 
     public function list_oculto($data)
     {
-
+        
         $db = \Config\Database::connect();
         $builder = $db->table($this->table);
         $builder = $builder->whereIn('idPreschuap_Agenda', $data);
