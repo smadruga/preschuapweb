@@ -314,7 +314,7 @@ class Agenda extends BaseController
         $v['agenda'] = $agenda->list_agenda($data);
         $v['agenda']['databd'] = $data;
 
-        $v['agenda']['oculto'] = $oculto->list_oculto($v['agenda']['wherein_agenda']);
+        $v['agenda']['oculto'] = (isset($v['agenda']['wherein_agenda'])) ? $oculto->list_oculto($v['agenda']['wherein_agenda']) : NULL;
 
         // Gerar URLs para navegação
         $prox = date('Y-m-d', strtotime($v['agenda']['databd'] . ' +1 day'));
