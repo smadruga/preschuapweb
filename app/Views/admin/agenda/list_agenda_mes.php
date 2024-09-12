@@ -15,8 +15,7 @@
                 <div class="col-4 text-center">
                     <form method="post" action="<?= base_url('agenda/show_agenda_mes') ?>">
                         <div class="input-group">
-                            <input type="month" name="month" class="form-control" value="<?= esc($agenda['month']) ?>" required>
-                            <button type="submit" class="btn btn-info"><i class="fa-solid fa-person-walking-arrow-right"></i> Ir para Data</button>
+                            <input type="month" name="month" class="form-control" value="<?= esc($agenda['month']) ?>" required onchange="this.form.submit()">
                         </div>
                     </form>
                 </div>
