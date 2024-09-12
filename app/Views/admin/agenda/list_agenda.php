@@ -15,8 +15,7 @@
                 <div class="col-3 text-center">
                     <form method="post" action="<?= base_url('agenda/index') ?>">
                         <div class="input-group">
-                            <input type="date" name="data" class="form-control" value="<?= esc($agenda['databd']) ?>" required>
-                            <button type="submit" class="btn btn-info"><i class="fa-solid fa-person-walking-arrow-right"></i> Ir para Data</button>
+                            <input type="date" name="data" class="form-control" value="<?= esc($agenda['databd']) ?>" required onchange="this.form.submit()">
                         </div>
                     </form>
                 </div>
@@ -46,7 +45,7 @@
     <hr>
 
     <?php foreach (['M' => 'MANHÃ', 'T' => 'TARDE'] as $turno => $turnoNome): ?>
-        <div class="alert alert-secondary text-center" colspan='13' role="alert">
+        <div class="alert alert-secondary text-center" colspan='14' role="alert">
             <b>TURNO: <?= $turnoNome ?></b>
         </div>
 
@@ -56,7 +55,7 @@
                 <td>Tipo</td>
                 <td>Obs</td> 
                 <td><i class="fa-regular fa-trash-can"></i></td>
-                <!--<td><i class="fa-solid fa-pen-to-square"></i></td>-->
+                <td><i class="fa-solid fa-pen-to-square"></i></td>
                 <td><i class="fa-solid fa-eye"></i></td>           
                 <td>Prontuário</td>
                 <td>Nome</td>
@@ -90,7 +89,7 @@
                             $ant = $agn = '<i class="fa-regular fa-trash-can"></i>';
                             foreach ($v as $x) {
                                 if ($i > 0 && $x['idTabPreschuap_TipoAgendamento'] != $agn) {
-                                    echo '<tr><td colspan="13"><br></td></tr>';
+                                    echo '<tr><td colspan="14"><br></td></tr>';
                                 }
 
                                 if ($ant != $x['idPreschuap_Agenda'].'#'.$x['idTabPreschuap_Protocolo']) {
@@ -111,7 +110,7 @@
                                         $inc++;
 
                                     echo "                     
-                                        <tr><td colspan='13'><br></td></tr>
+                                        <tr><td colspan='14'><br></td></tr>
                                         <tr>
                                             {$th}
                                             <th>{$x['badge']}</th>
@@ -123,13 +122,13 @@
                                                     <i class='fa-regular fa-trash-can'></i>
                                                 </a>
                                             </th>
-                                            <!--<th>
+                                            <th>
                                                 <a href='' 
                                                     class='btn btn-outline-warning btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
                                                     data-bs-placement='top' data-bs-title='Editar agendamento'>
                                                     <i class='fa-solid fa-pen-to-square'></i>
                                                 </a>
-                                            </th>-->
+                                            </th>
                                             <th>
                                                 <a href=".base_url('agenda/hide_medicamento/'.$agenda['databd'].'/'.$x['idPreschuap_Agenda'].'/1/')." 
                                                     class='btn btn-outline-info btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
@@ -178,7 +177,7 @@
                                     
                                         echo '
                                             <tr>
-                                                <th colspan="9"></th>
+                                                <th colspan="10"></th>
                                                 <th>'.esc($x['Medicamento']).'</th>
                                                 <th>'.esc($x['Codigo']).'</th>
                                                 <th>'.esc($x['Dose']).'</th>  
@@ -203,7 +202,7 @@
             </tbody>        
             <tfoot>
                 <tr>
-                    <th colspan="13" class="text-center">
+                    <th colspan="14" class="text-center">
                         <table width="100%">
                             <tr>
                                 <th><span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" 
@@ -221,7 +220,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="13" class="text-center">Total: <?= $i ?> agendamentos</th>
+                    <th colspan="14" class="text-center">Total: <?= $i ?> agendamentos</th>
                 </tr>
             </tfoot>        
         </table>
