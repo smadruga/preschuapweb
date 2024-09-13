@@ -20,7 +20,56 @@ class AgendaModel extends Model
                                     'idPreschuap_Prescricao'
                                     ];
 
-    
+    /**
+    * Atualiza o item no banco de dados
+    *
+    * @return array
+    */
+    public function update_agendamento($data)
+    {
+
+        $db = \Config\Database::connect();
+
+        $builder = $db->table($this->table);
+        $builder->where(['idPreschuap_Agenda' => $data['idPreschuap_Agenda']]);
+
+        return $builder->update($data);
+
+    }
+
+    /**
+    *
+    * @return void
+    */    
+    public function get_agendamento($data)
+    {
+
+        $db = \Config\Database::connect();
+        $query = $db->query('
+            SELECT
+                *
+            FROM
+                Preschuap_Agenda
+            WHERE
+                idPreschuap_Agenda = '.$data.'
+            ;
+        ');
+        #$query = $query->getRowArray();
+
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit($data.'<><>');
+        #*/
+        #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
+
+        
+        return $query->getRowArray();
+
+    }
+                                    
     /**
     * Captura o id da prescrição concluída mais recente.
     *

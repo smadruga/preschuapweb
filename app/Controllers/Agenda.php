@@ -207,7 +207,7 @@ class Agenda extends BaseController
     *
     * @return void
     */
-    public function agenda_prescricao($id = FALSE)
+    public function agenda_prescricao($id = FALSE, $agendamento = FALSE, $prontuario = FALSE)
     {
 
         $tabela         = new TabelaModel(); #Inicia o objeto baseado na TabelaModel
@@ -215,6 +215,7 @@ class Agenda extends BaseController
         $agenda         = new AgendaModel(); #Inicia o objeto baseado na TabelaModel
         $auditoria      = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
         $auditorialog   = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
+        $paciente       = new PacienteModel();
         $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias
 
         if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {         
@@ -229,22 +230,50 @@ class Agenda extends BaseController
                 'submit'                            => '',
             ];
 
+            if($prontuario) {
+                $_SESSION['Paciente']   = $paciente->get_paciente_codigo($prontuario);
+                $v['data']              = $agenda->get_agendamento($agendamento);
+                #exit('oi333');
+                /*
+                echo "<pre>";
+                print_r($v['data']);
+                echo "</pre>";
+                exit('<><>');
+                #*/
+            }
+
             $v['data']['prescricao'] = $prescricao->read_prescricao($id, true, true);
-            #exit('oi22');
+
+            $v['radio'] = array(
+                'Turno' => $v['func']->radio_checked($v['data']['Turno'], 'Turno', 'M|T', FALSE, TRUE, TRUE),
+            );
+
+            #exit('oi11');
         }
         else {
+            #exit('oi22');
             #Captura os inputs do Formulário
             $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+            /*$v['data'] = array( 
+            [
+                'DataAgendamento' => $this->request->getVar('DataAgendamento', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+                'Turno' => $this->request->getVar('Turno', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+                'Observacoes' => $this->request->getVar('Observacoes', FILTER_SANITIZE_FULL_SPECIAL_CHARS)
+            ]);*/
         
             $v['data']['DataAgendamento'] = $v['func']->mascara_data($v['data']['DataAgendamento'], 'bd');
-            #$v['data']['DataAgendamento'] = '2024-05-01';
 
             $validation = \Config\Services::validation();
             $valid = $this->validate([
-                'DataAgendamento' => 'required|valid_date',
-                'Turno' => 'required',
-                'Observacoes' => 'max_length[15]',
-            ]);            
+                'DataAgendamento'   => ['label' => 'Data do Agendamento', 'rules' => 'required|valid_date'],
+                'Turno'             => 'required',
+                'Observacoes'       => ['label' => 'Observações', 'rules' => 'max_length[15]'],
+            ]);    
+            
+            /*echo "<br><br><br><br><br><br><pre>";
+            print_r($v['data']);
+            echo "</pre>";
+            exit('asrfa');*/    
 
             if (!$valid) {
                 return redirect()->back()->withInput()->with('validation', $validation);
@@ -254,16 +283,28 @@ class Agenda extends BaseController
             $id     = $v['data']['idPreschuap_Prescricao'];
             unset($v['data']['csrf_test_name'],$v['data']['submit']);
             
-            $v['id'] = $agenda->insert($v['data']);
-            session()->setFlashdata('success', 'Agendamento realizado com sucesso!');
+
+            if($v['data']['idPreschuap_Agenda']) {
+                unset($v['data']['idPreschuap_Prescricao']);
+
+                if($agenda->update_agendamento($v['data']))
+                    session()->setFlashdata('success', 'Agendamento atualizado com sucesso!');
+                else
+                    session()->setFlashdata('danger', 'Erro ao atualizar agendamento');
+            }
+            else {
+                $v['id'] = $agenda->insert($v['data']);
+                session()->setFlashdata('success', 'Agendamento realizado com sucesso!');
+            }
+
      
-        /*
-        echo "<pre>";
-        print_r($v['data']);
-        echo "</pre>";
-        exit('oi333');
-        #echo 'oi'.$submit;
-        #*/
+            /*
+            echo "<pre>";
+            print_r($v['data']);
+            echo "</pre>";
+            exit('oi333');
+            #echo 'oi'.$submit;
+            #*/
             
             if ($submit == 2) 
                 return redirect()->to('agenda/agenda_prescricao/'.$id);
