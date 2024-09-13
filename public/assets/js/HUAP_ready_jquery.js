@@ -58,3 +58,23 @@ $(document).on('select2:open', () => {
         },0);
     });
 });
+
+    /*
+    * Adiciona um btn-warning para cara checked de cada campo radio do formulário
+    *
+    * @param {string} value
+    * @returns {decimal}
+    */
+    // Adiciona um listener para o evento click em todos os botões/labels dentro de cada grupo
+    $('.btn-group label').click(function() {
+        // Remove a classe btn-warning de todos os labels dentro do grupo
+        $(this).closest('.btn-group').find('label').removeClass('btn-warning');
+        // Adiciona a classe btn-secondary a todos os labels dentro do grupo
+        $(this).closest('.btn-group').find('label').addClass('btn-secondary');
+        // Adiciona a classe btn-warning apenas ao label clicado
+        $(this).addClass('btn-warning');
+        // Remove o atributo checked de todos os radio buttons dentro do grupo
+        $(this).closest('.btn-group').find('input[type="radio"]').prop('checked', false);
+        // Marca como checked o radio button correspondente ao label clicado
+        $(this).prev('input[type="radio"]').prop('checked', true);
+    });
