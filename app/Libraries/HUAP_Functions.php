@@ -16,6 +16,86 @@ class HUAP_Functions
     }
 
     /**
+     * 
+     * Função que prepara os campos do tipo radio do formulário.
+     *
+     */
+
+     function radio_checked($data, $campo, $tipo = FALSE, $default = FALSE, $multi = FALSE, $array = FALSE) {
+      
+        $radio = array();
+
+        if (!$data && $default)
+            $data = $default;
+
+        if ($multi) {
+            $tipo = explode('|', $tipo);
+            $i = count($tipo);
+        }
+        else {
+            $tipo = str_split($tipo);
+            $i = count($tipo);
+        }
+    
+        if ($array) {
+        
+            for ($j = 0; $j < $i; $j++) {
+                
+                if ($data == $tipo[$j]) {
+                    
+                    for ($k = 0; $k < $i; $k++)
+                        if ($k == $j) {
+
+                            $radio['c'][$k] = 'checked';
+                            $radio['a'][$k] = 'active';
+                            $radio['b'][$k] = 'warning';
+
+                        }
+                        else {
+                            
+                            $radio['c'][$k] = '';
+                            $radio['a'][$k] = '';
+                            $radio['b'][$k] = 'secondary';
+
+                        }
+                        
+                }
+                else {
+
+                    $radio['c'][$j] = '';
+                    $radio['a'][$j] = '';
+                    $radio['b'][$j] = 'secondary';
+
+                }
+            }
+
+        }
+        else {
+            
+            for ($j = 0; $j < $i; $j++) {
+
+                if ($data == $tipo[$j]) {
+
+                    for ($k = 0; $k < $i; $k++)
+                        ($k == $j) ? $radio[$k] = 'checked' : $radio[$k] = '';
+
+                }
+            }
+        }
+
+        /*
+        print "<pre>";
+        print_r($radio);
+        print "</pre>";
+        exit();
+        #*/
+
+        return $radio;
+
+    }
+
+
+    /**
     * Função que calcula diferença entre datas no formato americano
     *
     **********************************************************************
