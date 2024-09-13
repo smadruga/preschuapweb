@@ -38,28 +38,26 @@
             
                 <div class="col-md-2">
                     <label for="Turno" class="form-label">Turno <b class="text-danger">*</b></label>
-                    
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="Turno" value="M" id="Turno">
-                            <label class="form-check-label" for="Turno">
-                                Manhã
-                            </label>
-                        </div>
+                        <div class="input-group">
+                            <div class="btn-group" data-toggle="buttons">
+                                <input type="radio" class="btn-check" name="Turno" autocomplete="off"
+                                    id="TurnoM" value="M" <?php echo $radio['Turno']['c'][0] ?> />
+                                <label class="btn btn-<?php echo $radio['Turno']['b'][0] ?> <?php echo $radio['Turno']['a'][0] ?>" for="TurnoM" 
+                                    data-mdb-ripple-init>Manhã</label>
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="Turno" value="T" id="Turno">
-                            <label class="form-check-label" for="Turno">
-                                Tarde
-                            </label>
-                            <div class="invalid-feedback">
-                                <?php if ($validation->getError('Turno')): ?>
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('Turno') ?>
-                                    </div>
-                                <?php endif; ?>
+                                <input type="radio" class="btn-check" name="Turno" autocomplete="off" 
+                                    id="TurnoT" value="T" <?php echo $radio['Turno']['c'][1] ?> />
+                                <label class="btn btn-<?php echo $radio['Turno']['b'][1] ?> <?php echo $radio['Turno']['a'][1] ?>" for="TurnoT" 
+                                    data-mdb-ripple-init>Tarde</label>
                             </div>
                         </div>
-
+                        <?php if ($validation->getError('Turno')): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('Turno') ?>
+                            </div>
+                        <?php elseif ($validation->getError('Turno')): ?>
+                            <div class="form-text text-danger">Turno é obrigatório</div>
+                        <?php endif; ?>
                 </div>
                 
                 <div class="col-md-6">
@@ -83,6 +81,7 @@
 
                 <div class="col-md-12">
                     <input type="hidden" name="idPreschuap_Prescricao" id="idPreschuap_Prescricao" value="<?= $data['prescricao']['idPreschuap_Prescricao'] ?>" />
+                    <input type="hidden" name="idPreschuap_Agenda" id="idPreschuap_Agenda" value="<?= $data['idPreschuap_Agenda'] ?>" />
                     <button class="btn btn-primary" id="submit" name="submit" value="1" type="submit">
                         <i class="fa-solid fa-calendar-check"></i> Salvar e Concluir
                     </button>

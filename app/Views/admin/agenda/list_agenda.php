@@ -123,7 +123,7 @@
                                                 </a>
                                             </th>
                                             <th>
-                                                <a href='' 
+                                                <a href='".base_url('agenda/agenda_prescricao/'.$x['idPreschuap_Prescricao'].'/'.$x['idPreschuap_Agenda'].'/'.$agenda['paciente'][$x['Prontuario']]['codigo'])." '
                                                     class='btn btn-outline-warning btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
                                                     data-bs-placement='top' data-bs-title='Editar agendamento'>
                                                     <i class='fa-solid fa-pen-to-square'></i>
