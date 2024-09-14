@@ -96,6 +96,54 @@
                                     echo '<tr><td colspan="'.$cs1.'"><br></td></tr>';
                                 }
 
+                                if ((!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6])))) { 
+                                    $bt1 = "
+                                        <th>
+                                            <a href='#' class='btn btn-outline-danger btn-sm' role='button' aria-label='Excluir'
+                                                data-bs-toggle='modal' data-bs-target='#confirmDeleteModal' 
+                                                data-id='".$x['idPreschuap_Agenda']."' data-date='".$agenda['databd']."'
+                                                data-bs-title='Excluir agendamento'>
+                                                <i class='fa-regular fa-trash-can'></i>
+                                            </a>
+                                        </th>
+
+                                        <th>
+                                            <a href='".base_url('agenda/agenda_prescricao/'.$x['idPreschuap_Prescricao'].'/'.$x['idPreschuap_Agenda'].'/'.$agenda['paciente'][$x['Prontuario']]['codigo'])." '
+                                                class='btn btn-outline-warning btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
+                                                data-bs-placement='top' data-bs-title='Editar agendamento'>
+                                                <i class='fa-solid fa-pen-to-square'></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href=".base_url('agenda/hide_medicamento/'.$agenda['databd'].'/'.$x['idPreschuap_Agenda'].'/1/')." 
+                                                class='btn btn-outline-info btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
+                                                data-bs-placement='top' data-bs-title='Reexibir todos medicamentos'>
+                                                <i class='fa-solid fa-eye'></i>
+                                            </a>
+                                        </th>                                          
+                                    ";
+                                    
+                                    $bt2 = "
+                                        <th>
+                                            <a href=".base_url('agenda/hide_medicamento/'.$agenda['databd'].'/'.$x['idPreschuap_Agenda'].'/0/'.$x['idTabPreschuap_Medicamento'])." 
+                                                class='btn btn-outline-info btn-sm' role='button' aria-label='Ocultar' data-bs-toggle='tooltip' 
+                                                data-bs-placement='top' data-bs-title='Ocultar medicamento'>
+                                                <i class='fa-solid fa-eye-slash'></i>
+                                            </a>
+                                        </th>                                            
+                                    ";
+
+                                    $thth = '<th></th>';
+
+                                    $cs1 = 14;
+                                    $cs2 = 10;
+                                }
+                                else {
+                                    $thth = $bt1 = $bt2 = "";
+                                    $cs1 = 10;
+                                    $cs2 = 7;                                        
+                                }
+
                                 if ($ant != $x['idPreschuap_Agenda'].'#'.$x['idTabPreschuap_Protocolo']) {
                                     $i++;
                                     $th = ($x['idTabPreschuap_TipoAgendamento'] == 1) ? '<th>'.$i.'</th>' : '<th></th>';
@@ -111,56 +159,7 @@
                                     if($x['idTabPreschuap_TipoAgendamento']==4)
                                         $int++;
                                     if($x['idTabPreschuap_TipoAgendamento']==5)
-                                        $inc++;
-
-                                    if ((!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6])))) { 
-                                        $bt1 = "
-                                            <th>
-                                                <a href='#' class='btn btn-outline-danger btn-sm' role='button' aria-label='Excluir'
-                                                    data-bs-toggle='modal' data-bs-target='#confirmDeleteModal' 
-                                                    data-id='".$x['idPreschuap_Agenda']."' data-date='".$agenda['databd']."'
-                                                    data-bs-title='Excluir agendamento'>
-                                                    <i class='fa-regular fa-trash-can'></i>
-                                                </a>
-                                            </th>
-
-                                            <th>
-                                                <a href='".base_url('agenda/agenda_prescricao/'.$x['idPreschuap_Prescricao'].'/'.$x['idPreschuap_Agenda'].'/'.$agenda['paciente'][$x['Prontuario']]['codigo'])." '
-                                                    class='btn btn-outline-warning btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
-                                                    data-bs-placement='top' data-bs-title='Editar agendamento'>
-                                                    <i class='fa-solid fa-pen-to-square'></i>
-                                                </a>
-                                            </th>
-                                            <th>
-                                                <a href=".base_url('agenda/hide_medicamento/'.$agenda['databd'].'/'.$x['idPreschuap_Agenda'].'/1/')." 
-                                                    class='btn btn-outline-info btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
-                                                    data-bs-placement='top' data-bs-title='Reexibir todos medicamentos'>
-                                                    <i class='fa-solid fa-eye'></i>
-                                                </a>
-                                            </th>                                          
-                                        ";
-                                        
-                                        $bt2 = "
-                                            <th>
-                                                <a href=".base_url('agenda/hide_medicamento/'.$agenda['databd'].'/'.$x['idPreschuap_Agenda'].'/0/'.$x['idTabPreschuap_Medicamento'])." 
-                                                    class='btn btn-outline-info btn-sm' role='button' aria-label='Ocultar' data-bs-toggle='tooltip' 
-                                                    data-bs-placement='top' data-bs-title='Ocultar medicamento'>
-                                                    <i class='fa-solid fa-eye-slash'></i>
-                                                </a>
-                                            </th>                                            
-                                        ";
-
-                                        $thth = '<th></th>';
-
-                                        $cs1 = 14;
-                                        $cs2 = 10;
-                                    }
-                                    else {
-                                        $thth = $bt1 = $bt2 = "";
-                                        $cs1 = 10;
-                                        $cs2 = 7;                                        
-                                    }
-                                        
+                                        $inc++;                                       
                                     
                                     echo "                     
                                         <tr><td colspan='".$cs1."'><br></td></tr>
