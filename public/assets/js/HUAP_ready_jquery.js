@@ -88,6 +88,7 @@ $('.btn-group label').click(function() {
 */
 var confirmDeleteModal = document.getElementById('confirmDeleteModal');
 confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
+
     // Botão que acionou o modal
     var button = event.relatedTarget;
 
@@ -96,7 +97,7 @@ confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
     var date = button.getAttribute('data-date');
 
     // Monta o link de exclusão
-    var deleteUrl = 'agenda/del_agendamento/'+id+'/'+date;
+    var deleteUrl = window.location.origin+'/agenda/del_agendamento/'+id+'/'+date;
 
     // Atualiza o link de confirmação no modal
     var confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
