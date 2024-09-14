@@ -136,6 +136,7 @@ class Agenda extends BaseController
     public function del_agendamento($id = FALSE, $data = FALSE) {
 
         $agenda         = new AgendaModel(); #Inicia o objeto baseado na TabelaModel
+        $oculto         = new AgendaMedicamentoOcultoModel(); #Inicia o objeto baseado na TabelaModel
         $auditoria      = new AuditoriaModel(); #Inicia o objeto baseado na AuditoriaModel
         $auditorialog   = new AuditoriaLogModel(); #Inicia o objeto baseado na AuditoriaLogModel
         $v['func']      = new HUAP_Functions(); #Inicia a classe de funções próprias do HUAP
@@ -151,7 +152,7 @@ class Agenda extends BaseController
         exit('DEL = '.$id.' data = '.$data);
         #*/
 
-        if($agenda->where('idPreschuap_Agenda', $id)->delete()) {
+        if($oculto->where('idPreschuap_Agenda', $id)->delete() && $agenda->where('idPreschuap_Agenda', $id)->delete()) {
 
             $v['auditoria'] = $auditoria->insert($v['func']->create_auditoria('Preschuap_Agenda', 'DELETE', $id), TRUE);
             $v['auditoriaitem'] = $auditorialog->insertBatch($v['func']->create_log($v['anterior'], $v['data'], $v['campos'], $id, $v['auditoria'], FALSE, TRUE), TRUE);
