@@ -116,12 +116,14 @@
                                     if ((!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6])))) { 
                                         $bt1 = "
                                             <th>
-                                                <a href=".base_url('agenda/del_agendamento/'.$x['idPreschuap_Agenda'].'/'.$agenda['databd'])." 
-                                                    class='btn btn-outline-danger btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
-                                                    data-bs-placement='top' data-bs-title='Excluir agendamento'>
+                                                <a href='#' class='btn btn-outline-danger btn-sm' role='button' aria-label='Excluir'
+                                                    data-bs-toggle='modal' data-bs-target='#confirmDeleteModal' 
+                                                    data-id='".$x['idPreschuap_Agenda']."' data-date='".$agenda['databd']."'
+                                                    data-bs-title='Excluir agendamento'>
                                                     <i class='fa-regular fa-trash-can'></i>
                                                 </a>
                                             </th>
+
                                             <th>
                                                 <a href='".base_url('agenda/agenda_prescricao/'.$x['idPreschuap_Prescricao'].'/'.$x['idPreschuap_Agenda'].'/'.$agenda['paciente'][$x['Prontuario']]['codigo'])." '
                                                     class='btn btn-outline-warning btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
@@ -250,5 +252,25 @@
     <?php endforeach; ?>
 
 </main>
+
+<!-- Modal de confirmação -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        Você tem certeza que deseja excluir este agendamento?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a href="#" id="confirmDeleteBtn" class="btn btn-danger">Excluir</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <?= $this->endSection() ?>

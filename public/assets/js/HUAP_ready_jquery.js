@@ -78,3 +78,30 @@ $('.btn-group label').click(function() {
     // Marca como checked o radio button correspondente ao label clicado
     $(this).prev('input[type="radio"]').prop('checked', true);
 });
+
+
+/*
+* Modal de confirmação de exclusão da lista diária de agendamentos
+*
+* @param {string} value
+* @returns {decimal}
+*/
+var confirmDeleteModal = document.getElementById('confirmDeleteModal');
+confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
+    // Botão que acionou o modal
+    var button = event.relatedTarget;
+
+    // Extrai os dados (ID e data)
+    var id = button.getAttribute('data-id');
+    var date = button.getAttribute('data-date');
+
+    // Monta o link de exclusão
+    var deleteUrl = 'agenda/del_agendamento/'+id+'/'+date;
+
+    // Atualiza o link de confirmação no modal
+    var confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    confirmDeleteBtn.setAttribute('href', deleteUrl);
+});
+
+//.base_url('agenda/del_agendamento/'.$x['idPreschuap_Agenda'].'/'.$agenda['databd']).
+
