@@ -42,14 +42,23 @@
                 <div class="accordion-body">
                     <div>
                         <?php if($v['Concluido'] == 1) { ?>
+                            
                             <a class="btn btn-outline-info" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
+                            
+                            <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,3]))) { ?>
                             <a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-copy"></i> Copiar</a>
-                            <!--<a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idPreschuap_Prescricao'].'/1') ?>" role="button"><i class="fa-solid fa-repeat"></i> Continuar</a>-->
+                            <?php } ?>
+
+                            <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6]))) { ?>
                             <a class="btn btn-outline-info click" href="<?= base_url('agenda/agenda_prescricao/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-calendar"></i> Agendar</a>
+                            <?php } ?>
+
                         <?php } else { ?>
+                            <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,3]))) { ?>
                             <a class="btn btn-outline-warning" id="click" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Editar</a>
                             <a class="btn btn-outline-danger" id="click" href="<?= base_url('prescricao/manage_prescricao/excluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-trash-can"></i> Excluir</a>
                             <a class="btn btn-outline-success" id="click" href="<?= base_url('prescricao/manage_prescricao/concluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-check-circle"></i> Concluir</a>
+                            <?php } ?>
                         <?php } ?>
                     </div>
 
@@ -147,11 +156,13 @@
                         <hr />
 
                         <?php if($v['Concluido'] != 1) { ?>
+                            <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,3]))) { ?>
                             <div class="text-center">
                                 <a class="btn btn-warning" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-arrow-right-arrow-left"></i> Trocar Protocolo</a>
                                 <a class="btn btn-warning" href="<?= base_url('prescricao/manage_medicamento/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Ajustar Doses</a>
                             </div>
                             <hr />
+                            <?php } ?>
                         <?php } ?>
 
                         <?php
