@@ -232,9 +232,17 @@ class Admin extends BaseController
 
         /*
         echo "<pre>";
-        print_r($v);
+        print_r($_SESSION['Sessao']['Perfil']);
         echo "</pre>";
-        #exit($v['data']['Usuario']);
+        echo "<pre>";
+        print_r([1,2]);
+        echo "</pre>";
+        echo "<pre>";
+        print_r(array_intersect($_SESSION['Sessao']['Perfil'], [1,2]));
+        #print_r($v);
+        echo "</pre>";
+        echo (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,2]))) ? "sim" : "não"; 
+        exit('oi');
         #*/
 
         return view('admin/usuario/list_perfil', $v);

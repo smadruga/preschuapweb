@@ -54,9 +54,11 @@
                 <td>#</td>
                 <td>Tipo</td>
                 <td>Obs</td> 
+                <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6]))) { ?>
                 <td><i class="fa-regular fa-trash-can"></i></td>
                 <td><i class="fa-solid fa-pen-to-square"></i></td>
-                <td><i class="fa-solid fa-eye"></i></td>           
+                <td><i class="fa-solid fa-eye"></i></td>    
+                <?php } ?>
                 <td>Prontuário</td>
                 <td>Nome</td>
                 <td>Prescrição</td>
@@ -64,7 +66,9 @@
                 <td>Medicamento</td>
                 <td>Via</td>
                 <td>Dose</td>
+                <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6]))) { ?>
                 <td><i class="fa-solid fa-eye-slash"></i></td>
+                <?php } ?>
             </tr>
             <tbody>
                 <?php
@@ -89,7 +93,7 @@
                             $ant = $agn = '<i class="fa-regular fa-trash-can"></i>';
                             foreach ($v as $x) {
                                 if ($i > 0 && $x['idTabPreschuap_TipoAgendamento'] != $agn) {
-                                    echo '<tr><td colspan="14"><br></td></tr>';
+                                    echo '<tr><td colspan="'.$cs1.'"><br></td></tr>';
                                 }
 
                                 if ($ant != $x['idPreschuap_Agenda'].'#'.$x['idTabPreschuap_Protocolo']) {
@@ -109,12 +113,8 @@
                                     if($x['idTabPreschuap_TipoAgendamento']==5)
                                         $inc++;
 
-                                    echo "                     
-                                        <tr><td colspan='14'><br></td></tr>
-                                        <tr>
-                                            {$th}
-                                            <th>{$x['badge']}</th>
-                                            <th>".esc($x['Observacoes'])."</th>
+                                    if ((!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6])))) { 
+                                        $bt1 = "
                                             <th>
                                                 <a href=".base_url('agenda/del_agendamento/'.$x['idPreschuap_Agenda'].'/'.$agenda['databd'])." 
                                                     class='btn btn-outline-danger btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
@@ -135,7 +135,38 @@
                                                     data-bs-placement='top' data-bs-title='Reexibir todos medicamentos'>
                                                     <i class='fa-solid fa-eye'></i>
                                                 </a>
-                                            </th>                                                                                        
+                                            </th>                                          
+                                        ";
+                                        
+                                        $bt2 = "
+                                            <th>
+                                                <a href=".base_url('agenda/hide_medicamento/'.$agenda['databd'].'/'.$x['idPreschuap_Agenda'].'/0/'.$x['idTabPreschuap_Medicamento'])." 
+                                                    class='btn btn-outline-info btn-sm' role='button' aria-label='Ocultar' data-bs-toggle='tooltip' 
+                                                    data-bs-placement='top' data-bs-title='Ocultar medicamento'>
+                                                    <i class='fa-solid fa-eye-slash'></i>
+                                                </a>
+                                            </th>                                            
+                                        ";
+
+                                        $thth = '<th></th>';
+
+                                        $cs1 = 14;
+                                        $cs2 = 10;
+                                    }
+                                    else {
+                                        $thth = $bt1 = $bt2 = "";
+                                        $cs1 = 10;
+                                        $cs2 = 7;                                        
+                                    }
+                                        
+                                    
+                                    echo "                     
+                                        <tr><td colspan='".$cs1."'><br></td></tr>
+                                        <tr>
+                                            {$th}
+                                            <th>{$x['badge']}</th>
+                                            <th>".esc($x['Observacoes'])."</th>
+                                            ".$bt1."
                                             <th>
                                                 <a href=".base_url('paciente/show_paciente/'.$agenda['paciente'][$x['Prontuario']]['codigo'])."
                                                     data-bs-toggle='tooltip' data-bs-placement='top' data-bs-title='Abrir Perfil' 
@@ -151,20 +182,15 @@
                                             <th>".esc($x['Medicamento'])."</th>
                                             <th>".esc($x['Codigo'])."</th>
                                             <th>".esc($x['Dose'])."</th>
-                                            <th>
-                                                <a href=".base_url('agenda/hide_medicamento/'.$agenda['databd'].'/'.$x['idPreschuap_Agenda'].'/0/'.$x['idTabPreschuap_Medicamento'])." 
-                                                    class='btn btn-outline-info btn-sm' role='button' aria-label='Excluir' data-bs-toggle='tooltip' 
-                                                    data-bs-placement='top' data-bs-title='Ocultar medicamento'>
-                                                    <i class='fa-solid fa-eye-slash'></i>
-                                                </a>
-                                            </th>";
+                                            ".$bt2."
+                                            ";
                                     }
                                     else {
                                         echo "
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th></th>
+                                            ".$thth."
                                         ";
                                     }
                                     echo "
@@ -177,17 +203,11 @@
                                     
                                         echo '
                                             <tr>
-                                                <th colspan="10"></th>
+                                                <th colspan="'.$cs2.'"></th>
                                                 <th>'.esc($x['Medicamento']).'</th>
                                                 <th>'.esc($x['Codigo']).'</th>
                                                 <th>'.esc($x['Dose']).'</th>  
-                                                <th>
-                                                    <a href='.base_url("agenda/hide_medicamento/".$agenda['databd']."/".$x["idPreschuap_Agenda"]."/0/".$x["idTabPreschuap_Medicamento"]).'
-                                                        class="btn btn-outline-info btn-sm" role="button" aria-label="Excluir" data-bs-toggle="tooltip" 
-                                                        data-bs-placement="top" data-bs-title="Ocultar medicamento">
-                                                        <i class="fa-solid fa-eye-slash"></i>
-                                                    </a>
-                                                </th>   
+                                                '.$bt2.' 
                                             </tr>
                                         ';
 

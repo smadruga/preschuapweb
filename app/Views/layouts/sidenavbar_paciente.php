@@ -10,11 +10,13 @@
                 <i class="fa-solid fa-hospital-user"></i> Paciente
             </a>
         </li>
+        <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,3]))) { ?>
         <li class="nav-item">
             <a href="<?= base_url('prescricao/page_prescricao/') ?>" class="nav-link text-white p-2" aria-current="page">
                 <i class="fa-solid fa-add"></i> Nova Prescrição
             </a>
         </li>
+        <?php } ?>
         <li>
             <a href="<?= base_url('prescricao/list_prescricao/') ?>" class="nav-link text-white p-2" aria-current="page">
                 <i class="fa-solid fa-list"></i> Histórico de Prescrições
