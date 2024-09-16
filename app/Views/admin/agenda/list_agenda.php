@@ -160,8 +160,7 @@
                                         $inc++;                                       
                                     
                                     #<tr><td colspan='".$cs1."'><br></td></tr>    
-                                    echo "                     
-                                        
+                                    echo "                       
                                         <tr>
                                             {$th}
                                             <th>{$x['badge']}</th>
