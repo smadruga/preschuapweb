@@ -72,10 +72,7 @@
             </tr>
             <tbody>
                 <?php
-                    #echo ">>>>>>>>>>>>".$agenda['agendamento']['M'];
-                    /*echo "<pre>";
-                    print_r($agenda['agendamento']['M']);
-                    echo "</pre>";*/
+
                     if (!isset($agenda['agendamento'][$turno])) {
                         $i=$sq=$inj=$ms=$int=$inc=0;
                     ?>
@@ -92,10 +89,11 @@
                         foreach ($agenda['agendamento'][$turno] as $v) {
                             $ant = $agn = '<i class="fa-regular fa-trash-can"></i>';
                             foreach ($v as $x) {
+                                /*
                                 if ($i > 0 && $x['idTabPreschuap_TipoAgendamento'] != $agn) {
                                     echo '<tr><td colspan="'.$cs1.'"><br></td></tr>';
                                 }
-
+                                */
                                 if ((!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6])))) { 
                                     $bt1 = "
                                         <th>
@@ -161,8 +159,9 @@
                                     if($x['idTabPreschuap_TipoAgendamento']==5)
                                         $inc++;                                       
                                     
+                                    #<tr><td colspan='".$cs1."'><br></td></tr>    
                                     echo "                     
-                                        <tr><td colspan='".$cs1."'><br></td></tr>
+                                        
                                         <tr>
                                             {$th}
                                             <th>{$x['badge']}</th>
