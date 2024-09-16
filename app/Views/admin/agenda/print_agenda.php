@@ -97,7 +97,7 @@ $currentTurnoIndex = 0;
                             if($x['idTabPreschuap_TipoAgendamento']==5) $inc++;
 
                             echo "
-                                <tr><td colspan='10'><br></td></tr>
+                                
                                 <tr style='padding: 10px; border: 1px solid; text-align: center;'>
                                     {$th}
                                     <th>{$x['badge']}</th>
