@@ -150,7 +150,7 @@ class Admin extends BaseController
 
         $v['data'] = [
             'Usuario'           => (isset($v['ad']['entries'][0]['samaccountname'][0])) ? esc($v['ad']['entries'][0]['samaccountname'][0]) : '',
-            'Nome'              => (isset($v['ad']['entries'][0]['cn'][0])) ? esc(mb_convert_encoding($v['ad']['entries'][0]['cn'][0], "UTF-8", "ASCII")) : NULL,
+            'Nome'              => (isset($v['ad']['entries'][0]['cn'][0])) ? esc(mb_convert_encoding($v['ad']['entries'][0]['cn'][0], "UTF-8", "ISO-8859-1")) : NULL,
             'Cpf'               => (isset($v['ad']['entries'][0]['employeeid'][0])) ? esc($v['ad']['entries'][0]['employeeid'][0]) : NULL,
             'EmailSecundario'   => (isset($v['ad']['entries'][0]['othermailbox'][0])) ? $v['ad']['entries'][0]['othermailbox'][0] : NULL,
         ];
