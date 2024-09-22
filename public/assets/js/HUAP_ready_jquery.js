@@ -87,22 +87,26 @@ $('.btn-group label').click(function() {
 * @returns {decimal}
 */
 var confirmDeleteModal = document.getElementById('confirmDeleteModal');
-confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
 
-    // Botão que acionou o modal
-    var button = event.relatedTarget;
+if (confirmDeleteModal) {
+  
+    confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
 
-    // Extrai os dados (ID e data)
-    var id = button.getAttribute('data-id');
-    var date = button.getAttribute('data-date');
-
-    // Monta o link de exclusão
-    var deleteUrl = window.location.origin+'/agenda/del_agendamento/'+id+'/'+date;
-
-    // Atualiza o link de confirmação no modal
-    var confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-    confirmDeleteBtn.setAttribute('href', deleteUrl);
-});
+        // Botão que acionou o modal
+        var button = event.relatedTarget;
+    
+        // Extrai os dados (ID e data)
+        var id = button.getAttribute('data-id');
+        var date = button.getAttribute('data-date');
+    
+        // Monta o link de exclusão
+        var deleteUrl = window.location.origin+'/agenda/del_agendamento/'+id+'/'+date;
+    
+        // Atualiza o link de confirmação no modal
+        var confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        confirmDeleteBtn.setAttribute('href', deleteUrl);
+    });
+} 
 
 //.base_url('agenda/del_agendamento/'.$x['idPreschuap_Agenda'].'/'.$agenda['databd']).
 
