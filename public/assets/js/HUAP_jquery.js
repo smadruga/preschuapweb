@@ -7,7 +7,7 @@ var timesession = new Date();
 timesession.setSeconds( timesession.getSeconds() + parseInt(timeout) );
 
 //fecha divs de flashdata (mensagens de erro/sucesso) após alguns segundos
-$('#flashdata').delay(5000).fadeOut('slow');
+$('#flashdata-success, #flashdata-failed, #flashdata-nochange').delay(5000).fadeOut('slow');
 
 //monta o time de sessão do usuário
 $('#clock').countdown(timesession)
