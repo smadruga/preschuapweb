@@ -166,4 +166,4 @@ mod.cod         = 26
 
 hu.nome         = "Hospital Universitário Antonio Pedro"
 hu.abrev        = "Huap-UFF"
-
+hu.head.print   = "GERÊNCIA DE ATENÇÃO A SAÚDE - GAS<br />DIVISÃO DE GESTÃO DO CUIDADO - DGC<br />UNIDADE DE HEMATOLOGIA E ONCOLOGIA - UHON<br />PRESCRIÇÃO MÉDICA DO PACIENTE"
