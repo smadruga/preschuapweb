@@ -50,32 +50,44 @@
 
             <div class="ms-1 me-1">
                 <div class="row">
-                    <div class="col container border border-dark border-bottom-0">
-                        <div class="row">
-                            <div class="col"><b>CID-Categoria:</b> <?= $v['Categoria'] ?></div>
-                        </div>
-                        <div class="row">
-                            <div class="col"><b>CID-Subcategoria:</b> <?= $v['Subcategoria'] ?></div>
-                        </div>
-                        <div class="row">
-                            <div class="col"><b>Aplicabilidade:</b> <?= $v['Aplicabilidade'] ?></div>
-                            <div class="col"><b>Protocolo:</b> <?= $v['Protocolo'] ?></div>
-                        </div>
-                        <div class="row">
-                            <div class="col"><b>Data da Prescrição:</b> <?= $v['DataPrescricao'] ?></div>
-                            <div class="col"><b>Tipo de Terapia:</b> <?= $v['TipoTerapia'] ?></div>
-                            <div class="col-3"><b>Tipo de Agendamento:</b> <?= $v['TipoAgendamento'] ?></div>
-                            <div class="col"><b>Total de Ciclos:</b> <?= $v['CiclosTotais'] ?></div>
-                            <div class="col"><b>Entre Ciclos:</b> <?= $v['EntreCiclos'] ?></div>
-                        </div>
-                        <div class="row">
-                            <div class="col"><b>Unidade de Internação:</b> --- </div>
-                        </div>
-                        <br />
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-6 border border-dark">
+                        <div>
+                            <div class="row">
+                                <div class="col"><b>CID-Categoria:</b> <?= $v['Categoria'] ?></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>CID-Subcategoria:</b> <?= $v['Subcategoria'] ?></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Aplicabilidade:</b> <?= $v['Aplicabilidade'] ?></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Protocolo:</b> <?= $v['Protocolo'] ?></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Tipo de Agendamento:</b> <?= $v['TipoAgendamento'] ?></div>
+                            </div>                            
+                            <div class="row">
+                                <div class="col"><b>Data da Prescrição:</b> <?= $v['DataPrescricao'] ?></div>
+                                <div class="col"><b>Tipo de Terapia:</b> <?= $v['TipoTerapia'] ?></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Total de Ciclos:</b> <?= $v['CiclosTotais'] ?></div>
+                                <div class="col"><b>Entre Ciclos:</b> <?= $v['EntreCiclos'] ?></div>
+                            </div>                            
+                            <div class="row">
+                                <div class="col"><b>Unidade de Internação:</b> --- </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="col border border-dark border-start-0">
+                        <div class="col"><b>Observações do Protocolo:</b> <?= $v['Observacoes'] ?><br /><br /></div>
+                    </div>
+                </div>         
+                
+                <div class="row" style="min-height: 100px;">
+                    <div class="col-6 border border-dark border-top-0">
                         <div class="col"><b>Informações Complementares:</b>
                             <?= ($v['InformacaoComplementar']) ? '<br>'.nl2br($v['InformacaoComplementar']) : NULL ?>
                             <?php
@@ -91,8 +103,8 @@
                             ?>
                         </div>
                     </div>
-                    <div class="col border border-dark border-start-0">
-                        <div class="col"><b>Observações do Protocolo:</b> <?= $v['Observacoes'] ?><br /><br /></div>
+                    <div class="col border border-dark border-top-0 border-start-0">
+                        <div class="col"><b>Carimbo:</b><br /><br /></div>
                     </div>
                 </div>
                 <div class="row">
