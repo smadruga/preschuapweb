@@ -27,6 +27,7 @@ class PrescricaoMedicamentoModel extends Model
                                         'Dose',
                                         'idTabPreschuap_UnidadeMedida',
                                         'idTabPreschuap_ViaAdministracao',
+                                        'idTabPreschuap_Codigo',
                                         'idTabPreschuap_Diluente',
                                         'Volume',
                                         'TempoInfusao',
@@ -65,6 +66,7 @@ class PrescricaoMedicamentoModel extends Model
                 , format(tm.CalculoLimiteMaximo, 2, "pt_BR") as CalculoLimiteMaximo
                 , concat(format(tpm.Dose, 2, "pt_BR")," ",tum.Representacao) as Dose
                 , tva.ViaAdministracao
+                , tva.Codigo
                 , td.Diluente
                 , format(tpm.Volume, 2, "pt_BR") as Volume
                 , tpm.TempoInfusao
