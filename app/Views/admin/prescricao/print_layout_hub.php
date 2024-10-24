@@ -1,13 +1,13 @@
 <tr>
         <th class="border border-dark">#</th>
-        <th class="border border-dark">Etapa Terapia</th>
+        <th class="border border-dark">Etapa</th>
         <th class="border border-dark">Medicamento</th>
         <th class="border border-dark">Dose do Protocolo</th>
         <th class="border border-dark">Cálculo Final</th>
         <th class="border border-dark">Via</th>
         <th class="border border-dark">Diluente</th>
         <th class="border border-dark">Vol. (ml)</th>
-        <th class="border border-dark">Tempo Infusão</th>
+        <th class="border border-dark">Infusão</th>
         <th class="border border-dark">Posologia</th>
         <th class="border border-dark col-3" colspan="7">Aprazamento</th>
     </tr>
@@ -26,7 +26,7 @@
         <td class="border border-dark"><?= $m['Medicamento'] ?></td>
         <td class="border border-dark"><?= $m['Dose'] ?></td>
         <td class="border border-dark"><?= $m['Calculo'] ?></td>
-        <td class="border border-dark"><?= $m['ViaAdministracao'] ?></td>
+        <td class="border border-dark"><?= $m['Codigo'] ?></td>
         <td class="border border-dark"><?= $m['Diluente'] ?></td>
         <td class="border border-dark"><?= ($m['Volume'] == '0,00' || !$m['Volume'] ) ? NULL : $m['Volume'] . 'ml' ?></td>
         <td class="border border-dark"><?= $m['TempoInfusao'] ?></td>
