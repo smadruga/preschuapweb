@@ -44,7 +44,7 @@
 
     <hr>
 
-    <?php foreach (['M' => 'MANHÃ', 'T' => 'TARDE'] as $turno => $turnoNome): ?>
+    <?php foreach (['M' => 'MANHÃ', 'T' => 'TARDE', 'N' => 'NOITE'] as $turno => $turnoNome): ?>
         <div class="alert alert-secondary text-center" colspan='14' role="alert">
             <b>TURNO: <?= $turnoNome ?></b>
         </div>

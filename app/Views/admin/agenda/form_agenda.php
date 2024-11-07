@@ -36,7 +36,7 @@
                     </div>
                 </div>
             
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label for="Turno" class="form-label">Turno <b class="text-danger">*</b></label>
                         <div class="input-group">
                             <div class="btn-group" data-toggle="buttons">
@@ -49,6 +49,11 @@
                                     id="TurnoT" value="T" <?php echo $radio['Turno']['c'][1] ?> />
                                 <label class="btn btn-<?php echo $radio['Turno']['b'][1] ?> <?php echo $radio['Turno']['a'][1] ?>" for="TurnoT" 
                                     data-mdb-ripple-init>Tarde</label>
+
+                                <input type="radio" class="btn-check" name="Turno" autocomplete="off" 
+                                    id="TurnoN" value="N" <?php echo $radio['Turno']['c'][1] ?> />
+                                <label class="btn btn-<?php echo $radio['Turno']['b'][1] ?> <?php echo $radio['Turno']['a'][1] ?>" for="TurnoN" 
+                                    data-mdb-ripple-init>Noite</label>                                    
                             </div>
                         </div>
                         <?php if ($validation->getError('Turno')): ?>
