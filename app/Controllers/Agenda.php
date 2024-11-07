@@ -246,7 +246,7 @@ class Agenda extends BaseController
             $v['data']['prescricao'] = $prescricao->read_prescricao($id, true, true);
 
             $v['radio'] = array(
-                'Turno' => $v['func']->radio_checked($v['data']['Turno'], 'Turno', 'M|T', FALSE, TRUE, TRUE),
+                'Turno' => $v['func']->radio_checked($v['data']['Turno'], 'Turno', 'M|T|N', FALSE, TRUE, TRUE),
             );
 
             #exit('oi11');

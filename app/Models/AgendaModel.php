@@ -84,6 +84,7 @@ class AgendaModel extends Model
                 , pa.idPreschuap_Agenda 
                 , CASE
                     WHEN pa.Turno = "T" THEN "TARDE"
+                    WHEN pa.Turno = "N" THEN "NOITE"
                     ELSE "MANHÃ"
                 END as Turno
                 , date_format(pa.DataAgendamento, "%d/%m/%Y") as DataAgendamento
