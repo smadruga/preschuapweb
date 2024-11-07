@@ -14,7 +14,8 @@
         <link href="<?= base_url('/assets/select2/dist/css/select2.min.css') ?>" rel="stylesheet">
         <link href="<?= base_url('/assets/select2-bootstrap-5-theme-master/dist/select2-bootstrap-5-theme.min.css') ?>" rel="stylesheet">
         <link href="<?= base_url('/assets/css/simple-datatables@latest-style.css') ?>" rel="stylesheet">
-        <link href="<?= base_url('/assets/css/bootswatch-flatly-bootstrap.min.css') ?>" rel="stylesheet">
+<link href="<?= base_url('/assets/css/bootswatch-flatly-bootstrap.min.css') ?>" rel="stylesheet">
+<!--<link href="<?= base_url('/assets/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">-->
         <link href="<?= base_url('/assets/bootstrap-table-1.19.1/dist/bootstrap-table.min.css') ?>" rel="stylesheet">
         <link href="<?= base_url('/assets/fontawesome/css/all.min.css') ?>" rel="stylesheet">
         <link href="<?= base_url('/assets/css/apphuap.css') ?>" rel="stylesheet">
