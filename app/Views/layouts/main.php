@@ -11,7 +11,8 @@
     <link rel="shortcut icon" type="image/png" href="<?= base_url('/favicon.ico') ?>"/>
     <link href="<?= base_url('/assets/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
     <link href="<?= base_url('/assets/css/simple-datatables@latest-style.css') ?>" rel="stylesheet">
-    <link href="<?= base_url('/assets/css/bootswatch-flatly-bootstrap.min.css') ?>" rel="stylesheet">
+<link href="<?= base_url('/assets/css/bootswatch-flatly-bootstrap.min.css') ?>" rel="stylesheet">
+<!--<link href="<?= base_url('/assets/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">-->
     <link href="<?= base_url('/assets/fontawesome/css/all.min.css') ?>" rel="stylesheet">
 
     <!-- Favicons -->
