@@ -2,7 +2,7 @@
 <?= $this->section('content') ?>
 
 <?php
-$turnos = ['M' => 'MANHÃ', 'T' => 'TARDE'];
+$turnos = ['M' => 'MANHÃ', 'T' => 'TARDE', 'N' => 'TERCEIRO TURNO'];
 $totalTurnos = count($turnos);
 $currentTurnoIndex = 0;
 ?>
