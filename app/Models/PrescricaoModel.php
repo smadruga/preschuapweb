@@ -26,6 +26,7 @@ class PrescricaoModel extends Model
                                         'idTabPreschuap_TipoTerapia',
                                         'CiclosTotais',
                                         'EntreCiclos',
+                                        'idTabPreschuap_Dieta',
 
                                         'Peso',
                                         'CreatininaSerica',
@@ -73,6 +74,7 @@ class PrescricaoModel extends Model
                 , ttt.TipoTerapia
                 , p.CiclosTotais
                 , p.EntreCiclos
+                , td.Dieta
 
                 , format(p.Peso, 2, "pt_BR") as Peso
                 , format(p.CreatininaSerica, 2, "pt_BR") as CreatininaSerica
@@ -96,13 +98,14 @@ class PrescricaoModel extends Model
                 , tta.TipoAgendamento 
             FROM
                 preschuapweb.Preschuap_Prescricao as p
-                    left join TabPreschuap_Categoria as tc on p.idTabPreschuap_Categoria = tc.idTabPreschuap_Categoria
-                    left join TabPreschuap_Subcategoria as ts on p.idTabPreschuap_Subcategoria = ts.idTabPreschuap_Subcategoria
-                    left join TabPreschuap_Protocolo as tp on p.idTabPreschuap_Protocolo = tp.idTabPreschuap_Protocolo
-                    left join TabPreschuap_TipoTerapia as ttt on p.idTabPreschuap_TipoTerapia = ttt.idTabPreschuap_TipoTerapia
-                    left join Sishuap_Usuario as u on p.idSishuap_Usuario = u.idSishuap_Usuario
-                    left join TabPreschuap_MotivoCancelamento as tmc on p.idTabPreschuap_MotivoCancelamento = tmc.idTabPreschuap_MotivoCancelamento
-                    left join TabPreschuap_TipoAgendamento as tta on tp.idTabPreschuap_TipoAgendamento = tta.idTabPreschuap_TipoAgendamento
+                    left join TabPreschuap_Categoria as tc              on p.idTabPreschuap_Categoria           = tc.idTabPreschuap_Categoria
+                    left join TabPreschuap_Subcategoria as ts           on p.idTabPreschuap_Subcategoria        = ts.idTabPreschuap_Subcategoria
+                    left join TabPreschuap_Protocolo as tp              on p.idTabPreschuap_Protocolo           = tp.idTabPreschuap_Protocolo
+                    left join TabPreschuap_TipoTerapia as ttt           on p.idTabPreschuap_TipoTerapia         = ttt.idTabPreschuap_TipoTerapia
+                    left join TabPreschuap_Dieta as td                  on p.idTabPreschuap_Dieta               = td.idTabPreschuap_Dieta
+                    left join Sishuap_Usuario as u                      on p.idSishuap_Usuario                  = u.idSishuap_Usuario
+                    left join TabPreschuap_MotivoCancelamento as tmc    on p.idTabPreschuap_MotivoCancelamento  = tmc.idTabPreschuap_MotivoCancelamento
+                    left join TabPreschuap_TipoAgendamento as tta       on tp.idTabPreschuap_TipoAgendamento    = tta.idTabPreschuap_TipoAgendamento
             WHERE
                 '.$where.'
             ORDER BY p.idPreschuap_Prescricao DESC

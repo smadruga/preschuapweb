@@ -176,7 +176,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <label for="idTabPreschuap_Protocolo" class="form-label">Protocolo <b class="text-danger">*</b></label>
                     <div class="input-group mb-3">
 
@@ -200,7 +200,9 @@
                         <?php endif; ?>
                     </div>
                 </div>
-                <div class="col-md-4">
+
+
+                <div class="col-md-6">
                     <label for="idTabPreschuap_TipoTerapia" class="form-label">Tipo de Terapia</b></label>
                     <div class="input-group mb-3">
 
@@ -220,6 +222,30 @@
                         <?php if ($validation->getError('idTabPreschuap_TipoTerapia')): ?>
                             <div class="invalid-feedback">
                                 <?= $validation->getError('idTabPreschuap_TipoTerapia') ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="idTabPreschuap_Dieta" class="form-label">Dieta <b class="text-danger">*</b></label>
+                    <div class="input-group mb-3">
+
+                        <select <?= $opt['disabled'] ?>
+                            class="form-select select2 <?php if($validation->getError('idTabPreschuap_Dieta')): ?>is-invalid<?php endif ?>"
+                            id="idTabPreschuap_Dieta" name="idTabPreschuap_Dieta" data-placeholder="Selecione uma opção"
+                            data-allow-clear="1">
+                            <option value="">Selecione uma opção</option>
+                            <?php
+                            foreach ($select['Dieta']->getResultArray() as $val) {
+                                $selected = ($data['idTabPreschuap_Dieta'] == $val['idTabPreschuap_Dieta']) ? 'selected' : '';
+                                echo '<option value="'.$val['idTabPreschuap_Dieta'].'" '.$selected.'>'.$val['Dieta'].'</option>';
+                            }
+                            ?>
+                        </select>
+
+                        <?php if ($validation->getError('idTabPreschuap_Dieta')): ?>
+                            <div class="invalid-feedback">
+                                <?= $validation->getError('idTabPreschuap_Dieta') ?>
                             </div>
                         <?php endif; ?>
                     </div>

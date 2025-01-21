@@ -156,6 +156,7 @@ class Prescricao extends BaseController
                 'idTabPreschuap_TipoTerapia'        => '',
                 'CiclosTotais'                      => '',
                 'EntreCiclos'                       => '',
+                'idTabPreschuap_Dieta'                             => '',
 
                 'Peso'                              => '',
                 'CreatininaSerica'                  => '',
@@ -208,6 +209,7 @@ class Prescricao extends BaseController
             'Subcategoria'      => $tabela->list_tabela_bd('Subcategoria',  FALSE, FALSE, '*', 'idTabPreschuap_Subcategoria', TRUE), #Carrega os itens da tabela selecionada
             'Protocolo'         => $tabela->list_tabela_bd('Protocolo',     FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
             'TipoTerapia'       => $tabela->list_tabela_bd('TipoTerapia',   FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
+            'Dieta'             => $tabela->list_tabela_bd('Dieta',   FALSE, FALSE, '*', FALSE, TRUE), #Carrega os itens da tabela selecionada
             'Aplicabilidade'    => ['CANCEROLOGIA', 'HEMATOLOGIA'],
         ];
 
@@ -268,7 +270,7 @@ class Prescricao extends BaseController
                     'idTabPreschuap_Categoria'          => ['label' => 'CID Categoria', 'rules' => 'required'],
                     #'idTabPreschuap_Subcategoria'       => ['label' => 'CID Subcategoria', 'rules' => 'required'],
                     'idTabPreschuap_Protocolo'          => ['label' => 'Protocolo', 'rules' => 'required'],
-                    #'idTabPreschuap_TipoTerapia'        => ['label' => 'Tipo de Terapia', 'rules' => 'required'],
+                    'idTabPreschuap_Dieta'              => ['label' => 'Dieta', 'rules' => 'required'],
                     'CiclosTotais'                      => ['label' => 'Total de Ciclos', 'rules' => 'required|integer'],
                     'EntreCiclos'                       => ['label' => 'Entre Ciclos', 'rules' => 'required|integer'],
 
@@ -307,7 +309,7 @@ class Prescricao extends BaseController
 
                     $v['data']['idTabPreschuap_Subcategoria']   = ($v['data']['idTabPreschuap_Subcategoria']) ? $v['data']['idTabPreschuap_Subcategoria'] : NULL;
                     $v['data']['idTabPreschuap_TipoTerapia']    = ($v['data']['idTabPreschuap_TipoTerapia']) ? $v['data']['idTabPreschuap_TipoTerapia'] : NULL;
-                    #$v['data']['idTabPreschuap_Alergia']        = ($v['data']['idTabPreschuap_Alergia']) ? $v['data']['idTabPreschuap_Alergia'] : NULL;
+                    $v['data']['idTabPreschuap_Dieta']          = ($v['data']['idTabPreschuap_Dieta']) ? $v['data']['idTabPreschuap_Dieta'] : NULL;
 
                 }
                 if($action == 'concluir')

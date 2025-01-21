@@ -25,6 +25,7 @@
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Categoria') ?>"><i class="fa-solid fa-table-list"></i> CID - Categoria</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Subcategoria') ?>"><i class="fa-solid fa-table-list"></i> CID - Subcategoria</a>
                         <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Dieta') ?>"><i class="fa-solid fa-table-list"></i> Dieta</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Diluente') ?>"><i class="fa-solid fa-table-list"></i> Diluente</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/EtapaTerapia') ?>"><i class="fa-solid fa-table-list"></i> Etapa da Terapia</a>
                         <a class="dropdown-item" href="<?= base_url('tabela/list_tabela/Medicamento') ?>"><i class="fa-solid fa-table-list"></i> Medicamento</a>

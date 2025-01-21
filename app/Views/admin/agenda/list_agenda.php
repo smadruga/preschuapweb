@@ -45,7 +45,7 @@
     <hr>
 
     <?php foreach (['M' => 'MANHÃ', 'T' => 'TARDE', 'N' => 'TERCEIRO TURNO'] as $turno => $turnoNome): ?>
-        <div class="alert alert-secondary text-center" colspan='14' role="alert">
+        <div class="alert alert-secondary text-center" colspan='20' role="alert">
             <b>TURNO: <?= $turnoNome ?></b>
         </div>
 
@@ -55,6 +55,7 @@
                 <td>Tipo</td>
                 <td>Obs</td> 
                 <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6]))) { ?>
+                <td><i class="fa-solid fa-utensils"></i></td>
                 <td><i class="fa-regular fa-trash-can"></i></td>
                 <td><i class="fa-solid fa-pen-to-square"></i></td>
                 <td><i class="fa-solid fa-eye"></i></td>    
@@ -133,13 +134,13 @@
 
                                     $thth = '<th></th>';
 
-                                    $cs1 = 14;
-                                    $cs2 = 10;
+                                    $cs1 = 15;
+                                    $cs2 = 11;
                                 }
                                 else {
                                     $thth = $bt1 = $bt2 = "";
-                                    $cs1 = 10;
-                                    $cs2 = 7;                                        
+                                    $cs1 = 11;
+                                    $cs2 = 8;                                        
                                 }
 
                                 if ($ant != $x['idPreschuap_Agenda'].'#'.$x['idTabPreschuap_Protocolo']) {
@@ -165,6 +166,7 @@
                                             {$th}
                                             <th>{$x['badge']}</th>
                                             <th>".esc($x['Observacoes'])."</th>
+                                            <th>{$x['dieta']}</th>
                                             ".$bt1."
                                             <th>
                                                 <a href=".base_url('paciente/show_paciente/'.$agenda['paciente'][$x['Prontuario']]['codigo'])."

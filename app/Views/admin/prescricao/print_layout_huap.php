@@ -57,10 +57,13 @@
                         <div class="row">
                             <div class="col"><b>Data da Prescrição:</b> <?= $v['DataPrescricao'] ?></div>
                             <div class="col"><b>Tipo de Terapia:</b> <?= $v['TipoTerapia'] ?></div>
-                            <div class="col-3"><b>Tipo de Agendamento:</b> <?= $v['TipoAgendamento'] ?></div>
                             <div class="col"><b>Total de Ciclos:</b> <?= $v['CiclosTotais'] ?></div>
                             <div class="col"><b>Entre Ciclos:</b> <?= $v['EntreCiclos'] ?></div>
                         </div>
+                        <div class="row">
+                            <div class="col"><b>Tipo de Agendamento:</b> <?= $v['TipoAgendamento'] ?></div>
+                            <div class="col"><b>Dieta:</b> <?= $v['Dieta'] ?></div>
+                        </div>                        
                         <div class="row">
                             <div class="col"><b>Unidade de Internação:</b> --- </div>
                         </div>
