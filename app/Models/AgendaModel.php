@@ -185,6 +185,7 @@ class AgendaModel extends Model
                 , ppm.idTabPreschuap_ViaAdministracao 
                 , ppm.idTabPreschuap_Medicamento 
                 , pp.Prontuario
+                , pp.idTabPreschuap_Dieta
                 , tpp.idTabPreschuap_Protocolo
                 , tpp.Protocolo
                 , ppm.idTabPreschuap_Medicamento 
@@ -241,6 +242,7 @@ class AgendaModel extends Model
         foreach($query as $v) {
         
             $v['badge'] = $this->badge($v['idTabPreschuap_TipoAgendamento']);
+            $v['dieta'] = $this->dieta($v['idTabPreschuap_Dieta']);
             $wherein_agenda[] = $v['idPreschuap_Agenda'];
 
             if($v['idTabPreschuap_TipoAgendamento'] == 1 && $v['idTabPreschuap_EtapaTerapia'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 2) 
@@ -359,5 +361,39 @@ class AgendaModel extends Model
         return $badge;
 
     }
+
+    /**
+    * Função que adciona um badge de acordo com o tipo de agendamento.
+    *
+    * @return text
+    */    
+    public function dieta($data)
+    {
+       
+        if($data == 1)
+            $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Branda">B</span>';
+        elseif($data == 2)
+            $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Pastosa">P</span>';
+        elseif($data == 3)
+            $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Líquida">L</span>';
+        elseif($data == 4)
+            $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Semi-líquida">SL</span>';
+        elseif($data == 5)
+            $badge = '<span class="badge bg-danger text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Enteral por Sonda">ES</span>';  
+        elseif($data == 6)
+            $badge = '<span class="badge bg-danger text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Enteral por Gastrostomia">EG</span>';
+        else
+            $badge = '<h4><span class="badge bg-secondary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Não informado"><i class="fa-solid fa-utensils"></i></span></h4>';
+
+        /*
+        echo "<pre>";
+        #print_r($v['data']);
+        echo "</pre>";
+        exit($badge.'oi'.$data);
+        #*/
+
+        return $badge;
+
+    }    
 
 }
