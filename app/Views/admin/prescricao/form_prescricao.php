@@ -227,7 +227,9 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <label for="idTabPreschuap_Dieta" class="form-label">Dieta <b class="text-danger">*</b></label>
+                    <label for="idTabPreschuap_Dieta" class="form-label">Dieta <b class="text-info">*</b>
+                        <i class="fas fa-question-circle text-primary" data-bs-toggle="tooltip" title="Campo obrigatório apenas para alguns"></i>
+                    </label>
                     <div class="input-group mb-3">
 
                         <select <?= $opt['disabled'] ?>

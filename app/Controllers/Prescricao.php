@@ -270,7 +270,7 @@ class Prescricao extends BaseController
                     'idTabPreschuap_Categoria'          => ['label' => 'CID Categoria', 'rules' => 'required'],
                     #'idTabPreschuap_Subcategoria'       => ['label' => 'CID Subcategoria', 'rules' => 'required'],
                     'idTabPreschuap_Protocolo'          => ['label' => 'Protocolo', 'rules' => 'required'],
-                    'idTabPreschuap_Dieta'              => ['label' => 'Dieta', 'rules' => 'required'],
+                    #'idTabPreschuap_Dieta'              => ['label' => 'Dieta', 'rules' => 'required'],
                     'CiclosTotais'                      => ['label' => 'Total de Ciclos', 'rules' => 'required|integer'],
                     'EntreCiclos'                       => ['label' => 'Entre Ciclos', 'rules' => 'required|integer'],
 
