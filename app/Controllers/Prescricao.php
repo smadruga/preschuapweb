@@ -287,11 +287,22 @@ class Prescricao extends BaseController
             else
                 $inputs = '';
 
-            #Realiza a validação e retorna ao formulário se false
-            if (!$inputs && ($action == 'cadastrar' || $action == 'editar'))
+            if ($action == 'cadastrar' || $action == 'editar') {
+                $agendamento = ($v['data']['idTabPreschuap_Protocolo']) ? $prescricao->get_agendamento($v['data']['idTabPreschuap_Protocolo']) : null;
+                $v['data']['divDieta'] = (in_array($agendamento, [1, 4]) && $v['data']['idTabPreschuap_Protocolo']) ? 1 : null;
+            }   
+        
+/*
+            echo "<pre>";
+            print_r($v['data']);
+            echo "</pre>";
+            echo '<br> >>';
+*/
+            if ((!$inputs || ($v['data']['divDieta'] && !$v['data']['idTabPreschuap_Dieta'])) && ($action == 'cadastrar' || $action == 'editar'))
+            #if (!$inputs && ($action == 'cadastrar' || $action == 'editar'))
                 $v['validation'] = $this->validator;
             else {
-
+#exit('>................<');
                 if($action == 'cadastrar' || $action == 'editar') {
 
                     $v['data']['DataPrescricao']        = date("Y-m-d", strtotime(str_replace('/', '-', $v['data']['DataPrescricao'])));

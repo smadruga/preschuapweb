@@ -204,4 +204,37 @@ class PrescricaoModel extends Model
 
     }
 
+/**
+    * Captura o id da prescrição concluída mais recente.
+    *
+    * @return void
+    */
+    public function get_agendamento($id)
+    {
+
+        $db = \Config\Database::connect();
+        $query = $db->query('
+            SELECT
+                idTabPreschuap_TipoAgendamento
+            FROM
+                TabPreschuap_Protocolo
+            WHERE
+                idTabPreschuap_Protocolo = '.$id.'
+            ;
+        ');
+
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit($id.'<><>');
+        #*/
+        #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
+
+        $query = $query->getRowArray();
+        return $query['idTabPreschuap_TipoAgendamento'];
+
+    }    
+
 }
