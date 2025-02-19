@@ -66,7 +66,6 @@
 
                     <div class="container">
                         <div class="row">
-                            <!--<div class="col"><b>Data da Marcação:</b> <?= $v['DataMarcacao'] ?></div>-->
                             <div class="col"><b>Data da Prescrição:</b> <?= $v['DataPrescricao'] ?></div>
                         </div>
 

@@ -233,7 +233,7 @@
                     <div class="input-group mb-3">
 
                         <select <?= $opt['disabled'] ?>
-                            class="form-select select2 <?php if($validation->getError('idTabPreschuap_Dieta')): ?>is-invalid<?php endif ?>"
+                            class="form-select select2 <?php if(isset($data['divDieta']) && $data['divDieta'] && !$data['idTabPreschuap_Dieta']): ?>is-invalid<?php endif ?>"
                             id="idTabPreschuap_Dieta" name="idTabPreschuap_Dieta" data-placeholder="Selecione uma opção"
                             data-allow-clear="1">
                             <option value="">Selecione uma opção</option>
@@ -245,11 +245,11 @@
                             ?>
                         </select>
 
-                        <?php if ($validation->getError('idTabPreschuap_Dieta')): ?>
+                        <?php if (isset($data['divDieta']) && $data['divDieta'] == 1 && !$data['idTabPreschuap_Dieta']) { ?>
                             <div class="invalid-feedback">
-                                <?= $validation->getError('idTabPreschuap_Dieta') ?>
+                                Campo obrigatório
                             </div>
-                        <?php endif; ?>
+                        <?php } ?>
                     </div>
                 </div>
 
