@@ -58,7 +58,7 @@ foreach($prescricao['array'] as $v) {
         
         <tr>
             <th class="border border-dark" colspan="12">
-                <span class="badge bg-primary fs-7"><i class="fa-solid fa-utensils"></i></span> <b>Dieta:</b> <?= $v['Dieta'] ?>
+                <span class="badge bg-primary fs-7"><i class="fa-solid fa-utensils"></i></span> <b>Dieta:</b> <?= ($v['Dieta']) ? $v['Dieta'] : "Não informado" ?>
             </th>
         </tr>
         
