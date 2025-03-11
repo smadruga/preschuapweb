@@ -55,7 +55,13 @@ foreach($prescricao['array'] as $v) {
 
             </td>
         </tr>
-
+        
+        <tr>
+            <th class="border border-dark" colspan="12">
+                <span class="badge bg-primary fs-7"><i class="fa-solid fa-utensils"></i></span> <b>Dieta:</b> <?= $v['Dieta'] ?>
+            </th>
+        </tr>
+        
         <?php
         $vem['v'] = $v;
         if( env('hu.layout.print') == 1 )
