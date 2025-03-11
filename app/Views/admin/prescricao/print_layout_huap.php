@@ -62,11 +62,11 @@
                         </div>
                         <div class="row">
                             <div class="col"><b>Tipo de Agendamento:</b> <?= $v['TipoAgendamento'] ?></div>
-                            <div class="col"><b>Dieta:</b> <?= $v['Dieta'] ?></div>
+                            <!--<div class="col"><b>Dieta:</b> <?= $v['Dieta'] ?></div>-->
                         </div>                        
-                        <div class="row">
+                        <!--<div class="row">
                             <div class="col"><b>Unidade de Internação:</b> --- </div>
-                        </div>
+                        </div>-->
                         <br />
                     </div>
                 </div>
