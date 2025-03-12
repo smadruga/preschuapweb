@@ -56,13 +56,21 @@ foreach($prescricao['array'] as $v) {
             </td>
         </tr>
         
-        <tr>
-            <th class="border border-dark" colspan="12">
-                <span class="badge bg-primary fs-7"><i class="fa-solid fa-utensils"></i></span> <b>Dieta:</b> <?= ($v['Dieta']) ? $v['Dieta'] : "Não informado" ?>
-            </th>
-        </tr>
-        
         <?php
+
+        if($v['idTabPreschuap_TipoAgendamento'] != 2 && $v['idTabPreschuap_TipoAgendamento'] != 3) {
+            $data = ($v['Dieta']) ? $v['Dieta'] : "Não informado";
+
+            echo '
+                <tr>
+                    <th class="border border-dark" colspan="12">
+                        <span class="badge bg-primary fs-7"><i class="fa-solid fa-utensils"></i></span> <b>Dieta:</b> '.$data.'
+                    </th>
+                </tr>
+            ';
+        }
+
+
         $vem['v'] = $v;
         if( env('hu.layout.print') == 1 )
             echo view('admin/prescricao/print_layout_hub', $vem);
