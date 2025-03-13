@@ -25,6 +25,9 @@ Registrado no INPI. Processo No: BR512023003825-3
   - 4GB de memória RAM<br>
   - 40GB de espaço em disco<br>
 
+## Instalação:
+
+Consultar o arquivo **documentacao/install.txt** <br>
 
 **Desenvolvido pela Unidade de Sistemas de Informação e Inteligência de Dados - USID/SETISD**<br>
 **Hospital Universitário Antonio Pedro - HUAP/UFF/EBSERH**
