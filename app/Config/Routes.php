@@ -56,6 +56,7 @@ $routes->group('paciente', function ($routes) {
 $routes->group('prescricao', function ($routes) {
     $routes->get('list_prescricao', 'Prescricao::list_prescricao');
     $routes->get('print_prescricao/(:any)', 'Prescricao::print_prescricao/$1');
+    $routes->get('print_etiqueta/(:any)', 'Prescricao::print_etiqueta/$1');
     $routes->get('page_prescricao', 'Prescricao::page_prescricao');
 
     $routes->get('manage_prescricao/(:any)/(:any)', 'Prescricao::manage_prescricao/$1/$2');
