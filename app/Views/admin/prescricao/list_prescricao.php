@@ -25,6 +25,9 @@
                             <div class="col-6 text-start"><b>Prescrição #<?= $v['idPreschuap_Prescricao'] ?></b></div>
                             <div class="col-6 text-end">
                                 <?php
+                                if(isset($agendamento[$v['idPreschuap_Prescricao']]))
+                                    echo '<span class="badge bg-danger text-white"><i class="fa-regular fa-calendar-check"></i> Agendado</span> ';
+
                                 if($v['Concluido'] == 1)
                                     echo '<span class="badge bg-primary text-white"><i class="fa-solid fa-check-circle"></i> Fechada</span>';
                                 else
@@ -39,14 +42,27 @@
                 <div class="accordion-body">
                     <div>
                         <?php if($v['Concluido'] == 1) { ?>
+                            
                             <a class="btn btn-outline-info" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
+                            
+                            <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,3]))) { ?>
                             <a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-copy"></i> Copiar</a>
-                            <!--<a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idPreschuap_Prescricao'].'/1') ?>" role="button"><i class="fa-solid fa-repeat"></i> Continuar</a>-->
+                            <?php } ?>
+
+                            <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6]))) { ?>
                             <a class="btn btn-outline-info click" href="<?= base_url('agenda/agenda_prescricao/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-calendar"></i> Agendar</a>
+                            <?php } ?>
+
+                            <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6]))) { ?>
+                                <a class="btn btn-outline-info" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_etiqueta/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-tag"></i> Etiqueta</a>
+                            <?php } ?>
+
                         <?php } else { ?>
+                            <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,3]))) { ?>
                             <a class="btn btn-outline-warning" id="click" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Editar</a>
                             <a class="btn btn-outline-danger" id="click" href="<?= base_url('prescricao/manage_prescricao/excluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-trash-can"></i> Excluir</a>
                             <a class="btn btn-outline-success" id="click" href="<?= base_url('prescricao/manage_prescricao/concluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-check-circle"></i> Concluir</a>
+                            <?php } ?>
                         <?php } ?>
                     </div>
 
@@ -54,7 +70,6 @@
 
                     <div class="container">
                         <div class="row">
-                            <!--<div class="col"><b>Data da Marcação:</b> <?= $v['DataMarcacao'] ?></div>-->
                             <div class="col"><b>Data da Prescrição:</b> <?= $v['DataPrescricao'] ?></div>
                         </div>
 
@@ -79,6 +94,14 @@
                         <div class="row">
                             <div class="col"><b>Aplicabilidade:</b> <?= $v['Aplicabilidade'] ?></div>
                             <div class="col"><b>Tipo de Terapia:</b> <?= $v['TipoTerapia'] ?></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col"><b>Dieta:</b> <?= $v['Dieta'] ?></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col"><b>Tipo de Agendamento:</b> <?= $v['TipoAgendamento'] ?></div>
                         </div>
 
                         <hr />
@@ -140,11 +163,13 @@
                         <hr />
 
                         <?php if($v['Concluido'] != 1) { ?>
+                            <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,3]))) { ?>
                             <div class="text-center">
                                 <a class="btn btn-warning" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-arrow-right-arrow-left"></i> Trocar Protocolo</a>
                                 <a class="btn btn-warning" href="<?= base_url('prescricao/manage_medicamento/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Ajustar Doses</a>
                             </div>
                             <hr />
+                            <?php } ?>
                         <?php } ?>
 
                         <?php
@@ -204,6 +229,50 @@
                         ?>
 
                     </div>
+
+                    <?php
+                        if(!isset($agendamento[$v['idPreschuap_Prescricao']])) {
+                        ?>
+                        <div class="alert alert-secondary text-center" role="alert">
+                            Nenhum agendamento
+                        </div>
+                        <?php
+                        }
+                        
+                        else {
+                            $i=0;
+                            
+                            echo '
+                            <div class="alert alert-danger text-center" role="alert">
+                                AGENDAMENTOS
+                            </div>
+                            <table class="table bordered">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Data</th>
+                                    <th scope="col">Turno</th>
+                                    <th scope="col">Obs</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                            ';
+
+                            foreach($agendamento[$v['idPreschuap_Prescricao']] as $m) {
+                            $i++;
+                            echo '
+                            <tr>
+                                <th scope="row">'.$i.'</th>
+                                <td>'.$m['DataAgendamento'].'</td>
+                                <td>'.$m['Turno'].'</td>
+                                <td>'.$m['Observacoes'].'</td>
+                            </tr>
+                            ';
+
+                            } 
+                            echo '</table>';
+                        }
+                    ?>
                 </div>
             </div>
         </div>

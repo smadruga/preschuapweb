@@ -71,6 +71,44 @@ class Prescricao extends BaseController
     *
     * @return mixed
     */
+    public function print_etiqueta($data)
+    {
+
+        $prescricao = new PrescricaoModel();
+        $medicamento = new PrescricaoMedicamentoModel();
+
+        #Inicia a classe de funções próprias
+        $v['func'] = new HUAP_Functions();
+
+        $v['prescricao'] = $prescricao->read_prescricao($data, TRUE);
+
+        if($v['prescricao']['count'] > 0) {
+
+            $m['where'] = $data;
+            $m['medicamento'][$data] = NULL;
+
+            $v['medicamento'] = $medicamento->read_medicamento($m);
+
+        }
+
+        $v['prescricao']['conselho'] = $prescricao->get_conselho($v['prescricao']['array'][0]['Cpf']);
+
+        /*
+        echo "<pre>";
+        print_r($v['medicamento']);
+        echo "</pre>";
+        exit('oi');
+        #*/
+
+        return view('admin/prescricao/print_etiqueta', $v);
+
+    }
+
+    /**
+    * Gera a versão para impressão da Prescrição Médica
+    *
+    * @return mixed
+    */
     public function print_prescricao($data)
     {
 

@@ -42,6 +42,10 @@
                     <div class="col"><b>Tipo de Terapia:</b> <?= $data['prescricao']['TipoTerapia'] ?></div>
                 </div>
 
+                <div class="row">
+                    <div class="col"><b>Dieta:</b> <?= $data['prescricao']['Dieta'] ?></div>
+                </div>
+
                 <hr />
 
                 <div class="row">
