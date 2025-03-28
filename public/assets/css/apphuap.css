@@ -1,13 +1,65 @@
 /* override styles when printing */
 @media print {
 
+    /* Removemos padding para evitar redimensionamento inesperado */
     html, body {
-        width:  210mm;
-        height: 297mm;
+        margin: 0;
+        padding: 0;
+        width: auto;
+        height: auto;
+    }
+
+    .no-print {
+        display: none; /* Esconde elementos desnecessários na impressão */
     }
 
     .page-break {
         page-break-before: always;
     }
 
+    /* Configuração para etiquetas Zebra */
+    .zebra-label {
+        width: 50mm; /* Largura fixa */
+        height: 70mm; /* Altura fixa */
+        display: inline-block; /* Garante que a etiqueta respeite o tamanho */
+        box-sizing: border-box; /* Garante que padding e border não aumentem o tamanho */
+        font-size: 10px;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        border: 1px solid black; /* Apenas para visualização */
+        margin: 0; /* Remove margens externas */
+        padding: 0; /* Remove espaçamento interno */
+        page-break-after: always; /* Garante que cada etiqueta fique separada */
+    }
+
+    /* Estilos da tabela dentro da etiqueta */
+    .zebra-label .tabela {
+        width: 100%;
+        height: 100%;
+        border: 2px solid black; /* Borda externa grossa */
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box; /* Evita expansão inesperada */
+    }
+
+    .zebra-label .tabela .row {
+        display: flex;
+        flex: 1;
+        border-bottom: 2px solid black; /* Bordas grossas entre as linhas */
+    }
+
+    .zebra-label .tabela .col {
+        flex: 1;
+        border-right: 2px solid black; /* Bordas grossas entre colunas */
+        padding: 2px;
+        text-align: center;
+    }
+
+    .zebra-label .tabela .col:last-child {
+        border-right: none;
+    }
+
+    .zebra-label .tabela .row:last-child {
+        border-bottom: none;
+    }
 }
