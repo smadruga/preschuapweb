@@ -144,7 +144,10 @@ class HUAP_Functions
     */
     function calc_IndiceMassaCorporal($peso, $altura) {
 
-        return number_format((str_replace(',', '.',$peso)/(($altura/100)**2)), 3, ',', '');
+        if($peso && $altura)
+            return number_format((str_replace(',', '.',$peso)/(($altura/100)**2)), 3, ',', '');
+        else    
+            return null;
 
     }
 
@@ -163,7 +166,10 @@ class HUAP_Functions
     */
     function calc_SuperficieCorporal($peso, $altura) {
 
-        return number_format(( (0.007184) * (str_replace(',', '.',$peso)**(0.425)) * ($altura**(0.725)) ), 3, ',', '');
+        if($peso && $altura)
+            return number_format(( (0.007184) * (str_replace(',', '.',$peso)**(0.425)) * ($altura**(0.725)) ), 3, ',', '');
+        else
+            return null;
 
     }
 
@@ -180,7 +186,10 @@ class HUAP_Functions
 
         $sexo = ($sexo == 'F') ? 0.85 : 1;
 
-        return number_format((((140 - $idade) * $peso * $sexo) / (72 * $creatinina)), 3, ',', '');
+        if($peso && $idade && $sexo && $creatinina) 
+            return number_format((((140 - $idade) * $peso * $sexo) / (72 * $creatinina)), 3, ',', '');
+        else
+            return null;
 
     }
 

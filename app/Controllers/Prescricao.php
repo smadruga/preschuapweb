@@ -156,7 +156,7 @@ class Prescricao extends BaseController
                 'idTabPreschuap_TipoTerapia'        => '',
                 'CiclosTotais'                      => '',
                 'EntreCiclos'                       => '',
-                'idTabPreschuap_Dieta'                             => '',
+                'idTabPreschuap_Dieta'              => '',
 
                 'Peso'                              => '',
                 'CreatininaSerica'                  => '',
@@ -287,20 +287,43 @@ class Prescricao extends BaseController
             else
                 $inputs = '';
 
+            $calc = null;
+            #$v['data']['SuperficieCorporal'] = 1;
             if ($action == 'cadastrar' || $action == 'editar') {
                 $agendamento = ($v['data']['idTabPreschuap_Protocolo']) ? $prescricao->get_agendamento($v['data']['idTabPreschuap_Protocolo']) : null;
                 $v['data']['divDieta'] = (in_array($agendamento, [1, 4]) && $v['data']['idTabPreschuap_Protocolo']) ? 1 : null;
+                $calc1  = ($v['func']->calc_ClearanceCreatinina($v['data']['Peso'], $_SESSION['Paciente']['idade'], $_SESSION['Paciente']['sexo'], $v['data']['CreatininaSerica']) != $v['data']['ClearanceCreatinina']) ? 1 : null;
+                $calc2  = ($v['func']->calc_IndiceMassaCorporal($v['data']['Peso'], $v['data']['Altura']) != $v['data']['IndiceMassaCorporal']) ? 1 : null;
+                $calc3  = ($v['func']->calc_SuperficieCorporal($v['data']['Peso'], $v['data']['Altura']) != $v['data']['SuperficieCorporal']) ? 1 : null;
+                $calc   = $calc1 + $calc2 + $calc3;
             }   
-        
+            #$calc = 1;
+            
 /*
             echo "<pre>";
             print_r($v['data']);
             echo "</pre>";
             echo '<br> >>';
-*/
+            echo $v['data']['SuperficieCorporal'];
+            echo '<br> >>';
+            echo $v['func']->calc_SuperficieCorporal($v['data']['Peso'], $v['data']['Altura']);
+            echo '<br> >><><><####';
+            echo '<br> >>';
+            echo $calc;
+            echo '<br> >>';
+            echo $calc1;
+            echo '<br> >>';
+            echo $calc2;
+            echo '<br> >>';
+            echo $calc3;
+#*/
             if ((!$inputs || ($v['data']['divDieta'] && !$v['data']['idTabPreschuap_Dieta'])) && ($action == 'cadastrar' || $action == 'editar'))
             #if (!$inputs && ($action == 'cadastrar' || $action == 'editar'))
                 $v['validation'] = $this->validator;
+            elseif ((!$inputs || $calc) && ($action == 'cadastrar' || $action == 'editar')) {
+#exit('>................<');
+                session()->setFlashdata('failed', 'Erro de cálculo. Entre em contato com a chefia da unidade.');
+            }
             else {
 #exit('>................<');
                 if($action == 'cadastrar' || $action == 'editar') {
