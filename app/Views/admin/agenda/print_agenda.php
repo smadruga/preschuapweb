@@ -50,8 +50,8 @@ $currentTurnoIndex = 0;
             <tr class="text-center">
                 <th>#</th>
                 <th>Tipo</th>
-                <td><i class="fa-solid fa-utensils"></i></td>
-                <th>Obs</th>            
+                <th>Obs</th> 
+                <td><i class="fa-solid fa-utensils"></i></td>           
                 <th>Prontuário</th>
                 <th>Nome</th>
                 <th>Prescrição</th>
