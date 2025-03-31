@@ -9,6 +9,9 @@ use App\Models\PrescricaoMedicamentoModel;
 use App\Models\AuditoriaModel;
 use App\Models\AuditoriaLogModel;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 use CodeIgniter\RESTful\ResourceController;
 use App\Libraries\HUAP_Functions;
 
@@ -765,6 +768,39 @@ class Prescricao extends BaseController
         #exit('oi');
         #*/
 
+    }
+
+    public function generatePDF()
+    {
+        // Configurações do Dompdf
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        $options->set('defaultFont', 'Arial');
+
+        // Inicializa o Dompdf
+        $dompdf = new Dompdf($options);
+
+        // HTML para o PDF
+        /*$html = '
+            <h1>Relatório de Teste</h1>
+            <p>Este é um exemplo de PDF gerado com CodeIgniter 4 e Dompdf.</p>
+        ';*/
+
+        $html = view('admin/prescricao/print_etiqueta', ['titulo' => 'Minha Etiqueta']);
+
+        // Carregar o HTML
+        $dompdf->loadHtml($html);
+
+        // Definir o tamanho do papel e a orientação (A4, paisagem)
+        #$dompdf->setPaper('A4', 'portrait');
+        #$dompdf->setPaper([0, 0, 283.465, 340.158], 'portrait');
+        $dompdf->setPaper([0, 0, 280, 338], 'portrait');
+
+        // Renderizar o PDF
+        $dompdf->render();
+
+        // Enviar o PDF para o navegador
+        $dompdf->stream("relatorio.pdf", ["Attachment" => 0]); // Muda para 1 para download automático
     }
 
 }

@@ -19,6 +19,7 @@
 
     /* Configuração para etiquetas Zebra */
     .zebra-label {
+        background-color:brown;
         width: 50mm; /* Largura fixa */
         height: 70mm; /* Altura fixa */
         display: inline-block; /* Garante que a etiqueta respeite o tamanho */

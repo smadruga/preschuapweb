@@ -69,6 +69,9 @@ $routes->group('prescricao', function ($routes) {
     $routes->get('copy_prescricao/(:any)/(:any)', 'Prescricao::copy_prescricao/$1/$2');
     $routes->get('copy_prescricao/(:any)', 'Prescricao::copy_prescricao/$1');
     $routes->get('copy_prescricao', 'Prescricao::copy_prescricao');
+
+    $routes->get('gerar-pdf', 'Prescricao::generatePDF');
+
 });
 
 $routes->group('agenda', function ($routes) {
