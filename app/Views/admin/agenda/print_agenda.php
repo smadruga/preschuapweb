@@ -50,6 +50,7 @@ $currentTurnoIndex = 0;
             <tr class="text-center">
                 <th>#</th>
                 <th>Tipo</th>
+                <td><i class="fa-solid fa-utensils"></i></td>
                 <th>Obs</th>            
                 <th>Prontuário</th>
                 <th>Nome</th>
@@ -102,6 +103,7 @@ $currentTurnoIndex = 0;
                                     {$th}
                                     <th>{$x['badge']}</th>
                                     <th>".esc($x['Observacoes'])."</th>
+                                    <th>{$x['dieta']}</th>
                                     <th>".esc($agenda['paciente'][$x['Prontuario']]['prontuario'])."</th>
                                     <th>".esc($agenda['paciente'][$x['Prontuario']]['nome'])."</th>
                                     <th>#".esc($x['idPreschuap_Prescricao'])."</th>

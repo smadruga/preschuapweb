@@ -54,8 +54,8 @@
                 <td>#</td>
                 <td>Tipo</td>
                 <td>Obs</td> 
+                <td><i class="fa-solid fa-utensils"></i></td>                
                 <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6]))) { ?>
-                <td><i class="fa-solid fa-utensils"></i></td>
                 <td><i class="fa-regular fa-trash-can"></i></td>
                 <td><i class="fa-solid fa-pen-to-square"></i></td>
                 <td><i class="fa-solid fa-eye"></i></td>    
