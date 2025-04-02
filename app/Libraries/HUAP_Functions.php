@@ -143,6 +143,9 @@ class HUAP_Functions
     * @return double
     */
     function calc_IndiceMassaCorporal($peso, $altura) {
+        
+        $peso   = str_replace(",", ".", $peso);
+        $altura = str_replace(",", ".", $altura);
 
         if($peso && $altura)
             return number_format((str_replace(',', '.',$peso)/(($altura/100)**2)), 3, ',', '');
@@ -166,6 +169,9 @@ class HUAP_Functions
     */
     function calc_SuperficieCorporal($peso, $altura) {
 
+        $peso   = str_replace(",", ".", $peso);
+        $altura = str_replace(",", ".", $altura);
+
         if($peso && $altura)
             return number_format(( (0.007184) * (str_replace(',', '.',$peso)**(0.425)) * ($altura**(0.725)) ), 3, ',', '');
         else
@@ -186,6 +192,9 @@ class HUAP_Functions
 
         $sexo = ($sexo == 'F') ? 0.85 : 1;
 
+        $peso       = str_replace(",", ".", $peso);
+        $creatinina = str_replace(",", ".", $creatinina);
+
         if($peso && $idade && $sexo && $creatinina) 
             return number_format((((140 - $idade) * $peso * $sexo) / (72 * $creatinina)), 3, ',', '');
         else
@@ -201,6 +210,9 @@ class HUAP_Functions
     * @return double
     */
     function calc_DoseCarboplatina($dose, $clearance) {
+
+        $dose       = str_replace(",", ".", $dose);
+        $clearance  = str_replace(",", ".", $clearance);
 
         return number_format(($dose * ($clearance + 25)), 3, ',', '');
 
