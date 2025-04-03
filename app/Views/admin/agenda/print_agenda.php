@@ -51,7 +51,7 @@ $currentTurnoIndex = 0;
                 <th>#</th>
                 <th>Tipo</th>
                 <th>Obs</th> 
-                <td><i class="fa-solid fa-utensils"></i></td>           
+                <th>Dieta</th>
                 <th>Prontuário</th>
                 <th>Nome</th>
                 <th>Prescrição</th>
@@ -148,20 +148,20 @@ $currentTurnoIndex = 0;
             ?>
         
             <tr>
-                <th colspan="10" class="text-center">
-                    <table width="100%">
+                <th colspan="11" class="text-center">
+                    <table width="100%" >
                         <tr>
-                            <th><span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Salão de Quimioterapia"><i class="fa-solid fa-couch"></i></span> <?= $sq ?></th>
-                            <th><span class="badge bg-success text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Injeção"><i class="fa-solid fa-syringe"></i></span> <?= $inj ?></th>
-                            <th><span class="badge bg-warning text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Medicação de Suporte"><i class="fa-solid fa-pills"></i></span> <?= $ms ?></th>
-                            <th><span class="badge bg-danger text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Internação"><i class="fa-solid fa-bed"></i></span> <?= $int ?></th>
-                            <th><span class="badge bg-info text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Intratecal"><i class="fa-solid fa-house-medical"></i></span> <?= $inc ?></th>                        
+                            <th>Salão de Quimioterapia (SQ): <?= $sq ?></th>
+                            <th>Injeção (INJ): <?= $inj ?></th>
+                            <th>Medicação de Suporte (MS): <?= $ms ?></th>
+                            <th>Internação (INTER): <?= $int ?></th>
+                            <th>Intratecal (INTRA): <?= $inc ?></th>                        
                         </tr>
                     </table>                  
                 </th>
             </tr>
             <tr>
-                <th colspan="10" class="text-center">Total: <?= $i ?> agendamentos</th>
+                <th colspan="11" class="text-center">Total: <?= $i ?> agendamentos</th>
             </tr>
 
         </tbody>        
