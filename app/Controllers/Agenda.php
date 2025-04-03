@@ -181,7 +181,7 @@ class Agenda extends BaseController
 
         $data = ($data) ? $data : date('Y-m-d');
 
-        $v['agenda'] = $agenda->list_agenda($data);
+        $v['agenda'] = $agenda->list_agenda($data, true);
         $v['agenda']['databd'] = $data;
 
         $v['agenda']['oculto'] = $oculto->list_oculto($v['agenda']['wherein_agenda']);

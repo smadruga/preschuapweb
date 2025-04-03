@@ -171,7 +171,7 @@ class AgendaModel extends Model
     *
     * @return void
     */
-    public function list_agenda($data)
+    public function list_agenda($data, $print = null)
     {
 
         #$data = ($data) ? $data : date('Y-m-d'); 
@@ -241,8 +241,8 @@ class AgendaModel extends Model
         $wherein_agenda = array();
         foreach($query as $v) {
         
-            $v['badge'] = $this->badge($v['idTabPreschuap_TipoAgendamento']);
-            $v['dieta'] = $this->dieta($v['idTabPreschuap_Dieta']);
+            $v['badge'] = $this->badge($v['idTabPreschuap_TipoAgendamento'], $print);
+            $v['dieta'] = $this->dieta($v['idTabPreschuap_Dieta'], $print);
             $wherein_agenda[] = $v['idPreschuap_Agenda'];
 
             if($v['idTabPreschuap_TipoAgendamento'] == 1 && $v['idTabPreschuap_EtapaTerapia'] == 2 && $v['idTabPreschuap_ViaAdministracao'] == 2) 
@@ -337,20 +337,36 @@ class AgendaModel extends Model
     *
     * @return text
     */    
-    public function badge($data)
+    public function badge($data, $print = null)
     {
+        if($print){
 
-        if($data == 1)
-            $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Salão de Quimioterapia"><i class="fa-solid fa-couch"></i></span>';
-        elseif($data == 2)
-            $badge = '<span class="badge bg-success text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Injeção"><i class="fa-solid fa-syringe"></i></span>';
-        elseif($data == 3)
-            $badge = '<span class="badge bg-warning text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Medicação de Suporte"><i class="fa-solid fa-pills"></i></span>';
-        elseif($data == 4)
-            $badge = '<span class="badge bg-danger text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Internação"><i class="fa-solid fa-bed"></i></span>';
-        else
-            $badge = '<span class="badge bg-info text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Intratecal"><i class="fa-solid fa-house-medical"></i></span>';
+            if($data == 1)
+                $badge = 'SQ';
+            elseif($data == 2)
+                $badge = 'INJ';
+            elseif($data == 3)
+                $badge = 'MS';
+            elseif($data == 4)
+                $badge = 'INTER';
+            else
+                $badge = 'INTRA';
 
+        }
+        else{   
+
+            if($data == 1)
+                $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Salão de Quimioterapia"><i class="fa-solid fa-couch"></i></span>';
+            elseif($data == 2)
+                $badge = '<span class="badge bg-success text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Injeção"><i class="fa-solid fa-syringe"></i></span>';
+            elseif($data == 3)
+                $badge = '<span class="badge bg-warning text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Medicação de Suporte"><i class="fa-solid fa-pills"></i></span>';
+            elseif($data == 4)
+                $badge = '<span class="badge bg-danger text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Internação"><i class="fa-solid fa-bed"></i></span>';
+            else
+                $badge = '<span class="badge bg-info text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Intratecal"><i class="fa-solid fa-house-medical"></i></span>';
+
+        }
         /*
         echo "<pre>";
         #print_r($v['data']);
@@ -367,23 +383,46 @@ class AgendaModel extends Model
     *
     * @return text
     */    
-    public function dieta($data)
+    public function dieta($data, $print = null)
     {
        
-        if($data == 1)
-            $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Branda">B</span>';
-        elseif($data == 2)
-            $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Pastosa">P</span>';
-        elseif($data == 3)
-            $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Líquida">L</span>';
-        elseif($data == 4)
-            $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Semi-líquida">SL</span>';
-        elseif($data == 5)
-            $badge = '<span class="badge bg-danger text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Enteral por Sonda">ES</span>';  
-        elseif($data == 6)
-            $badge = '<span class="badge bg-danger text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Enteral por Gastrostomia">EG</span>';
-        else
-            $badge = '<h4><span class="badge bg-secondary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Não informado"><i class="fa-solid fa-utensils"></i></span></h4>';
+        if($print){
+
+            if($data == 1)
+                $badge = 'B';
+            elseif($data == 2)
+                $badge = 'P';
+            elseif($data == 3)
+                $badge = 'L';
+            elseif($data == 4)
+                $badge = 'SL';
+            elseif($data == 5)
+                $badge = 'ES';  
+            elseif($data == 6)
+                $badge = 'EG';
+            else
+                $badge = '--';
+
+        }
+        else {
+
+            if($data == 1)
+                $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Branda">B</span>';
+            elseif($data == 2)
+                $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Pastosa">P</span>';
+            elseif($data == 3)
+                $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Líquida">L</span>';
+            elseif($data == 4)
+                $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Semi-líquida">SL</span>';
+            elseif($data == 5)
+                $badge = '<span class="badge bg-danger text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Enteral por Sonda">ES</span>';  
+            elseif($data == 6)
+                $badge = '<span class="badge bg-danger text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Dieta Enteral por Gastrostomia">EG</span>';
+            else
+                $badge = '<h4><span class="badge bg-secondary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Não informado"><i class="fa-solid fa-utensils"></i></span></h4>';
+
+
+        }
 
         /*
         echo "<pre>";
