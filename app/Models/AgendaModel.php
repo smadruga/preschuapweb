@@ -361,9 +361,9 @@ class AgendaModel extends Model
             elseif($data == 3)
                 $badge = '<img src="'. base_url('/assets/img/agendamentos/ms.png') . '" />';
             elseif($data == 4)
-                $badge = '<img src="'. base_url('/assets/img/agendamentos/inter.png') . '" />';
+                $badge = '<img src="'. base_url('/assets/img/agendamentos/int.png') . '" />';
             else
-                $badge = '<img src="'. base_url('/assets/img/agendamentos/intra.png') . '" />';
+                $badge = '<img src="'. base_url('/assets/img/agendamentos/inc.png') . '" />';
 
         }
         else{   
