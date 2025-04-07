@@ -223,7 +223,7 @@
             </tbody>        
             <tfoot>
                 <tr>
-                    <th colspan="14" class="text-center">
+                    <th colspan="15" class="text-center">
                         <table width="100%">
                             <tr>
                                 <th><span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" 
@@ -241,7 +241,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="14" class="text-center">Total: <?= $i ?> agendamentos</th>
+                    <th colspan="15" class="text-center">Total: <?= $i ?> agendamentos</th>
                 </tr>
             </tfoot>        
         </table>

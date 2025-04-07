@@ -152,10 +152,10 @@ $currentTurnoIndex = 0;
                     <table width="100%" >
                         <tr>
                             <th><img src="<?= base_url('/assets/img/agendamentos/sq.png') ?>" /> <?= $sq ?></th>
-                            <th><img src="<?= base_url('/assets/img/agendamentos/inj.png') ?>" /> <?= $sq ?></th>
-                            <th><img src="<?= base_url('/assets/img/agendamentos/ms.png') ?>" /> <?= $sq ?></th>
-                            <th><img src="<?= base_url('/assets/img/agendamentos/inter.png') ?>" /> <?= $sq ?></th>
-                            <th><img src="<?= base_url('/assets/img/agendamentos/intra.png') ?>" /> <?= $sq ?></th>
+                            <th><img src="<?= base_url('/assets/img/agendamentos/inj.png') ?>" /> <?= $inj ?></th>
+                            <th><img src="<?= base_url('/assets/img/agendamentos/ms.png') ?>" /> <?= $ms ?></th>
+                            <th><img src="<?= base_url('/assets/img/agendamentos/inter.png') ?>" /> <?= $int ?></th>
+                            <th><img src="<?= base_url('/assets/img/agendamentos/intra.png') ?>" /> <?= $inc ?></th>
                         </tr>
                     </table>                  
                 </th>
