@@ -94,7 +94,9 @@
    * hu.head.print   = "GERÊNCIA DE ATENÇÃO A SAÚDE - GAS<br />DIVISÃO DE GESTÃO DO CUIDADO - DGC<br />UNIDADE DE HEMATOLOGIA E ONCOLOGIA - UHON<br />PRESCRIÇÃO MÉDICA DO PACIENTE"
    * * Se necessário adicionar permissão no firewall
 * Reiniciar o servidor e acessar o PreschuapWeb a partir de alguma máquina da rede, digitando na barra de endereços o IP do servidor.
-vm2 - Banco de dados:
+
+
+VM2 - Banco de dados:
 * 40GB de espaço
 * 4GB de memória
 * debian 12 ou superior
@@ -102,7 +104,7 @@ vm2 - Banco de dados:
 * mariadb (qualquer versão, pode ser a última)
 * instalar o cliente mysql
 * executar o comando mysql_secure_installation para definir senha de root
-* importar sql (arquivo para importação está na pasta
+* importar sql (arquivo para importação está na pasta)
 * criar usuário e dar grant
 * inserir primeiro usuário pela linha de comando
    * INSERT INTO `Sishuap_Usuario` (`idSishuap_Usuario`, `Inativo`, `Usuario`, `Nome`, `Cpf`, `EmailSecundario`) VALUES (1, 0, 'LOGINEBSERH', 'NOMEDOCOLABORADOR', CPFSEMASPASAPENASNUMEROS, 'EMAILEBSERH');
