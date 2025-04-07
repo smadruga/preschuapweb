@@ -341,6 +341,7 @@ class AgendaModel extends Model
     {
         if($print){
 
+            /*
             if($data == 1)
                 $badge = 'SQ';
             elseif($data == 2)
@@ -351,10 +352,22 @@ class AgendaModel extends Model
                 $badge = 'INTER';
             else
                 $badge = 'INTRA';
+            */
+
+            if($data == 1)
+                $badge = '<img src="'. base_url('/assets/img/agendamentos/sq.png') . '" />';
+            elseif($data == 2)
+                $badge = '<img src="'. base_url('/assets/img/agendamentos/inj.png') . '" />';
+            elseif($data == 3)
+                $badge = '<img src="'. base_url('/assets/img/agendamentos/ms.png') . '" />';
+            elseif($data == 4)
+                $badge = '<img src="'. base_url('/assets/img/agendamentos/inter.png') . '" />';
+            else
+                $badge = '<img src="'. base_url('/assets/img/agendamentos/intra.png') . '" />';
 
         }
         else{   
-
+            
             if($data == 1)
                 $badge = '<span class="badge bg-primary text-white" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Salão de Quimioterapia"><i class="fa-solid fa-couch"></i></span>';
             elseif($data == 2)
@@ -388,6 +401,7 @@ class AgendaModel extends Model
        
         if($print){
 
+            /*
             if($data == 1)
                 $badge = 'B';
             elseif($data == 2)
@@ -402,6 +416,22 @@ class AgendaModel extends Model
                 $badge = 'EG';
             else
                 $badge = '--';
+            */
+
+            if($data == 1)
+                $badge = '<img src="'. base_url('/assets/img/dietas/b.png') . '" />';
+            elseif($data == 2)
+                $badge = '<img src="'. base_url('/assets/img/dietas/p.png') . '" />';
+            elseif($data == 3)
+                $badge = '<img src="'. base_url('/assets/img/dietas/l.png') . '" />';
+            elseif($data == 4)
+                $badge = '<img src="'. base_url('/assets/img/dietas/sl.png') . '" />';
+            elseif($data == 5)
+                $badge = '<img src="'. base_url('/assets/img/dietas/es.png') . '" />';
+            elseif($data == 6)
+                $badge = '<img src="'. base_url('/assets/img/dietas/eg.png') . '" />';
+            else
+                $badge = '<img src="'. base_url('/assets/img/dietas/vazio.png') . '" />';
 
         }
         else {
