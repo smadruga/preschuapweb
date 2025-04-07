@@ -151,11 +151,11 @@ $currentTurnoIndex = 0;
                 <th colspan="11" class="text-center">
                     <table width="100%" >
                         <tr>
-                            <th>Salão de Quimioterapia (SQ): <?= $sq ?></th>
-                            <th>Injeção (INJ): <?= $inj ?></th>
-                            <th>Medicação de Suporte (MS): <?= $ms ?></th>
-                            <th>Internação (INTER): <?= $int ?></th>
-                            <th>Intratecal (INTRA): <?= $inc ?></th>                        
+                            <th><img src="<?= base_url('/assets/img/agendamentos/sq.png') ?>" /> <?= $sq ?></th>
+                            <th><img src="<?= base_url('/assets/img/agendamentos/inj.png') ?>" /> <?= $sq ?></th>
+                            <th><img src="<?= base_url('/assets/img/agendamentos/ms.png') ?>" /> <?= $sq ?></th>
+                            <th><img src="<?= base_url('/assets/img/agendamentos/inter.png') ?>" /> <?= $sq ?></th>
+                            <th><img src="<?= base_url('/assets/img/agendamentos/intra.png') ?>" /> <?= $sq ?></th>
                         </tr>
                     </table>                  
                 </th>
