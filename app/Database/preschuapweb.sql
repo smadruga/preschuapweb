@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 16/10/2024 às 20:35
+-- Tempo de geração: 07/04/2025 às 20:56
 -- Versão do servidor: 10.11.3-MariaDB-1-log
 -- Versão do PHP: 8.2.7
 
@@ -81,7 +81,8 @@ CREATE TABLE `Preschuap_Prescricao` (
   `InformacaoComplementar` longtext DEFAULT NULL,
   `ReacaoAdversa` longtext DEFAULT NULL,
   `Concluido` int(1) DEFAULT 0,
-  `Alergia` longtext DEFAULT NULL
+  `Alergia` longtext DEFAULT NULL,
+  `idTabPreschuap_Dieta` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2385,6 +2386,31 @@ INSERT INTO `TabPreschuap_Categoria` (`idTabPreschuap_Categoria`, `Categoria`, `
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `TabPreschuap_Dieta`
+--
+
+CREATE TABLE `TabPreschuap_Dieta` (
+  `idTabPreschuap_Dieta` int(11) NOT NULL,
+  `Dieta` varchar(100) DEFAULT NULL,
+  `Inativo` int(1) NOT NULL DEFAULT 0,
+  `DataCadastro` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `TabPreschuap_Dieta`
+--
+
+INSERT INTO `TabPreschuap_Dieta` (`idTabPreschuap_Dieta`, `Dieta`, `Inativo`, `DataCadastro`) VALUES
+(1, 'Branda', 0, '2025-01-20 12:11:20'),
+(2, 'Pastosa', 0, '2025-01-20 12:11:20'),
+(3, 'Líquida', 0, '2025-01-20 12:11:20'),
+(4, 'Semi-líquida', 0, '2025-01-20 12:11:20'),
+(5, 'Enteral por Sonda', 0, '2025-01-20 12:11:20'),
+(6, 'Enteral por Gastrostomia', 0, '2025-01-20 12:11:20');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `TabPreschuap_Diluente`
 --
 
@@ -2409,7 +2435,7 @@ INSERT INTO `TabPreschuap_Diluente` (`idTabPreschuap_Diluente`, `Diluente`, `Ina
 (8, 'aaa123abc', 1, '2024-10-01 02:36:53'),
 (9, 'diluente teste', 1, '2022-04-11 17:15:43'),
 (10, '-', 1, '2022-11-17 11:33:15'),
-(21, '1 ampola de Cloreto de Potassio 10% + 1 ampola de Sulfato de Magnesio 10% em SF 0,9% 500mL', 0, '2023-08-03 17:48:46'),
+(21, '1 ampola de Cloreto de Potassio 10% + 1 ampola de Sulfato de Magnesio 10% em SF 0,9% 500mL', 0, '2025-03-01 17:48:46'),
 (22, 'S.F. 0,9% + Solu&ccedil;&atilde;o Estabilizante', 0, '2024-09-13 15:27:10');
 
 -- --------------------------------------------------------
@@ -2563,11 +2589,12 @@ INSERT INTO `TabPreschuap_Medicamento` (`idTabPreschuap_Medicamento`, `Medicamen
 (85, 'Pamidronato 60mg', 0, '2023-10-30 16:04:38', NULL, NULL),
 (86, 'teste', 0, '2024-07-12 10:35:45', NULL, NULL),
 (87, 'CianoCOBALAMINA', 0, '2024-07-26 09:39:19', NULL, NULL),
-(88, 'Daratumumabe -SC', 0, '2024-08-06 14:42:06', NULL, NULL),
-(89, 'Daratumumabe -EV', 0, '2024-08-06 14:42:21', NULL, NULL),
+(88, 'Daratumumabe -SC', 1, '2024-08-06 14:42:06', NULL, NULL),
+(89, 'Daratumumabe -EV', 1, '2024-08-06 14:42:21', NULL, NULL),
 (90, 'DecitaBIna', 0, '2024-08-09 15:26:53', NULL, NULL),
 (91, 'vit b14', 1, '2024-09-06 15:47:25', NULL, NULL),
-(92, 'BLINATUMOmabe', 0, '2024-09-13 14:57:05', NULL, NULL);
+(92, 'BLINATUMOmabe', 0, '2024-09-13 14:57:05', NULL, NULL),
+(93, 'DARAtumumabe EV', 0, '2024-10-23 15:07:58', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2720,7 +2747,7 @@ INSERT INTO `TabPreschuap_Posologia` (`idTabPreschuap_Posologia`, `Posologia`, `
 (73, 'D1, Mensalmente', 0, '2022-03-26 17:08:03'),
 (74, '8/8 Horas, D1 a D5', 0, '2022-03-26 17:08:03'),
 (75, '12 Horas Após o Metotrexato', 0, '2022-03-26 17:08:03'),
-(76, '12 Após o Fim do Metotrexato', 0, '2022-03-26 17:08:03'),
+(76, '12 Após o Fim do Metotrexato', 1, '2022-03-26 17:08:03'),
 (77, '6/6 H (1º Dose 6H Após Dose de 50Mg) 8 Doses', 0, '2022-03-26 17:08:03'),
 (78, '12 Horas Após o Fim do Metotrexato', 0, '2022-03-26 17:08:03'),
 (79, '6/6 Horas Durante 8 Doses', 0, '2022-03-26 17:08:03'),
@@ -2859,7 +2886,10 @@ INSERT INTO `TabPreschuap_Posologia` (`idTabPreschuap_Posologia`, `Posologia`, `
 (212, 'D1 a D4 e D9 a D12', 0, '2023-12-29 16:13:03'),
 (213, 'D8 a D28', 0, '2024-09-13 15:32:40'),
 (214, 'D1 a D28', 0, '2024-09-13 16:16:37'),
-(215, 'Depois da Cisplatina', 0, '2024-10-07 12:15:49');
+(215, 'Depois da Cisplatina', 0, '2024-10-07 12:15:49'),
+(216, 'D1, D15', 0, '2024-10-24 10:07:38'),
+(217, 'D1 a D7 Pela Manh&atilde;', 0, '2024-11-21 09:45:19'),
+(218, 'D2, D3', 0, '2024-11-21 10:29:54');
 
 -- --------------------------------------------------------
 
@@ -3020,10 +3050,10 @@ INSERT INTO `TabPreschuap_Protocolo` (`idTabPreschuap_Protocolo`, `Aplicabilidad
 (254, 'CANCEROLOGIA', 'AI', 0, '2022-03-28 16:00:19', 'C49', 3, 'Total de ciclos: 4-6 ciclos. ATENÇÃO: Mesna calculada é proporcional a 60% da dose total de Ifosfamida. Potencial Emetogênico: Alto. Cuidado com extravasamento, agente vesicante: Doxorrubicina. Referência:  Uptodate / BCCancer / Guia SBOC / NCCN / ASCO / S. R. Grobmyer, R. G. Maki, G. D. Demetri, M. Mazumdar4, E. Riedel, M. F. Brennan1 & S. SingerDepartments of Surgery, Medicine and Biostatistics, Memorial Sloan Kettering Cancer Center,   New   York,   NY;   4 Department   of   Medicine,   Dana Farber   Cancer Institute,   Boston,   MA,   USA.   Annals   of Oncology 15: 1667–1672, 2004.', 1),
 (255, NULL, 'FULVESTRANTO (1º CICLO)', 1, '2022-03-28 16:00:19', 'C50', 2, 'Aplicar lentamente de 1 à 2 minutos. Referência: Einstein, A. Guia de protocolos e medicamentos para tratamento em oncologia e hematologia./ Gaertner, E. Guia de fármaco oncologia.', 2),
 (256, NULL, 'FULVESTRANTO (MANUTENÇÃO)', 1, '2022-03-28 16:00:19', 'C50', 2, 'Intervalo de 28 dias. Aplicar lentamente de 1 à 2 minutos. Referência: Einstein, A. Guia de protocolos e medicamentos para tratamento em oncologia e hematologia./ Gaertner, E. Guia de fármaco oncologia.', 2),
-(259, 'CANCEROLOGIA', 'PERTUZUMABE+TRASTUZUMABE+DOCETAXEL (ATAQUE)', 0, '2022-03-28 16:00:19', 'C50', 2, 'Este ciclo corresponde à dose de ataque, prosseguir para ciclo sequenciais, como manutenção após 21 dias. Potencial Emetogênico: baixo. ATENÇÃO: É recomendado a utilização de DEXAmetasona 8mg 12/12h VO D0, D1 e D2. Em caso de não utilização do preparo, realiza-la como pré-qt 20mg. Referência: BCCancer / NCCN Antiemesis / NHS / ASCO Guideline / Pertuzumab, Trastuzumab, and Docetaxel in HER2-Positive Metastatic Breast Cancer. 2015', 1),
-(260, 'CANCEROLOGIA', 'PERTUZUMABE+TRASTUZUMABE+DOCETAXEL-MANUTENÇÃO', 0, '2022-03-28 16:00:19', 'C50', 2, 'Este ciclo corresponde à dose  de manutenção. Intervalo entre ciclos: 21 dias. Potencial Emetogênico: baixo. ATENÇÃO: É recomendado a utilização de DEXAmetasona 8mg 12/12h VO D0, D1 e D2. Em caso de não utilização do preparo, realiza-la como pré-qt 20mg. Referência: BCCancer / NCCN Antiemesis / NHS / ASCO Guideline / Pertuzumab, Trastuzumab, and Docetaxel in HER2-Positive Metastatic Breast Cancer. 2015', 1),
-(261, 'CANCEROLOGIA', 'PERTUZUMABE+TRASTUZUMABE+PACLITAXEL (ATAQUE)', 0, '2022-03-28 16:00:19', 'C50', 2, 'Este ciclo corresponde à dose de ataque. Intervalo entre os ciclos: 21 dias. Paclitaxel semanal. Potencial Emetogênico: baixo. Referência: BCCancer / NCCN Antiemesis / NHS / ASCO Guideline / ', 1),
-(262, 'CANCEROLOGIA', 'PERTUZUMABE+TRASTUZUMABE+TAXOL - MANUTENÇÃO', 0, '2022-03-28 16:00:19', 'C50', 2, 'Este ciclo corresponde à dose de manutenção. Intervalo entre os ciclos: 21 dias. Paclitaxel semanal. Potencial Emetogênico: baixo. Referência: BCCancer / NCCN Antiemesis / NHS / ASCO Guideline / ', 1),
+(259, 'CANCEROLOGIA', 'PERTUZUMABE + TRASTUZUMABE + DOCETAXEL (ATAQUE)', 0, '2022-03-28 16:00:19', 'C50', 2, 'Este ciclo corresponde à dose de ataque, prosseguir para ciclo sequenciais, como manutenção após 21 dias. Potencial Emetogênico: baixo. ATENÇÃO: É recomendado a utilização de DEXAmetasona 8mg 12/12h VO D0, D1 e D2. Em caso de não utilização do preparo, realiza-la como pré-qt 20mg. Referência: BCCancer / NCCN Antiemesis / NHS / ASCO Guideline / Pertuzumab, Trastuzumab, and Docetaxel in HER2-Positive Metastatic Breast Cancer. 2015', 1),
+(260, 'CANCEROLOGIA', 'PERTUZUMABE + TRASTUZUMABE + DOCETAXEL - MANUTENÇÃO', 0, '2022-03-28 16:00:19', 'C50', 2, 'Este ciclo corresponde à dose  de manutenção. Intervalo entre ciclos: 21 dias. Potencial Emetogênico: baixo. ATENÇÃO: É recomendado a utilização de DEXAmetasona 8mg 12/12h VO D0, D1 e D2. Em caso de não utilização do preparo, realiza-la como pré-qt 20mg. Referência: BCCancer / NCCN Antiemesis / NHS / ASCO Guideline / Pertuzumab, Trastuzumab, and Docetaxel in HER2-Positive Metastatic Breast Cancer. 2015', 1),
+(261, 'CANCEROLOGIA', 'PERTUZUMABE + TRASTUZUMABE + PACLITAXEL (ATAQUE)', 0, '2022-03-28 16:00:19', 'C50', 2, 'Este ciclo corresponde à dose de ataque. Intervalo entre os ciclos: 21 dias. Paclitaxel semanal. Potencial Emetogênico: baixo. Referência: BCCancer / NCCN Antiemesis / NHS / ASCO Guideline / ', 1),
+(262, 'CANCEROLOGIA', 'PERTUZUMABE + TRASTUZUMABE + TAXOL - MANUTENÇÃO', 0, '2022-03-28 16:00:19', 'C50', 2, 'Este ciclo corresponde à dose de manutenção. Intervalo entre os ciclos: 21 dias. Paclitaxel semanal. Potencial Emetogênico: baixo. Referência: BCCancer / NCCN Antiemesis / NHS / ASCO Guideline / ', 1),
 (263, 'HEMATOLOGIA', 'BFM ADAPTADO USP (REINDUÇÃO FASE 2)', 0, '2022-03-28 16:00:19', 'C91', 1, 'Critérios para Reindução II: N>500 e Plaq>30 mil.Tioguanina 40mg cpr deve ser retirada na farmácia ambulatorial-térreo. Potencial Emetogênico:moderado para Ciclofosfamida. Potencial emetogênico baixo para Citarabina e Tioguanina. Referência: NCCN Antiemesis. Adaptado de protocolo de tratamento da LLA - HCFMUSP/ICESP, 2020 (A pedido da equipe médica de Hematologia). ', 4),
 (264, 'HEMATOLOGIA', 'BFM ADAPTADO INTRATECAL DA REINDUÇÃO 2', 0, '2022-03-28 16:00:19', 'C91', 1, 'Medicamentos fotossensíveis, proteger da luz..Utilizar imediatamente devido ao risco de contaminação microbiológica. Adaptado de protocolo de tratamento da LLA - HCFMUSP/ICESP, 2020 (A pedido da equipe médica de Hematologia).                                                                    ', 4),
 (265, 'HEMATOLOGIA', 'BORTEZOMIBE MONOTERAPIA', 0, '2022-03-28 16:00:19', 'C90', 5, 'Repetir os ciclos após 21 dias. Potencial emetogênico: mínimo. Considerar a adição de Dexametasona 20mg VO se doença progressiva após 2 ciclos ou doença estável após 4 ciclos nos dias de descanso após o Bortezomibe. Referência: Richardson P. et al. A phase II study of botezomib in relapsed.refractory myeloma.NEnglJMed2003 ;348:2609-2617/ Manual SBOC-Mieloma múltiplo/ Adaptado a pedido da equipe de hematologia do HUAP.', 2),
@@ -3037,8 +3067,8 @@ INSERT INTO `TabPreschuap_Protocolo` (`idTabPreschuap_Protocolo`, `Aplicabilidad
 (275, 'HEMATOLOGIA', 'TACL', 0, '2022-11-22 12:18:01', 'C91', 4, 'Respeitando a meia-vida e biodisponibilidade das apresenta&ccedil;&otilde;es de Asparaginase (peguilada e L-asparaginase) e a padroniza&ccedil;&atilde;o da L-asparaginase do hospital, convertemos a dose  considerando a equival&ecirc;ncia entre as mesmas para atender ao protocolo (L-asparaginase 6000UI/m&sup2; equivalente a Peg-asparaginase 2500UI/m&sup2;)-FUGANHOLI, Nicola Sgrignoli.An&aacute;lise t&eacute;cnico-econ&ocirc;mica para a produ&ccedil;&atilde;o de biof&aacute;rmacos de L-asparaginase. S&atilde;o Paulo, 2020. Disserta&ccedil;&atilde;o para obten&ccedil;&atilde;o do t&iacute;tulo de Mestre em Tecnologia Bioqu&iacute;mico Farmac&ecirc;utica. Faculdade de ci&ecirc;ncias farmac&ecirc;uticas, Universidade de S&atilde;o Paulo, 2020.Dispon&iacute;vel em: https://www.teses.usp.br/teses/disponiveis/9/9134/tde-05082021-093409/publico/NicolaSgrignoli_ME_Corrigida.pdf.\r\nMESSINGER, Y.H et al. Bortezomib with chemotherapy is highly active in advanced B-precursor acutelymphoblastic leukemia: Therapeutic Advances in Childhood Leukemia &amp; Lymphoma (TACL) Study. BLOOD, v.120, n. 02, p.285-290. 12, jun, 2012.\r\nPotencial Emetog&ecirc;nico: ALTO para o D1 devido a presen&ccedil;a da Doxorrubicina 60mg/m&sup2; e M&Iacute;NIMO (&lt;10% frequ&ecirc;ncia de &ecirc;mese) para os dias subsequentes do protocolo. Refer&ecirc;ncia: NCCN Antiemesis 2022. Aten&ccedil;&atilde;o para rea&ccedil;&otilde;es de hipersensibilidade com Asparaginase. Monitorar fun&ccedil;&atilde;o hep&aacute;tica, enzimas pancre&aacute;ticas e eventos tromb&oacute;ticos. Medicamento Vesicante: Vincristina e Doxorrubicina.', 1),
 (276, 'CANCEROLOGIA', 'DOCETAXEL + TRASTUZUMABE (DH) (ATAQUE)', 0, '2022-11-29 17:46:26', 'C50', 3, 'Repetir novo ciclo a cada 21 dias. Total de 17 ciclos, (4 ciclos de DH e 13 ciclos de Trastuzumabe em monoterapia). O medicamento Trastuzumabe &eacute; fornecido pelo programa do Minist&eacute;rio da Sa&uacute;de conforme Diretrizes Diagn&oacute;sticas e Terap&ecirc;uticas do C&acirc;ncer de Mama, portanto deve ser solicitado atrav&eacute;s do formul&aacute;rio disponibilizado pela equipe de farm&aacute;cia para envio &agrave; Secretaria Estadual de Sa&uacute;de. \r\nPotencial emetog&ecirc;nico: baixo. Risco de hipersensibilidade:  alto, atribu&iacute;do ao Docetaxel, podendo ocorrer rea&ccedil;&otilde;es infusionais graves com dispneia, hipotens&atilde;o, taquicardia, broncoespasmo, urtic&aacute;ria e angioedema.\r\nRecomenda-se utiliza&ccedil;&atilde;o de Dexametasona 8mg, via oral, 12/12h no dia anterior a infus&atilde;o do Docetaxel, seguindo a mesma posologia no D2 e D3.', 1),
 (277, 'CANCEROLOGIA', 'DOCETAXEL + TRASTUZUMABE (DH) (MANUTENÇÃO)', 0, '2022-12-06 12:04:27', 'C50', 3, 'Repetir novo ciclo a cada 21 dias. Total de 17 ciclos, (4 ciclos de DH e 13 ciclos de Trastuzumabe em monoterapia). O medicamento Trastuzumabe &eacute; fornecido pelo programa do Minist&eacute;rio da Sa&uacute;de conforme Diretrizes Diagn&oacute;sticas e Terap&ecirc;uticas do C&acirc;ncer de Mama, portanto deve ser solicitado atrav&eacute;s do formul&aacute;rio disponibilizado pela equipe de farm&aacute;cia para envio &agrave; Secretaria Estadual de Sa&uacute;de. \r\nPotencial emetog&ecirc;nico: baixo. Risco de hipersensibilidade:  alto, atribu&iacute;do ao Docetaxel, podendo ocorrer rea&ccedil;&otilde;es infusionais graves com dispneia, hipotens&atilde;o, taquicardia, broncoespasmo, urtic&aacute;ria e angioedema.\r\nRecomenda-se utiliza&ccedil;&atilde;o de Dexametasona 8mg, via oral, 12/12h no dia anterior a infus&atilde;o do Docetaxel, seguindo a mesma posologia no D2 e D3.', 1),
-(286, 'CANCEROLOGIA', 'PERTUZUMABE+TRASTUZUMABE (DOSE DE ATAQUE)', 0, '2023-01-31 17:13:43', 'D05', 2, 'Repetir o ciclo a cada 21 dias. Potencial em&eacute;tico do protocolo: m&iacute;nimo (NCCN, 2022), portanto n&atilde;o requer antiem&eacute;ticos profil&aacute;ticos. Baixo risco de rea&ccedil;&otilde;es adversas infusionais por hipersensibilidade, mas caso ocorram recomenda-se antihistam&iacute;nicos e antit&eacute;rmicos conforme sintomatologia. \r\nRefer&ecirc;ncias: National Cancer Cancer Programme Chemotherapy Regimen  ( www.hse.ie/NCCPchemoregimens )/NCCN Antiemesis Guidelines Version 2.2022', 1),
-(287, 'CANCEROLOGIA', 'PERTUZUMABE+TRASTUZUMABE (DOSE MANUTENCAO)', 0, '2023-01-31 17:17:41', 'C50', 2, 'Repetir o ciclo a cada 21 dias. Potencial em&eacute;tico do protocolo: m&iacute;nimo (NCCN, 2022), portanto n&atilde;o requer antiem&eacute;ticos profil&aacute;ticos. Baixo risco de rea&ccedil;&otilde;es adversas infusionais por hipersensibilidade, mas caso ocorram recomenda-se antihistam&iacute;nicos e antit&eacute;rmicos conforme sintomatologia. \r\nRefer&ecirc;ncias: National Cancer Cancer Programme Chemotherapy Regimen  ( www.hse.ie/NCCPchemoregimens )/NCCN Antiemesis Guidelines Version 2.2022', 1),
+(286, 'CANCEROLOGIA', 'PERTUZUMABE + TRASTUZUMABE (DOSE DE ATAQUE)', 0, '2023-01-31 17:13:43', 'D05', 2, 'Repetir o ciclo a cada 21 dias. Potencial em&eacute;tico do protocolo: m&iacute;nimo (NCCN, 2022), portanto n&atilde;o requer antiem&eacute;ticos profil&aacute;ticos. Baixo risco de rea&ccedil;&otilde;es adversas infusionais por hipersensibilidade, mas caso ocorram recomenda-se antihistam&iacute;nicos e antit&eacute;rmicos conforme sintomatologia. \r\nRefer&ecirc;ncias: National Cancer Cancer Programme Chemotherapy Regimen  ( www.hse.ie/NCCPchemoregimens )/NCCN Antiemesis Guidelines Version 2.2022', 1),
+(287, 'CANCEROLOGIA', 'PERTUZUMABE + TRASTUZUMABE (DOSE MANUTENCAO)', 0, '2023-01-31 17:17:41', 'C50', 2, 'Repetir o ciclo a cada 21 dias. Potencial em&eacute;tico do protocolo: m&iacute;nimo (NCCN, 2022), portanto n&atilde;o requer antiem&eacute;ticos profil&aacute;ticos. Baixo risco de rea&ccedil;&otilde;es adversas infusionais por hipersensibilidade, mas caso ocorram recomenda-se antihistam&iacute;nicos e antit&eacute;rmicos conforme sintomatologia. \r\nRefer&ecirc;ncias: National Cancer Cancer Programme Chemotherapy Regimen  ( www.hse.ie/NCCPchemoregimens )/NCCN Antiemesis Guidelines Version 2.2022', 1),
 (288, 'HEMATOLOGIA', 'AZACITIDINA', 0, '2023-03-24 17:41:30', 'C92', 4, 'Medicamento n&atilde;o padronizado no HUAP. Tamb&eacute;m aplicado para as seguintes condi&ccedil;&otilde;es: Leucemia Mielomonoc&iacute;tica e S&iacute;ndrome Mielodispl&aacute;sica. Doses acima de 4ml devem ser divididas igualmente em duas seringas e ser injetadas em dois locais separados. Fa&ccedil;a rod&iacute;zio de s&iacute;tios para cada inje&ccedil;&atilde;o.  Rea&ccedil;&otilde;es adversas locais s&atilde;o comuns, tais como eritema , endura&ccedil;&atilde;o,  dor local,  rash e prurido.', 2),
 (289, 'HEMATOLOGIA', 'CALGB 10403 (INDUCAO- CURSO 1)', 0, '2023-04-05 18:22:10', 'C91', 1, 'Potencial emetogenico do protocolo moderado para os dia D1, D8, D15 e D22, justificado pelo uso da Daunorrubicina e min&iacute;mo para os demais dias. Monitorar sinais de cardiotoxicidade dose acumulada 550 a 800 mg/m&sup2; de Daunorrubicina. Observar o uso de corticoster&oacute;ide (Prednisona) contido no protocolo, o que implica em n&atilde;o necessidade de pr&eacute;-medica&ccedil;&atilde;o como antiem&eacute;tico e pr&eacute; infus&atilde;o de Asparaginase. Cuidados ao uso da asparaginase: dosar fibrinog&ecirc;nio, PTTa, TAP, amilase, lipase, TGO, TGP e bilirrubinas, enquanto uso de asparaginase.  Introduzir Alopurinol at&eacute; diminui&ccedil;&atilde;o de blastos na periferia e extramedular. Respeitando a meia-vida e biodisponibilidade das apresenta&ccedil;&otilde;es de Asparaginase (peguilada e L-asparaginase) e a padroniza&ccedil;&atilde;o da L-asparaginase do hospital, convertemos a dose considerando a equival&ecirc;ncia entre as mesmas para atender ao protocolo (L-asparaginase 6000UI/m&sup2; equivalente a Peg-asparaginase 2500UI/m&sup2;). Aten&ccedil;&atilde;o para rea&ccedil;&otilde;es de hipersensibilidade com Asparaginase. Medicamento Vesicante: Vincristina e Daunorrubicina. \r\nRefer&ecirc;ncia: A pediatric regimen for older adolescents and young adults with acute lymphoblastic leukemia: results of CALGB 10403 (2019). \r\nFUGANHOLI, Nicola Sgrignoli.An&aacute;lise t&eacute;cnico-econ&ocirc;mica para a produ&ccedil;&atilde;o de biof&aacute;rmacos de L-asparaginase. S&atilde;o Paulo, 2020. Disserta&ccedil;&atilde;o para obten&ccedil;&atilde;o do t&iacute;tulo de Mestre em Tecnologia Bioqu&iacute;mico Farmac&ecirc;utica. Faculdade de ci&ecirc;ncias farmac&ecirc;uticas, Universidade de S&atilde;o Paulo, 2020.Dispon&iacute;vel em: https://www.teses.usp.br/teses/disponiveis/9/9134/tde-05082021-093409/publico/NicolaSgrignoli_ME_Corrigida.pdf. MESSINGER, Y.H et al. Refer&ecirc;ncia: NCCN Antiemesis (2023 v1).  Guia de Oncologia Hospital Israelita Albert Einstein / NHS England / MOC / Sociedade Brasileira de Cardiologia / EviQ - NSW Government / Diretriz Brasileira de Cardio-Oncologia 2020.', 4),
 (290, 'HEMATOLOGIA', 'CALGB 10403 (REINDUCAO- CURSO 1A)', 0, '2023-04-06 16:00:15', 'C91', 1, '**APENAS PARA PACIENTES QUE N&Atilde;O RESPONDEREM AO PROTOCOLO CALGB 10403 (INDUCAO- CURSO 1) - CASO DOEN&Ccedil;A RESIDUAL M&Iacute;NIMA ACIMA DE 5% DE BLASTOS, QUANTIFICAR AP&Oacute;S 4 SEMANAS DA INDU&Ccedil;&Atilde;O. \r\n\r\nPotencial emetogenico do protocolo moderado para os dia D1, justificado pelo uso da Daunorrubicina e min&iacute;mo para os demais dias. Monitorar sinais de cardiotoxicidade dose acumulada 550 a 800 mg/m&sup2; de Daunorrubicina.  Observar o uso de corticoster&oacute;ide (Prednisona) contido no protocolo, o que implica em n&atilde;o necessidade de pr&eacute;-medica&ccedil;&atilde;o como antiem&eacute;tico e pr&eacute; infus&atilde;o de Asparaginase. Cuidados ao uso da asparaginase: dosar fibrinog&ecirc;nio, PTTa, TAP, amilase, lipase, TGO, TGP e bilirrubinas, enquanto uso de asparaginase.  Respeitando a meia-vida e biodisponibilidade das apresenta&ccedil;&otilde;es de Asparaginase (peguilada e L-asparaginase) e a padroniza&ccedil;&atilde;o da L-asparaginase do hospital, convertemos a dose considerando a equival&ecirc;ncia entre as mesmas para atender ao protocolo (L-asparaginase 6000UI/m&sup2; equivalente a Peg-asparaginase 2500UI/m&sup2;). Aten&ccedil;&atilde;o para rea&ccedil;&otilde;es de hipersensibilidade com Asparaginase. Medicamento Vesicante: Vincristina e Daunorrubicina. Refer&ecirc;ncia: A pediatric regimen for older adolescents and young adults with acute lymphoblastic leukemia: results of CALGB 10403 (2019). FUGANHOLI, Nicola Sgrignoli.An&aacute;lise t&eacute;cnico-econ&ocirc;mica para a produ&ccedil;&atilde;o de biof&aacute;rmacos de L-asparaginase. S&atilde;o Paulo, 2020. Disserta&ccedil;&atilde;o para obten&ccedil;&atilde;o do t&iacute;tulo de Mestre em Tecnologia Bioqu&iacute;mico Farmac&ecirc;utica. Faculdade de ci&ecirc;ncias farmac&ecirc;uticas, Universidade de S&atilde;o Paulo, 2020.Dispon&iacute;vel em: https://www.teses.usp.br/teses/disponiveis/9/9134/tde-05082021-093409/publico/NicolaSgrignoli_ME_Corrigida.pdf. MESSINGER, Y.H et al. Refer&ecirc;ncia: NCCN Antiemesis (2023 v1). Guia de Oncologia Hospital Israelita Albert Einstein / NHS England / MOC / Sociedade Brasileira de Cardiologia / EviQ - NSW Government / Diretriz Brasileira de Cardio-Oncologia 2020.', 4),
@@ -3054,7 +3084,7 @@ INSERT INTO `TabPreschuap_Protocolo` (`idTabPreschuap_Protocolo`, `Aplicabilidad
 (305, 'CANCEROLOGIA', 'CARBOPLATINA - AUC 6', 0, '2024-08-06 15:23:58', 'C56', 2, 'Ozolz R E, et al. Combination regimens of paclitaxel and the platinum drugs as fi rst-line regimens for\r\novarian cancer. Semin Oncol 1995;22 (Suppl 15):1-6.\r\nBurger R A, et al. Phase III trial of bevacizumab (BEV) in the primary treatment of advanced epithelial\r\novarian cancer (EOC), primary peritoneal cancer (PPC), or fallopian tube cancer (FTC): A Gynecologic\r\nOncology Group Study. J Clin Oncol 2010;28:18s, (suppl; abstr LBA1).', 1),
 (307, 'CANCEROLOGIA', 'EMA/CO', 0, '2024-08-07 13:40:01', 'O01', 1, 'Bower M, et al. EMA/CO for high-risk gestational trophoblastic tumors: results from a cohort of 272 patients [published erratum appears in J Clin Oncol 1997 Sep;15(9):3168]. J\r\nClinc Oncol 1997;15:2636-43.', 4),
 (308, 'HEMATOLOGIA', 'DECITABINA', 0, '2024-08-09 15:29:07', 'C92', 1, 'https://www.novamedicamentos.com.br/media/catalog/product//d/e/decitabina.pdf - a cada 28dias,', 1),
-(317, 'HEMATOLOGIA', 'DARATUMUMABE', 0, '2024-08-13 11:58:13', 'C90', 1, 'https://pecorari-cloudbr72.pecoraricloud.com.br/~myelomaorg/website/wp-content/uploads/2022/06/MANUAL_DALINVI.pdf', 1),
+(317, NULL, 'DARATUMUMABE', 1, '2024-08-13 11:58:13', 'C90', 1, 'https://pecorari-cloudbr72.pecoraricloud.com.br/~myelomaorg/website/wp-content/uploads/2022/06/MANUAL_DALINVI.pdf', 1),
 (318, NULL, 'VIT B13', 1, '2024-08-14 15:26:52', 'A95', 3, 'peguei fonte tal, fazer 21 dias', 2),
 (319, 'CANCEROLOGIA', 'FULVESTRANTO (CICLO 1)', 0, '2024-09-12 14:59:44', 'C50', 4, 'ATEN&Ccedil;&Atilde;O! Administrar por via intramuscular em regi&atilde;o gl&uacute;tea, em duas inje&ccedil;&otilde;es de 5 mL. Aplicar lentamente, em 1 a 2 minutos. Atentar para sinais e sintomas como dor ci&aacute;tica, neuralgia, dor neurop&aacute;tica e neuropatia perif&eacute;rica. Refer&ecirc;ncia: Bula do medicamento (Faslodex, AstraZeneca), 2024; UpToDate. Fulvestrant: Drug information, 2024.', 3),
 (320, 'HEMATOLOGIA', 'BLINATUMOMABE CICLO 1', 0, '2024-09-13 13:06:54', 'C91', 9, 'ATEN&Ccedil;&Atilde;O: monitorar paciente para rea&ccedil;&otilde;es infusionais, rea&ccedil;&otilde;es neurol&oacute;gicas e S&iacute;ndrome de Libera&ccedil;&atilde;o de Citocinas.\r\nPOTENCIAL EMETOG&Ecirc;NICO: Baixo.\r\nREFER&Ecirc;NCIA: Blinatumomab versus Chemotherapy for Advanced Acute Lymphoblastic Leukemia. N Engl J Med 2017;376:836-47.', 4),
@@ -3062,7 +3092,18 @@ INSERT INTO `TabPreschuap_Protocolo` (`idTabPreschuap_Protocolo`, `Aplicabilidad
 (325, 'CANCEROLOGIA', 'GOSSERRELINA.', 0, '2024-10-03 16:33:39', 'C61', 4, 'ATEN&Ccedil;&Atilde;O! Administrar por via subcut&acirc;nea na parede abdominal inferior. Atentar para sinais e sintomas no local da inje&ccedil;&atilde;o, como dor, hematoma, hemorragia e dano vascular. Repetir a cada 12 semanas. Refer&ecirc;ncia: Bula do medicamento (Zoladex, AstraZeneca), 2024; UpToDate. Goserelin: Drug information, 2024.', 3),
 (326, 'CANCEROLOGIA', 'FULVESTRANTO (CICLO 2 EM DIANTE)', 0, '2024-10-03 17:23:31', 'C50', 4, 'ATEN&Ccedil;&Atilde;O! Administrar por via intramuscular em regi&atilde;o gl&uacute;tea, em duas inje&ccedil;&otilde;es de 5 mL. Aplicar lentamente, em 1 a 2 minutos. Atentar para sinais e sintomas como dor ci&aacute;tica, neuralgia, dor neurop&aacute;tica e neuropatia perif&eacute;rica. Refer&ecirc;ncia: Bula do medicamento (Faslodex, AstraZeneca), 2024; UpToDate. Fulvestrant: Drug information, 2024.', 3),
 (327, 'CANCEROLOGIA', 'DOXORRUBICINA + CISPLATINA (OSTEOSSARCOMA)', 0, '2024-10-07 11:42:30', 'C40', 3, 'ATEN&Ccedil;&Atilde;O: Repetir o ciclo a cada 21 dias, total de 6 ciclos (usualmente 3 ciclos no pr&eacute;-operat&oacute;rio e 3 ciclos no p&oacute;s-operat&oacute;rio). Monitorar sinais de cardiotoxicidade: dose acumulada 400 a 550 mg/m&sup2; de Doxorrubicina. Otimizar hidrata&ccedil;&atilde;o. Avaliar profilaxia prim&aacute;ria para neutropenia febril. POTENCIAL EMETOG&Ecirc;NICO: alto. MEDICAMENTO VESICANTE: Doxorrubicina. REFER&Ecirc;NCIAS: Souhami RL et al. Randomised trial of two regimens of chemotherapy in operable osteosarcoma: a study of the European Osteosarcoma Intergroup. Lancet. 350:911-7 (1997) / Hospital Israelita Albert Einstein: Guia do Epis&oacute;dio de Cuidado Osteossarcoma de Alto Grau (2022).', 1),
-(328, 'CANCEROLOGIA', 'CAP+P', 0, '2024-10-14 14:09:16', 'C37', 3, 'ATEN&Ccedil;&Atilde;O: Repetir o ciclo a cada 21 dias. Monitorar sinais de cardiotoxicidade: dose acumulada 400 a 550 mg/m&sup2; de Doxorrubicina. Otimizar hidrata&ccedil;&atilde;o. POTENCIAL EMETOG&Ecirc;NICO: alto. MEDICAMENTO VESICANTE: Doxorrubicina. REFER&Ecirc;NCIAS: Kim ES et al. Phase II study of a multidisciplinary approach with induction chemotherapy, followed by surgical resection, radiation therapy, and consolidation chemotherapy for unresectable malignant thymomas: final report. Lung Cancer. 2004 Jun;44(3):369-79.', 1);
+(328, 'CANCEROLOGIA', 'CAP+P', 0, '2024-10-14 14:09:16', 'C37', 3, 'ATEN&Ccedil;&Atilde;O: Repetir o ciclo a cada 21 dias. Monitorar sinais de cardiotoxicidade: dose acumulada 400 a 550 mg/m&sup2; de Doxorrubicina. Otimizar hidrata&ccedil;&atilde;o. POTENCIAL EMETOG&Ecirc;NICO: alto. MEDICAMENTO VESICANTE: Doxorrubicina. REFER&Ecirc;NCIAS: Kim ES et al. Phase II study of a multidisciplinary approach with induction chemotherapy, followed by surgical resection, radiation therapy, and consolidation chemotherapy for unresectable malignant thymomas: final report. Lung Cancer. 2004 Jun;44(3):369-79.', 1),
+(329, 'HEMATOLOGIA', 'DARATUMUMABE (EV) CICLO 1', 0, '2024-10-23 16:53:40', 'C90', 1, 'ATEN&Ccedil;&Atilde;O: Iniciar infus&atilde;o a 50 ml/hora e incrementar 50 ml/hora a cada hora at&eacute; o m&aacute;ximo de 200 ml/hora. Monitorar sinais e sintomas de rea&ccedil;&atilde;o infusional. Alternativamente, a dose do D1 pode ser dividida ao longo de dois dias consecutivos, ou seja, 8 mg/kg no D1 e D2, respectivamente. O volume de dilui&ccedil;&atilde;o de 500 ml para as infus&otilde;es subsequentes deve ser usado apenas se nenhuma rea&ccedil;&atilde;o infusional for observada na semana anterior. Caso contr&aacute;rio, o medicamento deve ser dilu&iacute;do em 1000 ml. OBS: Este esquema pode ser utilizado para Daratumumabe EV em monoterapia, ou em combina&ccedil;&atilde;o com lenalidomida e dexametasona (protocolo DRd) ou pomalidomida e dexametasona (protocolo DPd), em ciclos de 28 dias. POTENCIAL EMETOG&Ecirc;NICO: m&iacute;nimo. REFER&Ecirc;NCIAS: Lonial S et al. Daratumumab monotherapy in patients with treatment-refractory multiple myeloma (SIRIUS): an open-label, randomised, phase 2 trial. Lancet. 2016 Apr 9;387(10027):1551-1560. // DALINVI: solu&ccedil;&atilde;o para dilui&ccedil;&atilde;o para infus&atilde;o (Bula profissional de sa&uacute;de), Janssen-Cilag Farmac&ecirc;utica, 2024.', 1),
+(330, 'HEMATOLOGIA', 'DARATUMUMABE (EV) CICLO 2', 0, '2024-10-24 09:59:03', 'C90', 1, 'ATEN&Ccedil;&Atilde;O: Iniciar infus&atilde;o a 50 ml/hora e incrementar 50 ml/hora a cada hora at&eacute; o m&aacute;ximo de 200 ml/hora. Monitorar sinais e sintomas de rea&ccedil;&atilde;o infusional. O volume de dilui&ccedil;&atilde;o de 500 ml deve ser usado apenas se nenhuma rea&ccedil;&atilde;o infusional for observada na semana anterior. Caso contr&aacute;rio, o medicamento deve ser dilu&iacute;do em 1000 ml. OBS: Este esquema pode ser utilizado para Daratumumabe EV em monoterapia, ou em combina&ccedil;&atilde;o com lenalidomida e dexametasona (protocolo DRd) ou pomalidomida e dexametasona (protocolo DPd), em ciclos de 28 dias. POTENCIAL EMETOG&Ecirc;NICO: m&iacute;nimo. REFER&Ecirc;NCIAS: Lonial S et al. Daratumumab monotherapy in patients with treatment-refractory multiple myeloma (SIRIUS): an open-label, randomised, phase 2 trial. Lancet. 2016 Apr 9;387(10027):1551-1560. // DALINVI: solu&ccedil;&atilde;o para dilui&ccedil;&atilde;o para infus&atilde;o (Bula profissional de sa&uacute;de), Janssen-Cilag Farmac&ecirc;utica, 2024.', 1),
+(331, 'HEMATOLOGIA', 'DARATUMUMABE (EV) CICLOS 3 A 6', 0, '2024-10-24 15:30:56', 'C90', 1, 'ATEN&Ccedil;&Atilde;O: Iniciar infus&atilde;o a 50 ml/hora e incrementar 50 ml/hora a cada hora at&eacute; o m&aacute;ximo de 200 ml/hora. Monitorar sinais e sintomas de rea&ccedil;&atilde;o infusional. O volume de dilui&ccedil;&atilde;o de 500 ml deve ser usado apenas se nenhuma rea&ccedil;&atilde;o infusional for observada na semana anterior. Caso contr&aacute;rio, o medicamento deve ser dilu&iacute;do em 1000 ml. OBS: Este esquema pode ser utilizado para Daratumumabe EV em monoterapia, ou em combina&ccedil;&atilde;o com lenalidomida e dexametasona (protocolo DRd) ou pomalidomida e dexametasona (protocolo DPd), em ciclos de 28 dias. POTENCIAL EMETOG&Ecirc;NICO: m&iacute;nimo. REFER&Ecirc;NCIAS: Lonial S et al. Daratumumab monotherapy in patients with treatment-refractory multiple myeloma (SIRIUS): an open-label, randomised, phase 2 trial. Lancet. 2016 Apr 9;387(10027):1551-1560. // DALINVI: solu&ccedil;&atilde;o para dilui&ccedil;&atilde;o para infus&atilde;o (Bula profissional de sa&uacute;de), Janssen-Cilag Farmac&ecirc;utica, 2024.', 1),
+(332, 'HEMATOLOGIA', 'DARATUMUMABE (EV) CICLO 7 EM DIANTE', 0, '2024-10-24 15:57:21', 'C90', 1, 'ATEN&Ccedil;&Atilde;O: Iniciar infus&atilde;o a 50 ml/hora e incrementar 50 ml/hora a cada hora at&eacute; o m&aacute;ximo de 200 ml/hora. Monitorar sinais e sintomas de rea&ccedil;&atilde;o infusional. O volume de dilui&ccedil;&atilde;o de 500 ml deve ser usado apenas se nenhuma rea&ccedil;&atilde;o infusional for observada na semana anterior. Caso contr&aacute;rio, o medicamento deve ser dilu&iacute;do em 1000 ml. OBS: Este esquema pode ser utilizado para Daratumumabe EV em monoterapia, ou em combina&ccedil;&atilde;o com lenalidomida e dexametasona (protocolo DRd) ou pomalidomida e dexametasona (protocolo DPd), em ciclos de 28 dias. POTENCIAL EMETOG&Ecirc;NICO: m&iacute;nimo. REFER&Ecirc;NCIAS: Lonial S et al. Daratumumab monotherapy in patients with treatment-refractory multiple myeloma (SIRIUS): an open-label, randomised, phase 2 trial. Lancet. 2016 Apr 9;387(10027):1551-1560. // DALINVI: solu&ccedil;&atilde;o para dilui&ccedil;&atilde;o para infus&atilde;o (Bula profissional de sa&uacute;de), Janssen-Cilag Farmac&ecirc;utica, 2024.', 1),
+(333, 'CANCEROLOGIA', 'DACARBAZINA (MELANOMA)', 0, '2024-11-07 12:20:01', 'C43', 4, 'ATEN&Ccedil;&Atilde;O: Repetir o ciclo a cada 21 dias. POTENCIAL EMETOG&Ecirc;NICO: Alto. MEDICAMENTO IRRITANTE: Dacarbazina. REFER&Ecirc;NCIAS: Chapman PB et al. Phase III multicenter randomized trial of the Dartmouth regimen versus dacarbazine in patients with metastatic melanoma. J Clin Oncol. 1999 Sep;17(9):2745-51. // Crosby T et al. Systemic treatments for metastatic cutaneous melanoma. Cochrane Database Syst Rev. 2000;(2):CD001215.', 1),
+(334, 'HEMATOLOGIA', 'BEACOPDAC-14', 0, '2024-11-21 09:41:55', 'C81', 1, 'ATEN&Ccedil;&Atilde;O: Repetir o ciclo a cada 14 dias. Total de 8 ciclos. Monitorar sinais de cardiotoxicidade: dose acumulada 400 a 550 mg/m&sup2; de Doxorrubicina. Otimizar hidrata&ccedil;&atilde;o. POTENCIAL EMETOG&Ecirc;NICO: alto (D1 a D3). MEDICAMENTO VESICANTE: Doxorrubicina, Vincristina. MEDICAMENTO IRRITANTE: Dacarbazina, Etopos&iacute;deo. REFER&Ecirc;NCIAS: Sieber M et al. 14-day variant of the bleomycin, etoposide, doxorubicin, cyclophosphamide, vincristine, procarbazine, and prednisone regimen in advanced-stage Hodgkin&#039;s lymphoma: results of a pilot study of the German Hodgkin&#039;s Lymphoma Study Group. J Clin Oncol, 21(9):1734-9 (2003). // Santarsieri A et al. Replacing procarbazine with dacarbazine in escalated BEACOPP reduces clinical toxicity with no loss of efficacy yet protects stem cells from excess somatic mutational damage. Hematological Oncology, 41: 356-357 (2023).', 1),
+(335, 'HEMATOLOGIA', 'VIMBLASTINA (LCH-III) TERAPIA INICIAL', 0, '2024-11-26 17:12:07', 'D76', 9, 'ATEN&Ccedil;&Atilde;O: A dura&ccedil;&atilde;o da terapia inicial &eacute; de 6 semanas. POTENCIAL EMETOG&Ecirc;NICO: m&iacute;nimo. MEDICAMENTO VESICANTE: Vimblastina. REFER&Ecirc;NCIAS: Gadner H et al. Therapy prolongation improves outcome in multisystem Langerhans cell histiocytosis. Blood. 2013 Jun 20;121(25):5006-14.', 1),
+(336, 'HEMATOLOGIA', 'VIMBLASTINA (LCH-III) MANUTENCAO', 0, '2024-11-26 17:15:50', 'D76', 6, 'ATEN&Ccedil;&Atilde;O: Repetir o ciclo a cada 21 dias. POTENCIAL EMETOG&Ecirc;NICO: m&iacute;nimo. MEDICAMENTO VESICANTE: Vimblastina. REFER&Ecirc;NCIAS: Gadner H et al. Therapy prolongation improves outcome in multisystem Langerhans cell histiocytosis. Blood. 2013 Jun 20;121(25):5006-14.', 1);
+INSERT INTO `TabPreschuap_Protocolo` (`idTabPreschuap_Protocolo`, `Aplicabilidade`, `Protocolo`, `Inativo`, `DataCadastro`, `idTabPreschuap_Categoria`, `idTabPreschuap_TipoTerapia`, `Observacoes`, `idTabPreschuap_TipoAgendamento`) VALUES
+(337, 'CANCEROLOGIA', 'GENCITABINA + DACARBAZINA (SARCOMA)', 0, '2024-12-04 15:29:33', 'C49', 4, 'ATEN&Ccedil;&Atilde;O: Repetir o ciclo a cada 28 dias. Total de 6 ciclos. POTENCIAL EMETOG&Ecirc;NICO: alto. MEDICAMENTO IRRITANTE: Dacarbazina. REFER&Ecirc;NCIAS: Garc&iacute;a-Del-Muro X et al. Randomized phase II study comparing gemcitabine plus dacarbazine versus dacarbazine alone in patients with previously treated soft tissue sarcoma: a Spanish Group for Research on Sarcomas study. J Clin Oncol. 2011 Jun 20;29(18):2528-33.', 1),
+(338, NULL, 'VITB13', 1, '2025-02-06 12:51:43', 'A01', 2, 'isso', 1);
 
 -- --------------------------------------------------------
 
@@ -3893,8 +3934,8 @@ INSERT INTO `TabPreschuap_Protocolo_Medicamento` (`idTabPreschuap_Protocolo_Medi
 (807, 291, 7, 2, 21, 15.00, 1, 5, NULL, 0.00, '', 133, '2023-04-06 17:36:56', 0),
 (808, 293, 2, 2, 29, 40.00, 1, 2, 1, 50.00, '30 min', 19, '2023-08-10 18:19:42', 0),
 (809, 293, 1, 1, 41, 16.00, 1, 2, 1, 100.00, '30 min', 11, '2023-08-10 18:23:47', 0),
-(810, 293, 3, 2, 5, 5.00, 8, 2, 2, 250.00, '60 min', 4, '2023-08-10 18:31:43', 0),
-(811, 293, 4, 2, 7, 2000.00, 3, 2, 1, 500.00, '120 min', 68, '2023-08-10 18:37:49', 0),
+(810, 293, 4, 2, 5, 5.00, 8, 2, 2, 250.00, '60 min', 4, '2023-08-10 18:31:43', 0),
+(811, 293, 3, 2, 7, 2000.00, 3, 2, 1, 500.00, '120 min', 68, '2023-08-10 18:37:49', 0),
 (812, 8, 2, 1, 36, 25.00, 1, 2, 1, 20.00, 'Bolus', 11, '2023-08-24 11:22:41', 0),
 (813, 294, 1, 3, 85, 60.00, 1, 2, 1, 250.00, '2 HORAS', 4, '2023-10-30 18:25:02', 0),
 (814, 295, 1, 2, 3, 1.30, 3, 4, NULL, 0.00, '', 201, '2023-12-29 16:06:59', 0),
@@ -3929,11 +3970,11 @@ INSERT INTO `TabPreschuap_Protocolo_Medicamento` (`idTabPreschuap_Protocolo_Medi
 (850, 307, 9, 3, 45, 300.00, 9, 4, NULL, 0.00, '', 45, '2024-08-07 14:12:48', 0),
 (851, 308, 2, 2, 90, 20.00, 3, 2, 1, 100.00, '60 min', 21, '2024-08-09 15:31:40', 0),
 (852, 308, 1, 1, 41, 8.00, 1, 2, 1, 100.00, '15 Min', 21, '2024-08-13 11:48:40', 0),
-(853, 318, 4, 3, 43, 1.00, 1, 2, 1, 100.00, '60 min', 84, '2024-08-14 15:28:20', 0),
-(854, 318, 1, 1, 56, 1.00, 1, 5, 3, 100.00, '60', 84, '2024-08-14 15:28:44', 0),
+(853, 318, 3, 3, 43, 1.00, 1, 2, 1, 100.00, '60 min', 84, '2024-08-14 15:28:20', 0),
+(854, 318, 2, 1, 56, 1.00, 1, 5, 3, 100.00, '60', 84, '2024-08-14 15:28:44', 0),
 (855, 317, NULL, 1, 29, 10.00, 1, 2, 1, 100.00, '15', 3, '2024-08-14 16:00:37', 1),
-(856, 318, 3, 3, 61, 1.00, 1, 3, NULL, 1.00, 'agora', 8, '2024-09-03 10:40:31', 0),
-(857, 318, 2, 1, 38, 10.00, 1, 2, 2, 100.00, '15', 196, '2024-09-06 15:38:56', 0),
+(856, 318, 1, 3, 61, 1.00, 1, 3, NULL, 1.00, 'agora', 8, '2024-09-03 10:40:31', 0),
+(857, 318, 4, 1, 38, 10.00, 1, 2, 2, 100.00, '15', 196, '2024-09-06 15:38:56', 0),
 (858, 320, 1, 1, 29, 20.00, 1, 2, 1, 100.00, '30 min', 10, '2024-09-13 14:55:30', 0),
 (859, 320, 2, 2, 92, 9.00, 9, 2, 22, 275.50, '24 horas', 60, '2024-09-13 15:29:54', 0),
 (860, 320, 3, 2, 92, 28.00, 9, 2, 22, 275.50, '24 horas', 213, '2024-09-13 15:50:11', 0),
@@ -3957,7 +3998,44 @@ INSERT INTO `TabPreschuap_Protocolo_Medicamento` (`idTabPreschuap_Protocolo_Medi
 (878, 328, 7, 4, 60, 500.00, 2, 2, 4, 500.00, '30 min', 215, '2024-10-14 14:17:50', 0),
 (879, 328, 8, 2, 31, 100.00, 1, 1, NULL, 0.00, '', 24, '2024-10-14 14:21:21', 0),
 (880, 227, 3, 4, 60, 500.00, 2, 2, 4, 500.00, '30 min', 146, '2024-10-16 12:01:18', 0),
-(881, 227, 6, 4, 60, 500.00, 2, 2, 4, 500.00, '30 min', 215, '2024-10-16 12:02:05', 0);
+(881, 227, 6, 4, 60, 500.00, 2, 2, 4, 500.00, '30 min', 215, '2024-10-16 12:02:05', 0),
+(882, 329, 3, 1, 29, 20.00, 1, 2, 1, 100.00, '30 min', 11, '2024-10-23 16:55:05', 0),
+(883, 329, 2, 1, 36, 25.00, 1, 2, 1, 20.00, 'Bolus', 11, '2024-10-23 16:59:29', 0),
+(884, 329, 1, 1, 47, 1000.00, 1, 1, NULL, 0.00, '', 11, '2024-10-23 17:00:05', 0),
+(885, 329, 4, 2, 93, 16.00, 4, 2, 1, 1000.00, 'Iniciar 50 ml/h (vide observa&ccedil;&atilde;o)', 4, '2024-10-23 17:08:04', 0),
+(886, 329, 5, 2, 93, 16.00, 4, 2, 1, 500.00, 'Iniciar 50 ml/h (vide observa&ccedil;&atilde;o)', 203, '2024-10-23 17:09:28', 0),
+(887, 330, 3, 1, 29, 20.00, 1, 2, 1, 100.00, '30 min', 11, '2024-10-24 10:00:12', 0),
+(888, 330, 2, 1, 36, 25.00, 1, 2, 1, 20.00, 'Bolus', 11, '2024-10-24 10:01:02', 0),
+(889, 330, 1, 1, 47, 1000.00, 1, 1, NULL, 0.00, '', 11, '2024-10-24 10:01:34', 0),
+(890, 330, 4, 2, 93, 16.00, 4, 2, 1, 500.00, 'Iniciar 50 ml/h (vide observa&ccedil;&atilde;o)', 133, '2024-10-24 10:04:18', 0),
+(891, 331, 1, 1, 47, 1000.00, 1, 1, NULL, 0.00, '', 11, '2024-10-24 15:39:01', 0),
+(892, 331, 2, 1, 36, 25.00, 1, 2, 1, 20.00, 'Bolus', 11, '2024-10-24 15:40:09', 0),
+(893, 331, 3, 1, 29, 20.00, 1, 2, 1, 100.00, '30 min', 11, '2024-10-24 15:41:13', 0),
+(894, 331, 4, 2, 93, 16.00, 4, 2, 1, 500.00, 'Iniciar 50 ml/h (vide observa&ccedil;&atilde;o)', 216, '2024-10-24 15:44:02', 0),
+(895, 332, 1, 1, 47, 1000.00, 1, 1, NULL, 0.00, '', 11, '2024-10-24 15:58:33', 0),
+(896, 332, 2, 1, 36, 25.00, 1, 2, 1, 20.00, 'Bolus', 11, '2024-10-24 15:59:25', 0),
+(897, 332, 3, 1, 29, 20.00, 1, 2, 1, 100.00, '30 min', 11, '2024-10-24 16:00:05', 0),
+(898, 332, 4, 2, 93, 16.00, 4, 2, 1, 500.00, 'Iniciar 50 ml/h (vide observa&ccedil;&atilde;o)', 4, '2024-10-24 16:01:12', 0),
+(899, 333, 1, 1, 29, 20.00, 1, 2, 1, 100.00, '30 min', 11, '2024-11-07 12:22:30', 0),
+(900, 333, 2, 1, 41, 16.00, 1, 2, 1, 100.00, '30 min', 11, '2024-11-07 12:23:19', 0),
+(901, 333, 3, 2, 9, 1000.00, 3, 2, 1, 500.00, '60 min', 4, '2024-11-07 12:24:33', 0),
+(902, 334, 2, 2, 31, 80.00, 3, 1, NULL, 0.00, '', 217, '2024-11-21 09:44:23', 0),
+(903, 334, 3, 2, 12, 25.00, 3, 2, 1, 100.00, '15 min', 4, '2024-11-21 09:47:16', 0),
+(904, 334, 4, 2, 6, 650.00, 3, 2, 1, 250.00, '60 min', 4, '2024-11-21 09:50:14', 0),
+(905, 334, 5, 2, 14, 100.00, 3, 2, 1, 500.00, '60 min', 22, '2024-11-21 09:56:04', 0),
+(906, 334, 7, 2, 28, 1.40, 3, 2, 1, 50.00, '15 min', 35, '2024-11-21 10:05:30', 0),
+(907, 42, 0, 2, 2, 10.00, 6, 2, 1, 100.00, '15 min', 3, '2024-11-21 10:09:45', 1),
+(908, 334, 8, 2, 2, 10.00, 6, 2, 1, 100.00, '15 min', 35, '2024-11-21 10:12:45', 0),
+(909, 334, 6, 2, 9, 250.00, 3, 2, 2, 500.00, '60 min', 218, '2024-11-21 10:30:52', 0),
+(910, 334, 1, 1, 41, 16.00, 1, 2, 1, 100.00, '30 min', 11, '2024-11-21 16:50:01', 0),
+(911, 335, 1, 2, 27, 6.00, 3, 2, 1, 50.00, 'Bolus', 116, '2024-11-26 17:14:07', 0),
+(912, 336, 1, 2, 27, 6.00, 3, 2, 1, 50.00, 'Bolus', 4, '2024-11-26 17:18:06', 0),
+(913, 337, 1, 1, 29, 20.00, 1, 2, 1, 100.00, '30 min', 11, '2024-12-04 15:32:31', 0),
+(914, 337, 2, 1, 41, 16.00, 1, 2, 1, 100.00, '30 min', 11, '2024-12-04 15:33:29', 0),
+(915, 337, 3, 2, 17, 1800.00, 3, 2, 1, 250.00, '3 horas', 216, '2024-12-04 15:35:42', 0),
+(916, 337, 4, 2, 9, 500.00, 3, 2, 1, 500.00, '60 min', 216, '2024-12-04 15:36:35', 0),
+(917, 338, 2, 3, 61, 1.00, 11, 7, 1, 10.00, '15', 109, '2025-02-06 12:53:23', 0),
+(918, 338, 1, 4, 56, 1.00, 13, 1, 6, 1.00, '1', 152, '2025-02-06 12:53:47', 0);
 
 -- --------------------------------------------------------
 
@@ -16581,15 +16659,6 @@ CREATE TABLE `TabSismicrob_AntibioticoMantido` (
   `DataCadastro` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Despejando dados para a tabela `TabSismicrob_AntibioticoMantido`
---
-
-INSERT INTO `TabSismicrob_AntibioticoMantido` (`idTabSismicrob_AntibioticoMantido`, `AntibioticoMantido`, `Inativo`, `DataCadastro`) VALUES
-(1, 'Apenas na indu&ccedil;&atilde;o', 0, '2024-04-12 11:07:30'),
-(2, '24 horas', 0, '2024-04-12 11:07:42'),
-(3, '48 horas', 0, '2024-04-12 11:07:46');
-
 -- --------------------------------------------------------
 
 --
@@ -16604,21 +16673,6 @@ CREATE TABLE `TabSismicrob_DiagnosticoInfeccioso` (
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Despejando dados para a tabela `TabSismicrob_DiagnosticoInfeccioso`
---
-
-INSERT INTO `TabSismicrob_DiagnosticoInfeccioso` (`idTabSismicrob_DiagnosticoInfeccioso`, `DiagnosticoInfeccioso`, `Classificacao`, `Inativo`, `DataCadastro`) VALUES
-(1, 'Infecção de Cateter', 1, 0, '2023-12-09 20:03:48'),
-(2, 'ITU', 1, 0, '2023-12-09 20:03:48'),
-(3, 'Pneumonia', 1, 0, '2023-12-09 20:03:48'),
-(4, 'Infecção Sítio Cirúrgico', 1, 0, '2023-12-09 20:03:48'),
-(5, 'Infecção Cutânea', 1, 0, '2023-12-09 20:03:48'),
-(6, 'Infecção Osteoarticular', 1, 0, '2023-12-09 20:03:48'),
-(7, 'Outro', 2, 0, '2023-12-09 20:03:48'),
-(8, 'Infecção Abdominal', 1, 0, '2023-12-09 20:03:48'),
-(9, 'Neutropenia Febril', 1, 0, '2023-12-09 20:03:48');
-
 -- --------------------------------------------------------
 
 --
@@ -16631,39 +16685,6 @@ CREATE TABLE `TabSismicrob_Especialidade` (
   `Inativo` tinyint(4) NOT NULL DEFAULT 0,
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `TabSismicrob_Especialidade`
---
-
-INSERT INTO `TabSismicrob_Especialidade` (`idTabSismicrob_Especialidade`, `Especialidade`, `Inativo`, `DataCadastro`) VALUES
-(1, 'CARDIOLOGIA', 0, '2023-12-09 20:04:44'),
-(2, 'CIRURGIA GERAL', 0, '2023-12-09 20:04:44'),
-(3, 'CIRURGIA PLÁSTICA', 0, '2023-12-09 20:04:44'),
-(4, 'CIRURGIA TORÁCICA', 0, '2023-12-09 20:04:44'),
-(5, 'CIRURGIA VASCULAR', 0, '2023-12-09 20:04:44'),
-(6, 'CLINICA MÉDICA', 0, '2023-12-09 20:04:44'),
-(7, 'EMERGÊNCIA', 0, '2023-12-09 20:04:44'),
-(8, 'EMERGÊNCIA PEDIÁTRICA', 0, '2023-12-09 20:04:44'),
-(9, 'GASTROENTEROLOGIA', 0, '2023-12-09 20:04:44'),
-(10, 'GINECOLOGIA', 0, '2023-12-09 20:04:44'),
-(11, 'HEMATOLOGIA', 0, '2023-12-09 20:04:44'),
-(12, 'INFECTOLOGIA', 0, '2023-12-09 20:04:44'),
-(13, 'MASTOLOGIA', 0, '2023-12-09 20:04:44'),
-(14, 'NEFROLOGIA', 0, '2023-12-09 20:04:44'),
-(15, 'NEUROCIRURGIA', 0, '2023-12-09 20:04:44'),
-(16, 'OBSTETRÍCIA', 0, '2023-12-09 20:04:44'),
-(17, 'OFTALMOLOGIA', 0, '2023-12-09 20:04:44'),
-(18, 'ORTOPEDIA', 0, '2023-12-09 20:04:44'),
-(19, 'OTORRINOLARINGOLOGIA', 0, '2023-12-09 20:04:44'),
-(20, 'OUTRO', 0, '2023-12-09 20:04:44'),
-(21, 'PEDIATRIA', 0, '2023-12-09 20:04:44'),
-(22, 'PNEUMOLOGIA', 0, '2023-12-09 20:04:44'),
-(23, 'TERAPIA INTENSIVA', 0, '2023-12-09 20:04:44'),
-(24, 'UI NEONATAL', 0, '2023-12-09 20:04:44'),
-(25, 'UNIDADE CORONARIANA', 0, '2023-12-09 20:04:44'),
-(26, 'UROLOGIA', 0, '2023-12-09 20:04:44'),
-(27, 'UTI NEONATAL', 0, '2023-12-09 20:04:44');
 
 -- --------------------------------------------------------
 
@@ -16678,15 +16699,6 @@ CREATE TABLE `TabSismicrob_Indicacao` (
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Despejando dados para a tabela `TabSismicrob_Indicacao`
---
-
-INSERT INTO `TabSismicrob_Indicacao` (`idTabSismicrob_Indicacao`, `Indicacao`, `Inativo`, `DataCadastro`) VALUES
-(1, 'Profilaxia Cirúrgica', 0, '2023-12-09 20:05:19'),
-(2, 'Profilaxia Clínica', 0, '2023-12-09 20:05:19'),
-(3, 'Terapêutica', 0, '2023-12-09 20:05:19');
-
 -- --------------------------------------------------------
 
 --
@@ -16699,14 +16711,6 @@ CREATE TABLE `TabSismicrob_Infeccao` (
   `Inativo` tinyint(4) NOT NULL DEFAULT 0,
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `TabSismicrob_Infeccao`
---
-
-INSERT INTO `TabSismicrob_Infeccao` (`idTabSismicrob_Infeccao`, `Infeccao`, `Inativo`, `DataCadastro`) VALUES
-(1, 'Comunitária', 0, '2023-12-09 20:05:47'),
-(2, 'Hospitalar', 0, '2023-12-09 20:05:47');
 
 -- --------------------------------------------------------
 
@@ -16721,23 +16725,6 @@ CREATE TABLE `TabSismicrob_Intervalo` (
   `Inativo` tinyint(4) NOT NULL DEFAULT 0,
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `TabSismicrob_Intervalo`
---
-
-INSERT INTO `TabSismicrob_Intervalo` (`idTabSismicrob_Intervalo`, `Intervalo`, `Codigo`, `Inativo`, `DataCadastro`) VALUES
-(1, 4, 'horas', 0, '2023-12-09 20:06:15'),
-(2, 6, 'horas', 0, '2023-12-09 20:06:15'),
-(3, 8, 'horas', 0, '2023-12-09 20:06:15'),
-(4, 12, 'horas', 0, '2023-12-09 20:06:15'),
-(5, 24, 'horas', 0, '2023-12-09 20:06:15'),
-(6, 48, 'horas', 0, '2023-12-09 20:06:15'),
-(7, 72, 'horas', 0, '2023-12-09 20:06:15'),
-(8, 96, 'horas', 0, '2023-12-09 20:06:15'),
-(9, 7, 'dias', 0, '2023-12-09 20:06:15'),
-(10, 21, 'dias', 0, '2023-12-09 20:06:15'),
-(11, 28, 'dias', 0, '2023-12-09 20:06:15');
 
 -- --------------------------------------------------------
 
@@ -16755,151 +16742,6 @@ CREATE TABLE `TabSismicrob_Produto` (
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Despejando dados para a tabela `TabSismicrob_Produto`
---
-
-INSERT INTO `TabSismicrob_Produto` (`idTabSismicrob_Produto`, `Produto`, `NomeTipo`, `CodigoTipo`, `Ativo`, `Inativo`, `DataCadastro`) VALUES
-(19, 'ACICLOVIR, 200MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(20, 'ACICLOVIR, 250MG, FRASCO-AMPOLA, IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(21, 'ACICLOVIR, 50MG/G, BISNAGA 10G, CREME', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(65, 'ALBENDAZOL, 200MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(66, 'ALBENDAZOL, 40MG/ML, FRASCO 10ML (SOLUCAO ORAL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(84, 'AMICACINA SULFATO, 50MG/ML, AMPOLA 2ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(86, 'AMICACINA SULFATO, 250MG/ML, AMPOLA-2ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(106, 'AMOXICILINA+CLAVULANATO DE POTASSIO 250MG+62,5MG/5ML FR 75ML', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(107, 'AMOXICILINA, 500MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(109, 'AMOXICILINA, 250MG/5ML,  FRASCO 150ML', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(110, 'AMOXICILINA+CLAVULANATO, 500MG + 125MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(111, 'AMOXICILINA+CLAVULANATO, 500MG + 100MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(112, 'AMPICILINA SODICA, 1G, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(113, 'AMPICILINA, 500MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(114, 'AMPICILINA SODICA, 500MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(119, 'ANFOTERICINA B, 50MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(135, 'AZITROMICINA, 200MG/5ML, FRASCO, (PO PARA SUSPENSAO)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(136, 'AZITROMICINA, 250MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(137, 'AZITROMICINA, 500MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(218, 'CEFALEXINA, 500MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(220, 'CEFALEXINA, 50MG/ML, FRASCO 100ML, (PO PARA SUSPENCAO)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(223, 'CEFAZOLINA SODICA, 1G, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(224, 'CEFEPIMA, 1G, PO LIOFILIZADO, (SISTEMA FECHADO), IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(225, 'CEFEPIMA, 2G, PO LIOFILIZADO, (SISTEMA FECHADO), IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(226, 'CEFOTAXIMA SODICA, 1G, FRASCO-AMPOLA, IV/IM', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(227, 'CEFOTAXIMA SODICA, 500MG, FRASCO-AMPOLA, IV/IM', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(230, 'CEFTAZIDIMA, 1G, FRASCO-AMPOLA, IM/IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(231, 'CEFTRIAXONA SODICA, 1G, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(234, 'CETOCONAZOL, 200MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(258, 'CIPROFLOXACINO CLORIDRATO, 500MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(278, 'CLARITROMICINA, 250MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(279, 'CLARITROMICINA, 500MG, FRASCO-AMPOLA, IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(280, 'CLARITROMICINA, 500MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(283, 'CLINDAMICINA, 300MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(285, 'CLINDAMICINA, 150MG/ML, AMPOLA 2ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(286, 'CLINDAMICINA, 150MG/ML, AMPOLA 4ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(353, 'COLAGENASE+CLORANFENICOL, 0,6UI + 1%, BISNAGA 50G, (POMADA)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(444, 'DOXICICLINA, 100MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(474, 'ERTAPENEM, 1G, FRASCO-AMPOLA', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(492, 'ESTREPTOMICINA 1G FRAMP', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(499, 'ETAMBUTOL 400MG COMP', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(531, 'FLUCONAZOL, 100MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(532, 'FLUCONAZOL, 2MG/ML, BOLSA 100ML, (SISTEMA FECHADO)', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(565, 'GANCICLOVIR, 500MG, FRASCO-AMPOLA', 'QUIMIOTERAPICOS', 'M7', 'S', 0, '2023-12-09 20:06:39'),
-(571, 'GENTAMICINA, 20MG/ML, AMPOLA 1ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(574, 'GENTAMICINA, 40MG/ML, AMPOLA 2ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(636, 'IMIPENEM, 500MG, FRASCO-AMPOLA, (SISTEMA FECHADO), IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(674, 'ISONIAZIDA, 100MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(676, 'ISONIAZIDA-RIFAMPICINA 250MG COMP', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(677, 'ISONIAZIDA-RIFAMPICINA 500MG COMP', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(681, 'ITRACONAZOL, 100MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(700, 'LEVOFLOXACINA, 5MG/ML, BOLSA 100ML, (SISTEMA FECHADO)', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(719, 'LINEZOLIDA, 600MG, COMPRIMIDO', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(720, 'LINEZOLINA, 2MG/ML, BOLSA 300ML', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(745, 'MEBENDAZOL, 100MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(746, 'MEBENDAZOL, 20MG/ML, FRASCO 30ML, (SUSPENCAO ORAL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(757, 'MEROPENEM, 1G, FRASCO-AMPOLA, (SISTEMA FECHADO), IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(758, 'MEROPENEM, 500MG, FRASCO-AMPOLA, (SISTEMA FECHADO), IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(781, 'METRONIDAZOL + NISTATINA, 100MG+20000UI/G, BISNAGA 40G', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(782, 'METRONIDAZOL, 40MG/ML, FRASCO 100 ML, (SUSPENSAO ORAL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(783, 'METRONIDAZOL, 250MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(784, 'METRONIDAZOL, 7,5 MG/G, BISNAGA 30G, (GEL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(785, 'METRONIDAZOL, 5MGML, BOLSA 100ML, (SISTEMA FECHADO), IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(813, 'MUPIROCINA, 20MG/G (2%), BISNAGA 15G, (CREME)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(820, 'NEOMICINA+BACITRACINA, 5MG+250UI/G, BISNAGA 15G, (CREME)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(831, 'NISTATINA 100000 UI/ML 100MG - 50ML VDR', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(834, 'NISTATINA, 25.000 UI/G, CREME VAGINAL- BISNAGA 60 G', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(849, 'NORFLOXACINA, 400MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(879, 'OXACILINA, 500MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(896, 'BENZILPENICILINA BENZATINA, 1.200.000UI, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(897, 'BENZILPENICILINA BENZATINA, 600.000UI, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(899, 'BENZILPENICILINA POTASSICA, 1.000.000U, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(900, 'BENZILPENICILINA POTASSICA, 5.000.000UI, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(901, 'BENZILPENICILINA POTASSICA+PENICILINA PROCAINA,100000+300000', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(902, 'PENTAMIDINA 300MG FRAMP', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(912, 'PIPERACILINA + TAZOBACTAMA, 2G + 250MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(913, 'PIPERACILINA + TAZOBACTAMA, 4G + 500MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(921, 'PIRIMETAMINA, 25MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(925, 'POLIMIXINA B 500.000 UI FRAMP', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(975, 'RIFAMPICINA, 300MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(976, 'RIFAMPICINA, 20 MG/ML, SUSPENSÃO ORAL- FR 50 ML', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(1051, 'AMPICILINA + SULBACTAM SODICA, 1G + 500MG, FRASCO AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(1054, 'SULFADIAZINA, 500MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(1055, 'SULFADIAZINA DE PRATA, 1%, BISNAGA 50G, (CREME)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(1059, 'SULFAMETOXAZOL + TRIMETOPRIMA, 400MG + 80MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(1061, 'SULFAMETOXAZOL + TRIMETOPRIMA, 80MG + 16MG/ML, AMPOLA 5ML IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(1062, 'SULFAMETOXAZOL+TRIMETOPRIMA, 40MG + 8MG/ML, FRASCO 100ML', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(1063, 'SULFAMETOXAZOL+TRIMETOPRIMA, 800MG + 160MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(1088, 'TEICOPLANINA, 400MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(1107, 'TIABENDAZOL, 500MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(1109, 'TIABENDAZOL, 50MG/ML (5%), FRASCO 40ML, (SUSPENCAO ORAL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(1161, 'VANCOMICINA CLORIDRATO, 500MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(1214, 'CEFUROXIMA, 500MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(1215, 'CEFUROXIMA, 50MG/ML, FRASCO 50ML, (SUSPENSAO ORAL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(8407, 'CEFUROXIMA, 750MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(8535, 'AMPICILINA + SULBACTAM, 2G + 1G, FRASCO-AMPOLA, IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(9470, 'AMOXICILINA + CLAVULANATO, 1G + 200MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(9537, 'IVERMECTINA, 6MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(9554, 'HIDROXICLOROQUINA SULFATO, 400MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(9677, 'GENTAMICINA, 10MG/ML, AMPOLA 1ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(9747, 'CIPROFLOXACINO, 2MG/ML, BOLSA 100ML, (SISTEMA FECHADO)', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(9799, 'FLUCONAZOL, 150MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(9805, 'AZITROMICINA, 500MG, FRASCO-AMPOLA', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(9841, 'AZITROMICINA, 1G, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(11018, 'CLARITROMICINA, 25MG/ML, FRASCO 60ML', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(11019, 'LEVOFLOXACINA, 500MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(12659, 'SULFADIAZINA DE PRATA CREME 1% BISN 100 G', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(12906, 'TIGECICLINA, 50MG, FRASCO-AMPOLA', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(13102, 'RHZE (ISONIAZIDA+RIFAMPICINA+PIRAZINAMIDA+ETAMBUTOL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(13166, 'TEICOPLANINA, 200MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(13247, 'ANFOTERICINA B LIPOSSOMAL, 50MG, FRASCO-AMPOLA', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(13387, 'PRIMAQUINA, 15MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(13766, 'VORICONAZOL, 200MG, FRASCO-AMPOLA, IV', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(13941, 'ANFOTERICINA B COMPLEXO LIPIDICO, 5MG/ML, FRASCO-AMPOLA 20ML', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(13981, 'VORICONAZOL, 200MG, COMPRIMIDO', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(14109, 'DAPTOMICINA 500 MG INJETAVEL PO LIOFILO FRASCO-AMPOLA', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(14159, 'NISTATINA, 100.000UI/ML, FRASCO 40ML, (SUSPENCAO ORAL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(14241, 'ALBENDAZOL, 400MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(14935, 'ISONIAZIDA + RIFAMPICINA, 75MG + 150MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(15566, 'ANIDULAFUNGINA, 100MG, FRASCO-AMPOLA', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(16101, 'MEROPENEM 2 G', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
-(16627, 'MICAFUNGINA 50 MG', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(16628, 'MICAFUNGINA 100 MG', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
-(17093, 'DACLATASVIR 60MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17094, 'SOFOSBUVIR 400MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17216, 'ARTESUNATO 25 MG + MEFLOQUINA 55 MG (1 A 5 ANOS)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17217, 'ARTESUNATO 25 MG + MEFLOQUINA 55 MG (6 A 11 MESES)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17218, 'ARTESUNATO 60 MG - FRASCO / AMPOLA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17219, 'CLOROQUINA 150 MG (COMPRIMIDO)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17220, 'DICLORIDRATO DE QUININA 300 MG - AMPOLA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17221, 'PRIMAQUINA 5 MG - COMPRMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17223, 'OSELTAMIVIR FOSFATO 30MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17224, 'OSELTAMIVIR FOSFATO 45MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17398, 'DACLATASVIR 30MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17651, 'DOLUTEGRAVIR, 50MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17668, 'ACICLOVIR, 30MG/G, BISNAGA 4,5 G, CREME', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(17919, 'ARTESUNATO 100 MG + MEFLOQUINA 200 MG (12 ANOS OU MAIOR)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(99998, 'OSELTAMIVIR 75MG', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
-(99999, 'TESTE DE ANTIMICROBIANO 500MG, FRASCO', 'ANTIMICROBIANO', 'Z1', 'S', 0, '2023-12-09 20:06:39');
-
 -- --------------------------------------------------------
 
 --
@@ -16912,16 +16754,6 @@ CREATE TABLE `TabSismicrob_Substituicao` (
   `Inativo` tinyint(4) NOT NULL DEFAULT 0,
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `TabSismicrob_Substituicao`
---
-
-INSERT INTO `TabSismicrob_Substituicao` (`idTabSismicrob_Substituicao`, `Substituicao`, `Inativo`, `DataCadastro`) VALUES
-(1, 'Falha Terapêutica', 0, '2023-12-09 20:07:18'),
-(2, 'Falta na Farmácia', 0, '2023-12-09 20:07:18'),
-(3, 'Guiado por Cultura', 0, '2023-12-09 20:07:18'),
-(4, 'CCIH', 0, '2023-12-09 20:07:18');
 
 -- --------------------------------------------------------
 
@@ -16936,15 +16768,6 @@ CREATE TABLE `TabSismicrob_Tratamento` (
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Despejando dados para a tabela `TabSismicrob_Tratamento`
---
-
-INSERT INTO `TabSismicrob_Tratamento` (`idTabSismicrob_Tratamento`, `Tratamento`, `Inativo`, `DataCadastro`) VALUES
-(1, 'Início', 0, '2023-12-09 20:07:45'),
-(2, 'Prorrogação do Tratamento', 0, '2023-12-09 20:07:45'),
-(3, 'Substituição', 0, '2023-12-09 20:07:45');
-
 -- --------------------------------------------------------
 
 --
@@ -16958,22 +16781,6 @@ CREATE TABLE `TabSismicrob_ViaAdministracao` (
   `Inativo` tinyint(4) NOT NULL DEFAULT 0,
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `TabSismicrob_ViaAdministracao`
---
-
-INSERT INTO `TabSismicrob_ViaAdministracao` (`idTabSismicrob_ViaAdministracao`, `ViaAdministracao`, `Codigo`, `Inativo`, `DataCadastro`) VALUES
-(1, 'Via Oral', 'VO', 0, '2023-12-09 20:08:12'),
-(2, 'Endovenosa', 'EV', 0, '2023-12-09 20:08:12'),
-(3, 'Intramuscular', 'IM', 0, '2023-12-09 20:08:12'),
-(4, 'Sonda NasoEnteral', 'SNE', 0, '2023-12-09 20:08:12'),
-(5, 'Sonda NasoGástrica', 'SNG', 0, '2023-12-09 20:08:12'),
-(6, 'Via Intraperitoneal', 'VIP', 0, '2023-12-09 20:08:12'),
-(7, 'Via Intratecal', 'VIT', 0, '2023-12-09 20:08:12'),
-(8, 'Uso Tópico', 'UT', 0, '2023-12-09 20:08:12'),
-(9, 'Subcutânea', 'SC', 0, '2023-12-09 20:08:12'),
-(10, 'Gastrostomia', 'GTT', 0, '2023-12-09 20:08:12');
 
 -- --------------------------------------------------------
 
@@ -17022,7 +16829,8 @@ INSERT INTO `Tab_Perfil` (`idTab_Perfil`, `Inativo`, `Perfil`, `Descricao`) VALU
 (6, NULL, 'ENF01', 'Perfil destinado a Enfermeiros.'),
 (7, NULL, 'FARMA02', 'Perfil para Técnicos em Farmácia. Consulta de prescrições médicas, dados de pacientes e impressões.'),
 (8, NULL, 'ENF02', 'Pefil para Técnicos de Enfermagem.'),
-(9, NULL, 'MED02', 'Perfil para Médicos avaliadores da CCIH, utilizado pelo Sismicrob.');
+(9, NULL, 'MED02', 'Perfil para Médicos avaliadores da CCIH, utilizado pelo Sismicrob.'),
+(10, NULL, 'MED03', 'Perfil destinados aos Residentes Médicos');
 
 --
 -- Índices para tabelas despejadas
@@ -17053,7 +16861,8 @@ ALTER TABLE `Preschuap_Prescricao`
   ADD KEY `fk_Preschuap_Prescricao_TabPreschuap_Protocolo1_idx` (`idTabPreschuap_Protocolo`),
   ADD KEY `fk_Preschuap_Prescricao_TabPreschuap_TipoTerapia1_idx` (`idTabPreschuap_TipoTerapia`),
   ADD KEY `fk_Preschuap_Prescricao_Sishuap_Usuario1_idx` (`idSishuap_Usuario`),
-  ADD KEY `fk_Preschuap_Prescricao_TabPreschuap_MotivoCancelamento1_idx` (`idTabPreschuap_MotivoCancelamento`);
+  ADD KEY `fk_Preschuap_Prescricao_TabPreschuap_MotivoCancelamento1_idx` (`idTabPreschuap_MotivoCancelamento`),
+  ADD KEY `fk_Preschuap_Prescricao_TabPreschuap_Dieta1_idx` (`idTabPreschuap_Dieta`);
 
 --
 -- Índices de tabela `Preschuap_Prescricao_Medicamento`
@@ -17149,6 +16958,13 @@ ALTER TABLE `TabPreschuap_Alergia`
 ALTER TABLE `TabPreschuap_Categoria`
   ADD PRIMARY KEY (`idTabPreschuap_Categoria`),
   ADD UNIQUE KEY `idTabPreschuap_Categoria_UNIQUE` (`idTabPreschuap_Categoria`);
+
+--
+-- Índices de tabela `TabPreschuap_Dieta`
+--
+ALTER TABLE `TabPreschuap_Dieta`
+  ADD PRIMARY KEY (`idTabPreschuap_Dieta`),
+  ADD UNIQUE KEY `Dieta_UNIQUE` (`Dieta`);
 
 --
 -- Índices de tabela `TabPreschuap_Diluente`
@@ -17409,6 +17225,12 @@ ALTER TABLE `TabPreschuap_Alergia`
   MODIFY `idTabPreschuap_Alergia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
+-- AUTO_INCREMENT de tabela `TabPreschuap_Dieta`
+--
+ALTER TABLE `TabPreschuap_Dieta`
+  MODIFY `idTabPreschuap_Dieta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT de tabela `TabPreschuap_Diluente`
 --
 ALTER TABLE `TabPreschuap_Diluente`
@@ -17430,7 +17252,7 @@ ALTER TABLE `TabPreschuap_Formula`
 -- AUTO_INCREMENT de tabela `TabPreschuap_Medicamento`
 --
 ALTER TABLE `TabPreschuap_Medicamento`
-  MODIFY `idTabPreschuap_Medicamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `idTabPreschuap_Medicamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT de tabela `TabPreschuap_MotivoAjusteDose`
@@ -17448,19 +17270,19 @@ ALTER TABLE `TabPreschuap_MotivoCancelamento`
 -- AUTO_INCREMENT de tabela `TabPreschuap_Posologia`
 --
 ALTER TABLE `TabPreschuap_Posologia`
-  MODIFY `idTabPreschuap_Posologia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
+  MODIFY `idTabPreschuap_Posologia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
 
 --
 -- AUTO_INCREMENT de tabela `TabPreschuap_Protocolo`
 --
 ALTER TABLE `TabPreschuap_Protocolo`
-  MODIFY `idTabPreschuap_Protocolo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=329;
+  MODIFY `idTabPreschuap_Protocolo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=339;
 
 --
 -- AUTO_INCREMENT de tabela `TabPreschuap_Protocolo_Medicamento`
 --
 ALTER TABLE `TabPreschuap_Protocolo_Medicamento`
-  MODIFY `idTabPreschuap_Protocolo_Medicamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=882;
+  MODIFY `idTabPreschuap_Protocolo_Medicamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=919;
 
 --
 -- AUTO_INCREMENT de tabela `TabPreschuap_TipoAgendamento`
@@ -17490,55 +17312,55 @@ ALTER TABLE `TabPreschuap_ViaAdministracao`
 -- AUTO_INCREMENT de tabela `TabSismicrob_AntibioticoMantido`
 --
 ALTER TABLE `TabSismicrob_AntibioticoMantido`
-  MODIFY `idTabSismicrob_AntibioticoMantido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idTabSismicrob_AntibioticoMantido` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_DiagnosticoInfeccioso`
 --
 ALTER TABLE `TabSismicrob_DiagnosticoInfeccioso`
-  MODIFY `idTabSismicrob_DiagnosticoInfeccioso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idTabSismicrob_DiagnosticoInfeccioso` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_Especialidade`
 --
 ALTER TABLE `TabSismicrob_Especialidade`
-  MODIFY `idTabSismicrob_Especialidade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idTabSismicrob_Especialidade` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_Indicacao`
 --
 ALTER TABLE `TabSismicrob_Indicacao`
-  MODIFY `idTabSismicrob_Indicacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idTabSismicrob_Indicacao` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_Infeccao`
 --
 ALTER TABLE `TabSismicrob_Infeccao`
-  MODIFY `idTabSismicrob_Infeccao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idTabSismicrob_Infeccao` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_Produto`
 --
 ALTER TABLE `TabSismicrob_Produto`
-  MODIFY `idTabSismicrob_Produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000;
+  MODIFY `idTabSismicrob_Produto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_Substituicao`
 --
 ALTER TABLE `TabSismicrob_Substituicao`
-  MODIFY `idTabSismicrob_Substituicao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idTabSismicrob_Substituicao` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_Tratamento`
 --
 ALTER TABLE `TabSismicrob_Tratamento`
-  MODIFY `idTabSismicrob_Tratamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idTabSismicrob_Tratamento` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_ViaAdministracao`
 --
 ALTER TABLE `TabSismicrob_ViaAdministracao`
-  MODIFY `idTabSismicrob_ViaAdministracao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idTabSismicrob_ViaAdministracao` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `Tab_Modulo`
@@ -17550,7 +17372,7 @@ ALTER TABLE `Tab_Modulo`
 -- AUTO_INCREMENT de tabela `Tab_Perfil`
 --
 ALTER TABLE `Tab_Perfil`
-  MODIFY `idTab_Perfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idTab_Perfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restrições para tabelas despejadas
@@ -17575,6 +17397,7 @@ ALTER TABLE `Preschuap_AgendaMedicamentoOculto`
 ALTER TABLE `Preschuap_Prescricao`
   ADD CONSTRAINT `fk_Preschuap_Prescricao_Sishuap_Usuario1` FOREIGN KEY (`idSishuap_Usuario`) REFERENCES `Sishuap_Usuario` (`idSishuap_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Preschuap_Prescricao_TabPreschuap_Categoria1` FOREIGN KEY (`idTabPreschuap_Categoria`) REFERENCES `TabPreschuap_Categoria` (`idTabPreschuap_Categoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Preschuap_Prescricao_TabPreschuap_Dieta1` FOREIGN KEY (`idTabPreschuap_Dieta`) REFERENCES `TabPreschuap_Dieta` (`idTabPreschuap_Dieta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Preschuap_Prescricao_TabPreschuap_MotivoCancelamento1` FOREIGN KEY (`idTabPreschuap_MotivoCancelamento`) REFERENCES `TabPreschuap_MotivoCancelamento` (`idTabPreschuap_MotivoCancelamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Preschuap_Prescricao_TabPreschuap_Protocolo1` FOREIGN KEY (`idTabPreschuap_Protocolo`) REFERENCES `TabPreschuap_Protocolo` (`idTabPreschuap_Protocolo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Preschuap_Prescricao_TabPreschuap_Subcategoria1` FOREIGN KEY (`idTabPreschuap_Subcategoria`) REFERENCES `TabPreschuap_Subcategoria` (`idTabPreschuap_Subcategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
