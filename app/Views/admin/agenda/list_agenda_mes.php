@@ -71,11 +71,14 @@
                                 $inc    = (isset($agenda[$data->format('Y-m-d')][5])) ? $agenda[$data->format('Y-m-d')][5] : 0;
                                 $total  = (isset($agenda[$data->format('Y-m-d')]['Total'])) ? $agenda[$data->format('Y-m-d')]['Total'] : 0;
 
+                                $dia = $data->format('Y-m-d');
+                                $destaque = ($data->format('Y-m-d') == date('Y-m-d')) ? "btn-warning" : "btn-info";
+
                                 echo "
                                 <td>
                                     <div class='card'>
                                         <div class='card-header text-center'>
-                                            <a href='".esc(site_url('agenda/index/'.$data->format('Y-m-d')))."' class='btn btn-info text-decoration-none' role='button'>
+                                            <a href='".esc(site_url('agenda/index/'.$data->format('Y-m-d')))."' class='btn ".$destaque." text-decoration-none' role='button'>
                                                 ".$data->format('d')."
                                             </a>
                                         </div>
