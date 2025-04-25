@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Aba Bloqueada</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8d7da;
+      color: #721c24;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .mensagem {
+      background-color: #f5c6cb;
+      border: 1px solid #f1b0b7;
+      padding: 40px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #721c24;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #501517;
+    }
+  </style>
+</head>
+<body>
+  <div class="mensagem">
+    <h1>Este aplicativo já está aberto em outra aba.</h1>
+    <p>Por segurança, não é possível utilizar mais de uma aba simultaneamente.</p>
+    <button onclick="fecharAba()">Fechar esta aba</button>
+  </div>
+
+  <script>
+    function fecharAba() {
+      window.open('', '_self');
+      window.close();
+      alert("Se a aba não foi fechada automaticamente, feche-a manualmente.");
+    }
+  </script>
+</body>
+</html>

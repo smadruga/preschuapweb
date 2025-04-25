@@ -1,6 +1,50 @@
 //Funções e recursos javascript e jQuery inicializadas com o carregamento da página.
 $(document).ready(function() {
 
+    // BLOQUEIO DE MÚLTIPLAS ABAS (exceto para páginas de impressão)
+    const urlParams = new URLSearchParams(window.location.search);
+    const isPrintView = urlParams.get('printview') === '1';
+
+    if (!isPrintView) {
+        const LOCK_KEY = 'app_tab_lock';
+        const THIS_TAB_ID = Date.now().toString();
+
+        function lockApp() {
+            const lock = localStorage.getItem(LOCK_KEY);
+            if (lock && lock !== THIS_TAB_ID) {
+                //alert("Este aplicativo já está aberto em outra aba.");
+                window.location.href = "/block.html"; // ou mostre um modal de aviso
+            } else {
+                localStorage.setItem(LOCK_KEY, THIS_TAB_ID);
+            }
+        }
+
+        function unlockApp() {
+            const lock = localStorage.getItem(LOCK_KEY);
+            if (lock === THIS_TAB_ID) {
+                localStorage.removeItem(LOCK_KEY);
+            }
+        }
+
+        window.addEventListener('storage', function(event) {
+            if (event.key === LOCK_KEY && event.newValue !== THIS_TAB_ID) {
+                //alert("O aplicativo foi aberto em outra aba. Esta aba será desativada.");
+                window.location.href = "/block.html";
+            }
+        });
+
+        window.addEventListener('beforeunload', unlockApp);
+
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                lockApp();
+            }
+        });
+
+        lockApp();
+    }
+
+
     //Máscaras
     $(".Numero").mask("9");
     $(".Data").mask("99/99/9999");
