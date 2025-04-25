@@ -121,6 +121,15 @@ class PrescricaoModel extends Model
         #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 
 
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+        exit($data);
+        #*/
+
+        
         if($buscaid && $row) {
             return $query->getRowArray();
         }
