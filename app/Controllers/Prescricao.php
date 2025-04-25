@@ -102,9 +102,36 @@ class Prescricao extends BaseController
 
         $v['prescricao']['conselho'] = $prescricao->get_conselho($v['prescricao']['array'][0]['Cpf']);
 
+        #/*
+
+        $db = \Config\Database::connect('aghux');
+        $query = $db->query('
+            select
+                ap.nome
+                , TO_CHAR(ap.dt_nascimento, \'DD/MM/YYYY\') dt_nascimento
+                , EXTRACT(YEAR FROM age(CURRENT_DATE, ap.dt_nascimento)) AS idade
+                , string_agg(acp.ddd || \' \' || acp.nro_fone, \', \') AS telefone
+            from
+                agh.aip_pacientes ap
+                    join agh.aip_contatos_pacientes acp on ap.codigo = acp.pac_codigo
+            where
+                ap.prontuario = '. $v['prescricao']['array'][0]['Prontuario'].'
+            group by
+                ap.nome
+                , ap.dt_nascimento
+        ');
+        $query = $query->getResultArray();
+        
+        $v['prescricao']['array'][0]['nome']             = $query[0]['nome'];
+        $v['prescricao']['array'][0]['telefone']         = $query[0]['telefone'];
+        $v['prescricao']['array'][0]['dt_nascimento']    = $query[0]['dt_nascimento'];
+        $v['prescricao']['array'][0]['idade']            = $query[0]['idade'];
+        
+        //unset($_SESSION['Paciente']['nome']);
         /*
         echo "<pre>";
-        print_r($v['medicamento']);
+        print_r($v['prescricao']);
+        //print_r($v['medicamento']);
         echo "</pre>";
         exit('oi');
         #*/

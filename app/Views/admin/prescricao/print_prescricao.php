@@ -31,14 +31,14 @@ foreach($prescricao['array'] as $v) {
                                 <div class="col"><b>Prescrição Nº: #<?= $v['idPreschuap_Prescricao'] ?></b></div>
                             </div>
                             <div class="row">
-                                <div class="col"><b>Paciente: <?= $_SESSION['Paciente']['nome'] ?></b></div>
+                                <div class="col"><b>Paciente: <?= $v['nome'] ?></b></div>
                             </div>
                             <div class="row">
-                                <div class="col"><b>Telefone: <?= $_SESSION['Paciente']['telefone'] ?></b></div>
+                                <div class="col"><b>Telefone: <?= $v['telefone'] ?></b></div>
                             </div>                            
                             <div class="row">
-                                <div class="col-5"><b>Nascimento:</b> <?= $_SESSION['Paciente']['dt_nascimento'] ?></div>
-                                <div class="col"><b>Idade:</b> <?= $_SESSION['Paciente']['idade'] ?></div>
+                                <div class="col-5"><b>Nascimento:</b> <?= $v['dt_nascimento'] ?></div>
+                                <div class="col"><b>Idade:</b> <?= $v['idade'] ?></div>
                                 <div class="col"><b>Ciclo:</b> <?= $v['Ciclo'] ?></div>
                                 <div class="col"><b>Dia:</b> <?= $v['Dia'] ?></div>
                             </div>
