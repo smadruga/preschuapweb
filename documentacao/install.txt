@@ -1,0 +1,133 @@
+VM1 - Aplicação:
+* 40GB de espaço
+* 4GB de memória
+* debian 12 ou superior
+* atualizar com o comando apt update -y && apt upgrade -y
+* instalar apache2 ou httpd2
+* configurar o repositório bookworm:
+   * Instale os pacotes necessários
+      * apt install -y software-properties-common
+      * apt install apt-transport-https lsb-release ca-certificates wget 
+   * Instale o GnuPG para verificar pacotes e repositórios
+      * apt install gnupg2         
+   * Adicione a chave GPG do repositório
+      * wget -qO - https://packages.sury.org/php/apt.gpg | sudo apt-key add -
+   * Adicione o repositório à lista de fontes
+      * echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list
+* Instalar o php 8.1 (o PreschuapWeb foi homolgado para essa versão do PHP, acima disso ocorrerão bugs): apt install php8.1
+* Instalar os seguintes módulos do php8.1: apt install php8.1-gd php8.1-intl php8.1-curl php8.1-pgsql php8.1-mbstring php8.1-mysql php8.1-ldap php8.1-xml
+* Instalar o git: apt install git
+* Instalar o cliente mariadb(mysql): apt install mariadb-client
+* Habilitar o módulo rewrite e reiniciar o Apache2 : a2enmod rewrite && systemctl restart apache2
+* Clonar o repositório do PreschuapWeb: git clone https://github.com/smadruga/preschuapweb.git
+* Habilitar a escrita irrestrita na pasta writable: chmod -R 777 /var/www/preschuapweb/writable/
+* Criar em /etc/apache2/sites-available/ o arquivo preschuapweb.conf e colar o conteúdo a seguir:
+<VirtualHost *:80>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        ServerName preschuapweb.local
+
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/preschuapweb/public/
+
+
+        <Directory /var/www/preschuapweb>
+            Options -Indexes +FollowSymLinks
+            DirectoryIndex index.php index.html
+            AllowOverride All
+            Require all granted
+        </Directory>
+
+
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+
+
+        ErrorLog ${APACHE_LOG_DIR}/preschuapweb-error.log
+        CustomLog ${APACHE_LOG_DIR}/preschuapweb-access.log combined
+
+
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+* Habilitar o site e reiniciar o apache2: a2ensite preschuapweb.conf && systemctl reload apache2
+* Desabilitar o site padrão e reiniciar o apache2: a2dissite 000-default.conf && systemctl reload apache2
+* Caso não exista a linha a seguir no arquivo /etc/hosts, editar o arquivo para habilitar/redirecionar o IP. Adicionar uma linha conforme o exemplo a seguir: 
+   * 10.88.1.123        HUAP-VP-PRESCHUAPWEB.ebserhnet.ebserh.gov.br HUAP-VP-PRESCHUAPWEB
+* Fazer uma cópia do arquivo env para um arquivo oculto .env: cp /var/www/preschuapweb/env /var/www/preschuapweb/.env
+* Editar o arquivo .env e adicionar os dados nas seguintes variáveis:
+   * app.baseURL
+   * Dados do Banco de Dados MariaDB/MySQL:
+      * database.default.hostname = 
+      * database.default.database = 
+      * database.default.username = 
+      * database.default.password = 
+      * database.default.DBDriver = MySQLi
+      * database.default.DBPrefix =
+   * Dados do Banco de Dados AGHUx:
+      * database.aghux.hostname = 
+      * database.aghux.database = 
+      * database.aghux.port     = 
+      * database.aghux.username = 
+      * database.aghux.password = 
+      * database.aghux.DBDriver = Postgre
+      * database.aghux.schema   = agh
+   * srv.ldap1 = 
+   *    * #ldap.usr = EBSERHNET\
+   * #ldap.pwd = 
+   * #ldap.dn = OU=Usuarios,OU=HUAP,OU=EBSERH,DC=ebserhnet,DC=ebserh,DC=gov,DC=br
+   * hu.nome         = "Hospital Universitário Antonio Pedro"
+   * hu.abrev        = "Huap-UFF"
+   * hu.head.print   = "GERÊNCIA DE ATENÇÃO A SAÚDE - GAS<br />DIVISÃO DE GESTÃO DO CUIDADO - DGC<br />UNIDADE DE HEMATOLOGIA E ONCOLOGIA - UHON<br />PRESCRIÇÃO MÉDICA DO PACIENTE"
+   * * Se necessário adicionar permissão no firewall
+* Reiniciar o servidor e acessar o PreschuapWeb a partir de alguma máquina da rede, digitando na barra de endereços o IP do servidor.
+
+
+VM2 - Banco de dados:
+* 40GB de espaço
+* 4GB de memória
+* debian 12 ou superior
+* atualizar com o comando apt update -y && apt upgrade -y
+* mariadb (qualquer versão, pode ser a última)
+* instalar o cliente mysql
+* executar o comando mysql_secure_installation para definir senha de root
+* importar sql (arquivo para importação está na pasta)
+* criar usuário e dar grant
+* inserir primeiro usuário pela linha de comando
+   * INSERT INTO `Sishuap_Usuario` (`idSishuap_Usuario`, `Inativo`, `Usuario`, `Nome`, `Cpf`, `EmailSecundario`) VALUES (1, 0, 'LOGINEBSERH', 'NOMEDOCOLABORADOR', CPFSEMASPASAPENASNUMEROS, 'EMAILEBSERH');
+* inserir permissão do primeiro usuário
+   * INSERT INTO `Sishuap_PermissaoModulo` (`idSishuap_PermissaoModulo`, `idSishuap_Usuario`, `idTab_Modulo`) VALUES (1, 1, 26)
+* inserir perfil do primeiro usuário
+   * INSERT INTO `Sishuap_Perfil` (`idSishuap_Perfil`, `idSishuap_Usuario`, `idTab_Perfil`, `idTab_Modulo`) VALUES (1, 1, 1, 26),
+* executar comandos para atualizar data de cadastro
+   * UPDATE preschuapweb.TabPreschuap_Alergia SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_Categoria SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_Dieta SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_Diluente SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_EtapaTerapia SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_Formula SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_Medicamento SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_MotivoAjusteDose SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_MotivoCancelamento SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_Posologia SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_Protocolo SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_Protocolo_Medicamento SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_Subcategoria SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_TipoAgendamento SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_TipoTerapia SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_UnidadeMedida SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+   * UPDATE preschuapweb.TabPreschuap_ViaAdministracao SET DataCadastro = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
+* Fazer testes, criar prescrições, com um prontuário/paciente padrão.
