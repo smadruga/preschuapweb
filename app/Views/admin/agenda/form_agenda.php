@@ -51,8 +51,8 @@
                                     data-mdb-ripple-init>Tarde</label>
 
                                 <input type="radio" class="btn-check" name="Turno" autocomplete="off" 
-                                    id="TurnoN" value="N" <?php echo $radio['Turno']['c'][1] ?> />
-                                <label class="btn btn-<?php echo $radio['Turno']['b'][1] ?> <?php echo $radio['Turno']['a'][1] ?>" for="TurnoN" 
+                                    id="TurnoN" value="N" <?php echo $radio['Turno']['c'][2] ?> />
+                                <label class="btn btn-<?php echo $radio['Turno']['b'][2] ?> <?php echo $radio['Turno']['a'][2] ?>" for="TurnoN" 
                                     data-mdb-ripple-init>Noite</label>                                    
                             </div>
                         </div>
