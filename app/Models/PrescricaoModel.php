@@ -8,7 +8,7 @@ use App\Libraries\HUAP_Functions;
 class PrescricaoModel extends Model
 {
     protected $DBGroup              = 'default';
-    protected $table                = 'Preschuap_Prescricao';
+    protected $table                = 'Preschuap_Prescricao p';
     protected $primaryKey           = 'idPreschuap_Prescricao';
     protected $useAutoIncrement     = true;
     protected $returnType           = 'array';
@@ -51,10 +51,13 @@ class PrescricaoModel extends Model
     *
     * @return void
     */
-    public function read_prescricao($data, $buscaid = FALSE, $row = FALSE)
+    public function read_prescricao($data, $buscaid = FALSE, $row = FALSE, $limit = FALSE, $offset = FALSE)
     {
 
         $where = ($buscaid) ? 'p.idPreschuap_Prescricao = '.$data : 'p.Prontuario = '.$data;
+
+        $limit = ($limit) ? 'LIMIT '.$limit : null;
+        $offset = ($offset) ? 'OFFSET '.$offset : null;
 
         $db = \Config\Database::connect();
         $query = $db->query('
@@ -78,7 +81,7 @@ class PrescricaoModel extends Model
 
                 , format(p.Peso, 2, "pt_BR") as Peso
                 , format(p.CreatininaSerica, 2, "pt_BR") as CreatininaSerica
-                , Altura
+                , p.Altura
                 , format(p.ClearanceCreatinina, 2, "pt_BR") as ClearanceCreatinina
                 , format(p.IndiceMassaCorporal, 2, "pt_BR") as IndiceMassaCorporal
                 , format(p.SuperficieCorporal, 2, "pt_BR") as SuperficieCorporal
@@ -109,8 +112,12 @@ class PrescricaoModel extends Model
             WHERE
                 '.$where.'
             ORDER BY p.idPreschuap_Prescricao DESC
+            '.$limit.'
+            '.$offset.'
 
         ');
+        #echo '<Br> >> '.$db->getLastQuery();
+
         /*
         echo $db->getLastQuery();
         echo "<pre>";
@@ -120,7 +127,14 @@ class PrescricaoModel extends Model
         #*/
         #return ($query->getNumRows() > 0) ? $query->getRowArray() : FALSE ;
 
-
+        $q = $db->query('
+            SELECT COUNT(*) as total 
+            FROM preschuapweb.Preschuap_Prescricao p
+            WHERE '.$where.'
+        ');     
+        $t = $q->getRow(); // retorna objeto com a propriedade "total"
+        $r['total'] = $t->total;
+        #$echo '<Br> >> '.$db->getLastQuery();
         /*
         echo $db->getLastQuery();
         echo "<pre>";
