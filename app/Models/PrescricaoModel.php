@@ -8,7 +8,7 @@ use App\Libraries\HUAP_Functions;
 class PrescricaoModel extends Model
 {
     protected $DBGroup              = 'default';
-    protected $table                = 'Preschuap_Prescricao p';
+    protected $table                = 'Preschuap_Prescricao';
     protected $primaryKey           = 'idPreschuap_Prescricao';
     protected $useAutoIncrement     = true;
     protected $returnType           = 'array';
