@@ -11,21 +11,22 @@
                     <ul class="pagination">
             ';
             
-            if ( ($page > $pri) ) { 
-            echo '
-                        <li class="page-item"><a class="page-link" href="'. base_url('prescricao/list_prescricao/'.$pri) .'">Primeiro</a></li>
-                        <li class="page-item"><a class="page-link" href="'. base_url('prescricao/list_prescricao/'.$ant) .'"><<</a></li>
-            ';
-            }
+            #if ( ($page > $pri) ) { 
+            #echo '
+                        
+            #';
+            #}
 
-                    echo '<li class="page-item"><a class="page-link" href="'. base_url('prescricao/list_prescricao/'.$page) .'">'. $page .'</a></li>';
+            if ( ($prx > $ult) ) 
+                $prx = $ult;
 
-            if ( ($page < $ult) ) { 
             echo '
-                        <li class="page-item"><a class="page-link" href="'. base_url('prescricao/list_prescricao/'.$prx) .'">>></a></li>
-                        <li class="page-item"><a class="page-link" href="'. base_url('prescricao/list_prescricao/'.$ult) .'">Último</a></li>
+                <li class="page-item"><a class="page-link" href="'. base_url('prescricao/list_prescricao/'.$pri) .'">Primeiro</a></li>
+                    <li class="page-item"><a class="page-link" href="'. base_url('prescricao/list_prescricao/'.$ant) .'"><<</a></li>                    
+                <li class="page-item"><a class="page-link" href="'. base_url('prescricao/list_prescricao/'.$page) .'">'. $page .'</a></li>
+                <li class="page-item"><a class="page-link" href="'. base_url('prescricao/list_prescricao/'.$prx) .'">>></a></li>
+                    <li class="page-item"><a class="page-link" href="'. base_url('prescricao/list_prescricao/'.$ult) .'">Último</a></li>
             ';
-            }
 
             echo '
                     </ul>
