@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 07/04/2025 às 20:56
+-- Tempo de geração: 25/06/2025 às 17:13
 -- Versão do servidor: 10.11.3-MariaDB-1-log
 -- Versão do PHP: 8.2.7
 
@@ -2594,7 +2594,8 @@ INSERT INTO `TabPreschuap_Medicamento` (`idTabPreschuap_Medicamento`, `Medicamen
 (90, 'DecitaBIna', 0, '2024-08-09 15:26:53', NULL, NULL),
 (91, 'vit b14', 1, '2024-09-06 15:47:25', NULL, NULL),
 (92, 'BLINATUMOmabe', 0, '2024-09-13 14:57:05', NULL, NULL),
-(93, 'DARAtumumabe EV', 0, '2024-10-23 15:07:58', NULL, NULL);
+(93, 'DARAtumumabe EV', 0, '2024-10-23 15:07:58', NULL, NULL),
+(94, 'DARAtumumabe SC', 0, '2025-04-29 14:30:07', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3103,7 +3104,21 @@ INSERT INTO `TabPreschuap_Protocolo` (`idTabPreschuap_Protocolo`, `Aplicabilidad
 (336, 'HEMATOLOGIA', 'VIMBLASTINA (LCH-III) MANUTENCAO', 0, '2024-11-26 17:15:50', 'D76', 6, 'ATEN&Ccedil;&Atilde;O: Repetir o ciclo a cada 21 dias. POTENCIAL EMETOG&Ecirc;NICO: m&iacute;nimo. MEDICAMENTO VESICANTE: Vimblastina. REFER&Ecirc;NCIAS: Gadner H et al. Therapy prolongation improves outcome in multisystem Langerhans cell histiocytosis. Blood. 2013 Jun 20;121(25):5006-14.', 1);
 INSERT INTO `TabPreschuap_Protocolo` (`idTabPreschuap_Protocolo`, `Aplicabilidade`, `Protocolo`, `Inativo`, `DataCadastro`, `idTabPreschuap_Categoria`, `idTabPreschuap_TipoTerapia`, `Observacoes`, `idTabPreschuap_TipoAgendamento`) VALUES
 (337, 'CANCEROLOGIA', 'GENCITABINA + DACARBAZINA (SARCOMA)', 0, '2024-12-04 15:29:33', 'C49', 4, 'ATEN&Ccedil;&Atilde;O: Repetir o ciclo a cada 28 dias. Total de 6 ciclos. POTENCIAL EMETOG&Ecirc;NICO: alto. MEDICAMENTO IRRITANTE: Dacarbazina. REFER&Ecirc;NCIAS: Garc&iacute;a-Del-Muro X et al. Randomized phase II study comparing gemcitabine plus dacarbazine versus dacarbazine alone in patients with previously treated soft tissue sarcoma: a Spanish Group for Research on Sarcomas study. J Clin Oncol. 2011 Jun 20;29(18):2528-33.', 1),
-(338, NULL, 'VITB13', 1, '2025-02-06 12:51:43', 'A01', 2, 'isso', 1);
+(338, NULL, 'VITB13', 1, '2025-02-06 12:51:43', 'A01', 2, 'isso', 1),
+(339, 'CANCEROLOGIA', 'FOLFIRINOX TRADICIONAL (AMBULATORIAL)', 0, '2025-05-05 15:30:15', 'C25', 3, 'As doses cadastradas utilizam como refer&ecirc;ncia o protocolo FOLFIRINOX tradicional. ATEN&Ccedil;&Atilde;O: A oxaliplatina n&atilde;o &eacute; compat&iacute;vel com Cloreto de S&oacute;dio 0,9%. Realizar flush com Glicose a 5% antes e ap&oacute;s a administra&ccedil;&atilde;o da oxaliplatina. A oxaliplatina pode ser administrada simultaneamente ao &aacute;cido fol&iacute;nico, utilizando conector em Y. O &aacute;cido fol&iacute;nico deve sempre ser administrado antes do Fluorouracil. Orientar o paciente a evitar bebidas, alimentos e superf&iacute;cies geladas por at&eacute; 5 dias ap&oacute;s a administra&ccedil;&atilde;o da oxaliplatina. Fazer profilaxia com atropina para evitar diarreia causada pelo Irinotecano. POTENCIAL EMETOG&Ecirc;NICO: moderado. REFER&Ecirc;NCIAS: Diretrizes de tratamentos oncol&oacute;gicos da Sociedade Brasileira de Oncologia Cl&iacute;nica - SBOC | Cap&iacute;tulo &quot;P&acirc;ncreas&quot; DATA DE PUBLICA&Ccedil;&Atilde;O 20/05/2024 | NCCP', 1),
+(340, 'CANCEROLOGIA', 'FOLFIRINOX TRADICIONAL (INTERNACAO)', 0, '2025-05-08 10:24:00', 'C25', 3, 'As doses cadastradas utilizam como refer&ecirc;ncia o protocolo FOLFIRINOX tradicional. ATEN&Ccedil;&Atilde;O: A oxaliplatina n&atilde;o &eacute; compat&iacute;vel com Cloreto de S&oacute;dio 0,9%. Realizar flush com Glicose a 5% antes e ap&oacute;s a administra&ccedil;&atilde;o da oxaliplatina. A oxaliplatina pode ser administrada simultaneamente ao &aacute;cido fol&iacute;nico, utilizando conector em Y. O &aacute;cido fol&iacute;nico deve sempre ser administrado antes do Fluorouracil. Orientar o paciente a evitar bebidas, alimentos e superf&iacute;cies geladas por at&eacute; 5 dias ap&oacute;s a administra&ccedil;&atilde;o da oxaliplatina. Fazer profilaxia com atropina para evitar diarreia causada pelo Irinotecano. POTENCIAL EMETOG&Ecirc;NICO: moderado. REFER&Ecirc;NCIAS: Diretrizes de tratamentos oncol&oacute;gicos da Sociedade Brasileira de Oncologia Cl&iacute;nica - SBOC | Cap&iacute;tulo &quot;P&acirc;ncreas&quot; DATA DE PUBLICA&Ccedil;&Atilde;O 20/05/2024 | NCCP', 4),
+(341, 'CANCEROLOGIA', 'FOLFIRINOX MODIFICADO (AMBULATORIAL)', 0, '2025-05-09 13:41:04', 'C25', 4, 'Observa&ccedil;&otilde;es do Protocolo: As doses cadastradas utilizam como refer&ecirc;ncia o protocolo FOLFIRINOX modificado. ATEN&Ccedil;&Atilde;O: A oxaliplatina n&atilde;o &eacute; compat&iacute;vel com Cloreto de S&oacute;dio 0,9%. Realizar flush com Glicose a 5% antes e ap&oacute;s a administra&ccedil;&atilde;o da oxaliplatina. A oxaliplatina pode ser administrada simultaneamente ao &aacute;cido fol&iacute;nico, utilizando conector em Y. O &aacute;cido fol&iacute;nico deve sempre ser administrado antes do Fluorouracil. Orientar o paciente a evitar bebidas, alimentos e superf&iacute;cies geladas por at&eacute; 5 dias ap&oacute;s a administra&ccedil;&atilde;o da oxaliplatina. Fazer profilaxia com atropina para evitar diarreia causada pelo Irinotecano. POTENCIAL EMETOG&Ecirc;NICO: moderado. REFER&Ecirc;NCIAS: Diretrizes de tratamentos oncol&oacute;gicos da Sociedade Brasileira de Oncologia Cl&iacute;nica - SBOC | Cap&iacute;tulo &quot;P&acirc;ncreas&quot; DATA DE PUBLICA&Ccedil;&Atilde;O 20/05/2024 | NCCP', 1),
+(342, 'CANCEROLOGIA', 'FOLFIRINOX MODIFICADO (INTERNACAO)', 0, '2025-05-09 14:07:00', 'C25', 4, 'Observa&ccedil;&otilde;es do Protocolo: As doses cadastradas utilizam como refer&ecirc;ncia o protocolo FOLFIRINOX modificado. ATEN&Ccedil;&Atilde;O: A oxaliplatina n&atilde;o &eacute; compat&iacute;vel com Cloreto de S&oacute;dio 0,9%. Realizar flush com Glicose a 5% antes e ap&oacute;s a administra&ccedil;&atilde;o da oxaliplatina. A oxaliplatina pode ser administrada simultaneamente ao &aacute;cido fol&iacute;nico, utilizando conector em Y. O &aacute;cido fol&iacute;nico deve sempre ser administrado antes do Fluorouracil. Orientar o paciente a evitar bebidas, alimentos e superf&iacute;cies geladas por at&eacute; 5 dias ap&oacute;s a administra&ccedil;&atilde;o da oxaliplatina. Fazer profilaxia com atropina para evitar diarreia causada pelo Irinotecano. POTENCIAL EMETOG&Ecirc;NICO: moderado. REFER&Ecirc;NCIAS: Diretrizes de tratamentos oncol&oacute;gicos da Sociedade Brasileira de Oncologia Cl&iacute;nica - SBOC | Cap&iacute;tulo &quot;P&acirc;ncreas&quot; DATA DE PUBLICA&Ccedil;&Atilde;O 20/05/2024 | NCCP', 4),
+(343, 'CANCEROLOGIA', 'FOLFIRI (INTERNACAO)', 0, '2025-05-12 10:15:52', 'C18', 4, 'As doses cadastradas utilizam como refer&ecirc;ncia o protocolo FOLFIRI. ATEN&Ccedil;&Atilde;O:  O &aacute;cido fol&iacute;nico deve sempre ser administrado antes do Fluorouracil. Orientar o paciente a evitar bebidas, alimentos e superf&iacute;cies geladas por at&eacute; 5 dias ap&oacute;s a administra&ccedil;&atilde;o da oxaliplatina. Fazer profilaxia com atropina para evitar diarreia causada pelo Irinotecano. POTENCIAL EMETOG&Ecirc;NICO: moderado. REFER&Ecirc;NCIAS: Diretrizes de tratamentos oncol&oacute;gicos da Sociedade Brasileira de Oncologia Cl&iacute;nica - SBOC. 2024. Tournigand C, Andr&eacute; T, Achille E, et al. FOLFIRI followed by FOLFOX6 or the reverse sequence in advanced colorectal cancer: a randomized GERCOR study. 2004. Dispon&iacute;vel em: https://pubmed.ncbi.nlm.nih.gov/14657227/. Alkader MS, Shahin AA, Alsoreeky MS, Matarweh HB, Abdullah IA. The Impact of Palliative Chemotherapy on the Survival of Patients With Metastatic Colorectal Cancer in Jordan. Cureus. 2023 Sep 29;15(9):e46187. 2023. Dispon&iacute;evel em: https://pmc.ncbi.nlm.nih.gov/articles/PMC10544268/', 4),
+(344, 'CANCEROLOGIA', 'FOLFIRI (AMBULATORIAL)', 0, '2025-05-12 10:27:28', 'C18', 4, 'As doses cadastradas utilizam como refer&ecirc;ncia o protocolo FOLFIRI. ATEN&Ccedil;&Atilde;O: O &aacute;cido fol&iacute;nico deve sempre ser administrado antes do Fluorouracil. Orientar o paciente a evitar bebidas, alimentos e superf&iacute;cies geladas por at&eacute; 5 dias ap&oacute;s a administra&ccedil;&atilde;o da oxaliplatina. Fazer profilaxia com atropina para evitar diarreia causada pelo Irinotecano. POTENCIAL EMETOG&Ecirc;NICO: moderado. REFER&Ecirc;NCIAS: 1. Diretrizes de tratamentos oncol&oacute;gicos da Sociedade Brasileira de Oncologia Cl&iacute;nica - SBOC. 2024. 2. Tournigand C, Andr&eacute; T, Achille E, et al. FOLFIRI followed by FOLFOX6 or the reverse sequence in advanced colorectal cancer: a randomized GERCOR study. 2004. Dispon&iacute;vel em: https://pubmed.ncbi.nlm.nih.gov/14657227/. Alkader MS, Shahin AA, Alsoreeky MS, Matarweh HB, Abdullah IA. 3. The Impact of Palliative Chemotherapy on the Survival of Patients With Metastatic Colorectal Cancer in Jordan. Cureus. 2023 Sep 29;15(9):e46187. 2023. Dispon&iacute;vel em: https://pmc.ncbi.nlm.nih.gov/articles/PMC10544268/', 1),
+(345, 'CANCEROLOGIA', 'FOLFOX (AMBULATORIAL)', 0, '2025-05-12 10:39:23', 'C18', 4, 'As doses cadastradas utilizam como refer&ecirc;ncia o protocolo FOLFOX. ATEN&Ccedil;&Atilde;O: A oxaliplatina n&atilde;o &eacute; compat&iacute;vel com Cloreto de S&oacute;dio 0,9%. A oxaliplatina pode ser administrada simultaneamente ao &aacute;cido fol&iacute;nico, utilizando conector em Y. O &aacute;cido fol&iacute;nico deve sempre ser administrado antes do Fluorouracil. Orientar paciente a evitar bebidas, alimentos e superf&iacute;cies geladas por at&eacute; 5 dias ap&oacute;s a administra&ccedil;&atilde;o da oxaliplatina. POTENCIAL EMETOG&Ecirc;NICO: moderado. REFER&Ecirc;NCIAS: Andr&eacute;, T. et al. Oxaliplatin, Fluorouracil, and Leucovorin as Adjuvant Treatment for Colon Cancer. N Engl J Med 2004;350:2343-51. / BC Cancer Protocol Summary GIFOLFOX.', 1),
+(346, 'CANCEROLOGIA', 'DARATUMUMABE SC CICLOS 1 E 2 (SEMANAL)', 0, '2025-05-21 13:33:32', 'C90', 2, 'Este esquema pode ser utilizado para Daratumumabe SC em monoterapia, ou em combina&ccedil;&atilde;o com lenalidomida e dexametasona (protocolo DRd) ou pomalidomida e dexametasona (protocolo DPd), em ciclos de 28 dias. POTENCIAL EMETOG&Ecirc;NICO: m&iacute;nimo. REFER&Ecirc;NCIAS: DALINVI: solu&ccedil;&atilde;o para dilui&ccedil;&atilde;o para infus&atilde;o (Bula profissional de sa&uacute;de), Janssen-Cilag Farmac&ecirc;utica, 2024. Daratumumab or Active Monitoring for High-Risk Smoldering Multiple Myeloma. Meletios A et al. N Engl J Med 2025;392:1777-1788 DOI: 10.1056/NEJMoa2409029. 2024.  Subcutaneous versus intravenous daratumumab in patients with relapsed or refractory multiple myeloma (COLUMBA): a multicentre, open-label, non-inferiority, randomised, phase 3 trial. Mateos et al. Lancet Haematol. 2020 May;7(5):e370-e380. doi: 10.1016/S2352-3026(20)30070-3.  ATEN&Ccedil;&Atilde;O: DARATUMUMABE &eacute; um medicamento n&atilde;o padronizado na Institui&ccedil;&atilde;o.', 1),
+(347, 'HEMATOLOGIA', 'DARATUMUMABE SC CICLOS 3 AO 6 (QUINZENAL)', 0, '2025-05-21 13:45:11', 'C90', 2, 'Este esquema pode ser utilizado para Daratumumabe SC em monoterapia, ou em combina&ccedil;&atilde;o com lenalidomida e dexametasona (protocolo DRd) ou pomalidomida e dexametasona (protocolo DPd), em ciclos de 28 dias. POTENCIAL EMETOG&Ecirc;NICO: m&iacute;nimo. REFER&Ecirc;NCIAS: DALINVI: solu&ccedil;&atilde;o para dilui&ccedil;&atilde;o para infus&atilde;o (Bula profissional de sa&uacute;de), Janssen-Cilag Farmac&ecirc;utica, 2024. Daratumumab or Active Monitoring for High-Risk Smoldering Multiple Myeloma. Meletios A et al. N Engl J Med 2025;392:1777-1788 DOI: 10.1056/NEJMoa2409029. 2024.  Subcutaneous versus intravenous daratumumab in patients with relapsed or refractory multiple myeloma (COLUMBA): a multicentre, open-label, non-inferiority, randomised, phase 3 trial. Mateos et al. Lancet Haematol. 2020 May;7(5):e370-e380. doi: 10.1016/S2352-3026(20)30070-3.  ATEN&Ccedil;&Atilde;O: DARATUMUMABE &eacute; um medicamento n&atilde;o padronizado na Institui&ccedil;&atilde;o.', 1),
+(348, 'HEMATOLOGIA', 'DARATUMUMABE SC CICLO 7 EM DIANTE', 0, '2025-05-21 13:53:48', 'C90', 2, 'Este esquema pode ser utilizado para Daratumumabe SC em monoterapia, ou em combina&ccedil;&atilde;o com lenalidomida e dexametasona (protocolo DRd) ou pomalidomida e dexametasona (protocolo DPd), em ciclos de 28 dias. POTENCIAL EMETOG&Ecirc;NICO: m&iacute;nimo. REFER&Ecirc;NCIAS: DALINVI: solu&ccedil;&atilde;o para dilui&ccedil;&atilde;o para infus&atilde;o (Bula profissional de sa&uacute;de), Janssen-Cilag Farmac&ecirc;utica, 2024. Daratumumab or Active Monitoring for High-Risk Smoldering Multiple Myeloma. Meletios A et al. N Engl J Med 2025;392:1777-1788 DOI: 10.1056/NEJMoa2409029. 2024.  Subcutaneous versus intravenous daratumumab in patients with relapsed or refractory multiple myeloma (COLUMBA): a multicentre, open-label, non-inferiority, randomised, phase 3 trial. Mateos et al. Lancet Haematol. 2020 May;7(5):e370-e380. doi: 10.1016/S2352-3026(20)30070-3.  ATEN&Ccedil;&Atilde;O: DARATUMUMABE &eacute; um medicamento n&atilde;o padronizado na Institui&ccedil;&atilde;o.', 1),
+(349, NULL, 'BRENTUXIMABE (MONOTERAPIA)', 0, '2025-06-02 11:33:48', 'C81', 5, 'N&atilde;o administrar em bolus. Se o peso do paciente for maior que 100 kg, o c&aacute;lculo da dose deve usar 100 kg. Potencial emetog&ecirc;nico: baixo.\r\nEsse medicamento n&atilde;o &eacute; padronizado na Institui&ccedil;&atilde;o.\r\nREFER&Ecirc;NCIAS:  PAVONE, V. et al. Brentuximab vedotin as salvage treatment in Hodgkin lymphoma na&iuml;ve transplant patients or failing ASCT: the real life experience of Rete Ematologica Pugliese (REP). Annals of hematology, v. 97, n. 10, p. 1817&ndash;1824, out. 2018. ADCETRIS. Bula. Takeda. 2024', 1),
+(350, 'CANCEROLOGIA', 'FLOT', 1, '2025-06-11 09:02:21', 'C16', 2, 'Potencial Emetog&ecirc;nico: moderado. Concentra&ccedil;&atilde;o final do docetaxel deve estar entre 0.3 e 0.74 mg/mL. Monitorar sinais de rea&ccedil;&otilde;es infusionais durante a infus&atilde;o do Docetaxel. ATEN&Ccedil;&Atilde;O: A oxaliplatina n&atilde;o &eacute; compat&iacute;vel com Cloreto de S&oacute;dio 0,9%. A oxaliplatina pode ser administrada simultaneamente ao &aacute;cido fol&iacute;nico, utilizando conector em Y. O &aacute;cido fol&iacute;nico deve sempre ser administrado antes do Fluorouracil. Orientar paciente a evitar bebidas, alimentos e superf&iacute;cies geladas por at&eacute; 5 dias ap&oacute;s a administra&ccedil;&atilde;o da oxaliplatina.  REFER&Ecirc;NCIAS: Andr&eacute;, T. et al. Oxaliplatin, Fluorouracil, and Leucovorin as Adjuvant Treatment for Colon Cancer. N Engl J Med 2004;350:2343-51.//AL BATRAN, S. E.; HOMANN, N.; PAULIGK, C.; GOETZE, T. O.; MEILER, J.; KASPER, S.; et al. Perioperative chemotherapy with fluorouracil plus leucovorin, oxaliplatin, and docetaxel versus fluorouracil or capecitabine plus cisplatin and epirubicin for locally advanced, resectable gastric or gastro oesophageal junction adenocarcinoma (FLOT4): a randomised, phase 2/3 trial. Lancet, London, v. 393, n. 10184, p. 1948&ndash;1957, 11 maio 2019. DOI: 10.1016/S0140 6736(18)32557 1. PubMed PMID 30982686.// NORTHERN CANCER ALLIANCE. FLOT CRP18-UGI018 Version 1.0: FLOT for perioperative treatment of gastric cancer. [S.l.]: Northern Cancer Alliance, 2018. Dispon&iacute;vel em: https://www.northerncanceralliance.nhs.uk/wp-content/uploads/2018/11/FLOT-CRP18-UGI018-v1-0.pdf.', 1),
+(351, 'CANCEROLOGIA', 'DOXORRUBICINA+IFOSFAMIDA', 1, '2025-06-12 11:36:19', 'C49', 2, 'Potencial emetog&ecirc;nico moderado. Monitorar sinais de cardiotoxicidade dose acumulada 400 a 550 mg/m&sup2;de Doxorrubicina. Doxorrubicina &eacute; um medicamento vesicante. Para profilaxia da cistite hemorr&aacute;gica, ifosfamida deve ser usada em combina&ccedil;&atilde;o com mesna. Concentra&ccedil;&atilde;o total de mesna n&atilde;o deve exceder 20 mg/mL. Se necess&aacute;rio, mesna por via oral pode ser utilizada, mas n&atilde;o &eacute; recomendada para a dose inicial. Refer&ecirc;ncias: Ifosfamida. Bula do medicamento [recurso eletr&ocirc;nico]. Brasil. Eurofarma. 2024./ GROBMYER, S. R. et al. Neo-adjuvant chemotherapy for primary high-grade extremity soft tissue sarcoma. European Journal of Cancer, [S.l.], v. 40, n. 5, p. 686&ndash;695, 2004. Dispon&iacute;vel em: https://www.sciencedirect.com/science/article/pii/S092375341947525X./ BC Cancer. SAAI3 &ndash; BC Cancer protocol summary for 3 day doxorubicin + ifosfamide + mesna para pacientes com sarcoma de tecido mole avan&ccedil;ado. Vancouver: BC Cancer&mdash;it Chemotherapy Protocols, [s.d.]. Dispon&iacute;vel em: http://www.bccancer.bc.ca/chemotherapy-protocols-site/Documents/Sarcoma/SAAI3_Protocol.pdf. /UNIVERSITY HOSPITALS SOUTHAMPTON NHS FOUNDATION TRUST. Sarcoma &ndash; InP Doxorubicin + Ifosfamide. Standard Operating Procedure (SOP) Version 1 (February 2016). Southampton: UHS, 2016. Dispon&iacute;vel em: https://www.uhs.nhs.uk/Media/UHS-website-2019/Docs/Chemotherapy-', 1),
+(352, NULL, 'DOXORRUBICINA + IFOSFAMIDA + MESNA', 1, '2025-06-17 09:24:02', 'C49', 3, 'Durante ou imediatamente ap&oacute;s a administra&ccedil;&atilde;o de Ifosfamida, quantidades adequadas de l&iacute;quido devem ser ingeridas ou infundidas para for&ccedil;ar a diurese, a fim de reduzir o risco de toxicidade do trato urin&aacute;rio. ATEN&Ccedil;&Atilde;O! Para profilaxia da cistite hemorr&aacute;gica, a ifosfamida deve ser usada em combina&ccedil;&atilde;o com mesna. Monitorar sinais de cardiotoxicidade dose acumulada 400 a 550 mg/m&sup2; de Doxorrubicina. Doxorrubicina &eacute; um medicamento vesicante. Colora&ccedil;&atilde;o vermelha na urina pode ocorrer 1 a 2 dias ap&oacute;s administra&ccedil;&atilde;o de doxorrubicina.\r\nREFER&Ecirc;NCIAS: GROBMYER, S. R. et al. Neo-adjuvant chemotherapy for primary high-grade extremity soft tissue sarcoma. Annals of Oncology, v. 15, n. 11, p. 1667&ndash;1672, nov. 2004. DOI: 10.1093/annonc/mdh431.// DOXOrubicin (75) and Ifosfamide Therapy. NCCP Chemotherapy Regimen. https://www.hse.ie/eng/services/list/5/cancer/profinfo/chemoprotocols/sarcoma/392.pdf // UNIVERSITY HOSPITAL SOUTHAMPTON NHS FOUNDATION TRUST. Inpatient Doxorubicin and Ifosfamide for Sarcoma &ndash; Standard Operating Procedure (Version 1). Southampton: UHS, 2019. Dispon&iacute;vel em: https://www.uhs.nhs.uk/Media/UHS-website-2019/Docs/Chemotherapy-SOPs1/Sarcoma/InPDoxorubicinIfosfamideVer1.pdf. //  BRASIL. Ag&ecirc;ncia Nacional de Vigil&acirc;ncia Sanit&aacute;ria. ifosfamida Bula profissional de sa&uacute;de P&oacute; liofilizado para solu&ccedil;&atilde;o injet&aacute;vel 1g e 2g. 2024.', 1);
 
 -- --------------------------------------------------------
 
@@ -3279,8 +3294,8 @@ INSERT INTO `TabPreschuap_Protocolo_Medicamento` (`idTabPreschuap_Protocolo_Medi
 (144, 88, 5, 2, 8, 10.00, 3, 2, 1, 1000.00, '24H', 59, '2022-03-28 16:00:19', 0),
 (145, 88, 6, 2, 29, 40.00, 1, 1, 4, NULL, NULL, 19, '2022-03-28 16:00:19', 0),
 (146, 88, 7, 2, 48, 100.00, 1, 1, 4, NULL, NULL, 58, '2022-03-28 16:00:19', 0),
-(147, 89, 1, 3, 29, 10.00, 1, 2, 1, 100.00, '30 min', 15, '2022-03-28 16:00:19', 0),
-(148, 89, 2, 1, 41, 12.00, 1, 2, 1, 100.00, '15 min', 15, '2022-03-28 16:00:19', 0),
+(147, 89, 2, 3, 29, 10.00, 1, 2, 1, 100.00, '30 min', 15, '2022-03-28 16:00:19', 0),
+(148, 89, 1, 1, 41, 12.00, 1, 2, 1, 100.00, '15 min', 15, '2022-03-28 16:00:19', 0),
 (149, 89, 3, 2, 10, 60.00, 3, 2, 1, 100.00, '15 min', 22, '2022-03-28 16:00:19', 0),
 (150, 89, 4, 2, 7, 100.00, 3, 2, 1, 500.00, '24H', 60, '2022-03-28 16:00:19', 0),
 (151, 90, 1, 1, 29, 10.00, 1, 2, 1, 100.00, '30 min', 15, '2022-03-28 16:00:19', 0),
@@ -3970,11 +3985,11 @@ INSERT INTO `TabPreschuap_Protocolo_Medicamento` (`idTabPreschuap_Protocolo_Medi
 (850, 307, 9, 3, 45, 300.00, 9, 4, NULL, 0.00, '', 45, '2024-08-07 14:12:48', 0),
 (851, 308, 2, 2, 90, 20.00, 3, 2, 1, 100.00, '60 min', 21, '2024-08-09 15:31:40', 0),
 (852, 308, 1, 1, 41, 8.00, 1, 2, 1, 100.00, '15 Min', 21, '2024-08-13 11:48:40', 0),
-(853, 318, 3, 3, 43, 1.00, 1, 2, 1, 100.00, '60 min', 84, '2024-08-14 15:28:20', 0),
-(854, 318, 2, 1, 56, 1.00, 1, 5, 3, 100.00, '60', 84, '2024-08-14 15:28:44', 0),
+(853, 318, 2, 3, 70, 1.00, 1, 2, 1, 100.00, '60 min', 84, '2024-08-14 15:28:20', 0),
+(854, 318, 3, 1, 56, 1.00, 1, 5, 3, 100.00, '60', 84, '2024-08-14 15:28:44', 0),
 (855, 317, NULL, 1, 29, 10.00, 1, 2, 1, 100.00, '15', 3, '2024-08-14 16:00:37', 1),
 (856, 318, 1, 3, 61, 1.00, 1, 3, NULL, 1.00, 'agora', 8, '2024-09-03 10:40:31', 0),
-(857, 318, 4, 1, 38, 10.00, 1, 2, 2, 100.00, '15', 196, '2024-09-06 15:38:56', 0),
+(857, 318, 5, 1, 38, 10.00, 1, 2, 2, 100.00, '15', 196, '2024-09-06 15:38:56', 0),
 (858, 320, 1, 1, 29, 20.00, 1, 2, 1, 100.00, '30 min', 10, '2024-09-13 14:55:30', 0),
 (859, 320, 2, 2, 92, 9.00, 9, 2, 22, 275.50, '24 horas', 60, '2024-09-13 15:29:54', 0),
 (860, 320, 3, 2, 92, 28.00, 9, 2, 22, 275.50, '24 horas', 213, '2024-09-13 15:50:11', 0),
@@ -4035,7 +4050,91 @@ INSERT INTO `TabPreschuap_Protocolo_Medicamento` (`idTabPreschuap_Protocolo_Medi
 (915, 337, 3, 2, 17, 1800.00, 3, 2, 1, 250.00, '3 horas', 216, '2024-12-04 15:35:42', 0),
 (916, 337, 4, 2, 9, 500.00, 3, 2, 1, 500.00, '60 min', 216, '2024-12-04 15:36:35', 0),
 (917, 338, 2, 3, 61, 1.00, 11, 7, 1, 10.00, '15', 109, '2025-02-06 12:53:23', 0),
-(918, 338, 1, 4, 56, 1.00, 13, 1, 6, 1.00, '1', 152, '2025-02-06 12:53:47', 0);
+(918, 338, 1, 4, 56, 1.00, 13, 1, 6, 1.00, '1', 152, '2025-02-06 12:53:47', 0),
+(919, 318, 4, 1, 62, 15.00, 3, 5, 1, 100.00, '15', 32, '2025-04-24 11:59:50', 0),
+(920, 339, 4, 2, 23, 85.00, 3, 2, 2, 500.00, '2 horas', 4, '2025-05-05 15:35:33', 0),
+(921, 339, 2, 1, 41, 8.00, 1, 2, 1, 100.00, '30 minutos', 4, '2025-05-06 10:34:09', 0),
+(922, 339, 1, 1, 29, 10.00, 1, 2, 1, 100.00, '30 minutos', 4, '2025-05-06 10:36:22', 0),
+(923, 339, 5, 2, 20, 180.00, 3, 2, 2, 250.00, '90 minutos', 4, '2025-05-06 10:40:11', 0),
+(924, 339, 6, 3, 42, 400.00, 3, 2, 2, 250.00, '2 horas', 4, '2025-05-06 10:44:27', 0),
+(925, 339, 7, 2, 1, 400.00, 3, 2, 1, 100.00, '15 minutos', 4, '2025-05-06 10:45:37', 0),
+(926, 339, 8, 2, 1, 2400.00, 3, 2, 1, 230.00, '46 horas (em bomba elastom&eacute;rica)', 4, '2025-05-06 10:51:19', 0),
+(927, 340, 1, 1, 29, 10.00, 1, 2, 1, 100.00, '30 minutos', 4, '2025-05-08 12:12:40', 0),
+(928, 340, 2, 1, 41, 8.00, 1, 2, 1, 100.00, '30 minutos', 4, '2025-05-08 12:13:38', 0),
+(929, 339, 3, 1, 56, 0.25, 1, 4, 4, 0.00, '', 118, '2025-05-08 13:13:28', 0),
+(930, 340, 3, 1, 56, 0.25, 1, 4, 4, 0.00, '', 118, '2025-05-08 13:32:43', 0),
+(931, 340, 4, 2, 23, 85.00, 3, 2, 2, 500.00, '2 horas', 4, '2025-05-08 13:33:38', 0),
+(932, 340, 5, 2, 20, 180.00, 3, 2, 2, 250.00, '90 minutos', 4, '2025-05-08 13:34:28', 0),
+(933, 340, 6, 3, 42, 400.00, 3, 2, 2, 250.00, '2 horas', 4, '2025-05-08 13:35:54', 0),
+(934, 340, 7, 2, 1, 400.00, 3, 2, 1, 100.00, '15 minutos', 4, '2025-05-08 13:36:51', 0),
+(935, 340, 8, 2, 1, 2400.00, 3, 2, 1, 500.00, '46 horas', 4, '2025-05-08 13:37:47', 0),
+(936, 341, 4, 2, 23, 85.00, 3, 2, 2, 500.00, '2 horas', 4, '2025-05-09 13:42:55', 0),
+(937, 341, 5, 2, 20, 150.00, 3, 2, 2, 250.00, '90 min', 4, '2025-05-09 13:46:27', 0),
+(938, 341, 7, 2, 1, 2400.00, 3, 2, 1, 230.00, '46h (em bomba elastom&eacute;rica)', 4, '2025-05-09 13:51:35', 0),
+(939, 341, 6, 3, 42, 400.00, 3, 2, 2, 250.00, '2 horas', 4, '2025-05-09 13:52:56', 0),
+(940, 341, 3, 1, 56, 0.25, 1, 4, 4, 0.00, '', 118, '2025-05-09 13:55:17', 0),
+(941, 341, 1, 1, 29, 10.00, 1, 2, 1, 100.00, '30 min', 4, '2025-05-09 13:56:09', 0),
+(942, 341, 2, 1, 41, 8.00, 1, 2, 1, 100.00, '30 min', 4, '2025-05-09 13:58:14', 0),
+(943, 342, 1, 1, 29, 10.00, 1, 2, 1, 100.00, '30 min', 4, '2025-05-09 14:08:28', 0),
+(944, 342, 2, 1, 41, 8.00, 1, 2, 1, 100.00, '30 min', 4, '2025-05-09 14:09:42', 0),
+(945, 342, 3, 1, 56, 0.25, 1, 4, 4, 0.00, '', 118, '2025-05-09 14:10:45', 0),
+(946, 342, 4, 2, 23, 85.00, 3, 2, 2, 500.00, '2 horas', 4, '2025-05-09 14:11:56', 0),
+(947, 342, 5, 2, 20, 150.00, 3, 2, 2, 250.00, '90 min', 4, '2025-05-09 14:12:53', 0),
+(948, 342, 6, 3, 42, 400.00, 3, 2, 2, 250.00, '2 horas', 4, '2025-05-09 14:14:26', 0),
+(949, 342, 7, 2, 1, 2400.00, 3, 2, 1, 500.00, '46h', 4, '2025-05-09 14:15:28', 0),
+(950, 343, 1, 1, 29, 10.00, 1, 2, 1, 100.00, '30 min', 4, '2025-05-12 10:17:16', 0),
+(951, 343, 2, 1, 41, 8.00, 1, 2, 1, 100.00, '30 min', 4, '2025-05-12 10:17:53', 0),
+(952, 343, 3, 1, 56, 0.25, 1, 4, 4, 0.00, '', 118, '2025-05-12 10:18:45', 0),
+(953, 343, 4, 2, 20, 180.00, 3, 2, 2, 250.00, '90 min', 4, '2025-05-12 10:19:45', 0),
+(954, 343, 5, 3, 42, 400.00, 3, 2, 2, 250.00, '2 horas', 4, '2025-05-12 10:20:44', 0),
+(955, 343, 6, 2, 1, 400.00, 3, 2, 1, 100.00, '15 min', 4, '2025-05-12 10:22:43', 0),
+(956, 343, 7, 2, 1, 2400.00, 3, 2, 1, 500.00, '46h', 4, '2025-05-12 10:23:51', 0),
+(957, 344, 1, 1, 29, 10.00, 1, 2, 1, 100.00, '30 min', 4, '2025-05-12 10:28:31', 0),
+(958, 344, 2, 1, 41, 8.00, 1, 2, 1, 100.00, '30 min', 4, '2025-05-12 10:29:03', 0),
+(959, 344, 3, 1, 56, 0.25, 1, 4, 4, 0.00, '', 118, '2025-05-12 10:29:34', 0),
+(960, 344, 4, 2, 20, 180.00, 3, 2, 2, 250.00, '90 min', 4, '2025-05-12 10:30:42', 0),
+(961, 344, 5, 3, 42, 400.00, 3, 2, 2, 250.00, '2 horas', 4, '2025-05-12 10:31:32', 0),
+(962, 344, 6, 2, 1, 400.00, 3, 2, 1, 100.00, '15 min', 4, '2025-05-12 10:32:19', 0),
+(963, 344, 7, 2, 1, 2400.00, 3, 2, 1, 230.00, '46h (em bomba elastom&eacute;rica)', 4, '2025-05-12 10:33:17', 0),
+(964, 345, 1, 1, 29, 10.00, 1, 2, 1, 100.00, '30 min', 4, '2025-05-12 10:40:55', 0),
+(965, 345, 2, 1, 41, 8.00, 1, 2, 1, 100.00, '30 min', 4, '2025-05-12 10:41:22', 0),
+(966, 345, 3, 2, 23, 85.00, 3, 2, 2, 500.00, '2 horas', 4, '2025-05-12 10:42:16', 0),
+(967, 345, 4, 3, 42, 400.00, 3, 2, 2, 250.00, '2 horas', 4, '2025-05-12 10:43:09', 0),
+(968, 345, 5, 2, 1, 400.00, 3, 2, 1, 100.00, '15 min', 4, '2025-05-12 10:43:58', 0),
+(969, 345, 6, 2, 1, 2400.00, 3, 2, 1, 230.00, '46h (em bomba elastom&eacute;rica)', 4, '2025-05-12 10:45:15', 0),
+(970, 346, 1, 1, 47, 1000.00, 1, 1, 4, 0.00, '', 11, '2025-05-21 13:35:25', 0),
+(971, 346, 2, 1, 36, 25.00, 1, 2, 1, 20.00, 'Bolus', 11, '2025-05-21 13:37:39', 0),
+(972, 346, 3, 1, 29, 20.00, 1, 2, 1, 100.00, '30 min', 11, '2025-05-21 13:39:20', 0),
+(973, 346, 4, 2, 94, 1800.00, 1, 4, 4, 0.00, '', 133, '2025-05-21 13:41:09', 0),
+(974, 347, 1, 1, 47, 1000.00, 1, 1, 4, 0.00, '', 11, '2025-05-21 13:48:10', 0),
+(975, 347, 2, 1, 36, 25.00, 1, 2, 1, 20.00, 'Bolus', 11, '2025-05-21 13:48:47', 0),
+(976, 347, 3, 1, 29, 20.00, 1, 2, 1, 100.00, '30 min', 11, '2025-05-21 13:51:14', 0),
+(977, 347, 4, 2, 94, 1800.00, 1, 4, 4, 0.00, '', 216, '2025-05-21 13:52:47', 0),
+(978, 348, 1, 1, 47, 1000.00, 1, 1, 4, 0.00, '', 11, '2025-05-21 13:58:09', 0),
+(979, 348, 2, 1, 36, 25.00, 1, 2, 1, 20.00, 'Bolus', 11, '2025-05-21 13:59:41', 0),
+(980, 348, 3, 1, 29, 20.00, 1, 2, 1, 100.00, '30 min', 11, '2025-05-21 14:00:45', 0),
+(981, 348, 4, 2, 94, 1800.00, 1, 4, 4, 0.00, '', 4, '2025-05-21 14:01:47', 0),
+(982, 318, 6, 4, 1, 5.00, 3, 3, 6, 100.00, '15', 68, '2025-05-21 14:56:55', 0),
+(983, 349, 1, 1, 29, 10.00, 1, 2, 1, 100.00, '30 min', 11, '2025-06-02 11:36:19', 0),
+(984, 349, 2, 1, 47, 500.00, 1, 1, 4, 0.00, '', 11, '2025-06-02 11:36:57', 0),
+(985, 349, 3, 1, 36, 25.00, 1, 2, 1, 20.00, 'bolus', 11, '2025-06-02 11:38:32', 0),
+(986, 349, 4, 2, 4, 1.80, 4, 2, 1, 150.00, '30 min', 4, '2025-06-02 11:40:22', 0),
+(987, 350, 1, 1, 29, 10.00, 1, 2, 1, 100.00, '30 min', 11, '2025-06-11 09:11:08', 0),
+(988, 350, 2, 1, 41, 8.00, 1, 2, 1, 100.00, '30 min', 11, '2025-06-11 09:11:49', 0),
+(989, 350, 3, 2, 11, 50.00, 3, 2, 1, 250.00, '1h', 4, '2025-06-11 09:13:59', 0),
+(990, 350, 4, 2, 23, 85.00, 3, 2, 2, 500.00, '2h', 4, '2025-06-11 09:16:14', 0),
+(991, 350, 5, 3, 42, 200.00, 3, 2, 2, 250.00, '2h', 4, '2025-06-11 09:17:52', 0),
+(992, 350, 6, 2, 1, 2600.00, 3, 2, 1, 500.00, '24h', 4, '2025-06-11 09:19:28', 0),
+(993, 318, 7, 2, 43, 15.00, 1, 5, 1, 100.00, '15', 85, '2025-06-11 13:40:32', 0),
+(994, 318, NULL, 1, 5, 15.00, 10, 5, 6, 100.00, '15', 152, '2025-06-13 11:08:11', 1),
+(995, 352, 3, 2, 12, 25.00, 3, 2, 1, 100.00, '15min', 22, '2025-06-17 11:41:55', 0),
+(996, 352, 1, 1, 29, 10.00, 1, 2, 1, 100.00, '30 min', 11, '2025-06-17 13:41:56', 0),
+(997, 352, 2, 1, 41, 8.00, 1, 2, 1, 100.00, '30 min', 11, '2025-06-17 13:43:54', 0),
+(998, 352, 4, 3, 46, 400.00, 3, 2, 1, 100.00, '15 min', 22, '2025-06-18 07:36:46', 0),
+(999, 352, 5, 2, 19, 3000.00, 3, 2, 1, 1000.00, '3h', 22, '2025-06-18 07:40:50', 0),
+(1000, 352, 7, 3, 46, 800.00, 1, 1, 4, 0.00, '', 143, '2025-06-18 07:43:18', 0),
+(1001, 352, 8, 3, 46, 800.00, 1, 1, NULL, 0.00, '', 144, '2025-06-18 07:49:01', 0),
+(1002, 352, 6, 4, 60, 500.00, 2, 2, 4, 500.00, '30 min', 22, '2025-06-18 11:45:24', 0);
 
 -- --------------------------------------------------------
 
@@ -16659,6 +16758,15 @@ CREATE TABLE `TabSismicrob_AntibioticoMantido` (
   `DataCadastro` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `TabSismicrob_AntibioticoMantido`
+--
+
+INSERT INTO `TabSismicrob_AntibioticoMantido` (`idTabSismicrob_AntibioticoMantido`, `AntibioticoMantido`, `Inativo`, `DataCadastro`) VALUES
+(1, 'Apenas na indu&ccedil;&atilde;o', 0, '2024-04-12 11:07:30'),
+(2, '24 horas', 0, '2024-04-12 11:07:42'),
+(3, '48 horas', 0, '2024-04-12 11:07:46');
+
 -- --------------------------------------------------------
 
 --
@@ -16673,6 +16781,21 @@ CREATE TABLE `TabSismicrob_DiagnosticoInfeccioso` (
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `TabSismicrob_DiagnosticoInfeccioso`
+--
+
+INSERT INTO `TabSismicrob_DiagnosticoInfeccioso` (`idTabSismicrob_DiagnosticoInfeccioso`, `DiagnosticoInfeccioso`, `Classificacao`, `Inativo`, `DataCadastro`) VALUES
+(1, 'Infecção de Cateter', 1, 0, '2023-12-09 20:03:48'),
+(2, 'ITU', 1, 0, '2023-12-09 20:03:48'),
+(3, 'Pneumonia', 1, 0, '2023-12-09 20:03:48'),
+(4, 'Infecção Sítio Cirúrgico', 1, 0, '2023-12-09 20:03:48'),
+(5, 'Infecção Cutânea', 1, 0, '2023-12-09 20:03:48'),
+(6, 'Infecção Osteoarticular', 1, 0, '2023-12-09 20:03:48'),
+(7, 'Outro', 2, 0, '2023-12-09 20:03:48'),
+(8, 'Infecção Abdominal', 1, 0, '2023-12-09 20:03:48'),
+(9, 'Neutropenia Febril', 1, 0, '2023-12-09 20:03:48');
+
 -- --------------------------------------------------------
 
 --
@@ -16685,6 +16808,39 @@ CREATE TABLE `TabSismicrob_Especialidade` (
   `Inativo` tinyint(4) NOT NULL DEFAULT 0,
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `TabSismicrob_Especialidade`
+--
+
+INSERT INTO `TabSismicrob_Especialidade` (`idTabSismicrob_Especialidade`, `Especialidade`, `Inativo`, `DataCadastro`) VALUES
+(1, 'CARDIOLOGIA', 0, '2023-12-09 20:04:44'),
+(2, 'CIRURGIA GERAL', 0, '2023-12-09 20:04:44'),
+(3, 'CIRURGIA PLÁSTICA', 0, '2023-12-09 20:04:44'),
+(4, 'CIRURGIA TORÁCICA', 0, '2023-12-09 20:04:44'),
+(5, 'CIRURGIA VASCULAR', 0, '2023-12-09 20:04:44'),
+(6, 'CLINICA MÉDICA', 0, '2023-12-09 20:04:44'),
+(7, 'EMERGÊNCIA', 0, '2023-12-09 20:04:44'),
+(8, 'EMERGÊNCIA PEDIÁTRICA', 0, '2023-12-09 20:04:44'),
+(9, 'GASTROENTEROLOGIA', 0, '2023-12-09 20:04:44'),
+(10, 'GINECOLOGIA', 0, '2023-12-09 20:04:44'),
+(11, 'HEMATOLOGIA', 0, '2023-12-09 20:04:44'),
+(12, 'INFECTOLOGIA', 0, '2023-12-09 20:04:44'),
+(13, 'MASTOLOGIA', 0, '2023-12-09 20:04:44'),
+(14, 'NEFROLOGIA', 0, '2023-12-09 20:04:44'),
+(15, 'NEUROCIRURGIA', 0, '2023-12-09 20:04:44'),
+(16, 'OBSTETRÍCIA', 0, '2023-12-09 20:04:44'),
+(17, 'OFTALMOLOGIA', 0, '2023-12-09 20:04:44'),
+(18, 'ORTOPEDIA', 0, '2023-12-09 20:04:44'),
+(19, 'OTORRINOLARINGOLOGIA', 0, '2023-12-09 20:04:44'),
+(20, 'OUTRO', 0, '2023-12-09 20:04:44'),
+(21, 'PEDIATRIA', 0, '2023-12-09 20:04:44'),
+(22, 'PNEUMOLOGIA', 0, '2023-12-09 20:04:44'),
+(23, 'TERAPIA INTENSIVA', 0, '2023-12-09 20:04:44'),
+(24, 'UI NEONATAL', 0, '2023-12-09 20:04:44'),
+(25, 'UNIDADE CORONARIANA', 0, '2023-12-09 20:04:44'),
+(26, 'UROLOGIA', 0, '2023-12-09 20:04:44'),
+(27, 'UTI NEONATAL', 0, '2023-12-09 20:04:44');
 
 -- --------------------------------------------------------
 
@@ -16699,6 +16855,15 @@ CREATE TABLE `TabSismicrob_Indicacao` (
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `TabSismicrob_Indicacao`
+--
+
+INSERT INTO `TabSismicrob_Indicacao` (`idTabSismicrob_Indicacao`, `Indicacao`, `Inativo`, `DataCadastro`) VALUES
+(1, 'Profilaxia Cirúrgica', 0, '2023-12-09 20:05:19'),
+(2, 'Profilaxia Clínica', 0, '2023-12-09 20:05:19'),
+(3, 'Terapêutica', 0, '2023-12-09 20:05:19');
+
 -- --------------------------------------------------------
 
 --
@@ -16711,6 +16876,14 @@ CREATE TABLE `TabSismicrob_Infeccao` (
   `Inativo` tinyint(4) NOT NULL DEFAULT 0,
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `TabSismicrob_Infeccao`
+--
+
+INSERT INTO `TabSismicrob_Infeccao` (`idTabSismicrob_Infeccao`, `Infeccao`, `Inativo`, `DataCadastro`) VALUES
+(1, 'Comunitária', 0, '2023-12-09 20:05:47'),
+(2, 'Hospitalar', 0, '2023-12-09 20:05:47');
 
 -- --------------------------------------------------------
 
@@ -16725,6 +16898,23 @@ CREATE TABLE `TabSismicrob_Intervalo` (
   `Inativo` tinyint(4) NOT NULL DEFAULT 0,
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `TabSismicrob_Intervalo`
+--
+
+INSERT INTO `TabSismicrob_Intervalo` (`idTabSismicrob_Intervalo`, `Intervalo`, `Codigo`, `Inativo`, `DataCadastro`) VALUES
+(1, 4, 'horas', 0, '2023-12-09 20:06:15'),
+(2, 6, 'horas', 0, '2023-12-09 20:06:15'),
+(3, 8, 'horas', 0, '2023-12-09 20:06:15'),
+(4, 12, 'horas', 0, '2023-12-09 20:06:15'),
+(5, 24, 'horas', 0, '2023-12-09 20:06:15'),
+(6, 48, 'horas', 0, '2023-12-09 20:06:15'),
+(7, 72, 'horas', 0, '2023-12-09 20:06:15'),
+(8, 96, 'horas', 0, '2023-12-09 20:06:15'),
+(9, 7, 'dias', 0, '2023-12-09 20:06:15'),
+(10, 21, 'dias', 0, '2023-12-09 20:06:15'),
+(11, 28, 'dias', 0, '2023-12-09 20:06:15');
 
 -- --------------------------------------------------------
 
@@ -16742,6 +16932,151 @@ CREATE TABLE `TabSismicrob_Produto` (
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `TabSismicrob_Produto`
+--
+
+INSERT INTO `TabSismicrob_Produto` (`idTabSismicrob_Produto`, `Produto`, `NomeTipo`, `CodigoTipo`, `Ativo`, `Inativo`, `DataCadastro`) VALUES
+(19, 'ACICLOVIR, 200MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(20, 'ACICLOVIR, 250MG, FRASCO-AMPOLA, IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(21, 'ACICLOVIR, 50MG/G, BISNAGA 10G, CREME', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(65, 'ALBENDAZOL, 200MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(66, 'ALBENDAZOL, 40MG/ML, FRASCO 10ML (SOLUCAO ORAL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(84, 'AMICACINA SULFATO, 50MG/ML, AMPOLA 2ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(86, 'AMICACINA SULFATO, 250MG/ML, AMPOLA-2ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(106, 'AMOXICILINA+CLAVULANATO DE POTASSIO 250MG+62,5MG/5ML FR 75ML', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(107, 'AMOXICILINA, 500MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(109, 'AMOXICILINA, 250MG/5ML,  FRASCO 150ML', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(110, 'AMOXICILINA+CLAVULANATO, 500MG + 125MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(111, 'AMOXICILINA+CLAVULANATO, 500MG + 100MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(112, 'AMPICILINA SODICA, 1G, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(113, 'AMPICILINA, 500MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(114, 'AMPICILINA SODICA, 500MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(119, 'ANFOTERICINA B, 50MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(135, 'AZITROMICINA, 200MG/5ML, FRASCO, (PO PARA SUSPENSAO)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(136, 'AZITROMICINA, 250MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(137, 'AZITROMICINA, 500MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(218, 'CEFALEXINA, 500MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(220, 'CEFALEXINA, 50MG/ML, FRASCO 100ML, (PO PARA SUSPENCAO)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(223, 'CEFAZOLINA SODICA, 1G, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(224, 'CEFEPIMA, 1G, PO LIOFILIZADO, (SISTEMA FECHADO), IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(225, 'CEFEPIMA, 2G, PO LIOFILIZADO, (SISTEMA FECHADO), IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(226, 'CEFOTAXIMA SODICA, 1G, FRASCO-AMPOLA, IV/IM', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(227, 'CEFOTAXIMA SODICA, 500MG, FRASCO-AMPOLA, IV/IM', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(230, 'CEFTAZIDIMA, 1G, FRASCO-AMPOLA, IM/IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(231, 'CEFTRIAXONA SODICA, 1G, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(234, 'CETOCONAZOL, 200MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(258, 'CIPROFLOXACINO CLORIDRATO, 500MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(278, 'CLARITROMICINA, 250MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(279, 'CLARITROMICINA, 500MG, FRASCO-AMPOLA, IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(280, 'CLARITROMICINA, 500MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(283, 'CLINDAMICINA, 300MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(285, 'CLINDAMICINA, 150MG/ML, AMPOLA 2ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(286, 'CLINDAMICINA, 150MG/ML, AMPOLA 4ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(353, 'COLAGENASE+CLORANFENICOL, 0,6UI + 1%, BISNAGA 50G, (POMADA)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(444, 'DOXICICLINA, 100MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(474, 'ERTAPENEM, 1G, FRASCO-AMPOLA', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(492, 'ESTREPTOMICINA 1G FRAMP', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(499, 'ETAMBUTOL 400MG COMP', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(531, 'FLUCONAZOL, 100MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(532, 'FLUCONAZOL, 2MG/ML, BOLSA 100ML, (SISTEMA FECHADO)', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(565, 'GANCICLOVIR, 500MG, FRASCO-AMPOLA', 'QUIMIOTERAPICOS', 'M7', 'S', 0, '2023-12-09 20:06:39'),
+(571, 'GENTAMICINA, 20MG/ML, AMPOLA 1ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(574, 'GENTAMICINA, 40MG/ML, AMPOLA 2ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(636, 'IMIPENEM, 500MG, FRASCO-AMPOLA, (SISTEMA FECHADO), IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(674, 'ISONIAZIDA, 100MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(676, 'ISONIAZIDA-RIFAMPICINA 250MG COMP', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(677, 'ISONIAZIDA-RIFAMPICINA 500MG COMP', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(681, 'ITRACONAZOL, 100MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(700, 'LEVOFLOXACINA, 5MG/ML, BOLSA 100ML, (SISTEMA FECHADO)', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(719, 'LINEZOLIDA, 600MG, COMPRIMIDO', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(720, 'LINEZOLINA, 2MG/ML, BOLSA 300ML', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(745, 'MEBENDAZOL, 100MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(746, 'MEBENDAZOL, 20MG/ML, FRASCO 30ML, (SUSPENCAO ORAL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(757, 'MEROPENEM, 1G, FRASCO-AMPOLA, (SISTEMA FECHADO), IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(758, 'MEROPENEM, 500MG, FRASCO-AMPOLA, (SISTEMA FECHADO), IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(781, 'METRONIDAZOL + NISTATINA, 100MG+20000UI/G, BISNAGA 40G', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(782, 'METRONIDAZOL, 40MG/ML, FRASCO 100 ML, (SUSPENSAO ORAL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(783, 'METRONIDAZOL, 250MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(784, 'METRONIDAZOL, 7,5 MG/G, BISNAGA 30G, (GEL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(785, 'METRONIDAZOL, 5MGML, BOLSA 100ML, (SISTEMA FECHADO), IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(813, 'MUPIROCINA, 20MG/G (2%), BISNAGA 15G, (CREME)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(820, 'NEOMICINA+BACITRACINA, 5MG+250UI/G, BISNAGA 15G, (CREME)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(831, 'NISTATINA 100000 UI/ML 100MG - 50ML VDR', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(834, 'NISTATINA, 25.000 UI/G, CREME VAGINAL- BISNAGA 60 G', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(849, 'NORFLOXACINA, 400MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(879, 'OXACILINA, 500MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(896, 'BENZILPENICILINA BENZATINA, 1.200.000UI, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(897, 'BENZILPENICILINA BENZATINA, 600.000UI, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(899, 'BENZILPENICILINA POTASSICA, 1.000.000U, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(900, 'BENZILPENICILINA POTASSICA, 5.000.000UI, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(901, 'BENZILPENICILINA POTASSICA+PENICILINA PROCAINA,100000+300000', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(902, 'PENTAMIDINA 300MG FRAMP', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(912, 'PIPERACILINA + TAZOBACTAMA, 2G + 250MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(913, 'PIPERACILINA + TAZOBACTAMA, 4G + 500MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(921, 'PIRIMETAMINA, 25MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(925, 'POLIMIXINA B 500.000 UI FRAMP', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(975, 'RIFAMPICINA, 300MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(976, 'RIFAMPICINA, 20 MG/ML, SUSPENSÃO ORAL- FR 50 ML', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(1051, 'AMPICILINA + SULBACTAM SODICA, 1G + 500MG, FRASCO AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(1054, 'SULFADIAZINA, 500MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(1055, 'SULFADIAZINA DE PRATA, 1%, BISNAGA 50G, (CREME)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(1059, 'SULFAMETOXAZOL + TRIMETOPRIMA, 400MG + 80MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(1061, 'SULFAMETOXAZOL + TRIMETOPRIMA, 80MG + 16MG/ML, AMPOLA 5ML IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(1062, 'SULFAMETOXAZOL+TRIMETOPRIMA, 40MG + 8MG/ML, FRASCO 100ML', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(1063, 'SULFAMETOXAZOL+TRIMETOPRIMA, 800MG + 160MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(1088, 'TEICOPLANINA, 400MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(1107, 'TIABENDAZOL, 500MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(1109, 'TIABENDAZOL, 50MG/ML (5%), FRASCO 40ML, (SUSPENCAO ORAL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(1161, 'VANCOMICINA CLORIDRATO, 500MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(1214, 'CEFUROXIMA, 500MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(1215, 'CEFUROXIMA, 50MG/ML, FRASCO 50ML, (SUSPENSAO ORAL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(8407, 'CEFUROXIMA, 750MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(8535, 'AMPICILINA + SULBACTAM, 2G + 1G, FRASCO-AMPOLA, IV', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(9470, 'AMOXICILINA + CLAVULANATO, 1G + 200MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(9537, 'IVERMECTINA, 6MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(9554, 'HIDROXICLOROQUINA SULFATO, 400MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(9677, 'GENTAMICINA, 10MG/ML, AMPOLA 1ML', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(9747, 'CIPROFLOXACINO, 2MG/ML, BOLSA 100ML, (SISTEMA FECHADO)', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(9799, 'FLUCONAZOL, 150MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(9805, 'AZITROMICINA, 500MG, FRASCO-AMPOLA', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(9841, 'AZITROMICINA, 1G, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(11018, 'CLARITROMICINA, 25MG/ML, FRASCO 60ML', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(11019, 'LEVOFLOXACINA, 500MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(12659, 'SULFADIAZINA DE PRATA CREME 1% BISN 100 G', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(12906, 'TIGECICLINA, 50MG, FRASCO-AMPOLA', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(13102, 'RHZE (ISONIAZIDA+RIFAMPICINA+PIRAZINAMIDA+ETAMBUTOL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(13166, 'TEICOPLANINA, 200MG, FRASCO-AMPOLA', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(13247, 'ANFOTERICINA B LIPOSSOMAL, 50MG, FRASCO-AMPOLA', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(13387, 'PRIMAQUINA, 15MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(13766, 'VORICONAZOL, 200MG, FRASCO-AMPOLA, IV', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(13941, 'ANFOTERICINA B COMPLEXO LIPIDICO, 5MG/ML, FRASCO-AMPOLA 20ML', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(13981, 'VORICONAZOL, 200MG, COMPRIMIDO', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(14109, 'DAPTOMICINA 500 MG INJETAVEL PO LIOFILO FRASCO-AMPOLA', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(14159, 'NISTATINA, 100.000UI/ML, FRASCO 40ML, (SUSPENCAO ORAL)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(14241, 'ALBENDAZOL, 400MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(14935, 'ISONIAZIDA + RIFAMPICINA, 75MG + 150MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(15566, 'ANIDULAFUNGINA, 100MG, FRASCO-AMPOLA', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(16101, 'MEROPENEM 2 G', 'ANTIMICROBIANOS-INJETAVEIS', 'N2', 'S', 0, '2023-12-09 20:06:39'),
+(16627, 'MICAFUNGINA 50 MG', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(16628, 'MICAFUNGINA 100 MG', 'ALTO-CUSTO', 'M1', 'S', 0, '2023-12-09 20:06:39'),
+(17093, 'DACLATASVIR 60MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17094, 'SOFOSBUVIR 400MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17216, 'ARTESUNATO 25 MG + MEFLOQUINA 55 MG (1 A 5 ANOS)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17217, 'ARTESUNATO 25 MG + MEFLOQUINA 55 MG (6 A 11 MESES)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17218, 'ARTESUNATO 60 MG - FRASCO / AMPOLA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17219, 'CLOROQUINA 150 MG (COMPRIMIDO)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17220, 'DICLORIDRATO DE QUININA 300 MG - AMPOLA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17221, 'PRIMAQUINA 5 MG - COMPRMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17223, 'OSELTAMIVIR FOSFATO 30MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17224, 'OSELTAMIVIR FOSFATO 45MG, CAPSULA', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17398, 'DACLATASVIR 30MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17651, 'DOLUTEGRAVIR, 50MG, COMPRIMIDO', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17668, 'ACICLOVIR, 30MG/G, BISNAGA 4,5 G, CREME', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(17919, 'ARTESUNATO 100 MG + MEFLOQUINA 200 MG (12 ANOS OU MAIOR)', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(99998, 'OSELTAMIVIR 75MG', 'ANTIMICROBIANO', 'M2', 'S', 0, '2023-12-09 20:06:39'),
+(99999, 'TESTE DE ANTIMICROBIANO 500MG, FRASCO', 'ANTIMICROBIANO', 'Z1', 'S', 0, '2023-12-09 20:06:39');
+
 -- --------------------------------------------------------
 
 --
@@ -16754,6 +17089,16 @@ CREATE TABLE `TabSismicrob_Substituicao` (
   `Inativo` tinyint(4) NOT NULL DEFAULT 0,
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `TabSismicrob_Substituicao`
+--
+
+INSERT INTO `TabSismicrob_Substituicao` (`idTabSismicrob_Substituicao`, `Substituicao`, `Inativo`, `DataCadastro`) VALUES
+(1, 'Falha Terapêutica', 0, '2023-12-09 20:07:18'),
+(2, 'Falta na Farmácia', 0, '2023-12-09 20:07:18'),
+(3, 'Guiado por Cultura', 0, '2023-12-09 20:07:18'),
+(4, 'CCIH', 0, '2023-12-09 20:07:18');
 
 -- --------------------------------------------------------
 
@@ -16768,6 +17113,16 @@ CREATE TABLE `TabSismicrob_Tratamento` (
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `TabSismicrob_Tratamento`
+--
+
+INSERT INTO `TabSismicrob_Tratamento` (`idTabSismicrob_Tratamento`, `Tratamento`, `Inativo`, `DataCadastro`) VALUES
+(1, 'Início', 0, '2023-12-09 20:07:45'),
+(2, 'Prorrogação do Tratamento', 0, '2023-12-09 20:07:45'),
+(3, 'Substituição', 0, '2023-12-09 20:07:45'),
+(4, 'TIP', 0, '2025-06-18 11:32:35');
+
 -- --------------------------------------------------------
 
 --
@@ -16781,6 +17136,22 @@ CREATE TABLE `TabSismicrob_ViaAdministracao` (
   `Inativo` tinyint(4) NOT NULL DEFAULT 0,
   `DataCadastro` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `TabSismicrob_ViaAdministracao`
+--
+
+INSERT INTO `TabSismicrob_ViaAdministracao` (`idTabSismicrob_ViaAdministracao`, `ViaAdministracao`, `Codigo`, `Inativo`, `DataCadastro`) VALUES
+(1, 'Via Oral', 'VO', 0, '2023-12-09 20:08:12'),
+(2, 'Endovenosa', 'EV', 0, '2023-12-09 20:08:12'),
+(3, 'Intramuscular', 'IM', 0, '2023-12-09 20:08:12'),
+(4, 'Sonda NasoEnteral', 'SNE', 0, '2023-12-09 20:08:12'),
+(5, 'Sonda NasoGástrica', 'SNG', 0, '2023-12-09 20:08:12'),
+(6, 'Via Intraperitoneal', 'VIP', 0, '2023-12-09 20:08:12'),
+(7, 'Via Intratecal', 'VIT', 0, '2023-12-09 20:08:12'),
+(8, 'Uso Tópico', 'UT', 0, '2023-12-09 20:08:12'),
+(9, 'Subcutânea', 'SC', 0, '2023-12-09 20:08:12'),
+(10, 'Gastrostomia', 'GTT', 0, '2023-12-09 20:08:12');
 
 -- --------------------------------------------------------
 
@@ -17252,7 +17623,7 @@ ALTER TABLE `TabPreschuap_Formula`
 -- AUTO_INCREMENT de tabela `TabPreschuap_Medicamento`
 --
 ALTER TABLE `TabPreschuap_Medicamento`
-  MODIFY `idTabPreschuap_Medicamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `idTabPreschuap_Medicamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT de tabela `TabPreschuap_MotivoAjusteDose`
@@ -17276,13 +17647,13 @@ ALTER TABLE `TabPreschuap_Posologia`
 -- AUTO_INCREMENT de tabela `TabPreschuap_Protocolo`
 --
 ALTER TABLE `TabPreschuap_Protocolo`
-  MODIFY `idTabPreschuap_Protocolo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=339;
+  MODIFY `idTabPreschuap_Protocolo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=353;
 
 --
 -- AUTO_INCREMENT de tabela `TabPreschuap_Protocolo_Medicamento`
 --
 ALTER TABLE `TabPreschuap_Protocolo_Medicamento`
-  MODIFY `idTabPreschuap_Protocolo_Medicamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=919;
+  MODIFY `idTabPreschuap_Protocolo_Medicamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1003;
 
 --
 -- AUTO_INCREMENT de tabela `TabPreschuap_TipoAgendamento`
@@ -17312,55 +17683,55 @@ ALTER TABLE `TabPreschuap_ViaAdministracao`
 -- AUTO_INCREMENT de tabela `TabSismicrob_AntibioticoMantido`
 --
 ALTER TABLE `TabSismicrob_AntibioticoMantido`
-  MODIFY `idTabSismicrob_AntibioticoMantido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTabSismicrob_AntibioticoMantido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_DiagnosticoInfeccioso`
 --
 ALTER TABLE `TabSismicrob_DiagnosticoInfeccioso`
-  MODIFY `idTabSismicrob_DiagnosticoInfeccioso` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTabSismicrob_DiagnosticoInfeccioso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_Especialidade`
 --
 ALTER TABLE `TabSismicrob_Especialidade`
-  MODIFY `idTabSismicrob_Especialidade` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTabSismicrob_Especialidade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_Indicacao`
 --
 ALTER TABLE `TabSismicrob_Indicacao`
-  MODIFY `idTabSismicrob_Indicacao` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTabSismicrob_Indicacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_Infeccao`
 --
 ALTER TABLE `TabSismicrob_Infeccao`
-  MODIFY `idTabSismicrob_Infeccao` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTabSismicrob_Infeccao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_Produto`
 --
 ALTER TABLE `TabSismicrob_Produto`
-  MODIFY `idTabSismicrob_Produto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTabSismicrob_Produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_Substituicao`
 --
 ALTER TABLE `TabSismicrob_Substituicao`
-  MODIFY `idTabSismicrob_Substituicao` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTabSismicrob_Substituicao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_Tratamento`
 --
 ALTER TABLE `TabSismicrob_Tratamento`
-  MODIFY `idTabSismicrob_Tratamento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTabSismicrob_Tratamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `TabSismicrob_ViaAdministracao`
 --
 ALTER TABLE `TabSismicrob_ViaAdministracao`
-  MODIFY `idTabSismicrob_ViaAdministracao` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTabSismicrob_ViaAdministracao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `Tab_Modulo`
