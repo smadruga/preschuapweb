@@ -2,25 +2,33 @@ VM1 - Aplicação:
 * 40GB de espaço
 * 4GB de memória
 * debian 12 ou superior
-* atualizar com o comando apt update -y && apt upgrade -y
+* atualizar com o comando sudo apt update -y && sudo apt upgrade -y
 * instalar apache2 ou httpd2
+   * sudo apt install apache2
 * configurar o repositório bookworm:
    * Instale os pacotes necessários
-      * apt install -y software-properties-common
-      * apt install apt-transport-https lsb-release ca-certificates wget 
+      * sudo apt install -y software-properties-common
+      * sudo apt install apt-transport-https lsb-release ca-certificates wget 
    * Instale o GnuPG para verificar pacotes e repositórios
-      * apt install gnupg2         
+      * sudo apt install gnupg2         
    * Adicione a chave GPG do repositório
       * wget -qO - https://packages.sury.org/php/apt.gpg | sudo apt-key add -
    * Adicione o repositório à lista de fontes
       * echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list
-* Instalar o php 8.1 (o PreschuapWeb foi homolgado para essa versão do PHP, acima disso ocorrerão bugs): apt install php8.1
-* Instalar os seguintes módulos do php8.1: apt install php8.1-gd php8.1-intl php8.1-curl php8.1-pgsql php8.1-mbstring php8.1-mysql php8.1-ldap php8.1-xml
-* Instalar o git: apt install git
-* Instalar o cliente mariadb(mysql): apt install mariadb-client
-* Habilitar o módulo rewrite e reiniciar o Apache2 : a2enmod rewrite && systemctl restart apache2
-* Clonar o repositório do PreschuapWeb: git clone https://github.com/smadruga/preschuapweb.git
-* Habilitar a escrita irrestrita na pasta writable: chmod -R 777 /var/www/preschuapweb/writable/
+* Instalar o php 8.1 (o PreschuapWeb foi homolgado para essa versão do PHP, acima disso ocorrerão bugs): 
+   * sudo apt install php8.1
+* Instalar os seguintes módulos do php8.1: 
+   * sudo apt install php8.1-gd php8.1-intl php8.1-curl php8.1-pgsql php8.1-mbstring php8.1-mysql php8.1-ldap php8.1-xml
+* Instalar o git: 
+   * sudo apt install git
+* Instalar o cliente mariadb(mysql): 
+   * sudo apt install mariadb-client
+* Habilitar o módulo rewrite e reiniciar o Apache2 : 
+   * a2enmod rewrite && systemctl restart apache2
+* Clonar o repositório do PreschuapWeb: 
+   * git clone https://github.com/smadruga/preschuapweb.git
+* Habilitar a escrita irrestrita na pasta writable: 
+   * chmod -R 777 /var/www/preschuapweb/writable/
 * Criar em /etc/apache2/sites-available/ o arquivo preschuapweb.conf e colar o conteúdo a seguir:
 <VirtualHost *:80>
         # The ServerName directive sets the request scheme, hostname and port that
@@ -63,11 +71,14 @@ VM1 - Aplicação:
         # after it has been globally disabled with "a2disconf".
         #Include conf-available/serve-cgi-bin.conf
 </VirtualHost>
-* Habilitar o site e reiniciar o apache2: a2ensite preschuapweb.conf && systemctl reload apache2
-* Desabilitar o site padrão e reiniciar o apache2: a2dissite 000-default.conf && systemctl reload apache2
+* Habilitar o site e reiniciar o apache2: 
+   * a2ensite preschuapweb.conf && systemctl reload apache2
+* Desabilitar o site padrão e reiniciar o apache2: 
+   * a2dissite 000-default.conf && systemctl reload apache2
 * Caso não exista a linha a seguir no arquivo /etc/hosts, editar o arquivo para habilitar/redirecionar o IP. Adicionar uma linha conforme o exemplo a seguir: 
    * 10.88.1.123        HUAP-VP-PRESCHUAPWEB.ebserhnet.ebserh.gov.br HUAP-VP-PRESCHUAPWEB
-* Fazer uma cópia do arquivo env para um arquivo oculto .env: cp /var/www/preschuapweb/env /var/www/preschuapweb/.env
+* Fazer uma cópia do arquivo env para um arquivo oculto .env: 
+   * cp /var/www/preschuapweb/env /var/www/preschuapweb/.env
 * Editar o arquivo .env e adicionar os dados nas seguintes variáveis:
    * app.baseURL
    * Dados do Banco de Dados MariaDB/MySQL:
@@ -100,7 +111,8 @@ VM2 - Banco de dados:
 * 40GB de espaço
 * 4GB de memória
 * debian 12 ou superior
-* atualizar com o comando apt update -y && apt upgrade -y
+* atualizar com o comando: 
+   * sudo apt update -y && sudo apt upgrade -y
 * mariadb (qualquer versão, pode ser a última)
 * instalar o cliente mysql
 * executar o comando mysql_secure_installation para definir senha de root
