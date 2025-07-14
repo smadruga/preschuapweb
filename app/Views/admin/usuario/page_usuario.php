@@ -32,8 +32,28 @@
                 <td>
                     <?php
                     #if($_SESSION['Usuario']['Inativo'] == 1) {
-                    if(!isset($_SESSION['Usuario']['Permissao']) || !$_SESSION['Usuario']['Permissao'] || $_SESSION['Usuario']['Permissao'] == 'NULL' ) {
-                        $bg     = 'warning';
+                    if($_SESSION['Usuario']['Perfil'] < 1) {
+                        $bg     = 'danger';
+                        $msg    = 'Nenhum perfil associado';
+                        $fa     = 'user-slash';
+                    }
+                    else {
+                        $bg     = 'success';
+                        $msg    = ($_SESSION['Usuario']['Perfil'] >= 2) ? $_SESSION['Usuario']['Perfil'].' perfis' : $_SESSION['Usuario']['Perfil'].' perfil';
+                        $fa     = 'user-check';
+                    }
+                    ?>
+                    <h4><span class="badge bg-<?= $bg ?>"><i class="fa-solid fa-<?= $fa ?>"></i> <?= $msg ?></span></h4>
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    <?php
+                    #if($_SESSION['Usuario']['Inativo'] == 1) {
+                    if( $_SESSION['Usuario']['PermissaoModulo'] == 0 ) {
+                        $bg     = 'danger';
                         $msg    = 'Usuário Inativo';
                         $fa     = 'user-slash';
                     }

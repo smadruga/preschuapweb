@@ -5,6 +5,7 @@ namespace App\Controllers;
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\UsuarioModel;
 use App\Models\PerfilModel;
+use App\Models\PermissaoModuloModel;
 use App\Models\AuditoriaAcessoModel;
 use App\Libraries\HUAP_Functions;
 
@@ -59,12 +60,14 @@ class Home extends ResourceController
 
         $usuario = new UsuarioModel();
         $usuario = $usuario->get_user_mysql($v['Usuario']);
+        $permissao = new PermissaoModuloModel();
+        $permissao = $permissao->get_permissao($usuario['idSishuap_Usuario'], env('mod.cod'));
 
         if (!isset($usuario) || !$usuario) {
             session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário não encontrado ou não autorizado.');
             return view('home/form_login');
         }
-        if ($usuario['Inativo'] == 1) {
+        if ($usuario['Inativo'] == 1 || $permissao == 0) {
             session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário inativo.');
             return view('home/form_login');
         }

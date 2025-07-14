@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UsuarioModel;
+use App\Models\PermissaoModuloModel;
 use App\Models\PerfilModel;
 use App\Models\TabPerfilModel;
 use App\Models\AuditoriaModel;
@@ -168,7 +169,7 @@ class Admin extends BaseController
 
         /*
         #echo $usuario->getLastQuery();
-        echo "<pre>";
+        echo "<pre4>";
         print_r($v);
         echo "</pre>";
         exit($v['Usuario']);
@@ -184,17 +185,30 @@ class Admin extends BaseController
     public function show_user($data)
     {
 
-        $usuario = new UsuarioModel();
+        $usuario    = new UsuarioModel();
+        $pm         = new PermissaoModuloModel();
+        $perfil     = new PerfilModel();
 
         $_SESSION['Usuario'] = $usuario->getWhere(['Usuario' => $data])->getRowArray();
+        $_SESSION['Usuario']['PermissaoModulo'] = $pm->where([
+            'idSishuap_Usuario' => $_SESSION['Usuario']['idSishuap_Usuario'],
+            'idTab_Modulo'      => env('mod.cod')
+        ])->countAllResults();
+        $_SESSION['Usuario']['Perfil'] = $perfil->where([
+            'idSishuap_Usuario' => $_SESSION['Usuario']['idSishuap_Usuario'],
+            'idTab_Modulo'      => env('mod.cod')
+        ])->countAllResults();
+        #$_SESSION['Usuario'] = $usuario->getusuario($data)->getRowArray();
+        #env('srv.ldap1')
+
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
 
         /*
         echo "<pre>";
-        print_r($session);
+        print_r($_SESSION['Usuario']);
         echo "</pre>";
-        exit();
+        exit(env('mod.cod'));
         #*/
 
         return view('admin/usuario/page_usuario', $v);
@@ -235,14 +249,14 @@ class Admin extends BaseController
         print_r($_SESSION['Sessao']['Perfil']);
         echo "</pre>";
         echo "<pre>";
-        print_r([1,2]);
+        print_r($v['list']['Perfil']);
         echo "</pre>";
         echo "<pre>";
         print_r(array_intersect($_SESSION['Sessao']['Perfil'], [1,2]));
         #print_r($v);
         echo "</pre>";
         echo (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,2]))) ? "sim" : "não"; 
-        exit('oi');
+        exit('oi'.env('mod.cod'));
         #*/
 
         return view('admin/usuario/list_perfil', $v);
@@ -295,6 +309,7 @@ class Admin extends BaseController
         $v['data'] = [
             'idSishuap_Usuario' => $_SESSION['Usuario']['idSishuap_Usuario'],
             'idTab_Perfil'      => $v['Perfil'],
+            'idTab_Modulo'      => env('mod.cod'),
         ];
 
         $v['campos'] = array_keys($v['data']);
@@ -359,21 +374,23 @@ class Admin extends BaseController
     public function disable_user($data)
     {
 
-        $usuario = new UsuarioModel();
-        $auditoria = new AuditoriaModel();
-        $auditorialog = new AuditoriaLogModel();
-        $func = new HUAP_Functions();
+        $usuario        = new UsuarioModel();
+        $pm             = new PermissaoModuloModel();
+        $auditoria      = new AuditoriaModel();
+        $auditorialog   = new AuditoriaLogModel();
+        $func           = new HUAP_Functions();
 
         $v = $this->request->getVar(['Desabilitar']);
 
         if(!$v['Desabilitar'])
             return view('admin/usuario/form_desabilita_usuario', $v);
 
-        $v['data'] = array(
-            'Inativo' => 1,
-        );
-        $v['anterior'] = $usuario->find($data);
-        $v['campos'] = array_keys($v['data']);
+        $v['data'] = array();
+        $v['anterior'] = $pm->getWhere([
+            'idSishuap_Usuario' => $data,
+            'idTab_Modulo'      => env('mod.cod')
+        ])->getRowArray();
+        $v['campos'] = array_keys($v['anterior']);
 
         /*
         echo "<pre>";
@@ -382,11 +399,11 @@ class Admin extends BaseController
         exit();
         #*/
 
-        $usuario->update($data, $v['data']);
+        $v['id'] = $pm->delete($v['anterior']['idSishuap_PermissaoModulo']);
 
-        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'UPDATE', $data), TRUE);
-        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $data, $v['auditoria'], TRUE), TRUE);
-
+        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_PermissaoModulo', 'DELETE', $data), TRUE);
+        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $data, $v['auditoria'], NULL, TRUE), TRUE);
+#exit($v['id']. ' <> '.$data);
         session()->setFlashdata('success', 'Usuário desativado com sucesso!');
         return redirect()->to('admin/show_user/'.$_SESSION['Usuario']['Usuario']);
 
@@ -401,6 +418,7 @@ class Admin extends BaseController
     {
 
         $usuario = new UsuarioModel();
+        $pm = new PermissaoModuloModel();
         $auditoria = new AuditoriaModel();
         $auditorialog = new AuditoriaLogModel();
         $func = new HUAP_Functions();
@@ -411,10 +429,12 @@ class Admin extends BaseController
             return view('admin/usuario/form_habilita_usuario', $v);
 
         $v['data'] = array(
-            'Inativo' => 0,
+            'idSishuap_Usuario' => $data,
+            'idTab_Modulo' => env('mod.cod'),
         );
-        $v['anterior'] = $usuario->find($data);
+
         $v['campos'] = array_keys($v['data']);
+        $v['anterior'] = array();
 
         /*
         echo "<pre>";
@@ -423,10 +443,11 @@ class Admin extends BaseController
         exit();
         #*/
 
-        $usuario->update($data, $v['data']);
+        #$usuario->update($data, $v['data']);
+        $v['id'] = $pm->insert($v['data'], TRUE);
 
-        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'UPDATE', $data), TRUE);
-        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $data, $v['auditoria'], TRUE), TRUE);
+        $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'INSERT', $data), TRUE);
+        $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
 
         session()->setFlashdata('success', 'Usuário ativado com sucesso!');
         return redirect()->to('admin/show_user/'.$_SESSION['Usuario']['Usuario']);

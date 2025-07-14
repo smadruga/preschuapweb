@@ -50,7 +50,7 @@
                 <div class="col text-start" colspan="2">
                     <input type="hidden" name="Desabilitar" value="1"/>
                     <a class="btn btn-warning" href="<?= previous_url() ?>"><i class="fa-solid fa-ban"></i> Cancelar</a>
-                    <button class="btn btn-danger" id="submit" type="submit"><i class="fa-solid fa-check-circle"></i> Desabilitar</button>
+                    <button class="btn btn-danger" id="submit" type="submit"><i class="fa-solid fa-check-circle"></i> Desativar</button>
                 </div>
             </div>
         </div>
