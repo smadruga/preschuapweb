@@ -61,7 +61,7 @@ class Home extends ResourceController
         $usuario = new UsuarioModel();
         $usuario = $usuario->get_user_mysql($v['Usuario']);
         $permissao = new PermissaoModuloModel();
-        $permissao = $permissao->get_permissao($usuario['idSishuap_Usuario'], env('mod.cod'));
+        $permissao =  (isset($usuario['idSishuap_Usuario'])) ? $permissao->get_permissao($usuario['idSishuap_Usuario'], env('mod.cod')) : "0";
 
         if (!isset($usuario) || !$usuario) {
             session()->setFlashdata('failed', 'Erro ao autenticar. <br> Usuário não encontrado ou não autorizado.');

@@ -131,6 +131,7 @@ class Admin extends BaseController
     {
 
         $usuario = new UsuarioModel();
+        $permissao = new PermissaoModuloModel();
         $auditoria = new AuditoriaModel();
         $auditorialog = new AuditoriaLogModel();
 
@@ -149,6 +150,7 @@ class Admin extends BaseController
         if ($v['mysql'])
             return redirect()->to('admin/show_user/'.$v['mysql']['Usuario']);
 
+        ############## Dados do usuário
         $v['data'] = [
             'Usuario'           => (isset($v['ad']['entries'][0]['samaccountname'][0])) ? esc($v['ad']['entries'][0]['samaccountname'][0]) : '',
             'Nome'              => (isset($v['ad']['entries'][0]['cn'][0])) ? esc(mb_convert_encoding($v['ad']['entries'][0]['cn'][0], "UTF-8", "ISO-8859-1")) : NULL,
@@ -163,6 +165,23 @@ class Admin extends BaseController
 
         $v['auditoria'] = $auditoria->insert($func->create_auditoria('Sishuap_Usuario', 'CREATE', $v['id']), TRUE);
         $v['auditoriaitem'] = $auditorialog->insertBatch($func->create_log($v['anterior'], $v['data'], $v['campos'], $v['id'], $v['auditoria']), TRUE);
+
+
+        ############## Dados de permissão
+        $v['data2'] = [
+            'idSishuap_Usuario' => $v['id'],
+            'idTab_Modulo'      => env("mod.cod"),
+        ];        
+
+        $v['campos2'] = array_keys($v['data2']);
+        $v['anterior2'] = array();
+
+        $v['id2'] = $permissao->insert($v['data2'], TRUE);
+
+        $v['auditoria2'] = $auditoria->insert($func->create_auditoria('Sishuap_PermissaoModulo', 'CREATE', $v['id2']), TRUE);
+        $v['auditoriaitem2'] = $auditorialog->insertBatch($func->create_log($v['anterior2'], $v['data2'], $v['campos2'], $v['id2'], $v['auditoria2']), TRUE);        
+
+
 
         session()->setFlashdata('success', 'Usuário importado com sucesso!');
         return redirect()->to('admin/show_user/'.$v['data']['Usuario']);
