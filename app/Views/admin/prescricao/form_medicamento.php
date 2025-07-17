@@ -54,13 +54,25 @@
                 </div>
 
                 <div class="row">
-                    <div class="col"><b>Índice de Massa Corporal (IMC):</b> <?= $data['prescricao']['IndiceMassaCorporal'] ?> kg/m²</div>
-                    <div class="col"><b>Superfície Corporal (SC):</b> <?= $data['prescricao']['SuperficieCorporal'] ?> m²</div>
+                    <div class="col"><b>Creatinina Sérica (ClSr):</b> <?= $data['prescricao']['CreatininaSerica'] ?> mg/dL</div>
                 </div>
 
-                <div class="row">
-                    <div class="col"><b>Creatinina Sérica (ClSr):</b> <?= $data['prescricao']['CreatininaSerica'] ?> mg/dL</div>
-                    <div class="col"><b>Clearance Creatinina (ClCr):</b> <?= $data['prescricao']['ClearanceCreatinina'] ?> mL/min</div>
+                <hr />
+
+                <div class="row text-danger">
+                    <div class="col"><b>Clearance Creatinina (ClCr): <?= $data['prescricao']['ClearanceCreatinina'] ?> mL/min</b></div>
+                </div>
+
+                <div class="row text-danger">
+                    <div class="col"><b>Índice de Massa Corporal (IMC): <?= $data['prescricao']['IndiceMassaCorporal'] ?> kg/m²</b></div>
+                </div>
+
+                <div class="row text-danger">
+                    <div class="col"><b>Superfície Corporal (SC): <?= $data['prescricao']['SuperficieCorporal'] ?> m²</b></div>
+                </div>
+
+                <div class="col-md-12">
+                    <a class="btn btn-warning" id="click" href="<?= base_url('prescricao/manage_prescricao/editar/'.$data['prescricao']['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
                 </div>
 
                 <hr />
@@ -96,10 +108,10 @@
 
                 <hr />
 
-                    <div class="text-center">
-                        <b>
-                            <h4><span class="badge bg-primary">PROTOCOLO: <?= $data['prescricao']['Protocolo'] ?></b></span></h4>
-                        </b>
+                <div class="text-center">
+                    <b>
+                        <h4><span class="badge bg-primary">PROTOCOLO: <?= $data['prescricao']['Protocolo'] ?></b></span></h4>
+                    </b>
                 </div>                                
                 <div><strong>Observações do Protocolo: </strong> <?= $data['prescricao']['Observacoes'] ?></div>
 
@@ -266,8 +278,9 @@
 
                 <div class="col-md-12">
                     <?= $opt['button'] ?>
-                    <!--<a class="btn btn-warning" href="javascript:history.go(-1)"><i class="fa-solid fa-arrow-left"></i> Cancelar</a>-->
-                    <a class="btn btn-warning" href="<?= base_url('prescricao/list_prescricao/') ?>"><i class="fa-solid fa-ban"></i> Cancelar</a>
+                    <a class="btn btn-warning" id="click" href="<?= base_url('prescricao/manage_prescricao/editar/'.$data['prescricao']['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+
+                    <a class="btn btn-secondary" href="<?= base_url('prescricao/list_prescricao/') ?>"><i class="fa-solid fa-ban"></i> Cancelar</a>
                 </div>
 
                 <input type="hidden" name="idPreschuap_Prescricao" value="<?= $data['prescricao']['idPreschuap_Prescricao'] ?>" />

@@ -199,17 +199,14 @@ class Prescricao extends BaseController
                 'Peso'                              => '',
                 'CreatininaSerica'                  => '',
                 'Altura'                            => '',
-                'ClearanceCreatinina'               => '',
-                'IndiceMassaCorporal'               => '',
-                'SuperficieCorporal'                => '',
+                #'ClearanceCreatinina'               => '',
+                #'IndiceMassaCorporal'               => '',
+                #'SuperficieCorporal'                => '',
 
                 #'DescricaoServico'                  => '',
                 'InformacaoComplementar'            => '',
                 'ReacaoAdversa'                     => '',
-                'Alergia'            => '',
-                'ClearanceCreatinina'               => '',
-                'IndiceMassaCorporal'               => '',
-                'SuperficieCorporal'                => '',
+                'Alergia'                           => '',
 
                 'submit'                            => '',
             ];
@@ -328,6 +325,11 @@ class Prescricao extends BaseController
             $calc = null;
             #$v['data']['SuperficieCorporal'] = 1;
             if ($action == 'cadastrar' || $action == 'editar') {
+
+                $v['data']['ClearanceCreatinina']  = $v['func']->calc_ClearanceCreatinina($v['data']['Peso'], $_SESSION['Paciente']['idade'], $_SESSION['Paciente']['sexo'], $v['data']['CreatininaSerica']);
+                $v['data']['IndiceMassaCorporal']  = $v['func']->calc_IndiceMassaCorporal($v['data']['Peso'], $v['data']['Altura']);
+                $v['data']['SuperficieCorporal']   = $v['func']->calc_SuperficieCorporal($v['data']['Peso'], $v['data']['Altura']);
+                
                 $agendamento = ($v['data']['idTabPreschuap_Protocolo']) ? $prescricao->get_agendamento($v['data']['idTabPreschuap_Protocolo']) : null;
                 $v['data']['divDieta'] = (in_array($agendamento, [1, 4]) && $v['data']['idTabPreschuap_Protocolo']) ? 1 : null;
                 $calc1  = ($v['func']->calc_ClearanceCreatinina($v['data']['Peso'], $_SESSION['Paciente']['idade'], $_SESSION['Paciente']['sexo'], $v['data']['CreatininaSerica']) != $v['data']['ClearanceCreatinina']) ? 1 : null;
@@ -335,7 +337,6 @@ class Prescricao extends BaseController
                 $calc3  = ($v['func']->calc_SuperficieCorporal($v['data']['Peso'], $v['data']['Altura']) != $v['data']['SuperficieCorporal']) ? 1 : null;
                 $calc   = $calc1 + $calc2 + $calc3;
             }   
-            #$calc = 1;
             
 /*
             echo "<pre>";
@@ -358,21 +359,23 @@ class Prescricao extends BaseController
             if ((!$inputs || ($v['data']['divDieta'] && !$v['data']['idTabPreschuap_Dieta'])) && ($action == 'cadastrar' || $action == 'editar'))
             #if (!$inputs && ($action == 'cadastrar' || $action == 'editar'))
                 $v['validation'] = $this->validator;
-            elseif ((!$inputs || $calc) && ($action == 'cadastrar' || $action == 'editar')) {
+            /*elseif ((!$inputs || $calc) && ($action == 'cadastrar' || $action == 'editar')) {
 #exit('>................<');
                 session()->setFlashdata('failed', 'Erro de cálculo. Entre em contato com a chefia da unidade.');
-            }
+            }*/
             else {
-#exit('>................<');
+
                 if($action == 'cadastrar' || $action == 'editar') {
 
                     $v['data']['DataPrescricao']        = date("Y-m-d", strtotime(str_replace('/', '-', $v['data']['DataPrescricao'])));
 
                     $v['data']['Peso']                  = str_replace(",",".",$v['data']['Peso']);
                     $v['data']['CreatininaSerica']      = str_replace(",",".",$v['data']['CreatininaSerica']);
+                    
                     $v['data']['ClearanceCreatinina']   = str_replace(",",".",$v['data']['ClearanceCreatinina']);
                     $v['data']['IndiceMassaCorporal']   = str_replace(",",".",$v['data']['IndiceMassaCorporal']);
                     $v['data']['SuperficieCorporal']    = str_replace(",",".",$v['data']['SuperficieCorporal']);
+                    
 
                     $v['data']['Prontuario']            = $_SESSION['Paciente']['prontuario'];
                     $v['data']['idSishuap_Usuario']     = $_SESSION['Sessao']['idSishuap_Usuario'];
@@ -502,7 +505,13 @@ class Prescricao extends BaseController
 
                 }
                 elseif($action == 'cadastrar') {
-
+                    /*
+                    echo "<pre>";
+                    print_r($v['data']);
+                    echo "</pre>";
+                    echo '<br> >>';
+                    exit('###>................<');
+                    #*/
                     $v['anterior'] = array();
 
                     $v['id'] = $prescricao->insert($v['data']);
@@ -573,7 +582,7 @@ class Prescricao extends BaseController
 
         /*
         echo "<pre>";
-        print_r($_SESSION['Paciente']);
+        #print_r($_SESSION['Paciente']);
         echo "</pre>";
         echo "<pre>";
         print_r($v['data']);
@@ -606,6 +615,12 @@ class Prescricao extends BaseController
 
         $v['opt']['Peso']                  = str_replace(",",".",$v['data']['prescricao']['Peso']);
         $v['opt']['CreatininaSerica']      = str_replace(",",".",$v['data']['prescricao']['CreatininaSerica']);
+
+        /*
+        $v['data']['prescricao']['calc1']  = $v['func']->calc_ClearanceCreatinina($v['data']['prescricao']['Peso'], $_SESSION['Paciente']['idade'], $_SESSION['Paciente']['sexo'], $v['data']['prescricao']['CreatininaSerica']);
+        $v['data']['prescricao']['calc2']  = $v['func']->calc_IndiceMassaCorporal($v['data']['prescricao']['Peso'], $v['data']['prescricao']['Altura']);
+        $v['data']['prescricao']['calc3']  = $v['func']->calc_SuperficieCorporal($v['data']['prescricao']['Peso'], $v['data']['prescricao']['Altura']);
+        */
 
         if(!$this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
 

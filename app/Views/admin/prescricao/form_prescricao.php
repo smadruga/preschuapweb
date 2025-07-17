@@ -299,33 +299,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
-                    <label for="ClearanceCreatinina" class="form-label">Clearance Creatinina (ClCr) <b class="text-danger">*</b></label>
-                    <div class="input-group mb-3">
-                        <input type="text" readonly id="ClearanceCreatinina" <?= $opt['disabled'] ?>
-                            class="form-control <?php if($validation->getError('ClearanceCreatinina')): ?>is-invalid<?php endif ?>"
-                            name="ClearanceCreatinina" value="<?php echo $data['ClearanceCreatinina']; ?>" maxlength="9"/>
-                        <span class="input-group-text" id="basic-addon2">mL/min</span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <label for="IndiceMassaCorporal" class="form-label">Índice de Massa Corporal (IMC) <b class="text-danger">*</b></label>
-                    <div class="input-group mb-3">
-                        <input type="text" readonly id="IndiceMassaCorporal" <?= $opt['disabled'] ?>
-                        class="form-control <?php if($validation->getError('IndiceMassaCorporal')): ?>is-invalid<?php endif ?>"
-                        maxlength="10" name="IndiceMassaCorporal" value="<?php echo $data['IndiceMassaCorporal']; ?>" maxlength="9"/>
-                        <span class="input-group-text" id="basic-addon2">kg/m²</span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <label for="SuperficieCorporal" class="form-label">Superfície Corporal (SC) <b class="text-danger">*</b></label>
-                    <div class="input-group mb-3">
-                        <input type="text" readonly id="SuperficieCorporal" <?= $opt['disabled'] ?>
-                        class="form-control <?php if($validation->getError('SuperficieCorporal')): ?>is-invalid<?php endif ?>"
-                        maxlength="10" name="SuperficieCorporal" value="<?php echo $data['SuperficieCorporal']; ?>" maxlength="9"/>
-                        <span class="input-group-text" id="basic-addon2">m²</span>
-                    </div>
-                </div>
+                
 
                 <div class="col-md-12">
                     <label for="Alergia" class="form-label">Alergias</b></label>
