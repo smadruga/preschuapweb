@@ -74,17 +74,17 @@ class PrescricaoMedicamentoModel extends Model
                 , tum.Representacao as Unidade
                 , tum.idTabPreschuap_Formula
             FROM
-                preschuapweb.Preschuap_Prescricao_Medicamento as pm
-                    LEFT JOIN preschuapweb.TabPreschuap_MotivoAjusteDose as tmad ON pm.idTabPreschuap_MotivoAjusteDose = tmad.idTabPreschuap_MotivoAjusteDose
-                , preschuapweb.TabPreschuap_Protocolo_Medicamento as tpm
+                Preschuap_Prescricao_Medicamento as pm
+                    LEFT JOIN TabPreschuap_MotivoAjusteDose as tmad ON pm.idTabPreschuap_MotivoAjusteDose = tmad.idTabPreschuap_MotivoAjusteDose
+                , TabPreschuap_Protocolo_Medicamento as tpm
                     LEFT JOIN TabPreschuap_Diluente AS td ON tpm.idTabPreschuap_Diluente = td.idTabPreschuap_Diluente
-                , preschuapweb.TabPreschuap_EtapaTerapia as tet
-                , preschuapweb.TabPreschuap_Medicamento as tm
-                , preschuapweb.TabPreschuap_UnidadeMedida as tum
-                , preschuapweb.TabPreschuap_ViaAdministracao as tva
-                /*, preschuapweb.TabPreschuap_Diluente as td*/
-                , preschuapweb.TabPreschuap_Posologia as tps
-                /*, preschuapweb.TabPreschuap_MotivoAjusteDose as tmad*/
+                , TabPreschuap_EtapaTerapia as tet
+                , TabPreschuap_Medicamento as tm
+                , TabPreschuap_UnidadeMedida as tum
+                , TabPreschuap_ViaAdministracao as tva
+                /*, TabPreschuap_Diluente as td*/
+                , TabPreschuap_Posologia as tps
+                /*, TabPreschuap_MotivoAjusteDose as tmad*/
             WHERE
             	pm.idTabPreschuap_Protocolo_Medicamento = tpm.idTabPreschuap_Protocolo_Medicamento
                 and tpm.idTabPreschuap_EtapaTerapia = tet.idTabPreschuap_EtapaTerapia

@@ -100,7 +100,7 @@ class PrescricaoModel extends Model
                 , tp.idTabPreschuap_TipoAgendamento 
                 , tta.TipoAgendamento 
             FROM
-                preschuapweb.Preschuap_Prescricao as p
+                Preschuap_Prescricao as p
                     left join TabPreschuap_Categoria as tc              on p.idTabPreschuap_Categoria           = tc.idTabPreschuap_Categoria
                     left join TabPreschuap_Subcategoria as ts           on p.idTabPreschuap_Subcategoria        = ts.idTabPreschuap_Subcategoria
                     left join TabPreschuap_Protocolo as tp              on p.idTabPreschuap_Protocolo           = tp.idTabPreschuap_Protocolo
@@ -129,7 +129,7 @@ class PrescricaoModel extends Model
 
         $q = $db->query('
             SELECT COUNT(*) as total 
-            FROM preschuapweb.Preschuap_Prescricao p
+            FROM Preschuap_Prescricao p
             WHERE '.$where.'
         ');     
         $t = $q->getRow(); // retorna objeto com a propriedade "total"
