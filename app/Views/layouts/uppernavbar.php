@@ -48,12 +48,12 @@
                 </li>                
                 
                 <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,2]))) { ?>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-gear"></i> Configurações</a>
+                <a class="nav-link" href="<?= base_url('admin/find_user') ?>" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-gear"></i> Usuários</a>
+                    <!--<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-gear"></i> Configurações</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="<?= base_url('admin/find_user') ?>"><i class="fas fa-user"></i> Gerenciar Usuário</a>
-                    </div>
-                </li>   
+                        <div class="dropdown-divider"></div>
+                    </div>-->
                 <?php } ?>
             </ul>
             <div class="ms-3 me-3 text-warning fs-6 text-center">
