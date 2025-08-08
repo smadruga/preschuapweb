@@ -84,6 +84,10 @@
                             <a class="btn btn-outline-info click" href="<?= base_url('agenda/agenda_prescricao/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-calendar"></i> Agendar</a>
                             <?php } ?>
 
+                            <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6]))) { ?>
+                                <a class="btn btn-outline-info" href="<?= base_url('prescricao/print_etiqueta/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-tag"></i> Etiqueta</a>
+                            <?php } ?>
+
                         <?php } else { ?>
                             <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,3]))) { ?>
                             <a class="btn btn-outline-warning" id="click" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Editar</a>
