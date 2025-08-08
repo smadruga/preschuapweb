@@ -34,7 +34,7 @@
 
             <div class="row">
                 <div class="col-2 text-end">
-                    <a class="btn btn-info btn-sm" id="click" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Revisar</a>
+                    <a class="btn btn-info btn-sm" id="click" href="<?= base_url('prescricao/etiqueta/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Revisar</a>
                 </div>    
                 <div class="col"><b>Medicamento: <?= $m['Medicamento'] ?></b></div>
             </div>
