@@ -103,7 +103,7 @@ class Prescricao extends BaseController
         exit('oi');
         #*/
 
-        return view('admin/prescricao/print_etiqueta', $v);
+        return view('admin/prescricao/list_etiqueta', $v);
 
     }
 

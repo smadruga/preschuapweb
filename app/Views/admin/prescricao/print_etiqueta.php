@@ -13,13 +13,13 @@
         table {
             width: 92mm; /* Define a largura exata */
             border-collapse: collapse;
-            margin-left:20px;
+            margin-left:0px;
             margin-top:0px;
         }
         th, td {
             border: 1px solid black;
             padding: 3px;
-            font-size: 13px;
+            font-size: 12px;
         }
         th {
             background-color: #f0f0f0;
@@ -63,9 +63,9 @@
                 <td>Diluente: SIM</td>
             </tr>
             <tr>
-                <td>VolDiluente(ml):<br> 300</td>
-                <td>VolFinal(ml):<br> 300</td>
-                <td>ViaAdminist:<br> 300</td>
+                <td>VolDiluente(ml): 300</td>
+                <td>VolFinal(ml): 300</td>
+                <td>ViaAdminist: 300</td>
             </tr>
             <tr>
                 <td>Fotosensível: SIM</td>

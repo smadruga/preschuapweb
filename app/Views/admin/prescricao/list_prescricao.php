@@ -54,7 +54,7 @@
                             <?php } ?>
 
                             <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6]))) { ?>
-                                <a class="btn btn-outline-info" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_etiqueta/'.$v['idPreschuap_Prescricao']) ?>" target="_blank" role="button"><i class="fa-solid fa-tag"></i> Etiqueta</a>
+                                <a class="btn btn-outline-info" href="<?= base_url('prescricao/print_etiqueta/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-tag"></i> Etiqueta</a>
                             <?php } ?>
 
                         <?php } else { ?>
