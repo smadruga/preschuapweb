@@ -4,71 +4,203 @@
 
 <main class="col">
 
-    <form method="post" action="<?= base_url('prescricao/print_etiqueta/') ?>">
-        <?= csrf_field() ?>
-        <?php $validation = \Config\Services::validation(); ?>
+    <form method="post" target="_blank" action="<?= base_url('prescricao/etiqueta/imprimir') ?>">
 
         <div class="card">
-            <div class="card-header <?= $opt['bg'] ?> text-white">
-                <b><?= $opt['title'] ?></b>
+
+            <div class="card-body has-validation row g-3">
+
+                <div class="col-md-12">
+                    <label for="Dose" class="form-label"><b>Nome:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Nome" class="form-control" name="Nome" readonly value="<?= $medicamento['Nome'] ?>" />
+                    </div>
+                </div>
+
             </div>
+
             <div class="card-body has-validation row g-3">
 
                 <div class="col-md-4">
-                    <label for="Dose<?= $i ?>" class="form-label"><b>Dose do Protocolo</b> <b class="text-danger">*</b></label>
+                    <label for="Dose" class="form-label"><b>Prontuário:</b></label>
                     <div class="input-group mb-3">
-                        <input type="text" id="Dose<?= $i ?>" disabled
-                            class="form-control <?php if($validation->getError('Dose'.$i)): ?>is-invalid<?php endif ?>"
-                            name="Dose<?= $i ?>" value="<?php echo $dose[0] ?>"/>
-                        <span class="input-group-text" id="basic-addon2"><?php echo $dose[1] ?></span>
-                        <?php if ($validation->getError('Dose'.$i)): ?>
-                            <div class="invalid-feedback">
-                                <?= $validation->getError('Dose'.$i) ?>
-                            </div>
-                        <?php endif; ?>
+                        <input type="text" id="Prontuario" class="form-control" name="Prontuario" readonly
+                            value="<?= $medicamento['Prontuario'] ?>" />
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <label for="Ajuste<?= $i ?>" class="form-label"><b>Ajuste</b></label>
+                    <label for="Ajuste" class="form-label"><b>Data de Nascimento:</b></label>
                     <div class="input-group mb-3">
-                        <input type="text" id="Ajuste<?= $i ?>" <?= $opt['disabled'] ?>
-                            class="form-control <?php if($validation->getError('Ajuste'.$i)): ?>is-invalid<?php endif ?>"
-                            maxlength="9" name="Ajuste<?= $i ?>" placeholder="Apenas números" onkeyup="ajuste(<?= $i ?>)"
-                            
-                            value="<?php echo $data['input'][$i]['Ajuste']; ?>"/>
+                        <input type="text" id="DtNasc" class="form-control" name="DtNasc" readonly value="<?= $medicamento['DtNasc'] ?>" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Dose" class="form-label"><b>Unidade:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Unidade" class="form-control" name="Unidade"/>
+                    </div>
+                </div>                                
 
-                        <?php if ($validation->getError('Ajuste'.$i)): ?>
-                            <div class="invalid-feedback">
-                                <?= $validation->getError('Ajuste'.$i) ?>
-                            </div>
-                        <?php endif; ?>
+            </div>
+
+
+            <div class="card-body has-validation row g-3">
+
+                <div class="col-md-8">
+                    <label for="Dose" class="form-label"><b>Medicamento:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Medicamento" class="form-control" name="Medicamento" readonly
+                            value="<?= $medicamento['Medicamento'] ?>" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Calculo" class="form-label"><b>Prescrição:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Prescricao" class="form-control" name="Prescricao" readonly
+                            value="#<?= $medicamento['idPreschuap_Prescricao'] ?>" />
+                    </div>
+                </div>                
+
+            </div>
+
+
+            <div class="card-body has-validation row g-3">
+
+                <div class="col-md-4">
+                    <label for="Dose" class="form-label"><b>Dose:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Dose" class="form-control" name="Dose" value="<?= number_format($medicamento['Dose'], 2, ',', '.').' '.$medicamento['Representacao'] ?>" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Ajuste" class="form-label"><b>Dose do Volume(ml):</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="DoseVol" class="form-control" name="DoseVol" />
                     </div>
                 </div>                
                 <div class="col-md-4">
-                    <label for="Calculo<?= $i ?>" class="form-label"><b>Cálculo Final</b> <b class="text-danger">*</b></label>
+                    <label for="Calculo" class="form-label"><b>Diluente:</b></label>
                     <div class="input-group mb-3">
-                        <input type="text" id="Calculo<?= $i ?>" readonly
-                            class="form-control <?php if($validation->getError('Calculo'.$i)): ?>is-invalid<?php endif ?>"
-                            maxlength="10" name="Calculo<?= $i ?>" value="<?php echo $m['Calculo'] ?>"/>
-                        <span class="input-group-text" id="basic-addon2"><?php echo $u[0] ?></span>
-                        <?php if ($validation->getError('Calculo'.$i)): ?>
-                            <div class="invalid-feedback">
-                                <?= $validation->getError('Calculo'.$i) ?>
-                            </div>
-                        <?php endif; ?>
+                        <input type="text" id="Diluente" class="form-control" name="Diluente" value="<?= $medicamento['Diluente'] ?>" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-body has-validation row g-3">
+
+                <div class="col-md-4">
+                    <label for="Dose" class="form-label"><b>Volume Diluente(ml):</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="VolDiluente" class="form-control" name="VolDiluente"/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Ajuste" class="form-label"><b>Volume Final(ml):</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="VolFinal" class="form-control" name="VolFinal" />
+                    </div>
+                </div>                
+                <div class="col-md-4">
+                    <label for="Calculo" class="form-label"><b>Via de Administração:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="ViaAdminist" class="form-control" name="ViaAdminist" value="<?= $medicamento['Codigo'] ?>" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-body has-validation row g-3">
+
+                <div class="col-md-4">
+                    <label for="Dose" class="form-label"><b>Fotosensível:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Fotosensivel" class="form-control" name="Fotosensivel"/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Ajuste" class="form-label"><b>Refrigerar:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Refrigerar" class="form-control" name="Refrigerar" />
+                    </div>
+                </div>                
+                <div class="col-md-4">
+                    <label for="Calculo" class="form-label"><b>Equipo:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Equipo" class="form-control" name="Equipo" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-body has-validation row g-3">
+
+                <div class="col-md-4">
+                    <label for="Dose" class="form-label"><b>Vesicante:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Vesicante" class="form-control" name="Vesicante"/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Ajuste" class="form-label"><b>Irritante:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Irritante" class="form-control" name="Irritante" />
+                    </div>
+                </div>                
+                <div class="col-md-4">
+                    <label for="Calculo" class="form-label"><b>Infusão:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Infusao" class="form-control" name="Infusao" value="<?= $medicamento['TempoInfusao'] ?>" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-body has-validation row g-3">
+
+                <div class="col-md-4">
+                    <label for="Dose" class="form-label"><b>Data de Preparo:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Preparo" class="form-control" name="Preparo"/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Ajuste" class="form-label"><b>Validade de Temperatura Ambiente:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="ValTmpAmb" class="form-control" name="ValTmpAmb" />
+                    </div>
+                </div>                
+                <div class="col-md-4">
+                    <label for="Calculo" class="form-label"><b>Validade de Refrigeração:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="ValRefrig" class="form-control" name="ValRefrig" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-body has-validation row g-3">
+
+                <div class="col-md-12">
+                    <label for="Dose" class="form-label"><b>OBS:</b></label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Obs" class="form-control" name="Obs"/>
                     </div>
                 </div>
 
+            </div>
+
+
+            <div class="card-body has-validation row g-3">
 
                 <div class="col-md-12">
-                    <?= $opt['button'] ?>
-                    <a class="btn btn-warning" id="click" href="<?= base_url('prescricao/manage_prescricao/editar/'.$data['prescricao']['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
-
-                    <a class="btn btn-secondary" href="<?= base_url('prescricao/list_prescricao/') ?>"><i class="fa-solid fa-ban"></i> Cancelar</a>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-print"></i> Imprimir</button>
+                    <a class="btn btn-warning" id="click" onclick="history.back()" role="button"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
                 </div>
 
-
             </div>
+
+
         </div>
 
     </form>

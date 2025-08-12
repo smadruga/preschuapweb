@@ -35,7 +35,55 @@ class PrescricaoMedicamentoModel extends Model
                                     ];
 
     /**
-    * Retorna zero, um ou mais prescrições médicas registradas no banco de dados.
+    * Retorna os dados do medicamento e paciente associados ao medicamento em questão, 
+    * para elaboração de etiqueta de bolsa de quimioterapia.
+    *
+    * @return void
+    */
+    public function read_medicamento_etiqueta($data)
+    {
+
+        $db = \Config\Database::connect();
+        $query = $db->query('
+            SELECT
+                pp.idPreschuap_Prescricao 
+                , pp.Prontuario 
+                , tpm.Medicamento 
+                , ppm.Dose 
+                , tpum.Representacao 
+                , tpd.Diluente 
+                , tpva.Codigo 
+                , tpva.ViaAdministracao 
+                , ppm.TempoInfusao 
+            FROM
+                Preschuap_Prescricao_Medicamento ppm
+                    LEFT JOIN Preschuap_Prescricao pp 				ON ppm.idPreschuap_Prescricao 			= pp.idPreschuap_Prescricao 
+                    LEFT JOIN TabPreschuap_Medicamento tpm 			ON ppm.idTabPreschuap_Medicamento 		= tpm.idTabPreschuap_Medicamento 
+                    LEFT JOIN TabPreschuap_UnidadeMedida tpum 		ON ppm.idTabPreschuap_UnidadeMedida 	= tpum.idTabPreschuap_UnidadeMedida 
+                    LEFT JOIN TabPreschuap_Diluente tpd 			ON ppm.idTabPreschuap_Diluente 			= tpd.idTabPreschuap_Diluente 
+                    LEFT JOIN TabPreschuap_ViaAdministracao tpva 	ON ppm.idTabPreschuap_ViaAdministracao 	= tpva.idTabPreschuap_ViaAdministracao 
+            WHERE
+                ppm.idPreschuap_Prescricao_Medicamento = '.$data.'
+        ');
+
+        /*
+        echo $db->getLastQuery();
+        echo "<pre>";
+        print_r($query->getResultArray());
+        echo "</pre>";
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+        exit('oi222');
+        #*/
+
+        return $query->getRowArray();
+        
+
+    }
+
+    /**
+    * Retorna os medicamentos associados a prescrição indicada
     *
     * @return void
     */

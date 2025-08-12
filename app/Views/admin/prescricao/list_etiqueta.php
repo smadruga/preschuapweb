@@ -29,12 +29,19 @@
             <?php
             }
             else {
+
+                ?>
+            <div class="alert alert-info" role="alert">
+                <b>Prescrição #<?= $v['idPreschuap_Prescricao'] ?></b>
+            </div>
+                <?php
+
                 foreach($medicamento[$v['idPreschuap_Prescricao']] as $m) {
             ?>
 
             <div class="row">
                 <div class="col-2 text-end">
-                    <a class="btn btn-info btn-sm" id="click" href="<?= base_url('prescricao/etiqueta/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Revisar</a>
+                    <a class="btn btn-info btn-sm" id="click" href="<?= base_url('prescricao/etiqueta/editar/'.$m['idPreschuap_Prescricao_Medicamento']) ?>" role="button"><i class="fa-solid fa-edit"></i> Revisar</a>
                 </div>    
                 <div class="col"><b>Medicamento: <?= $m['Medicamento'] ?></b></div>
             </div>

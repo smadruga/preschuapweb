@@ -6,12 +6,15 @@ use App\Models\TabelaModel;
 use App\Models\PrescricaoModel;
 use App\Models\PrescricaoMedicamentoModel;
 use App\Models\AgendaModel;
+use App\Models\PacienteModel;
 
 use App\Models\AuditoriaModel;
 use App\Models\AuditoriaLogModel;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Libraries\HUAP_Functions;
+
+use DateTime;
 
 class Prescricao extends BaseController
 {
@@ -91,13 +94,14 @@ class Prescricao extends BaseController
     *
     * @return mixed
     */
-    public function etiqueta($acao, $data)
+    public function etiqueta($acao, $data = NULL)
     {
 
         #exit($data);
 
-        $prescricao = new PrescricaoModel();
-        $medicamento = new PrescricaoMedicamentoModel();
+        $prescricao     = new PrescricaoModel();
+        $medicamento    = new PrescricaoMedicamentoModel();
+        $paciente       = new PacienteModel();
 
         #Inicia a classe de funções próprias
         $v['func'] = new HUAP_Functions();
@@ -126,8 +130,42 @@ class Prescricao extends BaseController
 
         }
         elseif ($acao == 'editar') {
-            exit($data);
+            
+            $v['medicamento']   = $medicamento->read_medicamento_etiqueta($data);
+            $aghux              = $paciente->get_paciente_bd($v['medicamento']['Prontuario']);
+            
+            $v['medicamento']['Nome']   = $aghux['array'][0]['nome'];
+
+            
+            $dataObj        = new DateTime($aghux['array'][0]['dt_nascimento']);
+            $v['medicamento']['DtNasc']  = $dataObj->format("d/m/Y");
+            # = $aghux['array'][0]['dt_nascimento'];
+            
+            /*
+            #echo $v['medicamento']['paciente']['array'][0]['nome'];
+            echo "<pre>";
+            print_r($v['medicamento']);
+            echo "</pre>";
+            exit('oi');
+            #*/
+
+            return view('admin/prescricao/form_etiqueta', $v);
         }
+        elseif ($acao == 'imprimir') {
+            
+            $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+
+            /*
+            echo "<pre>";
+            print_r($v['data']);
+            echo "</pre>";
+            exit('oi');
+            #*/
+
+            return view('admin/prescricao/print_etiqueta', $v);
+        }
+        else 
+            exit('Erro XEQ165');
 
     }
 
