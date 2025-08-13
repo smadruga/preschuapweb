@@ -108,6 +108,7 @@ class PrescricaoMedicamentoModel extends Model
                 , format(pm.Calculo, 2, "pt_BR") as Calculo2
                 , tpm.idTabPreschuap_Protocolo
                 , tpm.OrdemInfusao
+                , tet.idTabPreschuap_EtapaTerapia
                 , tet.EtapaTerapia
                 , tm.Medicamento
                 , format(tm.CalculoLimiteMinimo, 2, "pt_BR") as CalculoLimiteMinimo

@@ -123,7 +123,11 @@ class Prescricao extends BaseController
             echo "<pre>";
             print_r($v['medicamento']);
             echo "</pre>";
-            exit('oi');
+            echo "<pre>";
+            print_r($_SESSION['Sessao']['Perfil']);
+            echo "</pre>";
+            echo array_key_first($_SESSION['Sessao']['Perfil']);
+            exit('<br>oi');
             #*/
 
             return view('admin/prescricao/list_etiqueta', $v);

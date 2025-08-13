@@ -37,28 +37,47 @@
                 <?php
 
                 foreach($medicamento[$v['idPreschuap_Prescricao']] as $m) {
+
+                    if ( $m['idTabPreschuap_EtapaTerapia'] == 2 && (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,4,7]))) ) {
             ?>
 
             <div class="row">
                 <div class="col-2 text-end">
                     <a class="btn btn-info btn-sm" id="click" href="<?= base_url('prescricao/etiqueta/editar/'.$m['idPreschuap_Prescricao_Medicamento']) ?>" role="button"><i class="fa-solid fa-edit"></i> Revisar</a>
                 </div>    
-                <div class="col"><b>Medicamento: <?= $m['Medicamento'] ?></b></div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    
-                </div>
+                <div class="col"><b>Medicamento: <?= $m['Medicamento'].' - '.$m['EtapaTerapia'] ?></b></div>
             </div>
 
             <hr />
 
             <?php
+                    }
+                    elseif ( $m['idTabPreschuap_EtapaTerapia'] == 1 && (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6,8]))) ) {
+
+            ?>
+
+            <div class="row">
+                <div class="col-2 text-end">
+                    <a class="btn btn-info btn-sm" id="click" href="<?= base_url('prescricao/etiqueta/editar/'.$m['idPreschuap_Prescricao_Medicamento']) ?>" role="button"><i class="fa-solid fa-edit"></i> Revisar</a>
+                </div>    
+                <div class="col"><b>Medicamento: <?= $m['Medicamento'].' - '.$m['EtapaTerapia'] ?></b></div>
+            </div>
+
+            <hr />
+
+            <?php                        
+
+                    }
                 }
             }
             ?>
 
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <a class="btn btn-warning" id="click" onclick="history.back()" role="button"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+                </div>
             </div>
 
         </div>

@@ -74,25 +74,33 @@
                     <div>
                         <?php if($v['Concluido'] == 1) { ?>
                             
-                            <a class="btn btn-outline-info" onclick="window.open(this.href).print(); return false" href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao'].'?printview=1') ?>" target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
+                            <a class="btn btn-outline-info" onclick="window.open(this.href).print(); return false" 
+                                href="<?= base_url('prescricao/print_prescricao/'.$v['idPreschuap_Prescricao'].'?printview=1') ?>" 
+                                target="_blank" role="button"><i class="fa-solid fa-print"></i> Imprimir</a>
                             
                             <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,3]))) { ?>
-                            <a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-copy"></i> Copiar</a>
+                            <a class="btn btn-outline-info click" href="<?= base_url('prescricao/copy_prescricao/'.$v['idPreschuap_Prescricao']) ?>"    
+                                role="button"><i class="fa-solid fa-copy"></i> Copiar</a>
                             <?php } ?>
 
                             <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6]))) { ?>
-                            <a class="btn btn-outline-info click" href="<?= base_url('agenda/agenda_prescricao/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-calendar"></i> Agendar</a>
+                            <a class="btn btn-outline-info click" href="<?= base_url('agenda/agenda_prescricao/'.$v['idPreschuap_Prescricao']) ?>"
+                                role="button"><i class="fa-solid fa-calendar"></i> Agendar</a>
                             <?php } ?>
 
-                            <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,6]))) { ?>
-                                <a class="btn btn-outline-info" href="<?= base_url('prescricao/etiqueta/listar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-tag"></i> Etiqueta</a>
+                            <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,4,6,7,8]))) { ?>
+                                <a class="btn btn-outline-info" href="<?= base_url('prescricao/etiqueta/listar/'.$v['idPreschuap_Prescricao']) ?>" 
+                                    role="button"><i class="fa-solid fa-tag"></i> Etiqueta</a>
                             <?php } ?>
 
                         <?php } else { ?>
                             <?php if (!empty(array_intersect(array_keys($_SESSION['Sessao']['Perfil']), [1,3]))) { ?>
-                            <a class="btn btn-outline-warning" id="click" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-edit"></i> Editar</a>
-                            <a class="btn btn-outline-danger" id="click" href="<?= base_url('prescricao/manage_prescricao/excluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-trash-can"></i> Excluir</a>
-                            <a class="btn btn-outline-success" id="click" href="<?= base_url('prescricao/manage_prescricao/concluir/'.$v['idPreschuap_Prescricao']) ?>" role="button"><i class="fa-solid fa-check-circle"></i> Concluir</a>
+                            <a class="btn btn-outline-warning" id="click" href="<?= base_url('prescricao/manage_prescricao/editar/'.$v['idPreschuap_Prescricao']) ?>" 
+                                role="button"><i class="fa-solid fa-edit"></i> Editar</a>
+                            <a class="btn btn-outline-danger" id="click" href="<?= base_url('prescricao/manage_prescricao/excluir/'.$v['idPreschuap_Prescricao']) ?>" 
+                                role="button"><i class="fa-solid fa-trash-can"></i> Excluir</a>
+                            <a class="btn btn-outline-success" id="click" href="<?= base_url('prescricao/manage_prescricao/concluir/'.$v['idPreschuap_Prescricao']) ?>" 
+                                role="button"><i class="fa-solid fa-check-circle"></i> Concluir</a>
                             <?php } ?>
                         <?php } ?>
                     </div>
