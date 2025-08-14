@@ -14,6 +14,8 @@ use App\Models\AuditoriaLogModel;
 use CodeIgniter\RESTful\ResourceController;
 use App\Libraries\HUAP_Functions;
 
+use Endroid\QrCode\Builder\Builder;
+
 use DateTime;
 
 class Prescricao extends BaseController
@@ -156,14 +158,37 @@ class Prescricao extends BaseController
             return view('admin/prescricao/form_etiqueta', $v);
         }
         elseif ($acao == 'imprimir') {
-            
+          
             $v['data'] = array_map('trim', $this->request->getVar(null, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+    
+    $hash = md5(uniqid('', true));
+    #$codigoRastreio = '1#'.$v['data']['Prontuario'].$v['data']['Prescricao'].'#'.$v['data']['idPreschuap_Prescricao_Medicamento'].'#'.$hash;
+    $codigoRastreio = $v['data']['Prontuario'].$v['data']['Prescricao'].'#'.$v['data']['idPreschuap_Prescricao_Medicamento'].'#'.$hash;
+
+    // === GERAR O QR CODE ===
+    $result = Builder::create()
+        ->data($codigoRastreio)  // texto ou link que quer codificar
+        ->size(150)              // tamanho do QR Code
+        ->margin(5)
+        ->build();
+
+    // Converter para base64 para usar inline na etiqueta
+    $qrBase64 = base64_encode($result->getString());
+    $qrDataUri = 'data:'.$result->getMimeType().';base64,'.$qrBase64;
+
+    // === DADOS DA ETIQUETA ===
+    $v['data']['rastreio'] = [
+        'codigo' => $codigoRastreio,
+        'qrCode' => $qrDataUri
+    ];
+         
 
             /*
             echo "<pre>";
             print_r($v['data']);
             echo "</pre>";
-            exit('oi');
+            #exit('oi 1'.$v['data']['Prontuario'].'|'.$v['data']['Prontuario'].'|'.);
+            exit('oi '.$codigoRastreio);
             #*/
 
             return view('admin/prescricao/print_etiqueta', $v);

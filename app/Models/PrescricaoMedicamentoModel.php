@@ -47,7 +47,9 @@ class PrescricaoMedicamentoModel extends Model
         $query = $db->query('
             SELECT
                 pp.idPreschuap_Prescricao 
+                , ppm.idPreschuap_Prescricao_Medicamento
                 , pp.Prontuario 
+                , tpm.idTabPreschuap_Medicamento
                 , tpm.Medicamento 
                 , ppm.Dose 
                 , tpum.Representacao 

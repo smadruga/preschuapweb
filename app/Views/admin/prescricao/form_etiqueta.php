@@ -190,6 +190,9 @@
 
             </div>
 
+            <input type="hidden" name="idPreschuap_Prescricao_Medicamento" value="<?= $medicamento['idPreschuap_Prescricao_Medicamento'] ?>">
+            <input type="hidden" name="idTabPreschuap_Medicamento" value="<?= $medicamento['idTabPreschuap_Medicamento'] ?>">
+
 
             <div class="card-body has-validation row g-3">
 
